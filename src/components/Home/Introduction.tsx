@@ -13,13 +13,14 @@ const Introduction = () => {
 };
 
 const Section1 = () => {
-  const container = useRef(null);
+  const ref = useRef(null);
   const { scrollYProgress } = useScroll();
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "-1000%"]);
   return (
     <div className="sticky top-16 h-[50vh] lg:h-[80vh] w-full flex flex-col justify-between items-center px-4 md:px-8 lg:px-16 xl:px-24 pb-8 ">
       <motion.h3
+        ref={ref}
         className=" text-8xl lg:text-[24rem] font-bold"
         style={{ translateY: y }}
       >
