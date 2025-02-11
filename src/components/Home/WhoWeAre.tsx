@@ -14,7 +14,7 @@ const WhoWeAre = () => {
             className=" text-6xl text-center font-thin dark:text-[#fdfdfd]"
           >
             We blend the power of strategy, design, and performance marketing to
-            transform founders' visions into remarkable brands. See our
+            transform {"founders'"} visions into remarkable brands. See our
             services.
           </motion.h3>
         </div>
