@@ -8,11 +8,11 @@ const Latest = () => {
     <div className=" pt-16">
       <div className="px-4 md:px-8 lg:px-16 xl:px-24">
         <motion.h3
-          initial={{ y: 175 }}
-          whileInView={{ y: 0 }}
+          initial={{ y: 175, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-6xl text-center font-thin dark:text-[#fdfdfd]"
+          className="text-6xl text-center dark:text-[#fdfdfd]"
         >
           Working to shape the future of your industry? We create brands that
           bring that ambition to life.

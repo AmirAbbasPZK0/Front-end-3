@@ -1,7 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { BiSolidVolumeFull, BiSolidVolumeMute } from "react-icons/bi";
-import { motion, useScroll, useTransform } from "framer-motion";
 
 const Introduction = () => {
   return (
@@ -13,19 +12,9 @@ const Introduction = () => {
 };
 
 const Section1 = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll();
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "-1000%"]);
   return (
     <div className="sticky top-16 h-[50vh] lg:h-[80vh] w-full flex flex-col justify-between items-center px-4 md:px-8 lg:px-16 xl:px-24 pb-8 ">
-      <motion.h3
-        ref={ref}
-        className=" text-8xl lg:text-[24rem] font-bold"
-        style={{ translateY: y }}
-      >
-        findora
-      </motion.h3>
+      <h3 className=" text-8xl lg:text-[24rem] font-bold">findora</h3>
       <div className=" flex gap-4 dark:text-[#c6c6c6] font-thin text-sm self-start">
         <span className=" w-1/2">Strategy, Design, and Performance.</span>
         <span className=" w-1/2">Two Engagement Models: Cash or Equity.</span>

@@ -40,14 +40,14 @@ export const Footer = () => {
     <div className="bg-black text-white py-8">
       <div className=" px-4 md:px-8 lg:px-16 xl:px-24">
         <div className=" flex flex-col justify-between gap-24">
-          <div className=" flex justify-between gap-8">
+          <div className=" flex justify-between gap-4 lg:gap-8">
             <div className=" flex flex-col justify-between gap-4">
               <h6 className=" text-lg lg:text-4xl">Do it once. Do it right.</h6>
               <div>
                 New Business: <br /> hello@rejouice.com
               </div>
             </div>
-            <div className=" flex gap-16">
+            <div className="flex gap-4 lg:gap-16">
               <div className=" flex flex-col justify-between gap-16">
                 <div className=" flex flex-col gap-1">
                   {links.map((link) => (
@@ -76,6 +76,7 @@ export const Footer = () => {
                 key={index}
                 initial={{ opacity: 0, y: -200 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{
                   delay: index * 0.1,
                   duration: 1,

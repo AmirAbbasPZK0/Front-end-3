@@ -7,11 +7,11 @@ const WhoWeAre = () => {
       <div>
         <div className=" overflow-hidden">
           <motion.h3
-            initial={{ y: 175 }}
-            whileInView={{ y: 0 }}
+            initial={{ y: 175, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className=" text-6xl text-center font-thin dark:text-[#fdfdfd]"
+            className=" text-6xl text-center dark:text-[#fdfdfd]"
           >
             We blend the power of strategy, design, and performance marketing to
             transform {"founders'"} visions into remarkable brands. See our
