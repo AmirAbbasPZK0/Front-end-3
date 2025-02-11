@@ -22,8 +22,14 @@ const Section1 = () => {
   );
 };
 
+interface FullScreenVideoElement extends HTMLVideoElement {
+  webkitRequestFullscreen?: () => void;
+  mozRequestFullScreen?: () => void;
+  msRequestFullscreen?: () => void;
+}
+
 const Section2 = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<FullScreenVideoElement | null>(null);
 
   // Function to enter fullscreen mode and reset video to the beginning
   const enterFullScreen = () => {
@@ -33,12 +39,12 @@ const Section2 = () => {
 
       if (videoRef.current.requestFullscreen) {
         videoRef.current.requestFullscreen();
-      } else if ((videoRef.current as any).webkitRequestFullscreen) {
-        (videoRef.current as any).webkitRequestFullscreen();
-      } else if ((videoRef.current as any).mozRequestFullScreen) {
-        (videoRef.current as any).mozRequestFullScreen();
-      } else if ((videoRef.current as any).msRequestFullscreen) {
-        (videoRef.current as any).msRequestFullscreen();
+      } else if (videoRef.current.webkitRequestFullscreen) {
+        videoRef.current.webkitRequestFullscreen();
+      } else if (videoRef.current.mozRequestFullScreen) {
+        videoRef.current.mozRequestFullScreen();
+      } else if (videoRef.current.msRequestFullscreen) {
+        videoRef.current.msRequestFullscreen();
       }
 
       videoRef.current.controls = true; // Enable controls in fullscreen mode
