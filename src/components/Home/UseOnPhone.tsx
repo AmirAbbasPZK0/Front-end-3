@@ -39,8 +39,8 @@ const UseOnPhone = () => {
               With Findora, you can easily access all of its powerful features
               directly from your phone, giving you the flexibility to stay
               connected, manage your activities, and enjoy a seamless experience
-              wherever you are, whether you're at home, on the go, or traveling,
-              all with just a few taps
+              wherever you are, whether {"you're"} at home, on the go, or
+              traveling, all with just a few taps
             </p>
           </div>
           <div>
