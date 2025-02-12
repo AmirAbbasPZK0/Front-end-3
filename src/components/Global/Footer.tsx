@@ -66,7 +66,7 @@ export const Footer = () => {
                     </Link>
                   ))}
                 </div>
-                <div className=" text-sm">©Copyright 2025</div>
+                <div className=" text-sm">©2025 Findora</div>
               </div>
             </div>
           </div>
