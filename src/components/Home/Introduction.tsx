@@ -13,8 +13,8 @@ const Introduction = () => {
 const Section1 = () => {
   return (
     <div className="sticky top-16 h-[50vh] lg:h-[80vh] w-full flex flex-col justify-between items-center px-4 md:px-8 lg:px-16 xl:px-24 pb-8">
-      <h3 className="text-8xl lg:text-[24rem] font-bold">findora</h3>
-      <div className="flex gap-4 dark:text-[#c6c6c6] font-thin text-sm self-start">
+      <h3 className="text-8xl lg:text-[22rem] font-bold">findora</h3>
+      <div className="flex gap-4 dark:text-[#c6c6c6] text-sm self-start">
         <span className="w-1/2">Privacy-Preserving Blockchain Platform.</span>
         <span className="w-1/2">Scalable, Transparent, and Secure.</span>
       </div>

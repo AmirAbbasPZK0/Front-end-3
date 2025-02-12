@@ -70,7 +70,7 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-          <div className=" lg:overflow-hidden flex justify-center items-center text-8xl md:text-[10rem] lg:text-[16rem] xl:text-[24rem] font-bold">
+          <div className=" lg:overflow-hidden flex justify-center items-center text-8xl md:text-[10rem] lg:text-[16rem] xl:text-[20rem] font-bold">
             {text.split("").map((letter, index) => (
               <motion.h1
                 key={index}
