@@ -42,35 +42,35 @@ export const Footer = () => {
         <div className=" flex flex-col justify-between gap-24">
           <div className=" flex justify-between gap-4 lg:gap-8">
             <div className=" flex flex-col justify-between gap-4">
-              <h6 className=" text-lg lg:text-4xl">Do it once. Do it right.</h6>
-              <div>
-                New Business: <br /> hello@rejouice.com
+              <h6 className=" text-lg lg:text-4xl">Ask more. Know more.</h6>
+              <div className=" text-sm">
+                Say Hello: <br /> hello@findora.ai
               </div>
             </div>
             <div className="flex gap-4 lg:gap-16">
               <div className=" flex flex-col justify-between gap-16">
-                <div className=" flex flex-col gap-1">
+                <div className=" flex flex-col gap-1 text-sm">
                   {links.map((link) => (
                     <Link key={link.id} href={link.href}>
                       {link.title}
                     </Link>
                   ))}
                 </div>
-                <div>Montréal—Canada</div>
+                <div className=" text-sm">Montréal—Canada</div>
               </div>
               <div className=" flex flex-col justify-between gap-4">
-                <div className=" flex flex-col gap-1">
+                <div className=" flex flex-col gap-1 text-sm">
                   {socials.map((social) => (
                     <Link key={social.id} href={social.href}>
                       {social.title}
                     </Link>
                   ))}
                 </div>
-                <div>©Copyright 2025</div>
+                <div className=" text-sm">©Copyright 2025</div>
               </div>
             </div>
           </div>
-          <div className=" lg:overflow-hidden flex justify-center items-center text-8xl lg:text-[24rem] font-bold">
+          <div className=" lg:overflow-hidden flex justify-center items-center text-8xl md:text-[10rem] lg:text-[16rem] xl:text-[24rem] font-bold">
             {text.split("").map((letter, index) => (
               <motion.h1
                 key={index}

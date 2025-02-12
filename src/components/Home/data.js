@@ -1,33 +1,32 @@
 export const LatestData = [
   {
     id: 1,
-    title: "The Power of Music",
+    title: "GeForce RTX 50 Series",
     image:
-      "https://images.prismic.io/rejouice-2024/Z3R385bqstJ986dE_Untitled-2.jpg?auto=format,compress&w=2048&h=1152&fm=avif",
+      "https://blogs.nvidia.com/wp-content/uploads/2025/02/rtx-ai-garage-blackwell-nim-blueprints-pc-nv-blog-1280x680-1.jpg",
   },
   {
     id: 2,
-    title: "The Beauty of Photography",
+    title: "What Are Foundation Models?",
     image:
-      "https://images.prismic.io/rejouice-2024/Z3R3CZbqstJ986cq_Untitled-2.jpg?auto=format,compress&w=2048&h=1152&fm=avif",
+      "https://blogs.nvidia.com/wp-content/uploads/2023/03/bridge-pixabay-1536x820.jpg",
   },
   {
     id: 3,
-    title: "The Poetry of Love",
-    image:
-      "https://images.prismic.io/rejouice-2024/Z1r5WZbqstJ98aZz_gencell-website.jpg?auto=format,compress&w=2048&h=1178&fm=avif",
+    title: "NVIDIA Media2 Transforms Content Creation",
+    image: "https://blogs.nvidia.com/wp-content/uploads/2025/01/media2-ces.png",
   },
   {
     id: 4,
-    title: "The Magic of Storytelling",
+    title: "Imbue’s Kanjun Qiu Shares Insights",
     image:
-      "https://images.prismic.io/rejouice-2024/Z1r5WpbqstJ98aZ1_hyperframe.jpg?auto=format,compress&w=2048&h=1178&fm=avif",
+      "https://blogs.nvidia.com/wp-content/uploads/2024/12/kanjun-1536x983.jpg",
   },
   {
     id: 5,
-    title: "The Art of Film",
+    title: "NVIDIA Unveils Its Most Affordable Generative",
     image:
-      "https://images.prismic.io/rejouice-2024/Z1r5W5bqstJ98aZ2_intreprid.jpg?auto=format,compress&w=2048&h=1178&fm=avif",
+      "https://blogs.nvidia.com/wp-content/uploads/2024/12/PXL_20241209_020516521.PORTRAIT-1-1536x864.jpg",
   },
 ];
 

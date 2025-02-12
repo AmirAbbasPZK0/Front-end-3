@@ -31,14 +31,16 @@ const UseOnPhone = () => {
       >
         <motion.div
           style={{ height: heightProgress, width: weightProgress }}
-          className="relative bg-gradient-to-tr from-[#6b49f7] via-[#ab61c7] to-[#d571a5] rounded-3xl flex flex-col md:flex-row justify-between items-center p-16 overflow-hidden"
+          className="relative bg-gradient-to-tr from-[#026095] via-[#511f78] to-[#c31069] rounded-3xl flex flex-col md:flex-row justify-between items-center p-16 overflow-hidden"
         >
           <div className=" md:w-2/3 flex flex-col gap-4 text-white">
-            <h6 className=" text-2xl font-bold">Use iAsk on your phone</h6>
+            <h6 className=" text-2xl font-bold">Use findora on your phone</h6>
             <p>
-              iAsk.Ai (iAsk™ AI) is an advanced free AI search engine that
-              enables users to Ask AI questions and receive Instant, Accurate,
-              and Factual Answers without ever storing your data.
+              With Findora, you can easily access all of its powerful features
+              directly from your phone, giving you the flexibility to stay
+              connected, manage your activities, and enjoy a seamless experience
+              wherever you are, whether you're at home, on the go, or traveling,
+              all with just a few taps
             </p>
           </div>
           <div>

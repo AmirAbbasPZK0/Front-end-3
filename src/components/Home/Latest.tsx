@@ -14,8 +14,8 @@ const Latest = () => {
           transition={{ duration: 0.5 }}
           className="text-6xl text-center dark:text-[#fdfdfd]"
         >
-          Working to shape the future of your industry? We create brands that
-          bring that ambition to life.
+          Discover the latest AI advancements, trends, and breakthroughs. Stay
+          updated on cutting-edge innovations shaping the future of technology.
         </motion.h3>
       </div>
       <div className=" flex flex-col pt-16">
