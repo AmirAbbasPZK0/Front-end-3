@@ -1,5 +1,5 @@
 "use client";
-import { FiMonitor, FiSave, FiSearch } from "react-icons/fi";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { IconType } from "react-icons";
 import { Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
@@ -92,7 +92,7 @@ interface TabProps {
   selected: boolean;
   Icon: IconType;
   title: string;
-  setSelected: Function;
+  setSelected: Dispatch<SetStateAction<number>>;
   tabNum: number;
   bgColor: string;
 }
