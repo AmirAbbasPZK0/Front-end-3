@@ -97,7 +97,7 @@ const Tabs = ({ selected, setSelected }: TabsProps) => {
     }
   }, [selected]);
   return (
-    <div className="flex overflow-x-auto scrollbar-hide lg:justify-center">
+    <div className="flex overflow-x-auto scrollbar-hide md:justify-center">
       {FEATURES.map((tab, index) => (
         <div
           key={index}
