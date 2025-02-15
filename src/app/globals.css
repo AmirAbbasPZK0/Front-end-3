@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 html.lenis,
 html.lenis body {
   height: auto;
