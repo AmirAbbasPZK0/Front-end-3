@@ -1,10 +1,9 @@
 "use client";
-
 import { AnimatePresence, motion } from "framer-motion";
 import { IconType } from "react-icons";
 import { Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { GoArrowRight } from "react-icons/go";
+import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import Image from "next/image";
 import { CiBoxList, CiImageOn, CiStar } from "react-icons/ci";
 import { IoDocumentTextOutline } from "react-icons/io5";
@@ -40,7 +39,16 @@ const TabsFeatures = () => {
   }, [selected, isHovered]);
 
   return (
-    <section className="px-4 md:px-8 mx-auto max-w-7xl">
+    <section className="relative px-4 md:px-8 mx-auto max-w-7xl">
+      {/* Left Arrow */}
+      {selected > 0 && (
+        <button
+          onClick={() => setSelected((prev) => prev - 1)}
+          className="absolute left-0 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-gray-800 text-white hover:bg-gray-600 transition"
+        >
+          <GoArrowLeft size={24} />
+        </button>
+      )}
       <Tabs selected={selected} setSelected={setSelected} />
       <AnimatePresence mode="wait">
         {FEATURES.map((tab, index) => {
@@ -59,6 +67,15 @@ const TabsFeatures = () => {
           ) : undefined;
         })}
       </AnimatePresence>
+      {/* Right Arrow */}
+      {selected < FEATURES.length - 1 && (
+        <button
+          onClick={() => setSelected((prev) => prev + 1)}
+          className="absolute right-0 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-gray-800 text-white hover:bg-gray-600 transition"
+        >
+          <GoArrowRight size={24} />
+        </button>
+      )}
     </section>
   );
 };
@@ -113,7 +130,7 @@ const Tab = ({
       >
         <span
           style={{ backgroundColor: bgColor }}
-          className={`rounded-lg p-3 text-2xl text-white shadow-indigo-400 transition-all duration-300 ${
+          className={`rounded-lg p-1 lg:p-3 text-2xl text-white shadow-indigo-400 transition-all duration-300 ${
             selected
               ? "scale-100 opacity-100 shadow-lg"
               : "scale-90 opacity-50 shadow"
@@ -122,7 +139,7 @@ const Tab = ({
           <Icon />
         </span>
         <span
-          className={`min-w-[150px] max-w-[200px] text-start text-xs text-slate-600 transition-opacity md:text-center ${
+          className={`lg:min-w-[150px] lg:max-w-[200px] text-start text-xs text-slate-600 transition-opacity md:text-center ${
             selected ? "opacity-100" : "opacity-50"
           }`}
         >
@@ -163,7 +180,7 @@ const ExampleFeature = ({
     onMouseEnter={() => setIsHovered(true)} // Set hover to true when mouse enters the feature box
     onMouseLeave={() => setIsHovered(false)} // Set hover to false when mouse leaves the feature box
   >
-    <div className="bg-white dark:bg-[#202938] rounded-3xl p-8 flex flex-col lg:flex-row gap-8 items-center">
+    <div className="bg-white dark:bg-[#202938] rounded-3xl p-8 flex flex-col lg:flex-row gap-8 items-center min-h-[800px] max-h-[900px]">
       <div className="lg:w-1/2">
         <Image
           src={image}
