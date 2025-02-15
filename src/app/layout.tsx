@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ScrollToTop from "./utils/ScrollToTop";
 import { Suspense } from "react";
+import ScrollProgress from "@/components/Global/ScrollProgress";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,8 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-[#202938] dark:text-white`}
       >
+        <ScrollProgress />
         <Suspense>
           <ScrollToTop>{children}</ScrollToTop>
         </Suspense>

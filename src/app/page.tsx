@@ -1,16 +1,24 @@
-import Features from "@/components/Home/Features";
-import Introduction from "@/components/Home/Introduction";
-import Latest from "@/components/Home/Latest";
+import BrowserSearch from "@/components/Home/BrowserSearch";
+import Cards from "@/components/Home/Cards";
+import IntroVideo from "@/components/Home/IntroVideo";
+import { Stats } from "@/components/Home/Stats";
+import TabsFeatures from "@/components/Home/TabFeatures";
 import UseOnPhone from "@/components/Home/UseOnPhone";
-import WhoWeAre from "@/components/Home/WhoWeAre";
+import WhatIsFindora from "@/components/Home/WhatIsFindora";
+import WhyFindora from "@/components/Home/WhyFindora";
 
 export default function Home() {
   return (
     <div>
-      <Introduction />
-      <WhoWeAre />
-      <Features />
-      <Latest />
+      <div className=" bg-[#f0f0fc] dark:bg-[#111828]">
+        <WhatIsFindora />
+        <TabsFeatures />
+        <Stats />
+        <Cards />
+        <IntroVideo />
+      </div>
+      <WhyFindora />
+      <BrowserSearch />
       <UseOnPhone />
     </div>
   );
