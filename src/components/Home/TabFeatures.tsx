@@ -113,7 +113,7 @@ const Tab = ({
       >
         <span
           style={{ backgroundColor: bgColor }}
-          className={`rounded-lg p-3 text-2xl text-white shadow-indigo-400 dark:shadow-white transition-all duration-300 ${
+          className={`rounded-lg p-3 text-2xl text-white shadow-indigo-400 transition-all duration-300 ${
             selected
               ? "scale-100 opacity-100 shadow-lg"
               : "scale-90 opacity-50 shadow"
