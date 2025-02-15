@@ -86,12 +86,27 @@ interface TabsProps {
 }
 
 const Tabs = ({ selected, setSelected }: TabsProps) => {
+  const tabsRef = useRef<(HTMLDivElement | null)[]>([]);
+  useEffect(() => {
+    if (tabsRef.current[selected]) {
+      tabsRef.current[selected]?.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [selected]);
   return (
-    <div className="flex overflow-x-scroll">
-      {FEATURES.map((tab, index) => {
-        return (
+    <div className="flex overflow-x-auto scrollbar-hide justify-center">
+      {FEATURES.map((tab, index) => (
+        <div
+          key={index}
+          ref={(el) => {
+            tabsRef.current[index] = el;
+          }}
+          className="flex-shrink-0"
+        >
           <Tab
-            key={index}
             setSelected={setSelected}
             selected={selected === index}
             Icon={tab.Icon}
@@ -99,8 +114,8 @@ const Tabs = ({ selected, setSelected }: TabsProps) => {
             tabNum={index}
             bgColor={tab.bgColor}
           />
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 };
