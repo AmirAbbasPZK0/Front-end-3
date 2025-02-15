@@ -246,7 +246,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature3.webp"
+        image="/images/feature3.png"
         text="Analyze docs"
         desc="Findora's free AI Answer Engine allows users to ask questions in natural language and receive detailed, accurate responses tailored to their specific queries. It’s a powerful alternative to ChatGPT for those seeking precise and reliable answers."
         button="Analyze Docs"

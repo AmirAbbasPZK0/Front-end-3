@@ -105,7 +105,7 @@ const IntroVideo = () => {
               loop
               playsInline
               controls
-              className=" w-[90%] md:w-3/4 h-auto max-w-7xl rounded-xl shadow-2xl"
+              className="w-[90%] md:w-3/4 h-auto max-w-7xl rounded-xl shadow-2xl"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
