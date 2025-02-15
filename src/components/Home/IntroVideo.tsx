@@ -81,9 +81,9 @@ const IntroVideo = () => {
       {!isPlaying && (
         <button
           onClick={handlePlay}
-          className="absolute top-0 left-0 right-0 bottom-0 w-fit h-fit backdrop-blur-xl m-auto text-white text-4xl md:text-6xl underline bg-opacity-50 px-12 py-4 bg-black/40 rounded-xl z-10"
+          className="absolute top-0 left-0 right-0 bottom-0 w-fit h-fit m-auto backdrop-blur-md text-4xl md:text-6xl underline bg-opacity-50 px-16 py-6 bg-black/40 rounded-2xl z-10 lg:hover:scale-110 transition-transform duration-300"
         >
-          <FaPlay />
+          <FaPlay size={40} color="white" />
         </button>
       )}
 
