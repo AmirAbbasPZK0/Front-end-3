@@ -42,7 +42,7 @@ const Cards = () => {
         {cardsData.map((card) => (
           <div
             key={card.id}
-            className="bg-[#f3f3fd] dark:bg-[#202938] border-4 border-white rounded-3xl flex items-center justify-center gap-5 p-8"
+            className="bg-[#f3f3fd] dark:bg-[#202938] border-4 border-white rounded-3xl flex justify-start items-center gap-5 p-8"
           >
             <div>
               <card.icon
