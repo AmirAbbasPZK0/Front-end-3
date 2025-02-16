@@ -1,6 +1,7 @@
 import BrowserSearch from "@/components/Home/BrowserSearch";
 import Cards from "@/components/Home/Cards";
 import IntroVideo from "@/components/Home/IntroVideo";
+import MovingBoxes from "@/components/Home/MovingBoxes";
 import { Stats } from "@/components/Home/Stats";
 import TabsFeatures from "@/components/Home/TabFeatures";
 import UseOnPhone from "@/components/Home/UseOnPhone";
@@ -19,6 +20,7 @@ export default function Home() {
       </div>
       <WhyFindora />
       <BrowserSearch />
+      <MovingBoxes />
       <UseOnPhone />
     </div>
   );

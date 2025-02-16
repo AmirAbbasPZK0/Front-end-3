@@ -118,7 +118,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <Link href="/" className="hidden xl:block">
+        <Link href="/">
           <Image
             src={LogoBlack}
             alt="logo"
