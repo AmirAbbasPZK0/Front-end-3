@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useRef } from "react";
+import React from "react";
 import phoneImg from "@/../public/images/phone.png";
 import GoooglePlayIcon from "@/../public/images/google_play_icon.webp";
 import AppStoreIcon from "@/../public/images/app_store_icon.png";

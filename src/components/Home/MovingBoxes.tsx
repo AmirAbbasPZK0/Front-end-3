@@ -76,20 +76,22 @@ const generateSquares = () => {
 };
 
 const ShuffleGrid = () => {
-  const timeoutRef = useRef<any>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null); // Use proper type
   const [squares, setSquares] = useState(generateSquares());
-
-  useEffect(() => {
-    shuffleSquares();
-
-    return () => clearTimeout(timeoutRef.current);
-  }, []);
 
   const shuffleSquares = () => {
     setSquares(generateSquares());
 
+    if (timeoutRef.current) clearTimeout(timeoutRef.current); // Clear before setting
     timeoutRef.current = setTimeout(shuffleSquares, 3000);
   };
+
+  useEffect(() => {
+    shuffleSquares();
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current); // Cleanup
+    };
+  }, []);
 
   return (
     <div className="grid grid-cols-2 grid-rows-2 h-[450px] gap-1">
