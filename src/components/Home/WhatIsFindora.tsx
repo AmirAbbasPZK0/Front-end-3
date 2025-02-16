@@ -6,7 +6,7 @@ const WhatIsFindora = () => {
   return (
     <div className="border-t-2 border-[#e8e9f3] dark:border-black">
       <div className=" px-4 md:px-8 flex flex-col justify-center items-center gap-4 pt-20 md:pt-24 pb-8 max-w-4xl mx-auto">
-        <div className="text-4xl lg:text-6xl h-[15vh] lg:h-[20vh] font-bold bg-gradient-to-tr from-[#026095] via-[#511f78] to-[#c31069] bg-clip-text text-transparent">
+        <div className="text-4xl lg:text-6xl h-[15vh] lg:h-[20vh] font-light text-red-400">
           <TypeAnimation
             sequence={[
               "We Are Robust",
