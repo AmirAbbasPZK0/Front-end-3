@@ -88,7 +88,7 @@ const Navbar = () => {
     <div className="px-4 md:px-8 py-4">
       <div className="flex justify-between items-center p-4 gap-4 dark:text-black">
         <div
-          className="relative block xl:hidden bg-[#f9fafc] py-3 px-3 rounded-full shadow-md"
+          className="relative block xl:hidden bg-[#f9fafc] py-3 px-5 rounded-full shadow-md"
           ref={dropdownRef}
         >
           <button onClick={toggleDropDown} className="flex items-center gap-2">
