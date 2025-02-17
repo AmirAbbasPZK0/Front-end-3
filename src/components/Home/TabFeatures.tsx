@@ -309,7 +309,7 @@ const FEATURES = [
     ),
   },
   {
-    title: "Grammer",
+    title: "Grammar",
     bgColor: "#c31069",
     Icon: PiFeatherLight,
     Feature: ({

@@ -9,6 +9,7 @@ import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import Link from "next/link";
 import NavLink from "./NavLink";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { IoMdClose } from "react-icons/io";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
 import LogoWhite from "@/../public/images/findora_logo_white.png";
 
@@ -85,10 +86,10 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="px-4 md:px-8 py-4">
-      <div className="flex justify-between items-center p-4 gap-4 dark:text-black">
+    <div className="px-4 md:px-8 py-12">
+      <div className="flex justify-between items-center gap-4">
         <div
-          className="relative block xl:hidden bg-[#f9fafc] py-3 px-5 rounded-full shadow-md"
+          className="relative block xl:hidden bg-[#f9fafc] dark:bg-[#111828] py-3 px-3 rounded-full shadow-md"
           ref={dropdownRef}
         >
           <button onClick={toggleDropDown} className="flex items-center gap-2">
@@ -102,7 +103,7 @@ const Navbar = () => {
             )}
           </button>
           {showDropDown && (
-            <div className="flex flex-col gap-2 absolute top-14 left-0 bg-[#f9fafc] rounded-2xl shadow-md z-[100]">
+            <div className="flex flex-col gap-2 absolute top-14 left-0 bg-[#f9fafc] dark:bg-[#111828] rounded-2xl shadow-md z-[100]">
               {Links.map((link) => (
                 <Link
                   key={link.id}
@@ -150,13 +151,17 @@ const Navbar = () => {
           <ThemeToggle />
           <div
             ref={hamMenuRef}
-            className=" bg-[#f9fafc] py-3 px-5 rounded-full shadow-md flex justify-center items-center"
+            className=" bg-[#f9fafc] dark:bg-[#111828] dark:text-white py-3 px-3 rounded-full shadow-md flex justify-center items-center"
           >
             <button onClick={toggleHamMenu}>
-              <RxHamburgerMenu size={25} />
+              {showHamMenu ? (
+                <IoMdClose size={25} />
+              ) : (
+                <RxHamburgerMenu size={25} />
+              )}
             </button>
             {showHamMenu && (
-              <div className="flex flex-col gap-2 absolute top-24 left-0 bg-[#f9fafc] rounded-2xl shadow-md z-[100]">
+              <div className="flex flex-col gap-2 absolute top-24 right-0 bg-[#f9fafc] dark:bg-[#111828] rounded-2xl shadow-md z-[100]">
                 <Link
                   href="/"
                   className="flex items-center gap-2 px-4 py-2 "
