@@ -16,9 +16,8 @@ const NavLink: React.FC<LinkProps> = ({ link }) => {
   return (
     <Link
       className={`${
-        pathName === link.url &&
-        " bg-[#f9fafc] dark:bg-white dark:text-black shadow-md"
-      } flex items-center gap-2 hover:bg-[#f9fafc] dark:hover:bg-white dark:hover:text-black py-3 px-5 rounded-full`}
+        pathName === link.url && " bg-[#f9fafc] dark:bg-[#202938] shadow-md"
+      } flex items-center gap-2 hover:bg-[#f9fafc] dark:hover:bg-[#202938] py-3 px-5 rounded-full`}
       href={link.url}
     >
       <link.icon size={20} />
