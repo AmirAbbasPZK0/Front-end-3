@@ -86,7 +86,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="px-4 md:px-8 py-12">
+    <div className="px-4 md:px-8 py-3">
       <div className="flex justify-between items-center gap-4">
         <div
           className="relative block xl:hidden bg-[#f9fafc] dark:bg-[#111828] py-3 px-3 rounded-full shadow-md"
