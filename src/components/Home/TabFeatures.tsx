@@ -44,7 +44,7 @@ const TabsFeatures = () => {
       {selected > 0 && (
         <button
           onClick={() => setSelected((prev) => prev - 1)}
-          className="absolute left-0 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-[#fefefe] dark:bg-[#202938]"
+          className="absolute left-0 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-[#202938]"
         >
           <GoArrowLeft size={24} />
         </button>
@@ -71,7 +71,7 @@ const TabsFeatures = () => {
       {selected < FEATURES.length - 1 && (
         <button
           onClick={() => setSelected((prev) => prev + 1)}
-          className="absolute right-0 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-[#fefefe] dark:bg-[#202938]"
+          className="absolute right-0 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-[#202938]"
         >
           <GoArrowRight size={24} />
         </button>
