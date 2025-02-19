@@ -1,49 +1,36 @@
 import React from "react";
 import { IconType } from "react-icons";
-import { FaFire, FaMedal } from "react-icons/fa";
-import { LuBadgeCheck, LuTarget } from "react-icons/lu";
+import { BsPeople } from "react-icons/bs";
+import { GiArtificialIntelligence } from "react-icons/gi";
 import { MdOutlineDoneAll } from "react-icons/md";
+import { PiTarget } from "react-icons/pi";
 
 const WhyFindoraData = [
   {
     id: 1,
     title: "Why Choose Findora?",
-    desc: "Choose Findora for its precision, speed, and relevance. With advanced AI technology, it delivers tailored insights that simplify complex tasks, boost your productivity, and provide clear, actionable solutions.",
+    desc: "Powerful Fact-Checking & Search Solutions for Enterprises",
   },
   {
     id: 2,
-    icon: FaMedal,
-    title: "Top-Rated AI",
-    desc: "Findora achieved an impressive score of 85.85% on the MMLU-Pro benchmark, surpassing all AI models on the official Hugging Face leaderboard, and 78.28% on the GPQA benchmark. Findora is ranked as the #1 AI worldwide overall.",
+    icon: BsPeople,
+    title: "Enterprise API",
+    desc: "Integrate findora’s verification system into your business.",
     color: "#008f7a",
   },
   {
     id: 3,
-    icon: LuBadgeCheck,
-    title: "The top search engine of 2024",
-    desc: "Findora is the top choice among AI and traditional search engines. Its exceptional accuracy and reliability have earned Findora the title of Best Search Engine of 2024 by Slashdot.",
+    icon: GiArtificialIntelligence,
+    title: "AI-Powered Search",
+    desc: "Enhance internal research with rigorously filtered results.",
     color: "#511f78",
   },
   {
     id: 4,
-    icon: MdOutlineDoneAll,
-    title: "Everything You Need in One Place",
-    desc: "Findora not only offers the most accurate and fastest AI available but also unlocks new features like Document Analysis, Image Creation, Follow-Up questions, Search History access, and more exciting features coming soon.",
+    icon: PiTarget,
+    title: "Media & Research Intelligence",
+    desc: "Ensure your content is factually accurate.",
     color: "#0b87b6",
-  },
-  {
-    id: 5,
-    icon: LuTarget,
-    title: "Tailored Responses",
-    desc: "Get tailored responses that suit your learning style and needs. Whether it's a challenging math problem or a complex essay, Findora provides the precise answers you're looking for.",
-    color: "#eaba33",
-  },
-  {
-    id: 6,
-    icon: FaFire,
-    title: "Seamless, Ad-Free Experience",
-    desc: "Stay focused with an entirely ad-free experience that won’t disrupt your studies. Get the answers you need without distractions and complete your homework more quickly.",
-    color: "#c31069",
   },
 ];
 

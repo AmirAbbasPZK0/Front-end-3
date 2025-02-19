@@ -9,19 +9,19 @@ export const Stats = () => {
         <Stat
           num={1400000}
           suffix="+"
-          subheading="Searches happen daily"
+          subheading="Verified Sources Indexed"
           color="#c31069"
         />
         <Stat
           num={80}
           suffix="%"
-          subheading="Saving time on research"
+          subheading="Fact-Checks Completed "
           color="#0b87b6"
         />
         <Stat
           num={500}
           suffix="M"
-          subheading="Searches are carried out"
+          subheading="Scientific Papers Indexed"
           color="#eaba33"
         />
       </div>

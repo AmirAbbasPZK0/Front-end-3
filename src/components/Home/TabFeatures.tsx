@@ -3,11 +3,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IconType } from "react-icons";
 import { Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { GoArrowLeft, GoArrowRight } from "react-icons/go";
+import { GoArrowLeft, GoArrowRight, GoDatabase, GoVideo } from "react-icons/go";
 import Image from "next/image";
-import { CiBoxList, CiImageOn, CiStar } from "react-icons/ci";
-import { IoDocumentTextOutline } from "react-icons/io5";
-import { PiFeatherLight } from "react-icons/pi";
+import {
+  MdMultipleStop,
+  MdOutlineVerified,
+  MdPeople,
+  MdPeopleOutline,
+} from "react-icons/md";
+import { SlMagnifier } from "react-icons/sl";
+import { GiMaterialsScience } from "react-icons/gi";
+import { SiGnuprivacyguard } from "react-icons/si";
 
 const TabsFeatures = () => {
   const [selected, setSelected] = useState(0);
@@ -39,12 +45,12 @@ const TabsFeatures = () => {
   }, [selected, isHovered]);
 
   return (
-    <section className="relative px-4 md:px-8 mx-auto max-w-7xl">
+    <section className="relative px-4 md:px-8">
       {/* Left Arrow */}
       {selected > 0 && (
         <button
           onClick={() => setSelected((prev) => prev - 1)}
-          className="absolute left-0 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-[#202938]"
+          className="absolute left-5 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-[#202938]"
         >
           <GoArrowLeft size={24} />
         </button>
@@ -71,7 +77,7 @@ const TabsFeatures = () => {
       {selected < FEATURES.length - 1 && (
         <button
           onClick={() => setSelected((prev) => prev + 1)}
-          className="absolute right-0 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-[#202938]"
+          className="absolute right-5 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-[#202938]"
         >
           <GoArrowRight size={24} />
         </button>
@@ -229,9 +235,9 @@ export default TabsFeatures;
 
 const FEATURES = [
   {
-    title: "Ask AI",
+    title: "Verified Answers",
     bgColor: "#008f7a",
-    Icon: CiStar,
+    Icon: MdOutlineVerified,
     Feature: ({
       setIsHovered,
     }: {
@@ -239,8 +245,8 @@ const FEATURES = [
     }) => (
       <ExampleFeature
         image="/images/feature1.jpg"
-        text="Question AI – Ask a Question"
-        desc="Findora's free AI-powered question-and-answer tool allows users to ask questions in everyday language and get precise, in-depth answers tailored to their specific needs. It’s a great alternative to ChatGPT for those seeking accurate and detailed responses"
+        text="Verified Answers"
+        desc="Get results backed by fact-checking and credible sources."
         button="Ask Your Question"
         url="/"
         textColor="#008f7a"
@@ -249,9 +255,9 @@ const FEATURES = [
     ),
   },
   {
-    title: "Summary",
+    title: "Website Trust Analysis",
     bgColor: "#eaba33",
-    Icon: CiBoxList,
+    Icon: SlMagnifier,
     Feature: ({
       setIsHovered,
     }: {
@@ -259,8 +265,8 @@ const FEATURES = [
     }) => (
       <ExampleFeature
         image="/images/feature2.jpg"
-        text="Make a summary"
-        desc="Findora makes web content easier to understand by converting long URLs into clear, concise bullet points. This allows users to extract information quickly and efficiently."
+        text="Website Trust Analysis"
+        desc="Instantly check any website’s reliability and trustworthiness."
         button="Summarize"
         url="/"
         textColor="#eaba33"
@@ -269,9 +275,9 @@ const FEATURES = [
     ),
   },
   {
-    title: "Docs",
+    title: "Scientific Search",
     bgColor: "#0b87b6",
-    Icon: IoDocumentTextOutline,
+    Icon: GiMaterialsScience,
     Feature: ({
       setIsHovered,
     }: {
@@ -279,8 +285,8 @@ const FEATURES = [
     }) => (
       <ExampleFeature
         image="/images/feature3.png"
-        text="Analyze docs"
-        desc="Findora's free AI Answer Engine allows users to ask questions in natural language and receive detailed, accurate responses tailored to their specific queries. It’s a powerful alternative to ChatGPT for those seeking precise and reliable answers."
+        text="Scientific Search"
+        desc="Access peer-reviewed research and academic insights."
         button="Analyze Docs"
         url="/"
         textColor="#0b87b6"
@@ -289,9 +295,9 @@ const FEATURES = [
     ),
   },
   {
-    title: "Create",
+    title: "Multi-Format Search",
     bgColor: "#511f78",
-    Icon: CiImageOn,
+    Icon: MdMultipleStop,
     Feature: ({
       setIsHovered,
     }: {
@@ -299,8 +305,8 @@ const FEATURES = [
     }) => (
       <ExampleFeature
         image="/images/feature4.webp"
-        text="Create images"
-        desc="With Findora, your vision comes to life effortlessly — simply describe your needs in plain language, and watch as it turns your ideas into stunning images"
+        text="Multi-Format Search"
+        desc="Analyze URLs, text, and files together for deep insights."
         button="Create images"
         url="/"
         textColor="#511f78"
@@ -309,9 +315,9 @@ const FEATURES = [
     ),
   },
   {
-    title: "Grammar",
+    title: "Video Intelligence",
     bgColor: "#c31069",
-    Icon: PiFeatherLight,
+    Icon: GoVideo,
     Feature: ({
       setIsHovered,
     }: {
@@ -319,11 +325,51 @@ const FEATURES = [
     }) => (
       <ExampleFeature
         image="/images/feature5.webp"
-        text="Check your grammar"
-        desc="Findora can help fix your grammar with just one click, ensuring your written content is polished and professional effortlessly."
+        text="Video Intelligence"
+        desc="Find accurate, fact-based answers from videos."
         button="Check your grammar"
         url="/"
         textColor="#c31069"
+        setIsHovered={setIsHovered} // Pass the hover handler
+      />
+    ),
+  },
+  {
+    title: "Data Ownership & Privacy",
+    bgColor: "#b25327",
+    Icon: GoDatabase,
+    Feature: ({
+      setIsHovered,
+    }: {
+      setIsHovered: Dispatch<SetStateAction<boolean>>;
+    }) => (
+      <ExampleFeature
+        image="/images/feature1.jpg"
+        text="Data Ownership & Privacy"
+        desc="You own your data. If used for better performance, it remains encrypted and fully anonymous."
+        button="Ask Your Question"
+        url="/"
+        textColor="#b25327"
+        setIsHovered={setIsHovered} // Pass the hover handler
+      />
+    ),
+  },
+  {
+    title: "Enterprise Solutions",
+    bgColor: "#0c3c4c",
+    Icon: MdPeopleOutline,
+    Feature: ({
+      setIsHovered,
+    }: {
+      setIsHovered: Dispatch<SetStateAction<boolean>>;
+    }) => (
+      <ExampleFeature
+        image="/images/feature1.jpg"
+        text="Enterprise Solutions"
+        desc="Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        button="Ask Your Question"
+        url="/"
+        textColor="#0c3c4c"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),

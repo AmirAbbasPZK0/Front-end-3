@@ -16,11 +16,8 @@ const UseOnPhone = () => {
               Access Findora on Your Phone
             </h6>
             <p>
-              With Findora, you can effortlessly access all its powerful
-              features directly from your phone, giving you the flexibility to
-              stay connected, manage your activities, and enjoy a seamless
-              experience wherever you are—whether at home, on the go, or
-              traveling—all with just a few taps.
+              findora is available on desktop and mobile. Get the same
+              fact-checked search experience wherever you go.
             </p>
             <div className=" flex gap-4">
               <Link href="/">

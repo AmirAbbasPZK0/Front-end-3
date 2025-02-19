@@ -15,12 +15,12 @@ export default function Home() {
         <WhatIsFindora />
         <TabsFeatures />
         <Stats />
+        <MovingBoxes />
         <Cards />
         <IntroVideo />
       </div>
       <WhyFindora />
       <BrowserSearch />
-      <MovingBoxes />
       <UseOnPhone />
     </div>
   );

@@ -9,13 +9,20 @@ const WhatIsFindora = () => {
         <div className="text-4xl lg:text-6xl h-[15vh] lg:h-[20vh] font-light text-red-400">
           <TypeAnimation
             sequence={[
-              "We Are Robust",
+              "findora is Accurate",
               2000,
-              "We Are Secure",
+              "findora is Transparent",
               2000,
-              "We Are Efficient",
+              "findora is Intelligent",
               2000,
-              "We Are findora",
+              "findora is Trustworthy",
+              2000,
+              2000,
+              "findora is Reliable",
+              2000,
+              "findora is Scientific",
+              2000,
+              "findora is Unbiased",
               2000,
             ]}
             wrapper="span"
@@ -25,8 +32,9 @@ const WhatIsFindora = () => {
         </div>
         <h3 className=" text-4xl font-bold">What is findora?</h3>
         <p className=" text-center">
-          Findora is an advanced, free AI search engine that enables users to
-          ask AI questions and receive instant, accurate, and factual answers.
+          Misinformation is everywhere, but findora delivers facts. Our AI
+          search engine fact-checks sources, analyzes content, and provides
+          reliable, transparent answers.
         </p>
       </div>
     </div>

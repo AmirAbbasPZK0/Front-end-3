@@ -1,36 +1,35 @@
 import React from "react";
-import { FaMagnifyingGlass } from "react-icons/fa6";
-import { FaRegLightbulb } from "react-icons/fa";
-import { TbTargetArrow } from "react-icons/tb";
-import { FaGraduationCap } from "react-icons/fa";
+import { BsCameraVideo } from "react-icons/bs";
+import { MdFactCheck, MdOutlineInsights } from "react-icons/md";
+import { RiCheckboxMultipleLine } from "react-icons/ri";
 
 const cardsData = [
   {
     id: 1,
-    icon: FaMagnifyingGlass,
-    title: "Speed Up Your Research",
-    desc: "Seamlessly transition from questions to solutions with quick, accurate search results that fuel your success.",
+    icon: MdFactCheck,
+    title: "Fact-Checked Sources ",
+    desc: "Highlight how findora ensures credibility.",
     color: "#511f78",
   },
   {
     id: 2,
-    icon: FaRegLightbulb,
-    title: "Accurate Answers in Seconds.",
-    desc: "Instantly find the answers you need with AI-powered search that provides clear, concise, and trustworthy results.",
+    icon: MdOutlineInsights,
+    title: "Scientific Insights",
+    desc: "Showcase the latest research access.",
     color: "#eaba33",
   },
   {
     id: 3,
-    icon: TbTargetArrow,
-    title: "Find the top academic sources effortlessly.",
-    desc: "Find exactly what you need with AI optimized for accuracy, relevance, and speed.",
+    icon: RiCheckboxMultipleLine,
+    title: "Multi-Format Search",
+    desc: "Emphasize findora’s ability to analyze URLs, text, and files together.",
     color: "#0b87b6",
   },
   {
     id: 4,
-    icon: FaGraduationCap,
-    title: "Revolutionize Your Learning Experience",
-    desc: "Solve complex problems with AI insights that enhance understanding and save time.",
+    icon: BsCameraVideo,
+    title: "Video-Based Knowledge",
+    desc: "Show how findora extracts answers from videos.",
     color: "#c31069",
   },
 ];
