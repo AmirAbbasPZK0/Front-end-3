@@ -2,7 +2,6 @@ import React from "react";
 import { IconType } from "react-icons";
 import { BsPeople } from "react-icons/bs";
 import { GiArtificialIntelligence } from "react-icons/gi";
-import { MdOutlineDoneAll } from "react-icons/md";
 import { PiTarget } from "react-icons/pi";
 
 const WhyFindoraData = [

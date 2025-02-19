@@ -8,12 +8,10 @@ import Image from "next/image";
 import {
   MdMultipleStop,
   MdOutlineVerified,
-  MdPeople,
   MdPeopleOutline,
 } from "react-icons/md";
 import { SlMagnifier } from "react-icons/sl";
 import { GiMaterialsScience } from "react-icons/gi";
-import { SiGnuprivacyguard } from "react-icons/si";
 
 const TabsFeatures = () => {
   const [selected, setSelected] = useState(0);
