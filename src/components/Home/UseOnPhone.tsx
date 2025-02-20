@@ -84,7 +84,7 @@ const UseOnPhone = () => {
               fill="#0b87b6"
               className="text-xl uppercase font-black transition-opacity duration-700 ease-out "
             >
-              Coming Soon Coming Soon Coming Soon Coming Soon
+              Coming Soon. Coming Soon. Coming Soon. Coming Soon.
             </textPath>
           </text>
         </motion.svg>

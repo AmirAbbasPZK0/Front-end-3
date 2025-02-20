@@ -68,7 +68,7 @@ const BrowserSearch = () => {
               fill="#c31069"
               className="text-xl uppercase font-black transition-opacity duration-700 ease-out "
             >
-              Coming Soon Coming Soon Coming Soon Coming Soon
+              Coming Soon. Coming Soon. Coming Soon. Coming Soon.
             </textPath>
           </text>
         </motion.svg>
