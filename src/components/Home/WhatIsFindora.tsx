@@ -50,7 +50,7 @@ const WhatIsFindora = () => {
             alt="o"
             width={22}
             height={22}
-            className=" object-contain pt-1 lg:pt-2"
+            className=" object-contain pt-1 lg:pt-[10px]"
           />
           <span className=" text-4xl font-bold"> ra?</span>
         </div>
