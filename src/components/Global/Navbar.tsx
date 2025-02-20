@@ -130,8 +130,8 @@ const Navbar = () => {
           <Image
             src={LogoWhite}
             alt="logo"
-            width={95}
-            height={95}
+            width={80}
+            height={80}
             className="hidden dark:block"
           />
         </Link>

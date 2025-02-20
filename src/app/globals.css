@@ -18,7 +18,3 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
-
-::-webkit-scrollbar {
-  display: none;
-}

@@ -7,17 +7,11 @@ const MovingBoxes = () => {
   return (
     <section className="w-full px-4 md:px-8 pb-20 md:pb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-7xl mx-auto">
       <div>
-        <h3 className="text-2xl font-bold">Findora</h3>
+        <h3 className="text-2xl font-bold">Anything</h3>
         <p className="my-4 md:my-6">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam nobis in
           error repellat voluptatibus ad.
         </p>
-        <Link
-          href="/"
-          className=" bg-[#c31069] rounded-full w-fit text-white py-2 px-4"
-        >
-          Add to browser
-        </Link>
       </div>
       <ShuffleGrid />
     </section>

@@ -158,7 +158,7 @@ const Tab = ({
           <Icon />
         </span>
         <span
-          className={`lg:min-w-[150px] lg:max-w-[200px] text-start text-xs text-slate-600 transition-opacity md:text-center ${
+          className={`lg:min-w-[150px] lg:max-w-[200px] text-start text-xs text-black dark:text-white transition-opacity md:text-center ${
             selected ? "opacity-100" : "opacity-50"
           }`}
         >
@@ -334,7 +334,7 @@ const FEATURES = [
   },
   {
     title: "Data Ownership & Privacy",
-    bgColor: "#b25327",
+    bgColor: "#c67f48",
     Icon: GoDatabase,
     Feature: ({
       setIsHovered,
@@ -347,14 +347,14 @@ const FEATURES = [
         desc="You own your data. If used for better performance, it remains encrypted and fully anonymous."
         button="Ask Your Question"
         url="/"
-        textColor="#b25327"
+        textColor="#c67f48"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),
   },
   {
     title: "Enterprise Solutions",
-    bgColor: "#0c3c4c",
+    bgColor: "#284759",
     Icon: MdPeopleOutline,
     Feature: ({
       setIsHovered,
@@ -367,7 +367,7 @@ const FEATURES = [
         desc="Businesses can integrate findora’s AI-powered fact-checking into their platforms."
         button="Ask Your Question"
         url="/"
-        textColor="#0c3c4c"
+        textColor="#284759"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),

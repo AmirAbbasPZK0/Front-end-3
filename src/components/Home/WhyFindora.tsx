@@ -1,13 +1,14 @@
 import React from "react";
 import { IconType } from "react-icons";
 import { BsPeople } from "react-icons/bs";
-import { GiArtificialIntelligence } from "react-icons/gi";
+import { GiArtificialIntelligence, GiAwareness } from "react-icons/gi";
+import { GrSecure } from "react-icons/gr";
 import { PiTarget } from "react-icons/pi";
 
 const WhyFindoraData = [
   {
     id: 1,
-    title: "Why Choose Findora?",
+    title: "Why Choose findora?",
     desc: "Powerful Fact-Checking & Search Solutions for Enterprises",
   },
   {
@@ -30,6 +31,20 @@ const WhyFindoraData = [
     title: "Media & Research Intelligence",
     desc: "Ensure your content is factually accurate.",
     color: "#0b87b6",
+  },
+  {
+    id: 5,
+    icon: GrSecure,
+    title: "Secure & Private Conversations",
+    desc: "Ensure user data stays protected with end-to-end encryption.",
+    color: "#c31069",
+  },
+  {
+    id: 6,
+    icon: GiAwareness,
+    title: "Context-Aware Responses",
+    desc: "Deliver accurate answers tailored to user input.",
+    color: "#c67f48",
   },
 ];
 

@@ -68,7 +68,7 @@ export const Footer = () => {
                     </Link>
                   ))}
                 </div>
-                <div className=" text-sm">©2025 Findora</div>
+                <div className=" text-sm">© 2025 findora</div>
               </div>
             </div>
           </div>
@@ -91,7 +91,6 @@ export const Footer = () => {
                   style={{ color }} // Applying the color to each letter
                   initial={{ opacity: 0, y: -200 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
                   transition={{
                     delay: index * 0.1,
                     duration: 1,
