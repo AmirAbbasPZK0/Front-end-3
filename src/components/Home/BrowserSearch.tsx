@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 const BrowserSearch = () => {
   return (
     <div className=" relative overflow-hidden cursor-not-allowed">
-      <div className=" px-4 md:px-8 pb-20 md:pb-24 max-w-7xl mx-auto">
+      <div className=" px-4 md:px-8 pb-20 md:pb-24 max-w-7xl mx-auto opacity-50">
         <div className=" flex flex-col lg:flex-row justify-center items-center gap-8">
           <div className="lg:w-1/2">
             <Image src={browserImg} alt="img" className=" rounded-xl" />
@@ -44,7 +44,7 @@ const BrowserSearch = () => {
           </div>
         </div>
       </div>
-      <div className=" bg-white/50 absolute inset-0" />
+      <div className=" bg-transparent absolute inset-0" />
       <div className="absolute top-10 -left-28">
         <motion.svg
           animate={{ rotate: 360 }}
