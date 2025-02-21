@@ -264,7 +264,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature3.png"
+        image="/images/feature2.png"
         text="Scientific Search"
         desc="Access peer-reviewed research and academic insights."
         button="Analyze Docs"
@@ -284,7 +284,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature4.webp"
+        image="/images/feature3.jpeg"
         text="Multi-Format Search"
         desc="Analyze URLs, text, and files together for deep insights."
         button="Create images"
@@ -304,7 +304,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature5.webp"
+        image="/images/feature4.webp"
         text="Video Intelligence"
         desc="Find accurate, fact-based answers from videos."
         button="Check your grammar"
@@ -324,9 +324,9 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature1.jpg"
-        text="Data Ownership & Privacy"
-        desc="You own your data. If used for better performance, it remains encrypted and fully anonymous."
+        image="/images/feature5.png"
+        text="Medical"
+        desc="Get personalized health advice from a doctor."
         button="Ask Your Question"
         url="/"
         textColor="#c31069"
@@ -344,7 +344,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature1.jpg"
+        image="/images/feature6.jpeg"
         text="Enterprise Solutions"
         desc="Businesses can integrate findora’s AI-powered fact-checking into their platforms."
         button="Ask Your Question"
@@ -364,7 +364,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature2.jpg"
+        image="/images/feature7.jpg"
         text="Website Trust Analysis"
         desc="Instantly check any website’s reliability and trustworthiness."
         button="Summarize"

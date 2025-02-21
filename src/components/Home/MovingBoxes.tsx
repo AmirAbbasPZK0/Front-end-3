@@ -37,19 +37,19 @@ const shuffle = (array: (typeof squareData)[0][]) => {
 const squareData = [
   {
     id: 1,
-    src: "/images/feature1.jpg",
+    src: "/images/moving1.webp",
   },
   {
     id: 2,
-    src: "/images/feature2.jpg",
+    src: "/images/moving2.jpg",
   },
   {
     id: 3,
-    src: "/images/feature3.png",
+    src: "/images/moving3.jpg",
   },
   {
     id: 4,
-    src: "/images/feature4.webp",
+    src: "/images/moving4.png",
   },
 ];
 
@@ -63,6 +63,7 @@ const generateSquares = () => {
       style={{
         backgroundImage: `url(${sq.src})`,
         backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     ></motion.div>
   ));
