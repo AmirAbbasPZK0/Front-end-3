@@ -49,6 +49,8 @@ export default function PreLoader() {
             autoPlay
             playsInline
             muted
+            width={700}
+            height={700}
             onEnded={() => setIsVideoEnded(true)} // Trigger slide-up after video ends
           ></video>
         </motion.div>
