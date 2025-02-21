@@ -102,7 +102,7 @@ const Tabs = ({ selected, setSelected }: TabsProps) => {
     }
   }, [selected]);
   return (
-    <div className="flex overflow-x-auto lg:justify-center">
+    <div className="overflow-x-auto flex max-w-6xl mx-auto tabScroll">
       {FEATURES.map((tab, index) => (
         <div
           key={index}

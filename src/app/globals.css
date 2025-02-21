@@ -18,3 +18,7 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+.tabScroll::-webkit-scrollbar {
+  display: none;
+}
