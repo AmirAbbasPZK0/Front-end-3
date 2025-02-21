@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IconType } from "react-icons";
 import { Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { GoArrowLeft, GoArrowRight, GoDatabase, GoVideo } from "react-icons/go";
+import { GoArrowLeft, GoArrowRight, GoVideo } from "react-icons/go";
 import Image from "next/image";
 import {
   MdMultipleStop,
@@ -12,6 +12,7 @@ import {
 } from "react-icons/md";
 import { SlMagnifier } from "react-icons/sl";
 import { GiMaterialsScience } from "react-icons/gi";
+import { CiMedicalCross } from "react-icons/ci";
 
 const TabsFeatures = () => {
   const [selected, setSelected] = useState(0);
@@ -252,29 +253,10 @@ const FEATURES = [
       />
     ),
   },
-  {
-    title: "Website Trust Analysis",
-    bgColor: "#eaba33",
-    Icon: SlMagnifier,
-    Feature: ({
-      setIsHovered,
-    }: {
-      setIsHovered: Dispatch<SetStateAction<boolean>>;
-    }) => (
-      <ExampleFeature
-        image="/images/feature2.jpg"
-        text="Website Trust Analysis"
-        desc="Instantly check any website’s reliability and trustworthiness."
-        button="Summarize"
-        url="/"
-        textColor="#eaba33"
-        setIsHovered={setIsHovered} // Pass the hover handler
-      />
-    ),
-  },
+
   {
     title: "Scientific Search",
-    bgColor: "#0b87b6",
+    bgColor: "#eaba33",
     Icon: GiMaterialsScience,
     Feature: ({
       setIsHovered,
@@ -287,14 +269,14 @@ const FEATURES = [
         desc="Access peer-reviewed research and academic insights."
         button="Analyze Docs"
         url="/"
-        textColor="#0b87b6"
+        textColor="#eaba33"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),
   },
   {
     title: "Multi-Format Search",
-    bgColor: "#511f78",
+    bgColor: "#0b87b6",
     Icon: MdMultipleStop,
     Feature: ({
       setIsHovered,
@@ -307,14 +289,14 @@ const FEATURES = [
         desc="Analyze URLs, text, and files together for deep insights."
         button="Create images"
         url="/"
-        textColor="#511f78"
+        textColor="#0b87b6"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),
   },
   {
     title: "Video Intelligence",
-    bgColor: "#c31069",
+    bgColor: "#511f78",
     Icon: GoVideo,
     Feature: ({
       setIsHovered,
@@ -327,15 +309,15 @@ const FEATURES = [
         desc="Find accurate, fact-based answers from videos."
         button="Check your grammar"
         url="/"
-        textColor="#c31069"
+        textColor="#511f78"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),
   },
   {
-    title: "Data Ownership & Privacy",
-    bgColor: "#c67f48",
-    Icon: GoDatabase,
+    title: "Medical",
+    bgColor: "#c31069",
+    Icon: CiMedicalCross,
     Feature: ({
       setIsHovered,
     }: {
@@ -347,14 +329,14 @@ const FEATURES = [
         desc="You own your data. If used for better performance, it remains encrypted and fully anonymous."
         button="Ask Your Question"
         url="/"
-        textColor="#c67f48"
+        textColor="#c31069"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),
   },
   {
     title: "Enterprise Solutions",
-    bgColor: "#284759",
+    bgColor: "#c67f48",
     Icon: MdPeopleOutline,
     Feature: ({
       setIsHovered,
@@ -366,6 +348,26 @@ const FEATURES = [
         text="Enterprise Solutions"
         desc="Businesses can integrate findora’s AI-powered fact-checking into their platforms."
         button="Ask Your Question"
+        url="/"
+        textColor="#c67f48"
+        setIsHovered={setIsHovered} // Pass the hover handler
+      />
+    ),
+  },
+  {
+    title: "Website Trust Analysis",
+    bgColor: "#284759",
+    Icon: SlMagnifier,
+    Feature: ({
+      setIsHovered,
+    }: {
+      setIsHovered: Dispatch<SetStateAction<boolean>>;
+    }) => (
+      <ExampleFeature
+        image="/images/feature2.jpg"
+        text="Website Trust Analysis"
+        desc="Instantly check any website’s reliability and trustworthiness."
+        button="Summarize"
         url="/"
         textColor="#284759"
         setIsHovered={setIsHovered} // Pass the hover handler

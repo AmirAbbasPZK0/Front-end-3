@@ -10,7 +10,7 @@ const WhatIsFindora = () => {
     <div className="border-t-2 border-[#e8e9f3] dark:border-black">
       <div className=" px-4 md:px-8 flex flex-col justify-center items-center gap-4 pt-20 md:pt-24 pb-8 max-w-4xl mx-auto">
         <div
-          className="text-4xl lg:text-6xl h-[15vh] lg:h-[20vh] font-light"
+          className="text-4xl lg:text-6xl h-[15vh] lg:h-[20vh]"
           style={{ color: textColor }}
         >
           <TypeAnimation
