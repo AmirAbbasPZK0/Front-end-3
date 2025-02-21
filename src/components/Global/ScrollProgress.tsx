@@ -7,8 +7,6 @@ const ScrollProgress = () => {
   return (
     <>
       <motion.div
-        className=" z-[100]"
-        id="scroll-indicator"
         style={{
           scaleX: scrollYProgress,
           position: "fixed",
@@ -17,6 +15,7 @@ const ScrollProgress = () => {
           right: 0,
           height: 5,
           originX: 0,
+          zIndex: 100,
           backgroundColor: "#ff0088",
         }}
       />
