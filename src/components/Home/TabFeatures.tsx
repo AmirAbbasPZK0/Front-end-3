@@ -44,7 +44,7 @@ const TabsFeatures = () => {
   }, [selected, isHovered]);
 
   return (
-    <section className="relative px-4 md:px-8">
+    <section className="relative px-4 md:px-8 max-w-7xl mx-auto">
       {/* Left Arrow */}
       {selected > 0 && (
         <button
@@ -102,7 +102,7 @@ const Tabs = ({ selected, setSelected }: TabsProps) => {
     }
   }, [selected]);
   return (
-    <div className="overflow-x-auto flex max-w-6xl mx-auto tabScroll">
+    <div className="overflow-x-auto flex tabScroll">
       {FEATURES.map((tab, index) => (
         <div
           key={index}
