@@ -65,7 +65,7 @@ const BrowserSearch = () => {
           <text>
             <textPath
               href="#circlePath"
-              fill="#0b87b6"
+              fill="#c31069"
               className="text-xl uppercase font-black transition-opacity duration-700 ease-out "
             >
               Coming Soon. Coming Soon. Coming Soon. Coming Soon.
