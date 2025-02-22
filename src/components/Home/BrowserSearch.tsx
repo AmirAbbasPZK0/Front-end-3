@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import browserImg from "@/../public/images/browser.png";
+import browserImg from "@/../public/images/browser.webp";
 import Link from "next/link";
 import oLogo from "@/../public/images/o.png";
 import { motion } from "framer-motion";

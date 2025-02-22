@@ -41,15 +41,15 @@ const squareData = [
   },
   {
     id: 2,
-    src: "/images/moving2.jpg",
+    src: "/images/moving2.webp",
   },
   {
     id: 3,
-    src: "/images/moving3.jpg",
+    src: "/images/moving3.webp",
   },
   {
     id: 4,
-    src: "/images/moving4.png",
+    src: "/images/moving4.webp",
   },
 ];
 

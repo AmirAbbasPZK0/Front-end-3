@@ -243,7 +243,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature1.jpg"
+        image="/images/feature1.webp"
         text="Verified Answers"
         desc="Get results backed by fact-checking and credible sources."
         button="Ask Your Question"
@@ -264,7 +264,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature2.png"
+        image="/images/feature2.webp"
         text="Scientific Search"
         desc="Access peer-reviewed research and academic insights."
         button="Analyze Docs"
@@ -284,7 +284,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature3.jpeg"
+        image="/images/feature3.webp"
         text="Multi-Format Search"
         desc="Analyze URLs, text, and files together for deep insights."
         button="Create images"
@@ -324,7 +324,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature5.png"
+        image="/images/feature5.webp"
         text="Medical"
         desc="Get personalized health advice from a doctor."
         button="Ask Your Question"
@@ -344,7 +344,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature6.jpeg"
+        image="/images/feature6.webp"
         text="Enterprise Solutions"
         desc="Businesses can integrate findora’s AI-powered fact-checking into their platforms."
         button="Ask Your Question"
@@ -364,7 +364,7 @@ const FEATURES = [
       setIsHovered: Dispatch<SetStateAction<boolean>>;
     }) => (
       <ExampleFeature
-        image="/images/feature7.jpg"
+        image="/images/feature7.webp"
         text="Website Trust Analysis"
         desc="Instantly check any website’s reliability and trustworthiness."
         button="Summarize"
