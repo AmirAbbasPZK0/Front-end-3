@@ -72,7 +72,7 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="lg:overflow-hidden flex justify-center items-center text-8xl md:text-[10rem] lg:text-[16rem] xl:text-[20rem] font-bold">
+          <div className="overflow-hidden flex justify-center items-center text-8xl md:text-[10rem] lg:text-[16rem] xl:text-[20rem] font-bold">
             {text.split("").map((letter, index) => {
               const colors = [
                 "#008f7a",
@@ -89,7 +89,7 @@ export const Footer = () => {
                 <motion.h1
                   key={index}
                   style={{ color }} // Applying the color to each letter
-                  initial={{ opacity: 0, y: -200 }}
+                  initial={{ opacity: 0, y: -85 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{
                     delay: index * 0.1,
