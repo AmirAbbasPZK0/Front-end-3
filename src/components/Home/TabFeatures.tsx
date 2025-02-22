@@ -169,7 +169,7 @@ const Tab = ({
       {selected && (
         <motion.span
           layoutId="tabs-features-underline"
-          className="absolute bottom-0 left-0 right-0 z-10 h-1 bg-indigo-600"
+          className="absolute bottom-0 left-0 right-0 z-10 h-1 bg-[#6a0dad]"
         />
       )}
     </div>
