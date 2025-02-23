@@ -67,7 +67,7 @@ export const Footer = () => {
                       delay: index * 0.1,
                       ease: "anticipate",
                       repeat: Infinity,
-                      repeatType: "reverse",
+                      repeatType: "mirror",
                     }}
                   >
                     {letter}
