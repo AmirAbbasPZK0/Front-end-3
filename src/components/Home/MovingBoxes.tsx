@@ -6,10 +6,14 @@ const MovingBoxes = () => {
   return (
     <section className="w-full px-4 md:px-8 pb-20 md:pb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-7xl mx-auto">
       <div>
-        <h3 className="text-2xl font-bold">Anything</h3>
+        <h3 className="text-2xl font-bold">
+          Discover More with Dynamic Insights
+        </h3>
         <p className="my-4 md:my-6">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam nobis in
-          error repellat voluptatibus ad.
+          Stay ahead with real-time insights curated just for you. Our rotating
+          sections bring you the latest in Trending Topics, AI Insights, Expert
+          Picks, and User Favorites—ensuring you always have access to the most
+          relevant, fact-checked, and trusted information.
         </p>
       </div>
       <ShuffleGrid />
@@ -63,7 +67,7 @@ const generateSquares = () => {
       style={{
         backgroundImage: `url(${sq.src})`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: "right",
       }}
     ></motion.div>
   ));

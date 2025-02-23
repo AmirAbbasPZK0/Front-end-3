@@ -21,9 +21,9 @@ const BrowserSearch = () => {
                 <Image
                   src={oLogo}
                   alt="o"
-                  width={16}
-                  height={16}
-                  className=" object-contain lg:pt-1"
+                  width={13}
+                  height={13}
+                  className=" object-contain pt-[3px] lg:pt-[6px]"
                 />
                 <span className=" text-2xl font-bold">ra</span>
               </div>

@@ -355,7 +355,7 @@ const FEATURES = [
     ),
   },
   {
-    title: "Website Trust Analysis & Privacy",
+    title: "Privacy & Trust",
     bgColor: "#284759",
     Icon: SlMagnifier,
     Feature: ({
@@ -365,8 +365,8 @@ const FEATURES = [
     }) => (
       <ExampleFeature
         image="/images/feature7.jpg"
-        text="Website Trust Analysis & Privacy"
-        desc="Instantly check any website’s reliability and trustworthiness."
+        text="Privacy & Trust"
+        desc="Protect your data. Stay anonymous. Verify website credibility."
         button="Summarize"
         url="/"
         textColor="#284759"
