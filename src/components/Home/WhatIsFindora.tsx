@@ -11,7 +11,7 @@ const WhatIsFindora = () => {
       <div className=" px-4 md:px-8 flex flex-col justify-center items-center gap-4 pt-20 md:pt-24 pb-8 max-w-4xl mx-auto">
         <div
           className="text-4xl lg:text-5xl h-[15vh] md:h-[20vh] font-semibold"
-          style={{ color: textColor, textShadow: `0 10px 15px ${textColor}` }}
+          style={{ color: textColor }}
         >
           <TypeAnimation
             sequence={[
@@ -26,7 +26,7 @@ const WhatIsFindora = () => {
               () => setTextColor("#0b87b6"),
               "Trustworthy",
               1000,
-              () => setTextColor("#511f78"),
+              () => setTextColor("#7332a1"),
               "Reliable",
               1000,
               () => setTextColor("#c31069"),
@@ -35,7 +35,7 @@ const WhatIsFindora = () => {
               () => setTextColor("#c67f48"),
               "Unbiased",
               1000,
-              () => setTextColor("#284759"),
+              () => setTextColor("#3d6a7d"),
             ]}
             wrapper="span"
             speed={40}
