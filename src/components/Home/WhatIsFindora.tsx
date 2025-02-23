@@ -48,8 +48,8 @@ const WhatIsFindora = () => {
           <Image
             src={oLogo}
             alt="o"
-            width={18}
-            height={18}
+            width={19}
+            height={19}
             className=" object-contain pt-2 lg:pt-[12px]"
           />
           <span className=" text-4xl font-bold"> ra?</span>
