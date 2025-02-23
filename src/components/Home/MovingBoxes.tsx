@@ -37,19 +37,19 @@ const shuffle = (array: (typeof squareData)[0][]) => {
 const squareData = [
   {
     id: 1,
-    src: "/images/moving1.webp",
+    src: "/images/moving1.jpg",
   },
   {
     id: 2,
-    src: "/images/moving2.webp",
+    src: "/images/moving2.jpg",
   },
   {
     id: 3,
-    src: "/images/moving3.webp",
+    src: "/images/moving3.jpg",
   },
   {
     id: 4,
-    src: "/images/moving4.webp",
+    src: "/images/moving4.jpg",
   },
 ];
 

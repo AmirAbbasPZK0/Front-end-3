@@ -14,7 +14,7 @@ const cardsData = [
   {
     id: 2,
     icon: MdOutlineInsights,
-    title: "Scientific Insights",
+    title: "Medical and Scientific Insights",
     desc: "Showcase the latest research access.",
     color: "#eaba33",
   },
