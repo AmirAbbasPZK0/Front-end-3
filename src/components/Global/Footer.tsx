@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
@@ -42,9 +43,21 @@ export const Footer = () => {
         <div className=" flex flex-col justify-between gap-24">
           <div className=" flex justify-between gap-4 lg:gap-8">
             <div className=" flex flex-col justify-between gap-4">
-              <h6 className=" text-lg lg:text-4xl">
+              <motion.h6
+                initial={{ color: "hsl(340, 82%, 47%)" }}
+                animate={{
+                  color: ["hsl(340, 82%, 47%)", "hsl(240, 100%, 50%)"],
+                  transition: {
+                    duration: 4,
+                    ease: "linear",
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                  },
+                }}
+                className=" text-lg lg:text-4xl"
+              >
                 A Search Engine You Can Trust
-              </h6>
+              </motion.h6>
               <div className=" text-sm">
                 Say Hello: <br /> hello@findora.ai
               </div>
