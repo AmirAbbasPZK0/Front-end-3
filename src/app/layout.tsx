@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "𝙛𝙞𝙣𝙙𝙤𝙧𝙖 – The Search Engine You Can Trust",
+  title: "𝙛𝙞𝙣𝙙𝙤𝙧𝙖 – A Search Engine You Can Trust",
   description: "Search with Confidence. Discover the Truth.",
 };
 
