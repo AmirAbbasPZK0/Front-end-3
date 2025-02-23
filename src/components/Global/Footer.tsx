@@ -42,8 +42,8 @@ export const Footer = () => {
         <div className=" flex flex-col justify-between gap-24">
           <div className=" flex justify-between gap-4 lg:gap-8">
             <div className=" flex flex-col justify-between gap-4">
-              <h6 className=" text-lg lg:text-4xl bg-gradient-to-tr from-[#026095] via-[#511f78] to-[#c31069] bg-clip-text text-transparent">
-                Join the Future of Search
+              <h6 className=" text-lg lg:text-4xl">
+                A Search Engine You Can Trust
               </h6>
               <div className=" text-sm">
                 Say Hello: <br /> hello@findora.ai

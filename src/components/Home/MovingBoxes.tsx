@@ -38,18 +38,22 @@ const squareData = [
   {
     id: 1,
     src: "/images/moving1.jpg",
+    position: "center",
   },
   {
     id: 2,
     src: "/images/moving2.jpg",
+    position: "right",
   },
   {
     id: 3,
     src: "/images/moving3.jpg",
+    position: "center",
   },
   {
     id: 4,
     src: "/images/moving4.jpg",
+    position: "center",
   },
 ];
 
@@ -63,7 +67,7 @@ const generateSquares = () => {
       style={{
         backgroundImage: `url(${sq.src})`,
         backgroundSize: "cover",
-        backgroundPosition: "right",
+        backgroundPosition: `${sq.position}`,
       }}
     ></motion.div>
   ));
