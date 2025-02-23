@@ -55,7 +55,7 @@ export const Footer = () => {
                     repeatType: "mirror",
                   },
                 }}
-                className=" text-lg lg:text-4xl"
+                className=" text-xl lg:text-4xl"
               >
                 {slogan.split("").map((letter, index) => (
                   <motion.span
