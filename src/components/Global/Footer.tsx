@@ -37,6 +37,7 @@ const socials = [
 
 export const Footer = () => {
   const text = "findora";
+  const slogan = " A Search Engine You Can Trust";
   return (
     <div className="bg-[#f0f0fc] dark:bg-[#111828] py-8">
       <div className=" px-4 md:px-8 max-w-7xl mx-auto">
@@ -56,7 +57,22 @@ export const Footer = () => {
                 }}
                 className=" text-lg lg:text-4xl"
               >
-                A Search Engine You Can Trust
+                {slogan.split("").map((letter, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                      duration: 3,
+                      delay: index * 0.1,
+                      ease: "anticipate",
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                    }}
+                  >
+                    {letter}
+                  </motion.span>
+                ))}
               </motion.h6>
               <div className=" text-sm">
                 Say Hello: <br /> hello@findora.ai
