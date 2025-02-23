@@ -31,7 +31,7 @@ const BrowserSearch = () => {
               <span className=" text-2xl font-bold">Browser Search</span>
             </div>
             <p>
-              Our free Findora Answer Engine allows users to ask questions in
+              Our free findora Answer Engine allows users to ask questions in
               natural language and receive detailed, accurate responses tailored
               to their specific queries.
             </p>
