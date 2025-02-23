@@ -296,7 +296,7 @@ const FEATURES = [
   },
   {
     title: "Video Intelligence",
-    bgColor: "#511f78",
+    bgColor: "#7332a1",
     Icon: GoVideo,
     Feature: ({
       setIsHovered,
@@ -309,7 +309,7 @@ const FEATURES = [
         desc="Find accurate, fact-based answers from videos."
         button="Check your grammar"
         url="/"
-        textColor="#511f78"
+        textColor="#7332a1"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),
@@ -356,7 +356,7 @@ const FEATURES = [
   },
   {
     title: "Privacy & Trust",
-    bgColor: "#284759",
+    bgColor: "#3d6a7d",
     Icon: SlMagnifier,
     Feature: ({
       setIsHovered,
@@ -369,7 +369,7 @@ const FEATURES = [
         desc="Protect your data. Stay anonymous. Verify website credibility."
         button="Summarize"
         url="/"
-        textColor="#284759"
+        textColor="#3d6a7d"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
     ),

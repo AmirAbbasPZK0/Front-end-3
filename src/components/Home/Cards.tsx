@@ -9,7 +9,7 @@ const cardsData = [
     icon: MdFactCheck,
     title: "Fact-Checked Sources ",
     desc: "Highlight how findora ensures credibility.",
-    color: "#511f78",
+    color: "#7332a1",
   },
   {
     id: 2,

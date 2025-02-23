@@ -23,7 +23,7 @@ const WhyFindoraData = [
     icon: GiArtificialIntelligence,
     title: "AI-Powered Search",
     desc: "Enhance internal research with rigorously filtered results.",
-    color: "#511f78",
+    color: "#7332a1",
   },
   {
     id: 4,

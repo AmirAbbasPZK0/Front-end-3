@@ -107,10 +107,10 @@ export const Footer = () => {
                 "#008f7a",
                 "#eaba33",
                 "#0b87b6",
-                "#511f78",
+                "#7332a1",
                 "#c31069",
                 "#c67f48",
-                "#284759",
+                "#3d6a7d",
               ];
               const color = colors[index % colors.length]; // This ensures the colors repeat
 
