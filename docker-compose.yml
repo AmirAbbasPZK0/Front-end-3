@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: /home/Front-end-2/Dockerfile
     ports:
-      - "3000:7000"
+      - "7000:7000"
     volumes:
       - .:/app
       - /app/node_modules
