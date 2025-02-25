@@ -4,7 +4,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: /home/Front-End-2/Dockerfile
+      dockerfile: /home/Front-end-2/Dockerfile
     ports:
       - "3000:7000"
     volumes:
