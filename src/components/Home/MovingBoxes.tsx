@@ -7,7 +7,7 @@ const MovingBoxes = () => {
     <section className="w-full px-4 md:px-8 pb-20 md:pb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-7xl mx-auto">
       <div>
         <h3 className="text-2xl font-bold">Dynamic Insights</h3>
-        <p className="my-4 md:my-6">
+        <p className="my-4 md:my-6 lg:text-lg">
           Get real-time, fact-checked updates from Trending Topics, AI Insights,
           Expert Picks, and User Favorites.
         </p>

@@ -29,10 +29,10 @@ const UseOnPhone = () => {
                   <span className=" text-2xl font-bold">ra</span>
                 </div>
               </div>
-              <span className=" text-2xl font-bold">on Your Phone</span>
+              <span className="text-2xl font-bold">on Your Phone</span>
             </div>
 
-            <p>
+            <p className="lg:text-lg">
               findora is available on desktop and mobile. Get the same
               fact-checked search experience wherever you go.
             </p>
@@ -55,7 +55,7 @@ const UseOnPhone = () => {
               </Link>
             </div>
           </div>
-          <div className=" pt-0 lg:pt-16 px-16 self-end">
+          <div className=" pt-0 md:pt-8 lg:pt-16 px-16 self-end">
             <Image src={phoneImg} width={250} height={250} alt="phone" />
           </div>
         </div>

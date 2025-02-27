@@ -1,10 +1,9 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { CiStar, CiBoxList, CiImageOn } from "react-icons/ci";
+import { CiBoxList, CiImageOn } from "react-icons/ci";
 import { LuCrown } from "react-icons/lu";
 import { IoDocumentTextOutline, IoBulbOutline } from "react-icons/io5";
-import { PiFeatherLight } from "react-icons/pi";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import Link from "next/link";
 import NavLink from "./NavLink";
@@ -18,15 +17,17 @@ import {
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import Image from "next/image";
+import { FiPhone } from "react-icons/fi";
+import { RiHome2Line } from "react-icons/ri";
 
 const Links = [
-  { id: 1, title: "Ask AI", icon: CiStar, url: "/" },
+  { id: 1, title: "Home", icon: RiHome2Line, url: "/" },
   { id: 2, title: "Findora Pro", icon: LuCrown, url: "/pricing" },
   { id: 3, title: "Summary", icon: CiBoxList, url: "/summary" },
   { id: 4, title: "Docs", icon: IoDocumentTextOutline, url: "/docs" },
   { id: 5, title: "Image", icon: CiImageOn, url: "/image" },
   { id: 6, title: "Writer", icon: IoBulbOutline, url: "/writer" },
-  { id: 7, title: "Grammar", icon: PiFeatherLight, url: "/grammar" },
+  { id: 7, title: "Contact", icon: FiPhone, url: "/contact" },
 ];
 
 const Navbar = () => {

@@ -59,9 +59,9 @@ const Stat = ({ num, suffix, decimals = 0, subheading, color }: Props) => {
   return (
     <div
       style={{ color: color }}
-      className="flex w-full flex-col items-center py-8 sm:py-0"
+      className="flex w-full flex-col items-center py-8"
     >
-      <p className="mb-2 text-center text-5xl font-bold sm:text-6xl">
+      <p className="mb-2 text-center text-4xl font-bold lg:text-5xl">
         <span ref={ref}></span>
         {suffix}
       </p>

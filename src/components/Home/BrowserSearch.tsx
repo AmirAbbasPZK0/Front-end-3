@@ -10,11 +10,11 @@ const BrowserSearch = () => {
   return (
     <div className=" relative overflow-hidden cursor-not-allowed">
       <div className=" px-4 md:px-8 pb-20 md:pb-24 max-w-7xl mx-auto">
-        <div className=" flex flex-col lg:flex-row justify-center items-center gap-8">
-          <div className="lg:w-1/2">
+        <div className=" flex flex-col md:flex-row justify-center items-center gap-8">
+          <div className="md:w-1/2">
             <Image src={browserImg} alt="img" className=" rounded-xl" />
           </div>
-          <div className="lg:w-1/2 flex flex-col gap-4">
+          <div className="md:w-1/2 flex flex-col gap-4">
             <div className="flex gap-1">
               <div className=" flex">
                 <span className=" text-2xl font-bold">find</span>
@@ -30,7 +30,7 @@ const BrowserSearch = () => {
 
               <span className=" text-2xl font-bold">Browser Search</span>
             </div>
-            <p>
+            <p className=" lg:text-lg">
               Our free findora Answer Engine allows users to ask questions in
               natural language and receive detailed, accurate responses tailored
               to their specific queries.

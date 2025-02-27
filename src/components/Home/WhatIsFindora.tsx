@@ -52,9 +52,9 @@ const WhatIsFindora = () => {
             height={19}
             className=" object-contain pt-[6px] lg:pt-[12px]"
           />
-          <span className=" text-4xl font-bold"> ra?</span>
+          <span className="text-4xl font-bold"> ra?</span>
         </div>
-        <p className=" text-center">
+        <p className=" text-center lg:text-lg">
           Misinformation is everywhere, but findora delivers facts. Our AI
           search engine fact-checks sources, analyzes content, and provides
           reliable, transparent answers.

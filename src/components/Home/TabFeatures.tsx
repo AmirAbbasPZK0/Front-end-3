@@ -7,10 +7,10 @@ import { GoArrowLeft, GoArrowRight, GoVideo } from "react-icons/go";
 import Image from "next/image";
 import {
   MdMultipleStop,
+  MdOutlinePrivacyTip,
   MdOutlineVerified,
   MdPeopleOutline,
 } from "react-icons/md";
-import { SlMagnifier } from "react-icons/sl";
 import { GiMaterialsScience } from "react-icons/gi";
 import { CiMedicalCross } from "react-icons/ci";
 
@@ -200,21 +200,21 @@ const ExampleFeature = ({
     onMouseEnter={() => setIsHovered(true)} // Set hover to true when mouse enters the feature box
     onMouseLeave={() => setIsHovered(false)} // Set hover to false when mouse leaves the feature box
   >
-    <div className="bg-white dark:bg-[#202938] rounded-3xl p-8 flex flex-col lg:flex-row gap-8 items-center">
-      <div className="lg:w-1/2">
+    <div className="bg-white dark:bg-[#202938] rounded-3xl p-8 flex flex-col md:flex-row gap-8 items-center">
+      <div className="md:w-1/2">
         <Image
           src={image}
           alt="img"
-          width={500}
-          height={500}
+          width={430}
+          height={430}
           className=" object-center object-cover rounded-xl"
         />
       </div>
-      <div className="lg:w-1/2 flex flex-col gap-4">
+      <div className="md:w-1/2 flex flex-col gap-4">
         <h6 className=" text-2xl font-bold" style={{ color: textColor }}>
           {text}
         </h6>
-        <p>{desc}</p>
+        <p className="lg:text-lg">{desc}</p>
         <Link
           href={url}
           style={{ backgroundColor: textColor }}
@@ -246,7 +246,7 @@ const FEATURES = [
         image="/images/feature1.jpg"
         text="Verified Answers"
         desc="Get results backed by fact-checking and credible sources."
-        button="Ask Your Question"
+        button="Learn More"
         url="/"
         textColor="#008f7a"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -267,7 +267,7 @@ const FEATURES = [
         image="/images/feature2.jpg"
         text="Scientific Search"
         desc="Access peer-reviewed research and academic insights."
-        button="Analyze Docs"
+        button="Learn More"
         url="/"
         textColor="#eaba33"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -287,7 +287,7 @@ const FEATURES = [
         image="/images/feature3.jpg"
         text="Multi-Format Search"
         desc="Analyze URLs, text, and files together for deep insights."
-        button="Create images"
+        button="Learn More"
         url="/"
         textColor="#0b87b6"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -307,7 +307,7 @@ const FEATURES = [
         image="/images/feature4.jpg"
         text="Video Intelligence"
         desc="Find accurate, fact-based answers from videos."
-        button="Check your grammar"
+        button="Learn More"
         url="/"
         textColor="#7332a1"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -327,7 +327,7 @@ const FEATURES = [
         image="/images/feature5.jpg"
         text="Medical"
         desc="Get personalized health advice from a doctor."
-        button="Ask Your Question"
+        button="Learn More"
         url="/"
         textColor="#c31069"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -347,7 +347,7 @@ const FEATURES = [
         image="/images/feature6.jpg"
         text="Enterprise Solutions"
         desc="Businesses can integrate findora’s AI-powered fact-checking into their platforms."
-        button="Ask Your Question"
+        button="Learn More"
         url="/"
         textColor="#c67f48"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -357,7 +357,7 @@ const FEATURES = [
   {
     title: "Privacy & Trust",
     bgColor: "#3d6a7d",
-    Icon: SlMagnifier,
+    Icon: MdOutlinePrivacyTip,
     Feature: ({
       setIsHovered,
     }: {
@@ -367,7 +367,7 @@ const FEATURES = [
         image="/images/feature7.jpg"
         text="Privacy & Trust"
         desc="Protect your data. Stay anonymous. Verify website credibility."
-        button="Summarize"
+        button="Learn More"
         url="/"
         textColor="#3d6a7d"
         setIsHovered={setIsHovered} // Pass the hover handler

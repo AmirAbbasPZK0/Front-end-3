@@ -42,13 +42,22 @@ export default function PreLoader() {
           initial={{ y: 0 }}
           animate={{ y: isVideoEnded ? "-100%" : 0 }}
           exit={{ y: "-100%", transition: { duration: 0.5 } }}
-          className="h-screen w-full bg-white fixed inset-0 z-[200] flex justify-center items-center overflow-hidden cursor-none"
+          className="h-screen w-full bg-white dark:bg-[#202938] fixed inset-0 z-[200] flex justify-center items-center overflow-hidden cursor-none"
         >
           <video
-            src="/videos/preloader.mp4"
+            src="/videos/preloader_white.mp4"
             autoPlay
             playsInline
             muted
+            className="dark:hidden"
+            onEnded={() => setIsVideoEnded(true)} // Trigger slide-up after video ends
+          ></video>
+          <video
+            src="/videos/preloader_dark.mp4"
+            autoPlay
+            playsInline
+            muted
+            className="hidden dark:block"
             onEnded={() => setIsVideoEnded(true)} // Trigger slide-up after video ends
           ></video>
         </motion.div>
