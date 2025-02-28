@@ -7,18 +7,13 @@ const links = [
   { id: 1, title: "Home", href: "/" },
   {
     id: 2,
-    title: "About",
-    href: "/about",
+    title: "Blog",
+    href: "/blog",
   },
   {
     id: 3,
     title: "Contact",
     href: "/contact",
-  },
-  {
-    id: 4,
-    title: "Blog",
-    href: "/blog",
   },
 ];
 

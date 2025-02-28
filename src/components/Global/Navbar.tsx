@@ -1,9 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { CiBoxList, CiImageOn } from "react-icons/ci";
-import { LuCrown } from "react-icons/lu";
-import { IoDocumentTextOutline, IoBulbOutline } from "react-icons/io5";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import Link from "next/link";
 import NavLink from "./NavLink";
@@ -11,23 +8,19 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
 import LogoWhite from "@/../public/images/findora_logo_white.png";
-
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import Image from "next/image";
 import { FiPhone } from "react-icons/fi";
-import { RiHome2Line } from "react-icons/ri";
+import { RiBloggerLine, RiHome2Line } from "react-icons/ri";
+import { GlowingBtn } from "./GlowingBtn";
 
 const Links = [
   { id: 1, title: "Home", icon: RiHome2Line, url: "/" },
-  { id: 2, title: "Findora Pro", icon: LuCrown, url: "/pricing" },
-  { id: 3, title: "Summary", icon: CiBoxList, url: "/summary" },
-  { id: 4, title: "Docs", icon: IoDocumentTextOutline, url: "/docs" },
-  { id: 5, title: "Image", icon: CiImageOn, url: "/image" },
-  { id: 6, title: "Writer", icon: IoBulbOutline, url: "/writer" },
-  { id: 7, title: "Contact", icon: FiPhone, url: "/contact" },
+  { id: 2, title: "Blog", icon: RiBloggerLine, url: "/blog" },
+  { id: 3, title: "Contact", icon: FiPhone, url: "/contact" },
 ];
 
 const Navbar = () => {
@@ -119,24 +112,25 @@ const Navbar = () => {
             </div>
           )}
         </div>
-
-        <Link href="/">
-          <Image
-            src={LogoBlack}
-            alt="logo"
-            width={80}
-            height={80}
-            className="block dark:hidden"
-          />
-          <Image
-            src={LogoWhite}
-            alt="logo"
-            width={80}
-            height={80}
-            className="hidden dark:block"
-          />
-        </Link>
-
+        <div className=" flex flex-col md:flex-row items-center gap-4">
+          <Link href="/">
+            <Image
+              src={LogoBlack}
+              alt="logo"
+              width={80}
+              height={80}
+              className="block dark:hidden"
+            />
+            <Image
+              src={LogoWhite}
+              alt="logo"
+              width={80}
+              height={80}
+              className="hidden dark:block"
+            />
+          </Link>
+          <GlowingBtn />
+        </div>
         <div className="hidden xl:flex items-center bg-[#f0f0fc] dark:bg-[#111828] dark:text-white p-2 border-2 border-[#e7e7f2] shadow-inner rounded-full">
           {Links.map((link) => (
             <NavLink link={link} key={link.id} />

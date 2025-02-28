@@ -2,7 +2,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { IconType } from "react-icons";
 import { Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import { GoArrowLeft, GoArrowRight, GoVideo } from "react-icons/go";
 import Image from "next/image";
 import {
@@ -13,6 +12,7 @@ import {
 } from "react-icons/md";
 import { GiMaterialsScience } from "react-icons/gi";
 import { CiMedicalCross } from "react-icons/ci";
+import { RxCross2 } from "react-icons/rx";
 
 const TabsFeatures = () => {
   const [selected, setSelected] = useState(0);
@@ -180,56 +180,137 @@ interface ExampleFeatureProps {
   image: string;
   text: string;
   desc: string;
-  button: string;
-  url: string;
+  longDesc: string;
+  buttonText: string;
   textColor: string;
   setIsHovered: Dispatch<SetStateAction<boolean>>; // Added setIsHovered to control hover state
 }
+
+const modalAnimation = {
+  hidden: {
+    y: "100%",
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+  visible: {
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+  exit: {
+    y: "100%",
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};
 
 const ExampleFeature = ({
   image,
   text,
   desc,
-  button,
-  url,
+  longDesc,
+  buttonText,
   textColor,
   setIsHovered,
-}: ExampleFeatureProps) => (
-  <div
-    className="px-4 md:px-8 w-full pt-8"
-    onMouseEnter={() => setIsHovered(true)} // Set hover to true when mouse enters the feature box
-    onMouseLeave={() => setIsHovered(false)} // Set hover to false when mouse leaves the feature box
-  >
-    <div className="bg-white dark:bg-[#202938] rounded-3xl p-8 flex flex-col md:flex-row gap-8 items-center">
-      <div className="md:w-1/2">
-        <Image
-          src={image}
-          alt="img"
-          width={430}
-          height={430}
-          className=" object-center object-cover rounded-xl"
-        />
-      </div>
-      <div className="md:w-1/2 flex flex-col gap-4">
-        <h6 className=" text-2xl font-bold" style={{ color: textColor }}>
-          {text}
-        </h6>
-        <p className="lg:text-lg">{desc}</p>
-        <Link
-          href={url}
-          style={{ backgroundColor: textColor }}
-          className=" flex gap-1 items-center font-medium group rounded-full w-fit text-white py-2 px-4 text-sm"
-        >
-          {button}
-          <div className="lg:group-hover:translate-x-1 transition duration-300 ease-in-out">
-            <GoArrowRight />
-          </div>
-        </Link>
+}: ExampleFeatureProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    return () => {
+      document.body.style.overflow = originalOverflow || "";
+    };
+  }, []);
+
+  // Close modal when clicking outside of it
+  const handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      setIsModalOpen(false);
+    }
+  };
+
+  return (
+    <div
+      className="px-4 md:px-8 w-full pt-8"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="bg-white dark:bg-[#202938] rounded-3xl p-8 flex flex-col md:flex-row gap-8 items-center">
+        <div className="md:w-1/2">
+          <Image
+            src={image}
+            alt="img"
+            width={430}
+            height={430}
+            className=" object-center object-cover rounded-xl"
+          />
+        </div>
+        <div className="md:w-1/2 flex flex-col gap-4">
+          <h6 className="text-2xl font-bold" style={{ color: textColor }}>
+            {text}
+          </h6>
+          <p className="lg:text-lg">{desc}</p>
+          <button
+            style={{ backgroundColor: textColor }}
+            className="flex gap-1 items-center font-medium group rounded-full w-fit text-white py-2 px-4 text-sm"
+            onClick={() => setIsModalOpen(true)}
+          >
+            {buttonText}
+            <div className="lg:group-hover:translate-x-1 transition duration-300 ease-in-out">
+              <GoArrowRight />
+            </div>
+          </button>
+
+          {/* Modal */}
+          <AnimatePresence>
+            {isModalOpen && (
+              <div
+                className="fixed inset-0 bg-black bg-opacity-50 flex justify-end items-end z-[200]"
+                onClick={handleClickOutside} // Handle clicks on the background
+              >
+                <motion.div
+                  ref={modalRef} // Assign ref to modal content
+                  variants={modalAnimation}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  data-lenis-prevent="true"
+                  className="relative h-[70vh] w-full overflow-y-scroll bg-white dark:bg-[#202938]"
+                >
+                  <div className="space-y-16 pt-16 px-8 md:px-16 lg:px-28">
+                    <h6 className="text-center text-4xl">{text}</h6>
+                    <p className="pb-10 lg:text-xl">{longDesc}</p>
+                  </div>
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className=" absolute top-5 right-5 lg:opacity-60 lg:hover:opacity-100 transition duration-300 ease-in-out"
+                  >
+                    <RxCross2 size={30} />
+                  </button>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
-  </div>
-);
-
+  );
+};
 export default TabsFeatures;
 
 const FEATURES = [
@@ -246,8 +327,8 @@ const FEATURES = [
         image="/images/feature1.jpg"
         text="Verified Answers"
         desc="Get results backed by fact-checking and credible sources."
-        button="Learn More"
-        url="/"
+        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        buttonText="Learn More"
         textColor="#008f7a"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
@@ -267,8 +348,8 @@ const FEATURES = [
         image="/images/feature2.jpg"
         text="Scientific Search"
         desc="Access peer-reviewed research and academic insights."
-        button="Learn More"
-        url="/"
+        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        buttonText="Learn More"
         textColor="#eaba33"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
@@ -287,8 +368,8 @@ const FEATURES = [
         image="/images/feature3.jpg"
         text="Multi-Format Search"
         desc="Analyze URLs, text, and files together for deep insights."
-        button="Learn More"
-        url="/"
+        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        buttonText="Learn More"
         textColor="#0b87b6"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
@@ -307,8 +388,8 @@ const FEATURES = [
         image="/images/feature4.jpg"
         text="Video Intelligence"
         desc="Find accurate, fact-based answers from videos."
-        button="Learn More"
-        url="/"
+        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        buttonText="Learn More"
         textColor="#7332a1"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
@@ -327,8 +408,8 @@ const FEATURES = [
         image="/images/feature5.jpg"
         text="Medical"
         desc="Get personalized health advice from a doctor."
-        button="Learn More"
-        url="/"
+        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        buttonText="Learn More"
         textColor="#c31069"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
@@ -347,8 +428,8 @@ const FEATURES = [
         image="/images/feature6.jpg"
         text="Enterprise Solutions"
         desc="Businesses can integrate findora’s AI-powered fact-checking into their platforms."
-        button="Learn More"
-        url="/"
+        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        buttonText="Learn More"
         textColor="#c67f48"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
@@ -367,8 +448,8 @@ const FEATURES = [
         image="/images/feature7.jpg"
         text="Privacy & Trust"
         desc="Protect your data. Stay anonymous. Verify website credibility."
-        button="Learn More"
-        url="/"
+        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        buttonText="Learn More"
         textColor="#3d6a7d"
         setIsHovered={setIsHovered} // Pass the hover handler
       />
