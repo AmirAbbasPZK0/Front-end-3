@@ -12,8 +12,8 @@ const ContactForm: React.FC = () => {
       duration: 3000,
       style: {
         borderRadius: "10px",
-        background: "white",
-        color: "black",
+        background: "#6a0dad",
+        color: "white",
       },
     });
   };
@@ -23,8 +23,8 @@ const ContactForm: React.FC = () => {
       duration: 3000,
       style: {
         borderRadius: "10px",
-        background: "white",
-        color: "black",
+        background: "#6a0dad",
+        color: "white",
       },
     });
   };
@@ -55,7 +55,7 @@ const ContactForm: React.FC = () => {
         <div className="text-center space-y-4">
           <h6 className="text-4xl font-bold">Contact Us</h6>
           <p className="text-lg">
-            Please leave your information below. {"We‘ll"} reply as soon as
+            Please enter your information below, and we will respond as soon as
             possible.
           </p>
         </div>

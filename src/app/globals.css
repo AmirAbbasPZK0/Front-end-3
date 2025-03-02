@@ -22,3 +22,77 @@ html.lenis body {
 .tabScroll::-webkit-scrollbar {
   display: none;
 }
+
+.skeuParent {
+  --x: 0px;
+  --y: 0px;
+  --shineColor: rgba(255, 255, 255, 0);
+  --size: 0px;
+}
+
+.skeu::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: calc(var(--x) - var(--size) / 2);
+  top: calc(var(--y) - var(--size) / 2);
+  width: var(--size);
+  height: var(--size);
+  transition: width 0.35s ease, height 0.35s;
+  background: radial-gradient(
+    circle closest-side,
+    var(--shineColor),
+    transparent
+  );
+}
+.scrollingImg:nth-child(1) {
+  width: 100px;
+  height: 200px;
+}
+.scrollingImg:nth-child(2) {
+  width: 150px;
+  height: 250px;
+}
+.scrollingImg:nth-child(3) {
+  width: 100px;
+  height: 150px;
+}
+.scrollingImg:nth-child(4) {
+  width: 150px;
+  height: 200px;
+}
+.scrollingImg:nth-child(5) {
+  width: 100px;
+  height: 250px;
+}
+.scrollingImg:nth-child(6) {
+  width: 100px;
+  height: 200px;
+}
+
+@media (min-width: 1024px) {
+  .scrollingImg:nth-child(1) {
+    width: 400px;
+    height: 500px;
+  }
+  .scrollingImg:nth-child(2) {
+    width: 600px;
+    height: 700px;
+  }
+  .scrollingImg:nth-child(3) {
+    width: 300px;
+    height: 400px;
+  }
+  .scrollingImg:nth-child(4) {
+    width: 450px;
+    height: 500px;
+  }
+  .scrollingImg:nth-child(5) {
+    width: 400px;
+    height: 550px;
+  }
+  .scrollingImg:nth-child(6) {
+    width: 400px;
+    height: 500px;
+  }
+}
