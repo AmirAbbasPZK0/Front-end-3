@@ -7,8 +7,8 @@ const links = [
   { id: 1, title: "Home", href: "/" },
   {
     id: 2,
-    title: "Blog",
-    href: "/blog",
+    title: "About",
+    href: "/about",
   },
   {
     id: 3,
@@ -69,9 +69,6 @@ export const Footer = () => {
                   </motion.span>
                 ))}
               </motion.h6>
-              <div className=" text-sm">
-                Say Hello: <br /> hello@findora.ai
-              </div>
             </div>
             <div className="flex gap-4 lg:gap-16">
               <div className=" flex flex-col justify-between gap-16">

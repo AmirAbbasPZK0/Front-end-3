@@ -230,13 +230,6 @@ const ExampleFeature = ({
     }
   }, [isModalOpen]);
 
-  useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
-    return () => {
-      document.body.style.overflow = originalOverflow || "";
-    };
-  }, []);
-
   // Close modal when clicking outside of it
   const handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -290,10 +283,10 @@ const ExampleFeature = ({
                   animate="visible"
                   exit="exit"
                   data-lenis-prevent="true"
-                  className="relative h-[70vh] w-full overflow-y-scroll bg-white dark:bg-[#202938]"
+                  className="relative h-[70vh] w-full bg-white dark:bg-[#202938]"
                 >
-                  <div className="space-y-16 pt-16 px-8 md:px-16 lg:px-28">
-                    <h6 className="text-center text-4xl">{text}</h6>
+                  <div className="space-y-8 lg:space-y-16 py-16 px-8 md:px-16 lg:px-28">
+                    <h6 className="text-center text-3xl lg:text-4xl">{text}</h6>
                     <p className="pb-10 lg:text-xl">{longDesc}</p>
                   </div>
                   <button
@@ -327,7 +320,7 @@ const FEATURES = [
         image="/images/feature1.jpg"
         text="Verified Answers"
         desc="Get results backed by fact-checking and credible sources."
-        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        longDesc="At Findora, we prioritize accuracy and trust. Our Verified Answers are the result of thorough fact-checking and analysis from credible sources. Each response is carefully vetted to ensure reliability, giving you the confidence that the information you receive is trustworthy and fact-based. Whether you're searching for academic insights, medical data, or general knowledge, Findora guarantees that the answers you find are backed by evidence and expertise."
         buttonText="Learn More"
         textColor="#008f7a"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -348,7 +341,7 @@ const FEATURES = [
         image="/images/feature2.jpg"
         text="Scientific Search"
         desc="Access peer-reviewed research and academic insights."
-        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        longDesc="Unlock a world of peer-reviewed research and authoritative academic insights with Findora’s Scientific Search. Our advanced AI technology sifts through a vast range of scholarly articles, journals, and studies to bring you the most relevant and credible information. Whether you’re exploring groundbreaking discoveries or seeking reliable data for your research, Findora ensures that you have access to scientifically validated sources that are current and accurate."
         buttonText="Learn More"
         textColor="#eaba33"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -368,7 +361,7 @@ const FEATURES = [
         image="/images/feature3.jpg"
         text="Multi-Format Search"
         desc="Analyze URLs, text, and files together for deep insights."
-        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        longDesc="Findora's Multi-Format Search empowers you to analyze a variety of content types—URLs, text, and files—simultaneously for deeper, more comprehensive insights. Whether you're researching a specific topic or cross-referencing multiple sources, our platform streamlines your search by integrating and interpreting diverse formats in real-time. This all-in-one approach ensures that you get a complete, fact-checked picture of the information you need, making your search more efficient and effective."
         buttonText="Learn More"
         textColor="#0b87b6"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -388,7 +381,7 @@ const FEATURES = [
         image="/images/feature4.jpg"
         text="Video Intelligence"
         desc="Find accurate, fact-based answers from videos."
-        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        longDesc="Findora’s Video Intelligence leverages cutting-edge AI to extract accurate, fact-based answers directly from video content. By analyzing visual and audio cues, our platform identifies key information, verifies its accuracy, and provides you with reliable insights. Whether you're watching educational videos, interviews, or documentaries, Findora ensures that the answers you find are backed by solid evidence, transforming video content into a trusted source of information."
         buttonText="Learn More"
         textColor="#7332a1"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -407,8 +400,8 @@ const FEATURES = [
       <ExampleFeature
         image="/images/feature5.jpg"
         text="Medical"
-        desc="Get personalized health advice from a doctor."
-        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        desc="Findora’s Medical search engine is your trusted resource for accurate, up-to-date medical information."
+        longDesc="Findora’s Medical search engine is your trusted resource for accurate, up-to-date medical information. Powered by AI, it sifts through a wealth of peer-reviewed research, clinical studies, and medical databases to deliver reliable answers to your health-related queries. Whether you're looking for treatment options, research findings, or expert opinions, Findora ensures that the information you receive is scientifically validated and comes from credible medical sources, supporting informed decisions about your health and well-being."
         buttonText="Learn More"
         textColor="#c31069"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -428,7 +421,7 @@ const FEATURES = [
         image="/images/feature6.jpg"
         text="Enterprise Solutions"
         desc="Businesses can integrate findora’s AI-powered fact-checking into their platforms."
-        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        longDesc="Findora’s Enterprise Solutions offer businesses powerful, AI-driven tools to enhance their workflows with accurate, fact-checked information. Our API allows seamless integration of Findora’s verification and search capabilities into your existing platforms, ensuring that your organization always operates with reliable and transparent data. From research teams to customer support, Findora helps businesses across industries maintain credibility and improve decision-making by delivering trustworthy answers in real time."
         buttonText="Learn More"
         textColor="#c67f48"
         setIsHovered={setIsHovered} // Pass the hover handler
@@ -448,7 +441,7 @@ const FEATURES = [
         image="/images/feature7.jpg"
         text="Privacy & Trust"
         desc="Protect your data. Stay anonymous. Verify website credibility."
-        longDesc="Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms.Businesses can integrate findora’s AI-powered fact-checking into their platforms."
+        longDesc="At Findora, we prioritize your privacy and data security. Our platform ensures that your personal information remains protected through end-to-end encryption and strict data privacy practices. We empower users to stay anonymous while conducting searches, providing full transparency on how your data is used. With Findora, you can trust that your interactions are secure, and your privacy is respected, so you can access reliable information with confidence."
         buttonText="Learn More"
         textColor="#3d6a7d"
         setIsHovered={setIsHovered} // Pass the hover handler
