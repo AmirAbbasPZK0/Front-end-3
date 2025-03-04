@@ -1,47 +1,11 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
-import { TypeAnimation } from "react-type-animation";
+import React from "react";
 import oLogo from "@/../public/images/o.png";
 
 const WhatIsFindora = () => {
-  const [textColor, setTextColor] = useState("#008f7a");
   return (
     <div className=" px-4 md:px-8 flex flex-col justify-center items-center gap-4 pt-20 md:pt-24 pb-8 max-w-4xl mx-auto">
-      <div
-        className="text-4xl lg:text-5xl h-[15vh] md:h-[20vh] font-semibold"
-        style={{ color: textColor }}
-      >
-        <TypeAnimation
-          sequence={[
-            "Accurate",
-            1000,
-            () => setTextColor("#008f7a"),
-            "Transparent",
-            1000,
-            () => setTextColor("#eaba33"),
-            "Intelligent",
-            1000,
-            () => setTextColor("#0b87b6"),
-            "Trustworthy",
-            1000,
-            () => setTextColor("#7332a1"),
-            "Reliable",
-            1000,
-            () => setTextColor("#c31069"),
-            "Scientific",
-            1000,
-            () => setTextColor("#c67f48"),
-            "Unbiased",
-            1000,
-            () => setTextColor("#3d6a7d"),
-          ]}
-          wrapper="span"
-          speed={40}
-          deletionSpeed={95}
-          repeat={Infinity}
-        />
-      </div>
       <div className=" flex">
         <span className="text-4xl font-bold">What is find</span>
         <Image

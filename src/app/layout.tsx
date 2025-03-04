@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ScrollToTop from "./utils/ScrollToTop";
+import Providers from "@/services/redux/Providers";
 import { Suspense } from "react";
+import Layout from "@/components/Engine/Layout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <Providers>
     <html lang="en">
       <head>
         <meta name="theme-color" content="#b898fd" /> {/* Set theme color */}
@@ -32,10 +35,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
       >
+        <Layout>
         <Suspense>
           <ScrollToTop>{children}</ScrollToTop>
         </Suspense>
+        </Layout>
       </body>
     </html>
+    </Providers>
   );
 }
