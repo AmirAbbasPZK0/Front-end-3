@@ -10,6 +10,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@edgestore/react": "^0.3.3",
+    "@edgestore/server": "^0.3.3",
     "@emailjs/browser": "^4.4.1",
     "@reduxjs/toolkit": "^2.6.0",
     "@types/react-dom": "^19.0.3",
@@ -18,12 +20,14 @@
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-dropzone": "^14.3.8",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.4.0",
     "react-markdown": "^10.0.1",
     "react-redux": "^9.2.0",
     "react-type-animation": "^3.2.0",
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

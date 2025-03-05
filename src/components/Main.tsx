@@ -15,7 +15,7 @@ import AnimatedText from "./Home/AnimatedText";
 export default function Home() {
   return (
     <>
-      <PreLoader />
+      {/* <PreLoader /> */}
       <div className="bg-[#f0f0fc] dark:bg-[#111828]">
         <AnimatedText/>
         <PropmptYard/>

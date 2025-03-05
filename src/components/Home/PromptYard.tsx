@@ -15,6 +15,12 @@ import { removeRecency } from '@/services/redux/reducers/resourceSlice';
 // import NewDropdown from './NewDropdown';
 // import BackToHomeButton from './BackToHomeButton';
 import { IoIosAttach, IoMdSend } from "react-icons/io";
+import NewDropdown from "../Engine/NewDropdown";
+import { TbSend2 } from 'react-icons/tb';
+import { addUrlToInputArray } from '@/services/redux/reducers/urlInputSlice';
+import UrlInput from '../Engine/UrlInput';
+import UploadedFileBox from '../Engine/UploadedFileBox';
+import AttachFileModal from '../Engine/AttachFileModal';
 
 
 
@@ -32,6 +38,7 @@ const PropmptYard = () => {
     const dispatch = useAppDispatch()
     const { socket, response, setResponse, responseRef } = useWebSocket();
     const router = useRouter()
+    const [isAttachOpen , setIsAttachOpen] = useState(false)
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
@@ -244,8 +251,9 @@ const PropmptYard = () => {
     }, [prompt , urlInputs.urlInputs]);
 
     return (<>
-        <div className="flex w-[100%] items-center justify-center flex-col">
-          <div className="md:w-[40%] w-[80%]">
+        <div className="flex w-[100%] items-center min-h-[20vh] justify-center gap-4 flex-col">
+          {isNew && (<>
+            <div className="md:w-[40%] w-[80%]">
             <form onSubmit={e => {
               e.preventDefault()
               sendMessage(prompt)
@@ -253,22 +261,43 @@ const PropmptYard = () => {
               <input onChange={e => setPrompt(e.target.value)} type="text" placeholder='Write your text...' className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} placeholder-gray-500 bg-transparent outline-none`}/>
               <div className='flex flex-row items-center justify-between gap-2 w-full'>
                 <div className='flex flex-row gap-2'>
-                <button type='button' className='flex flex-row gap-2 items-center justify-center'><IoIosAttach/></button>
-                  {/* <button type='button' onClick={fileModalHandler} className='flex flex-row gap-2 items-center justify-center'><ChosenIcon className='text-[27px]' e='Attach File'/></button> */}
-                  {/* {openUploadFile && <AttachFileModal setClose={setOpenUploadFile}/>} */}
-                  {/* <NewDropdown disabled={isLoading || uploadedFiles.uploadedFilesUrl.length > 0 || !isNew}/> */}
+
+                  {/* Attach File Modal */}
+                  <button onClick={()=>{
+                    setIsAttachOpen(true)
+                  }} type='button' className='flex flex-row gap-2 text-[20px] items-center justify-center'><IoIosAttach/></button>
+                  {isAttachOpen && <AttachFileModal setClose={setIsAttachOpen}/>}
+                  
+                  {/* Modules */}
+                  <NewDropdown disabled={uploadedFiles.uploadedFilesUrl.length > 0 || !isNew}/>
+                    
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
-                  <span className="text-[12px] md:text-[16px]">Deep Search</span>
-                  {/* <Switch */}
-                    {/* checked={selectedDepth} */}
-                    {/* onChange={() => setSelectedDepth(prev => !prev)} */}
-                    {/* /> */}
-                  <button type='submit'><IoMdSend/></button>
+                  <button className='text-[20px] p-1' type='submit'><TbSend2/></button>
                 </div>
               </div>
             </form>
-          </div>
+            {selectedResources === 'url' && isNew && (
+                  <div className='w-full'>
+                    {urlInputs.urlInputs.map((url, index) => (
+                      <UrlInput key={index} url={url} urlInputs={urlInputs.urlInputs} index={index}/>
+                    ))}
+                    <button
+                      onClick={() => dispatch(addUrlToInputArray())}
+                      className="border-2 border-slate-400 dark:border-slate-100 p-2 flex flex-row gap-2 justify-center rounded mt-2"
+                      type="button"
+                    >
+                      <span>Add URL</span>
+                    </button>
+                  </div>
+            )}
+            
+            {uploadedFiles.uploadedFilesUrl.length > 0 && uploadedFiles.uploadedFilesUrl.map((item , index) => (
+              <UploadedFileBox key={index} data={item}/>
+            ))}
+            
+            </div>
+          </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
               <ResponseDisplay
                 isDone={value.isDone}
@@ -283,7 +312,7 @@ const PropmptYard = () => {
                 responseRef={(index == Object.keys(response).length - 1 && !value.text) ? responseRef : undefined}
                 sendMessage={sendMessage}
               />
-      )}
+          )}
         </div>
     </>);
 }

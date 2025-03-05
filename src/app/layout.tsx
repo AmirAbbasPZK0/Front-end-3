@@ -5,6 +5,7 @@ import ScrollToTop from "./utils/ScrollToTop";
 import Providers from "@/services/redux/Providers";
 import { Suspense } from "react";
 import Layout from "@/components/Engine/Layout";
+import { EdgeStoreProvider } from '@/libs/edgestore';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,12 +35,13 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
-      >
+      > <EdgeStoreProvider>
         <Layout>
         <Suspense>
           <ScrollToTop>{children}</ScrollToTop>
         </Suspense>
         </Layout>
+        </EdgeStoreProvider>
       </body>
     </html>
     </Providers>
