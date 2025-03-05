@@ -84,7 +84,7 @@ export const Footer = () => {
               <div className=" flex flex-col justify-between gap-4">
                 <div className=" flex flex-col gap-1 text-sm">
                   {socials.map((social) => (
-                    <Link key={social.id} href={social.href}>
+                    <Link key={social.id} href={social.href} target="_blank">
                       {social.title}
                     </Link>
                   ))}

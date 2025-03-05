@@ -5,7 +5,7 @@ import ScrollToTop from "./utils/ScrollToTop";
 import Providers from "@/services/redux/Providers";
 import { Suspense } from "react";
 import Layout from "@/components/Engine/Layout";
-import { EdgeStoreProvider } from '@/libs/edgestore';
+import { EdgeStoreProvider } from "@/libs/edgestore";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,8 +18,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "𝙛𝙞𝙣𝙙𝙤𝙧𝙖 – A Search Engine You Can Trust",
-  description: "Search with Confidence. Discover the Truth.",
+  title: {
+    default: "𝙛𝙞𝙣𝙙𝙤𝙧𝙖 – A Search Engine You Can Trust",
+    template: "%s - 𝙛𝙞𝙣𝙙𝙤𝙧𝙖 – A Search Engine You Can Trust",
+  },
+  description:
+    "Findora is an advanced AI-powered platform designed for intelligent conversations, content generation, and problem-solving with speed and accuracy.",
 };
 
 export default function RootLayout({
@@ -29,21 +33,23 @@ export default function RootLayout({
 }>) {
   return (
     <Providers>
-    <html lang="en">
-      <head>
-        <meta name="theme-color" content="#b898fd" /> {/* Set theme color */}
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
-      > <EdgeStoreProvider>
-        <Layout>
-        <Suspense>
-          <ScrollToTop>{children}</ScrollToTop>
-        </Suspense>
-        </Layout>
-        </EdgeStoreProvider>
-      </body>
-    </html>
+      <html lang="en">
+        <head>
+          <meta name="theme-color" content="#b898fd" /> {/* Set theme color */}
+        </head>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
+        >
+          {" "}
+          <EdgeStoreProvider>
+            <Layout>
+              <Suspense>
+                <ScrollToTop>{children}</ScrollToTop>
+              </Suspense>
+            </Layout>
+          </EdgeStoreProvider>
+        </body>
+      </html>
     </Providers>
   );
 }
