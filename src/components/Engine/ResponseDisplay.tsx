@@ -9,6 +9,7 @@ import Loading from "./Loading";
 import Slider from "./Slider";
 import { TbSend2 } from "react-icons/tb";
 import { IoCopyOutline } from "react-icons/io5";
+import Carousel from "./Carousel";
 
 interface Source {
     title : string
@@ -61,8 +62,10 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 
     return(<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-center flex-col">
-            <div className="dark:bg-transparent bg-white dark:border-2 dark:border-slate-400 shadow-md rounded-3xl p-4">
-                <h2 className="text-[35px] p-2 font-semibold">{query}</h2>
+            <div className="dark:bg-[#202938] bg-white shadow-md rounded-3xl w-full p-4">
+                <h2 className="text-[25px] p-2 font-semibold">{query}</h2>
+            </div>
+            <div className="dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full  justify-between p-3 rounded-3xl">
                     <div className="flex flex-col w-[100%] md:w-[70%] gap-4">
                         <ReactMarkdown components={{
@@ -85,7 +88,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 </div>
             </div>
             {relatedQuestions?.length > 0 && (<>
-                <div className="flex flex-col w-full dark:bg-transparent bg-white dark:border-2 dark:border-slate-400 shadow-md rounded-3xl p-4">
+                <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h1 className="text-[20px] p-2 font-semibold">Related Questions</h1>
                 <div className="flex flex-col w-full">
                         {Array.isArray(relatedQuestions) && relatedQuestions?.map((e, index) => (
@@ -106,7 +109,15 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     </div>
                 </div>
             </>)}
-            <div className="rounded-3xl bg-white dark:bg-transparent dark:border-2 dark:border-slate-300 shadow-md w-[60%] p-3 flex flex-col">
+            {videos?.length > 0 && (<>
+                <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
+                <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
+                    <div className="w-full">
+                        <Carousel videos={videos}/>
+                    </div>
+                </div>
+            </>)}
+            {!disabled && <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md md:w-[60%] w-[100%] p-3 flex flex-col">
                 <form onSubmit={(e)=>{
                     e.preventDefault()
                     sendMessage(text)
@@ -115,7 +126,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     <input onChange={(e)=> setText(e.target.value)} type="text" placeholder="Follow-Up" className="w-full bg-transparent outline-none" />
                     {!disabled && <button disabled={disabled} className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>}
                 </form>
-            </div>
+            </div>}
         </div>
     </>)
 }

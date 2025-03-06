@@ -5,10 +5,16 @@ const useAgent = (width = 600) => {
 
     const [isMobile , setIsMobile] = useState(false)
 
+    const handleSize = ()=> {
+        setIsMobile(window.innerWidth < width)
+    }
+
     useEffect(()=>{
-        window.addEventListener("resize" , ()=>{
-            setIsMobile(window.innerWidth < width)
-        })
+        
+        window.addEventListener("resize" , handleSize)
+
+        return () => window.removeEventListener("resize" , handleSize)
+
     },[width])
 
     return {isMobile}
