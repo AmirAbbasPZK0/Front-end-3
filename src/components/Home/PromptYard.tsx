@@ -202,26 +202,26 @@ const PropmptYard = () => {
       };
     }, [socket]);
 
-    useEffect(() => {
-      if (newResponse.length > 0) {
+    // useEffect(() => {
+    //   if (newResponse.length > 0) {
   
-        setResponse((prev : any) => {
-          const cp: any = { ...prev };
-          const prom = localStorage.getItem('prompt') || prompt;
-          if (prom) {
-            if (!cp[prom]) {
-              cp[prom] = {};
-            }
-            cp[prom].isLoading = false;
-            cp[prom].text = newResponse;
-            // cp[prom].images = [];
-            // cp[prom].relatedQuestions = [];
-          }
-          return cp;
-        });
+    //     setResponse((prev : any) => {
+    //       const cp: any = { ...prev };
+    //       const prom = localStorage.getItem('prompt') || prompt;
+    //       if (prom) {
+    //         if (!cp[prom]) {
+    //           cp[prom] = {};
+    //         }
+    //         cp[prom].isLoading = false;
+    //         cp[prom].text = newResponse;
+    //         // cp[prom].images = [];
+    //         // cp[prom].relatedQuestions = [];
+    //       }
+    //       return cp;
+    //     });
   
-      }
-    }, [newResponse]);
+    //   }
+    // }, [newResponse]);
 
     // useEffect(() => {
     //   window.scrollTo({
@@ -251,7 +251,7 @@ const PropmptYard = () => {
     }, [prompt , urlInputs.urlInputs]);
 
     return (<>
-        <div className="flex w-[100%] items-center min-h-[20vh] justify-center gap-4 flex-col">
+        <div className="flex w-[100%] items-center min-h-[20vh] pt-4 justify-center gap-4 flex-col">
           {isNew && (<>
             <div className="md:w-[40%] w-[80%]">
             <form onSubmit={e => {
@@ -300,6 +300,7 @@ const PropmptYard = () => {
           </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
               <ResponseDisplay
+                key={key}
                 isDone={value.isDone}
                 videos={value.videos}
                 query={key}

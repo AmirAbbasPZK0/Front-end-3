@@ -5,7 +5,7 @@ import oLogo from "@/../public/images/o.png";
 
 const WhatIsFindora = () => {
   return (
-    <div className=" px-4 md:px-8 flex flex-col justify-center items-center gap-4 pt-20 md:pt-24 pb-8 max-w-4xl mx-auto">
+    <div className="px-4 md:px-8 flex flex-col justify-center items-center gap-4 pt-20 md:pt-24 pb-8 max-w-4xl mx-auto">
       <div className=" flex">
         <span className="text-4xl font-bold">What is find</span>
         <Image

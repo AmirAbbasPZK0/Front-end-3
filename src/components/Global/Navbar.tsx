@@ -142,7 +142,7 @@ const Navbar = () => {
             ))}
           </div>
           <div className="hidden lg:flex gap-4">
-            <Link href="/" className="hover:underline dark:text-white">
+            <Link href="/register" className="hover:underline dark:text-white">
               Sign Up
             </Link>
             <ThemeToggle />

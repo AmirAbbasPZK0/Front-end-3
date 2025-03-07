@@ -10,7 +10,7 @@ const AnimatedText = () => {
     return (<>
         <div className="flex items-center justify-center pt-10">
         <div
-            className="text-4xl lg:text-5xl h-[15vh] md:h-[20vh] font-semibold"
+            className="text-4xl lg:text-5xl h-[15vh] md:h-[10vh] font-semibold"
             style={{ color: textColor }}
         >
             <TypeAnimation

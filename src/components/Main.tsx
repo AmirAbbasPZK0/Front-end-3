@@ -11,14 +11,16 @@ import WhatIsFindora from "@/components/Home/WhatIsFindora";
 import WhyFindora from "@/components/Home/WhyFindora";
 import PropmptYard from "./Home/PromptYard";
 import AnimatedText from "./Home/AnimatedText";
+import Cookies from "js-cookie";
 
 export default function Home() {
+
   return (
     <>
       {/* <PreLoader /> */}
       <div className="bg-[#f0f0fc] dark:bg-[#111828]">
-        <AnimatedText/>
         <PropmptYard/>
+        <AnimatedText/>
         <WhatIsFindora />
         <TabsFeatures />
         <Stats />
