@@ -16,11 +16,12 @@ import Cookies from "js-cookie";
 export default function Home() {
 
   return (
-    <>
+    <div>
       {/* <PreLoader /> */}
+      <PreLoader />
       <div className="bg-[#f0f0fc] dark:bg-[#111828]">
-        <AnimatedText/>
-        <PropmptYard/>
+        <AnimatedText />
+        <PropmptYard />
         <WhatIsFindora />
         <TabsFeatures />
         <Stats />
@@ -31,6 +32,6 @@ export default function Home() {
       <WhyFindora />
       <BrowserSearch />
       <UseOnPhone />
-    </>
+    </div>
   );
 }

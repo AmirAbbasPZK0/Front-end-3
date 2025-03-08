@@ -7,7 +7,7 @@ export const Stats = () => {
     <div className=" max-w-7xl mx-auto px-4 md:px-8 py-20 md:py-24">
       <div className="flex flex-col items-center justify-center sm:flex-row">
         <Stat
-          num={1400000}
+          num={14000}
           suffix="+"
           subheading="Verified Sources Indexed"
           color="#c31069"
@@ -19,7 +19,7 @@ export const Stats = () => {
           color="#0b87b6"
         />
         <Stat
-          num={500}
+          num={1}
           suffix="M"
           subheading="Scientific Papers Indexed"
           color="#eaba33"

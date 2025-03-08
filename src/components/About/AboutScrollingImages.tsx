@@ -10,6 +10,12 @@ const images = [
   { id: 4, url: "/images/4.webp" },
   { id: 5, url: "/images/5.webp" },
   { id: 6, url: "/images/6.webp" },
+  { id: 7, url: "/images/1.webp" },
+  { id: 8, url: "/images/2.webp" },
+  { id: 9, url: "/images/3.webp" },
+  { id: 10, url: "/images/4.webp" },
+  { id: 11, url: "/images/5.webp" },
+  { id: 12, url: "/images/6.webp" },
 ];
 
 const AboutScrollingImages = () => {
