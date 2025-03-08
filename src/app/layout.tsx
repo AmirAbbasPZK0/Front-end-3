@@ -33,7 +33,7 @@ export default function RootLayout({
     <Providers>
     <html lang="en">
       <head>
-        <meta name="theme-color" content="#b898fd" /> {/* Set theme color */}
+        <meta name="theme-color" content="#b898fd" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
