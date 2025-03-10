@@ -48,9 +48,7 @@ const apiRequest = async (url: string, useToken = false, useSessionId = false, m
 
 const restApi = (url: string, useAccessToken = false, useSessionId = false) => {
   const get = (query: any = {}, headers = {}) => {
-    if (!headers['content-type']) {
-      headers['content-type'] = 'application/json';
-    }
+    
     if (query !== '{}') {
       Object.entries(query)?.map(([key, value], index) => {
         url += (index == 0 ? '?' : '&') + key + '=' + value;
@@ -60,17 +58,14 @@ const restApi = (url: string, useAccessToken = false, useSessionId = false) => {
   };
 
   const post = (body: any, headers = {}) => {
-    headers['content-type'] = 'application/json';
     return apiRequest(url, useAccessToken, useSessionId, 'post', body, headers);
   };
 
   const put = (body: any, headers = {}) => {
-    headers['content-type'] = 'application/json';
     return apiRequest(url, useAccessToken, useSessionId, 'put', body, headers);
   };
 
   const del = (body: any, headers = {}) => {
-    headers['content-type'] = 'application/json';
     return apiRequest(url, useAccessToken, useSessionId, 'delete', body, headers);
   };
 
