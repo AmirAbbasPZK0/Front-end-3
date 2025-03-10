@@ -15,10 +15,14 @@ export async function signUp(prevent : any , formData : FormData){
         },
         body : JSON.stringify(data)
     })
+
+    if(!res.ok){
+        console.log(res)
+        console.log("Failed to fetch")
+        return false
+    }
     
     const result = await res.json();
-
-    console.log(result);
 
     if(result.code !== 200){
         return {

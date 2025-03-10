@@ -24,6 +24,7 @@ const useAsync = (method : Methods , url : string) => {
                         if(!res.ok){
                             throw new Error("Failed to Fetch")
                         }
+                        return res.json()
                     }).then(data => {
                         resolve(data)
                     })
@@ -42,6 +43,7 @@ const useAsync = (method : Methods , url : string) => {
                         if(!res.ok){
                             throw new Error("Failed to Fetch")
                         }
+                        return res.json()
                     }).then(data => {
                         resolve(data)
                     }).catch(err => {

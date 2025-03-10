@@ -11,7 +11,9 @@ import WhatIsFindora from "@/components/Home/WhatIsFindora";
 import WhyFindora from "@/components/Home/WhyFindora";
 import PropmptYard from "./Home/PromptYard";
 import AnimatedText from "./Home/AnimatedText";
-import Cookies from "js-cookie";
+import LogoBlack from "@/../public/images/findora_logo_black.png";
+import LogoWhite from "@/../public/images/findora_logo_white.png";
+import Image from "next/image";
 
 export default function Home() {
 
@@ -20,9 +22,13 @@ export default function Home() {
       {/* <PreLoader /> */}
       {/* <PreLoader /> */}
       <div className="bg-[#f0f0fc] dark:bg-[#111828]">
-        <AnimatedText />
+        <div className="w-full flex pt-4 items-center justify-center">
+          <Image className="w-[120px] h-[120px] dark:hidden block" src={LogoBlack} alt="" />
+          <Image className="w-[120px] h-[120px] hidden dark:block" src={LogoWhite} alt="" />
+        </div>
         <PropmptYard />
         <WhatIsFindora />
+        <AnimatedText />
         <TabsFeatures />
         <Stats />
         <MovingBoxes />

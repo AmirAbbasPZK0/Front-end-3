@@ -11,9 +11,11 @@ const Layout = ({children} : {children : ReactNode}) => {
     const {isPending , run} = useAsync("GET" , "user")
 
     useEffect(()=>{
-        run(null , Cookies.get("jwt_token"))?.then(data => {
-            console.log(data)
-        })
+        if(Cookies.get("jwt_token") !== undefined){
+            run(null , Cookies.get("jwt_token"))?.then(data => {
+                console.log(data)
+            })
+        }
     }, [])
 
     return(<>
