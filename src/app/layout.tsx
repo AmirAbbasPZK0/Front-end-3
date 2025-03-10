@@ -7,7 +7,7 @@ import ScrollToTop from "./utils/ScrollToTop";
 import Providers from "@/services/redux/Providers";
 import { Suspense } from "react";
 import Layout from "@/components/Engine/Layout";
-import { EdgeStoreProvider } from "@/libs/edgestore";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

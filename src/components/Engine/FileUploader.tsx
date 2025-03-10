@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useEdgeStore } from '@/libs/edgestore';
+import { useEdgeStore } from '@/lib/edgestore';
 import { useAppDispatch , useAppSelector} from '@/services/redux/store';
 import {addUrl , removeFile} from "@/services/redux/reducers/fileUploadSlice"
 
