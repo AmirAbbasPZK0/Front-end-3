@@ -61,7 +61,7 @@ const SignUpFormHandler: React.FC = () => {
             <ShinySkeuButton />
           </div>
           <div className="flex flex-row items-center justify-center gap-2">
-            <p>Don't have an account?</p> <Link href={"/signup"}>Sign Up</Link>
+            <p>Already have an account?</p> <Link className="text-blue-500 font-semibold" href={"/login"}>Login</Link>
           </div>
         </form>
       </div>

@@ -31,7 +31,7 @@ const moduleList = [
         color : "#c31069"
     },
     {
-        title : "medicine",
+        title : "medical",
         color : "#c67f48"
     }
 ]
@@ -86,7 +86,7 @@ const ModuleIcon = ({moduleName , className , color} : {moduleName : string , cl
             return <MdOutlineOndemandVideo style={{color : "#7332a1"}} className={className}/>
         case "academic":
             return <FaGraduationCap style={{color : "#c31069"}} className={className}/>
-        case "medicine":
+        case "medical":
             return <CiMedicalCase style={{color : "#c67f48"}} className={className}/>
     }
 }

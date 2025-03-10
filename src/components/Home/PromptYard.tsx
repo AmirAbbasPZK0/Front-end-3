@@ -43,16 +43,9 @@ const PropmptYard = () => {
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
+    console.log(uploadedFiles.urlsOfFiles)
+
     const sendMessage = (prompt: string) => {
-      if(isNew){
-        if(prompt == ''){
-          return false;
-        }
-      }else{
-        if(followUp == ""){
-          return false
-        }
-      }
       if(selectedResources === "url" && urlInputs.urlInputs.includes("")){
         return false
       }
@@ -117,7 +110,7 @@ const PropmptYard = () => {
       }) => {
         if(!window.location.href.includes(data.code)){
           router.push('/search/' + data.code);
-          setCode(data.code);1
+          setCode(data.code);
         }
       });
   
@@ -246,7 +239,9 @@ const PropmptYard = () => {
     useEffect(() => {
       const handleKeyDown = (event: { key: string; }) => {
         if (event.key === "Enter") {
-          sendMessage(prompt)
+          if(prompt !== ""){
+            sendMessage(prompt)
+          }
         }
       };
   
@@ -263,7 +258,9 @@ const PropmptYard = () => {
             <div className="md:w-[40%] w-[80%]">
             <form onSubmit={e => {
               e.preventDefault()
-              sendMessage(prompt)
+              if(prompt !== ""){
+                sendMessage(prompt)
+              }
             }} className='border-2 flex flex-col text-center gap-5 w-full border-slate-400 dark:border-slate-100 p-4 rounded-lg'>
               <input onChange={e => setPrompt(e.target.value)} type="text" placeholder='Write your text...' className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} placeholder-gray-500 bg-transparent outline-none`}/>
               <div className='flex flex-row items-center justify-between gap-2 w-full'>
@@ -324,7 +321,9 @@ const PropmptYard = () => {
           {!isNew && <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md md:w-[60%] w-[100%] p-3 flex flex-col">
               <form onSubmit={(e)=>{
                 e.preventDefault()
-                sendMessage(followUp)
+                if(followUp !== ""){
+                  sendMessage(followUp)
+                }
               }} className="w-full flex flex-row gap-2" action="">
                 <input value={followUp} onChange={(e)=> setFollowUp(e.target.value)} type="text" placeholder="Follow-Up" className="w-full bg-transparent outline-none" />
                 <button className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>

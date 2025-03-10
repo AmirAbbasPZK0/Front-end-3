@@ -10,6 +10,7 @@ import Slider from "./Slider";
 import { TbSend2 } from "react-icons/tb";
 import { IoCopyOutline } from "react-icons/io5";
 import Carousel from "./Carousel";
+import FactCheckDisplay from "./FactCheckDisplay";
 
 interface Source {
     title : string
@@ -47,8 +48,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
-    const [text , setText] = useState("")
-    const [disabled , setDisabled] = useState(false)
 
     useEffect(()=>{
         setHyperLinkTooltip(snippetAndTitleHandler(sources))
@@ -60,13 +59,17 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         </div>
     }
 
+    if(data){
+        return <FactCheckDisplay data={data?.message} sources={sources} query={query}/>
+    }
+
     return(<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
             <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-4">
                 <h2 className="text-[15px] flex items-end justify-end text-end p-2 font-semibold">{query}</h2>
             </div>
             <div className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
-                <div className="flex gap-3 md:flex-row flex-col-reverse w-full  justify-between p-3 rounded-3xl">
+                <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
                     <div className="flex flex-col w-[100%] md:w-[70%] gap-4">
                         <ReactMarkdown components={{
                             h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
@@ -93,10 +96,9 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 <div className="flex flex-col w-full">
                         {Array.isArray(relatedQuestions) && relatedQuestions?.map((e, index) => (
                         <button
+                            onClick={()=> sendMessage(e)}
+                            type="button"
                             key={index}
-                            onClick={() => {
-                                sendMessage(e);
-                            }}
                             className={`border-b-2 w-[90%] border-slate-400 dark:border-slate-100 p-3 flex flex-row justify-between items-center`}
                         >
                             {isRTL(query) ? (<>
@@ -117,6 +119,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     </div>
                 </div>
             </>)}
+            
         </div>
     </>)
 }
