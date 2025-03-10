@@ -1,23 +1,22 @@
 "use client"
-import { useState , useEffect } from "react";
 
-const useAgent = (width = 600) => {
+import { useState, useEffect } from 'react';
 
-    const [isMobile , setIsMobile] = useState(false)
+function useAgent(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false);
 
-    const handleSize = ()=> {
-        setIsMobile(window.innerWidth < width)
-    }
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < breakpoint);
+    };
 
-    useEffect(()=>{
-        
-        window.addEventListener("resize" , handleSize)
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
 
-        return () => window.removeEventListener("resize" , handleSize)
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, [breakpoint]);
 
-    },[width])
-
-    return {isMobile}
+  return { isMobile };
 }
- 
+
 export default useAgent;

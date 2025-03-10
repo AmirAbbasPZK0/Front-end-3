@@ -61,11 +61,11 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     }
 
     return(<>
-        <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-center flex-col">
-            <div className="dark:bg-[#202938] flex flex-row items-end bg-slate-100 shadow-md rounded-3xl w-full p-4">
-                <h2 className="text-[20px] text-end p-2 font-semibold">{query}</h2>
+        <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
+            <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-4">
+                <h2 className="text-[15px] flex items-end justify-end text-end p-2 font-semibold">{query}</h2>
             </div>
-            <div className="dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
+            <div className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full  justify-between p-3 rounded-3xl">
                     <div className="flex flex-col w-[100%] md:w-[70%] gap-4">
                         <ReactMarkdown components={{

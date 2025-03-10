@@ -6,6 +6,7 @@ export async function login(prevent : any , formData : FormData){
         email : formData.get("email"),
         password : formData.get("password")
     }
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login` as string , {
         method : "POST",
         headers : {
@@ -15,6 +16,14 @@ export async function login(prevent : any , formData : FormData){
     })
     
     const result = await res.json();
+
+    console.log(result);
+
+    if(result.code !== 200){
+        return {
+            message : "Failed to Fetch"
+        }
+    }
 
     (await cookies()).set("jwt_token" , result?.data?.token , {path :"/" , maxAge :  60 * 60 * 60 * 24})
 

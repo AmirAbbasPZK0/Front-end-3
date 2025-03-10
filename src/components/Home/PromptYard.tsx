@@ -39,12 +39,19 @@ const PropmptYard = () => {
     const { socket, response, setResponse, responseRef } = useWebSocket();
     const router = useRouter()
     const [isAttachOpen , setIsAttachOpen] = useState(false)
+    const [followUp , setFollowUp] = useState("")
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const sendMessage = (prompt: string) => {
-      if(prompt == ''){
-        return false;
+      if(isNew){
+        if(prompt == ''){
+          return false;
+        }
+      }else{
+        if(followUp == ""){
+          return false
+        }
       }
       if(selectedResources === "url" && urlInputs.urlInputs.includes("")){
         return false
@@ -98,6 +105,9 @@ const PropmptYard = () => {
       });
   
       setPrompt('');
+
+      setFollowUp("")
+
     };
     useEffect(() => {
       if (!socket) return;
@@ -314,9 +324,9 @@ const PropmptYard = () => {
           {!isNew && <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md md:w-[60%] w-[100%] p-3 flex flex-col">
               <form onSubmit={(e)=>{
                 e.preventDefault()
-                sendMessage(prompt)
+                sendMessage(followUp)
               }} className="w-full flex flex-row gap-2" action="">
-                <input onChange={(e)=> setPrompt(e.target.value)} type="text" placeholder="Follow-Up" className="w-full bg-transparent outline-none" />
+                <input value={followUp} onChange={(e)=> setFollowUp(e.target.value)} type="text" placeholder="Follow-Up" className="w-full bg-transparent outline-none" />
                 <button className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
               </form>
           </div>}
