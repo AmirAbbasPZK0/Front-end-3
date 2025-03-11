@@ -21,7 +21,6 @@ const Carousel = ({videos} : {videos : any}) => {
         speed: 300,
         slidesToShow: isMobile ? 1 : 4,
         slidesToScroll: 1,
-        centerMode : !isMobile,
         arrows : false
     };
 
