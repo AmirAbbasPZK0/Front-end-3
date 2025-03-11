@@ -2,9 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import endpoints from "@/configs/endpoints";
 import toast from "react-hot-toast";
-import restApi from '@/services/restApi';
 import { useAppDispatch } from "@/services/redux/store";
 import { loginHandler } from "@/services/redux/reducers/userSlice";
 import { useRouter } from "next/navigation";
@@ -38,14 +36,10 @@ const LoginFormHandler: React.FC = () => {
       toast("Failed to Fetch")
       return false
     }else{
-      Cookies.set("access_token" , result?.data?.token , {path : "/" , expires : 60 * 60 * 60 * 24})
-
+      Cookies.set("access_token" , result?.data?.token , {path : "/"})
       dispatch(loginHandler(result?.data?.user))
-
       router.push("/")
     }
-
-    // window.location.reload()
     
   }
 

@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import { useAppDispatch } from "@/services/redux/store";
+import endpoints from "@/configs/endpoints";
+import restApi from "@/services/restApi";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import Link from "next/link";
@@ -37,13 +39,14 @@ const Links = [
 const Navbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [showHamMenu, setShowHamMenu] = useState(false);
+  const [recentSearch , setRecentSearch] = useState([])
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const hamMenuRef = useRef<HTMLDivElement>(null);
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const user = useAppSelector(state => state.userSlice.data)
+  const user = useAppSelector(state => state.userSlice)
 
   const openLeftMenu = () => {
     setShowLeftMenu(true);
@@ -66,6 +69,14 @@ const Navbar = () => {
 
   const toggleHamMenu = () => {
     setShowHamMenu((prev) => !prev);
+  };
+
+  const initialApiCalls = async () => {
+    if (Cookies.get('access_token') || localStorage.getItem('sessionId')){
+      const res = await restApi(endpoints.history, true, true).get();
+      console.log(res)
+      setRecentSearch(res.data)
+    }
   };
 
   const leftMenuRef = useRef<HTMLDivElement>(null);
@@ -131,6 +142,10 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutsideHam);
     };
   }, []);
+
+  useEffect(()=>{
+    initialApiCalls()
+  },[])
 
   return (
     <div>
@@ -213,8 +228,8 @@ const Navbar = () => {
               ))}
             </div>
             <div className="hidden lg:flex gap-4">
-              {Cookies.get("access_token") ? (<>
-                <div>{user?.name}</div>
+              {user.isLogin ? (<>
+                <div>{user?.data?.name}</div>
               </>) : (<>
                 <Link href={'/login'}>Login</Link>
               </>)}
@@ -236,7 +251,7 @@ const Navbar = () => {
                 {showHamMenu && (
                   <div className="flex flex-col gap-2 absolute top-24 right-0 bg-[#f9fafc] dark:bg-[#111828] rounded-2xl shadow-md z-[100]">
                     {Cookies.get("access_token") ? (<>
-                      <div>{user?.name}</div>
+                      <div>{user?.data?.name}</div>
                     </>) : (<>
                       <Link onClick={()=> setShowHamMenu(false)} href={'/login'}>Login</Link>
                     </>)}
@@ -263,9 +278,9 @@ const Navbar = () => {
               animate={{ x: "0%" }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className=" relative top-0 left-0 w-[60vw] md:w-[50vw] lg:w-[20vw] h-screen bg-[#f0f0fc] dark:bg-[#111828] z-[160] flex flex-col justify-around lg:justify-between pt-4 pb-4 px-4 lg:pt-16"
+              className="relative top-0 left-0 md:w-[20vw] w-[80vw] h-screen bg-[#f0f0fc] dark:bg-[#111828] z-[160] flex flex-col justify-around lg:justify-between pt-4 pb-4 px-4 lg:pt-16"
             >
-              <div className=" flex justify-center">
+              <div className="flex justify-center">
                 <button onClick={()=>{
                   dispatch(addRecency())
                   dispatch(removeAllFiles())
@@ -277,17 +292,27 @@ const Navbar = () => {
                   <span>New Thread</span>
                 </button>
               </div>
-              <div className=" flex justify-between items-center">
+              {user.isLogin && 
+              <div className="flex flex-col h-10 pt-5">
+                <h3 className="text-[20px] font-semibold">Recent</h3>
+                <div className="flex flex-col items-start pt-3">
+                  {recentSearch?.map((item : any , index) => (
+                    <p key={index}>{item?.question}</p>
+                  ))}
+                </div>
+              </div>
+              }
+              <div className="flex gap-4 items-end justify-between h-full">
                 <div className=" flex items-center gap-2">
                   <FaCircleUser size={30} />
-                  <div className=" flex flex-col">
-                    <span>Guest</span>
+                  <div className="flex flex-col md:w-auto">
+                    <span>{Cookies.get("access_token") ? user?.data?.name : "Guess"}</span>
                     <span className=" text-xs opacity-50">Free plan</span>
                   </div>
                 </div>
 
-                <button className=" flex gap-2 items-center group">
-                  <span className=" font-bold">My Profile</span>
+                <button className="flex gap-2 h-10 items-center group">
+                  <span className="font-bold">My Profile</span>
                   <div className=" lg:group-hover:translate-x-1 transition-transform duration-300">
                     <FaArrowRight />
                   </div>
