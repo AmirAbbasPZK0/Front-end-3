@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import Cookies from "js-cookie";
 import { useAppDispatch } from "@/services/redux/store";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
@@ -9,6 +10,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosClose, IoMdClose } from "react-icons/io";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
 import LogoWhite from "@/../public/images/findora_logo_white.png";
+import { useAppSelector } from "@/services/redux/store";
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
@@ -41,6 +43,7 @@ const Navbar = () => {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const dispatch = useAppDispatch()
   const router = useRouter()
+  const user = useAppSelector(state => state.userSlice.data)
 
   const openLeftMenu = () => {
     setShowLeftMenu(true);
@@ -210,9 +213,11 @@ const Navbar = () => {
               ))}
             </div>
             <div className="hidden lg:flex gap-4">
-              <Link href="/login" className="hover:underline dark:text-white">
-                Login
-              </Link>
+              {Cookies.get("access_token") ? (<>
+                <div>{user?.name}</div>
+              </>) : (<>
+                <Link href={'/login'}>Login</Link>
+              </>)}
               <ThemeToggle />
             </div>
             <div className=" flex flex-col items-center gap-4 lg:hidden relative">
@@ -230,13 +235,11 @@ const Navbar = () => {
                 </button>
                 {showHamMenu && (
                   <div className="flex flex-col gap-2 absolute top-24 right-0 bg-[#f9fafc] dark:bg-[#111828] rounded-2xl shadow-md z-[100]">
-                    <Link
-                      href="/login"
-                      className="flex items-center gap-2 px-4 py-2 "
-                      onClick={() => setShowHamMenu(false)}
-                    >
-                      Login
-                    </Link>
+                    {Cookies.get("access_token") ? (<>
+                      <div>{user?.name}</div>
+                    </>) : (<>
+                      <Link onClick={()=> setShowHamMenu(false)} href={'/login'}>Login</Link>
+                    </>)}
                     <Link
                       href="/"
                       className="p-4"

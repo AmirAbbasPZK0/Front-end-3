@@ -1,15 +1,53 @@
 "use client";
-import React, { useEffect, useRef, useActionState } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { login } from "@/actions/login";
-import toast from "react-hot-toast";
 import Link from "next/link";
-
+import endpoints from "@/configs/endpoints";
+import toast from "react-hot-toast";
+import restApi from '@/services/restApi';
+import { useAppDispatch } from "@/services/redux/store";
+import { loginHandler } from "@/services/redux/reducers/userSlice";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const LoginFormHandler: React.FC = () => {
+
   const form = useRef<HTMLFormElement | null>(null);
 
-  const [state , action] = useActionState(login , undefined)
+  const dispatch = useAppDispatch()
+
+  const router = useRouter()
+
+  const onSubmit = async (e : any) => {
+    e.preventDefault()
+    let data = {
+      email : e.target.email.value,
+      password : e.target.password.value
+    }
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login/` , {
+      method : "POST",
+      body : JSON.stringify(data),
+      headers : {
+        "Content-Type" : "application/json"
+      }
+    })
+    
+    let result = await res.json()
+
+    if(result.code !== 200){
+      toast("Failed to Fetch")
+      return false
+    }else{
+      Cookies.set("access_token" , result?.data?.token , {path : "/" , expires : 60 * 60 * 60 * 24})
+
+      dispatch(loginHandler(result?.data?.user))
+
+      router.push("/")
+    }
+
+    // window.location.reload()
+    
+  }
 
   return (
     <div className="px-4 md:px-8 py-10 md:py-9 flex justify-center items-center">
@@ -20,7 +58,7 @@ const LoginFormHandler: React.FC = () => {
         Logging in allows you to save search preferences, access search history, and enjoy a more tailored browsing experience.
         </p>
         </div>
-        <form ref={form} action={action} className="flex flex-col gap-6">
+        <form ref={form} onSubmit={onSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col justify-between gap-6">
             <div className="flex flex-col w-full gap-1">
               <label className="self-start text-sm font-semibold">

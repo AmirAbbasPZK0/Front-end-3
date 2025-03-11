@@ -19,7 +19,6 @@ const useAsync = (method : Methods , url : string) => {
                             "Content-Type" : "application/json",
                             "Authorization" : `Bearer ${token}`
                         },
-                        mode : "cors"
                     }).then(res => {
                         if(!res.ok){
                             throw new Error("Failed to Fetch")

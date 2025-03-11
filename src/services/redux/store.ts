@@ -7,6 +7,7 @@ import globalReducer from './reducers/globalSlice';
 import fileUploadsSlice from './reducers/fileUploadSlice'
 import resourceSlice from "./reducers/resourceSlice"
 import urlInputSlice from "./reducers/urlInputSlice"
+import userSlice from "./reducers/userSlice"
 
 const rootReducer = combineReducers({
   // userReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   globalReducer,
   fileUploadsSlice,
   resourceSlice,
-  urlInputSlice
+  urlInputSlice,
+  userSlice
 });
 
 const store = configureStore({

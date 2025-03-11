@@ -1,46 +1,27 @@
-// import endpoints from '@/config/endpoints';
-// import restApi from '@/services/restApi';
-// import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-// interface IUserSlice {
-//   data: any;
-//   history: any[];
-// }
+interface initialStateType { 
+    isLogin : boolean
+    data ?: {
+        name : string
+        email : string
+    }
+}
 
-// const initialState: IUserSlice = {
-//   data: {
-//     id: 0,
-//     name: '',
-//     lastName: '',
-//     phoneNumber: '',
-//     role: 'USER',
-//     profilePic: { url: ''}
-//   },
-//   history: []
-// };
-// export const fetchHistory = createAsyncThunk('history/fetchHistory', async () => {
-//   return await restApi(endpoints.history, true, true).get();
-// });
+const initialState : initialStateType = {
+    isLogin : false,
+}
 
-// const userSlice = createSlice({
-//   name: 'userSlice',
-//   initialState,
-//   reducers: {
-//     user: (state, action: PayloadAction<any>) => {
-//       state.data = action.payload;
-//     },
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(fetchHistory.fulfilled, (state, action) => {
-//         if (action.payload.code == 200) {
-//           state.history = action.payload.data;
-//         }
-//       });
-//   },
-// });
+const userSlice = createSlice({
+    name : "user",
+    initialState,
+    reducers : {
+        loginHandler : (state , action) => {
+            state.isLogin = true,
+            state.data = action.payload
+        }
+    }
+})
 
-// export const {user} = userSlice.actions;
-
-// const userReducer = userSlice.reducer;
-// export default userReducer;
+export const {loginHandler} = userSlice.actions
+export default userSlice.reducer
