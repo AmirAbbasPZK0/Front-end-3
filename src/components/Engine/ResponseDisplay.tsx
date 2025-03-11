@@ -9,7 +9,7 @@ import Loading from "./Loading";
 import Slider from "./Slider";
 import { TbSend2 } from "react-icons/tb";
 import { IoCopyOutline } from "react-icons/io5";
-import Carousel from "./Carousel";
+import CarouselYard from "./CarouselYard";
 import FactCheckDisplay from "./FactCheckDisplay";
 
 interface Source {
@@ -95,7 +95,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
                     <div className="w-full">
-                        <Carousel videos={videos}/>
+                        <CarouselYard videos={videos}/>
                     </div>
                 </div>
             </>)}

@@ -1,7 +1,6 @@
 "use client"
 
 import {useEffect , useState } from "react";
-import Video from "@/../public/images/video.png"
 
 const YouTubeVideos = ({ url , data } : {url : string , data : any}) => {
   const [videoId, setVideoId] = useState("");
@@ -27,7 +26,7 @@ const YouTubeVideos = ({ url , data } : {url : string , data : any}) => {
   }
 
   return (<>
-    <a target="_blank" href={url} className="md:w-[230px] w-[230px] md:h-[200px] h-[200px] flex flex-col gap-2 rounded-md">
+    <a target="_blank" href={url} className="md:w-[260px] w-[300px] md:h-[230px] h-[200px] flex flex-col gap-2 rounded-md">
         <img  onError={()=>setAlternativeImage("ffffff")} className="w-full md:h-[150px] h-[150px] object-cover rounded-md" src={data.source === "YouTube" ? !alternativeImage ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : imageAdd : data?.imageUrl ? data?.imageUrl : imageAdd} alt="Videos" />
         <div className="flex flex-col">
           <p className="text-[12px] dark:text-slate-500">{data?.title}</p>

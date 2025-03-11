@@ -8,6 +8,7 @@ import Providers from "@/services/redux/Providers";
 import { Suspense } from "react";
 import Layout from "@/components/Engine/Layout";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import 'react-multi-carousel/lib/styles.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
