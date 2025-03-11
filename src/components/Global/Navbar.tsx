@@ -9,7 +9,7 @@ import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import Link from "next/link";
 import NavLink from "./NavLink";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { IoIosClose, IoMdClose } from "react-icons/io";
+import { IoIosArrowForward, IoIosClose, IoMdClose } from "react-icons/io";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
 import LogoWhite from "@/../public/images/findora_logo_white.png";
 import { useAppSelector } from "@/services/redux/store";
@@ -292,6 +292,10 @@ const Navbar = () => {
                   <span>New Thread</span>
                 </button>
               </div>
+              <a href={"http://185.110.191.217:3000"} className="p-3 mt-3 flex justify-between items-center rounded-md font-semibold border-2 border-slate-800 dark:border-slate-100">
+                  <span>Try Findora</span>
+                  <IoIosArrowForward/>
+              </a>
               {user.isLogin && 
               <div className="flex flex-col h-10 pt-5">
                 <h3 className="text-[20px] font-semibold">Recent</h3>
@@ -300,9 +304,6 @@ const Navbar = () => {
                     <p key={index}>{item?.question}</p>
                   ))}
                 </div>
-                <a href={"http://185.110.191.217:3000"} className="text-white font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95">
-                  Try Findora
-                </a>
               </div>
               }
               <div className="flex gap-4 items-end justify-between h-full">
