@@ -25,6 +25,8 @@ const Layout = ({children} : {children : ReactNode}) => {
           dispatch(loginHandler(res.data))
         }
         setIsLoading(false)
+      }else{
+        setIsLoading(false)
       }
     };
     

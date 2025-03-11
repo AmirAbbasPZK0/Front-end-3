@@ -318,17 +318,6 @@ const PropmptYard = () => {
                 sendMessage={sendMessage}
               />
           )}
-          {!isNew && <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md md:w-[60%] w-[100%] p-3 flex flex-col">
-              <form onSubmit={(e)=>{
-                e.preventDefault()
-                if(followUp !== ""){
-                  sendMessage(followUp)
-                }
-              }} className="w-full flex flex-row gap-2" action="">
-                <input value={followUp} onChange={(e)=> setFollowUp(e.target.value)} type="text" placeholder="Follow-Up" className="w-full bg-transparent outline-none" />
-                <button className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
-              </form>
-          </div>}
         </div>
     </>);
 }

@@ -36,18 +36,19 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     sources ,
     isLoading , 
     images , 
-    isDone , 
     data , 
     relatedQuestions , 
     sendMessage , 
-    responseRef , 
     query ,
+    isDone,
     videos
 }) => {
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
+    const [followUp , setFollowUp] = useState("")
+    const [isSubmmited , setIsSubmited] = useState(false)
 
     useEffect(()=>{
         setHyperLinkTooltip(snippetAndTitleHandler(sources))
@@ -90,7 +91,29 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     </div>
                 </div>
             </div>
-            {relatedQuestions?.length > 0 && (<>
+            {(videos?.length > 0 && isDone) && (<>
+                <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
+                <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
+                    <div className="w-full">
+                        <Carousel videos={videos}/>
+                    </div>
+                </div>
+            </>)}
+            {!isSubmmited && (<>
+                <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md w-[100%] p-3 flex flex-col">
+                    <form onSubmit={(e)=>{
+                        setIsSubmited(true)
+                        e.preventDefault()
+                        if(followUp !== ""){
+                            sendMessage(followUp)
+                        }
+                    }} className="w-full flex flex-row gap-2" action="">
+                        <input value={followUp} onChange={(e)=> setFollowUp(e.target.value)} type="text" placeholder="Follow-Up" className="w-full bg-transparent outline-none" />
+                        <button className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
+                    </form>
+                </div>
+            </>)}
+            {(relatedQuestions?.length > 0 && isDone) && (<>
                 <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h1 className="text-[20px] p-2 font-semibold">Related Questions</h1>
                 <div className="flex flex-col w-full">
@@ -111,15 +134,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     </div>
                 </div>
             </>)}
-            {videos?.length > 0 && (<>
-                <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
-                <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
-                    <div className="w-full">
-                        <Carousel videos={videos}/>
-                    </div>
-                </div>
-            </>)}
-            
         </div>
     </>)
 }

@@ -57,7 +57,7 @@ const Slider = ({images} : {images : {imageUrl : string}[]}) => {
                     <img onClick={()=>{
                         setIsOpen(item?.imageUrl)
                         setOpenedImageSlider(index)
-                    }} className={`${isActive === index ? "md:max-w-full md:min-w-full min-h-[300px] max-h-[300px]" : "w-0 opacity-0"} object-cover cursor-pointer rounded-md`} src={item.imageUrl} alt="" />
+                    }} className={`${isActive === index ? "md:max-w-[270px] md:min-w-[270px]" : "w-0 opacity-0"} cursor-pointer rounded-md`} src={item.imageUrl} alt="" />
                 ))}
             </div>
             <button onClick={()=>{
