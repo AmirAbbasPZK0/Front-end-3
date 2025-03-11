@@ -300,6 +300,9 @@ const Navbar = () => {
                     <p key={index}>{item?.question}</p>
                   ))}
                 </div>
+                <a href={"http://185.110.191.217:3000"} className="text-white font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95">
+                  Try Findora
+                </a>
               </div>
               }
               <div className="flex gap-4 items-end justify-between h-full">
