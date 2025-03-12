@@ -68,14 +68,14 @@ const Slider = ({images} : {images : {imageUrl : string}[]}) => {
         <AnimatePresence>
                 <div>
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
-                        <button className='p-4 z-50' onClick={()=>{
+                        <button className='p-4 z-50 text-white' onClick={()=>{
                             setOpenedImageSlider((item : any) => item === 0 ? (newImages?.length - 1) : item - 1)
                         }}><IoIosArrowBack/></button>
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="fixed inset-0 bg-slate-800"
+                                className="fixed inset-0 bg-black/80"
                                 onClick={()=> setIsOpen(false)}
                             />
                             <motion.div
@@ -91,7 +91,7 @@ const Slider = ({images} : {images : {imageUrl : string}[]}) => {
                                     <img key={index} className={`${index === openedImageSlider ? "flex" : "hidden"}`} src={item.imageUrl} alt="" />
                                 ))}
                             </motion.div>
-                        <button className='p-4 z-50' onClick={()=>{
+                        <button className='p-4 z-50 text-white' onClick={()=>{
                             setOpenedImageSlider((item : any) => item === (newImages?.length - 1) ? 0 : item + 1)
                         }}><IoIosArrowForward/></button>
                     </div>

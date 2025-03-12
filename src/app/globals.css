@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 html.lenis,
 html.lenis body {
   height: auto;

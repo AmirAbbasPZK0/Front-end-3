@@ -57,6 +57,15 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         setHyperLinkTooltip(snippetAndTitleHandler(sources))
     },[sources])
 
+    useEffect(() => {
+        if(openSources){
+            document.body.style.overflow = "hidden";
+        }else{
+            document.body.style.overflow = "auto";
+        }
+        
+      }, [openSources]);
+
     if(isLoading){
         return <div className="h-[70vh]">
             <Loading/>
@@ -68,7 +77,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     }
 
     return(<>
-        <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
+        <div className={`p-4 ${openSources && "overflow-hidden"} rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
             <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
                 <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
             </div>
@@ -86,7 +95,10 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             {sources ? hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
-                            {sources && <button onClick={()=>setOpenSources(true)} className='px-2 rounded-md border-2 border-slate-500 dark:border-slate-100'>Sources</button>}
+                            {sources && <button onClick={()=>{
+                                setOpenSources(true)
+                                // document.getElementById("body")?.style.overflow = "hidden"
+                            }} className='px-2 rounded-md border-2 border-slate-500 dark:border-slate-100'>Sources</button>}
                             {openSources && <>
                                 <div onClick={()=>{
                                     setOpenSources(false)

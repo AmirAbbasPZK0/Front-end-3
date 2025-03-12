@@ -45,11 +45,13 @@ const CarouselYard = ({videos} : {videos : any}) => {
     console.log(newVideos)
 
     return(<>
-        <Carousel responsive={responsive}>
+        {newVideos?.length > 0 && (<>
+          <Carousel responsive={responsive}>
             {newVideos?.map((item : any , index) => (
                 <YouTubeVideos key={index} url={item.link} data={item}/>
             ))}
-        </Carousel>
+          </Carousel>
+        </>)}
     </>)
 }
 

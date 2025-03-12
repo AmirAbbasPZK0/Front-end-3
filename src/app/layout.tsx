@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import ScrollToTop from "./utils/ScrollToTop";
 import Providers from "@/services/redux/Providers";
 import { Suspense } from "react";
@@ -41,7 +39,7 @@ export default function RootLayout({
           <meta name="theme-color" content="#b898fd" />
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
+          className={`${geistSans.variable} ${geistMono.variable} overflow-y-hidden antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
         >
           <EdgeStoreProvider>
             <Layout>
