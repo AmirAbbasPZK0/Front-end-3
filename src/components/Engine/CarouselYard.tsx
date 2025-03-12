@@ -39,6 +39,11 @@ const CarouselYard = ({videos} : {videos : any}) => {
         }
       };
 
+    
+      console.log(videos)
+
+    console.log(newVideos)
+
     return(<>
         <Carousel responsive={responsive}>
             {newVideos?.map((item : any , index) => (

@@ -8,7 +8,7 @@ const AnimatedText = () => {
     const [textColor, setTextColor] = useState("#008f7a");
 
     return (<>
-        <div className="flex items-center justify-center pt-10">
+        <div className="flex items-center justify-center py-20">
         <div
             className="text-4xl lg:text-5xl h-[15vh] md:h-[10vh] font-semibold"
             style={{ color: textColor }}

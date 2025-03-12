@@ -22,8 +22,11 @@ export default function Home() {
       {/* <PreLoader /> */}
       {/* <PreLoader /> */}
       <div className="bg-[#f0f0fc] dark:bg-[#111828]">
-        <WhatIsFindora />
+        <div className="pt-[100px] flex items-center justify-center">
+          <h1 className="text-[30px] font-semibold">What is on your mind</h1>
+        </div>
         <PropmptYard />
+        <WhatIsFindora />
         <AnimatedText />
         <TabsFeatures />
         <Stats />

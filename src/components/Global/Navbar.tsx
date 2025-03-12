@@ -241,7 +241,7 @@ const Navbar = () => {
               animate={{ x: "0%" }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="relative top-0 left-0 md:w-[20vw] w-[80vw] h-screen bg-[#f0f0fc] dark:bg-[#111828] z-[160] flex flex-col justify-around lg:justify-between pt-4 pb-4 px-4 lg:pt-16"
+              className="relative top-0 left-0 md:w-[20vw] w-[80vw] h-screen bg-[#f0f0fc] dark:bg-[#111828] z-[160] flex flex-col justify-around lg:justify-between overflow-y-auto pt-4 pb-4 px-4 lg:pt-16"
             >
               <div className="flex justify-center">
                 <button onClick={()=>{
@@ -261,7 +261,7 @@ const Navbar = () => {
               </a>
               {user.isLogin && 
               <div className="flex flex-col  pt-5">
-                <h3 className="text-[20px]  font-semibold">Recent</h3>
+                <h3 className="text-[20px] font-semibold">Recent</h3>
                 <div className="flex flex-col h-[300px] overflow-y-auto items-start pt-3">
                   {recentSearch?.map((item : any , index) => (
                     <p className="flex" key={index}>{item?.question.length > 3 ? `${item?.question.split(0,10)}...` : item?.question}</p>
@@ -269,7 +269,7 @@ const Navbar = () => {
                 </div>
               </div>
               }
-              <div className="flex gap-4 items-end justify-between h-full">
+              <div className="flex gap-4 items-end justify-between">
                 <div className=" flex items-center gap-2">
                   <FaCircleUser size={30} />
                   <div className="flex flex-col md:w-auto">
@@ -285,7 +285,7 @@ const Navbar = () => {
                   </div>
                 </button>
               </div>
-              
+
               <button
                 onClick={closeLeftMenu}
                 className=" absolute top-2 right-2"
