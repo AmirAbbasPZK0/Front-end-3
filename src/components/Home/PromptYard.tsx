@@ -2,7 +2,7 @@
 import ResponseDisplay from '@/components/Engine/ResponseDisplay';
 import useWebSocket from '@/hooks/useWebSocket';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import Switch from 'react-ios-switch';
 // import UrlInput from './UrlInput';
 // import MenuButtons from './MenuButtons';
@@ -39,7 +39,8 @@ const PropmptYard = () => {
     const { socket, response, setResponse, responseRef } = useWebSocket();
     const router = useRouter()
     const [isAttachOpen , setIsAttachOpen] = useState(false)
-    const [followUp , setFollowUp] = useState("")
+    const pathname = usePathname();
+    const textareaRef = useRef<any>(null)
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
@@ -98,8 +99,6 @@ const PropmptYard = () => {
       });
   
       setPrompt('');
-
-      setFollowUp("")
 
     };
     useEffect(() => {
@@ -212,11 +211,11 @@ const PropmptYard = () => {
     //   });
     // }, [response]);
   
-    useEffect(()=>{
-      if(window.location.href.includes("search")){
-        dispatch(removeRecency())
-      }
-    },[])
+    // useEffect(()=>{
+    //   if(window.location.href.includes("search")){
+    //     dispatch(removeRecency())
+    //   }
+    // },[])
 
   useEffect(() => {
     if (newResponse.length > 0) {
@@ -252,6 +251,13 @@ const PropmptYard = () => {
       };
     }, [prompt , urlInputs.urlInputs]);
 
+    useEffect(() => {
+      if (textareaRef.current) {
+        textareaRef.current.style.height = 'auto';
+        textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+      }
+    }, [prompt]);
+
     return (<>
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 justify-center gap-4 flex-col">
           {isNew && (<>
@@ -262,7 +268,9 @@ const PropmptYard = () => {
                 sendMessage(prompt)
               }
             }} className='border-2 flex flex-col text-center gap-5 w-full border-slate-400 dark:border-slate-100 p-4 rounded-lg'>
-              <input onChange={e => setPrompt(e.target.value)} type="text" placeholder='Write your text...' className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} placeholder-gray-500 bg-transparent outline-none`}/>
+              <textarea ref={textareaRef} onChange={e => {
+            setPrompt(e.target.value)
+          }} placeholder='Write your text...' rows={2} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-5 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
               <div className='flex flex-row items-center justify-between gap-2 w-full'>
                 <div className='flex flex-row gap-2'>
 

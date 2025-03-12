@@ -29,8 +29,8 @@ const YouTubeVideos = ({ url , data } : {url : string , data : any}) => {
     <a target="_blank" href={url} className="md:w-[260px] w-[300px] md:h-[230px] h-[220px] flex flex-col gap-2 rounded-md">
         <img  onError={()=>setAlternativeImage("ffffff")} className="w-[300px] md:h-[150px] h-[150px] object-cover rounded-md" src={data.source === "YouTube" ? !alternativeImage ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : imageAdd : data?.imageUrl ? data?.imageUrl : imageAdd} alt="Videos" />
         <div className="flex flex-col">
-          <p className="text-[12px] dark:text-slate-500">{data?.title}</p>
-          <p className="text-[8px]">{data?.date}</p>
+          <p className="text-[12px]">{data?.title}</p>
+          <p className="text-[10px] text-slate-500 dark:text-slate-300">{data?.date}</p>
         </div>
     </a>
   </>);

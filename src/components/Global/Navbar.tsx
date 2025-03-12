@@ -22,13 +22,13 @@ import { FiPhone, FiPlus } from "react-icons/fi";
 import { RiHome2Line } from "react-icons/ri";
 import { GoPeople } from "react-icons/go";
 import { AnimatePresence, motion } from "framer-motion";
-import { GrUpgrade } from "react-icons/gr";
 import { FaCircleUser } from "react-icons/fa6";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaBars } from "react-icons/fa";
 import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
 import { addRecency, addResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
 import { useRouter } from "next/navigation";
+import { VscDebugBreakpointData } from "react-icons/vsc";
 
 const Links = [
   { id: 1, title: "Home", icon: RiHome2Line, url: "/" },
@@ -67,14 +67,9 @@ const Navbar = () => {
     setShowDropDown((prev) => !prev);
   };
 
-  const toggleHamMenu = () => {
-    setShowHamMenu((prev) => !prev);
-  };
-
   const initialApiCalls = async () => {
-    if (Cookies.get('access_token') || localStorage.getItem('sessionId')){
+    if (localStorage.getItem('sessionId')){
       const res = await restApi(endpoints.history, true, true).get();
-      console.log(res)
       setRecentSearch(res.data)
     }
   };
@@ -207,7 +202,7 @@ const Navbar = () => {
                   onClick={openLeftMenu}
                   className="text-white font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
                 >
-                  <span className="relative z-10 flex flex-col">Menu</span>
+                  <span className="relative z-10 flex flex-col"><FaBars className="text-[26px]"/></span>
                   <motion.div
                     initial={{ left: 0 }}
                     animate={{ left: "-300%" }}
@@ -228,43 +223,11 @@ const Navbar = () => {
               ))}
             </div>
             <div className="hidden lg:flex gap-4">
-              {user.isLogin ? (<>
-                <div>{user?.data?.name}</div>
-              </>) : (<>
-                <Link href={'/login'}>Login</Link>
-              </>)}
               <ThemeToggle />
             </div>
             <div className=" flex flex-col items-center gap-4 lg:hidden relative">
               <ThemeToggle />
-              <div
-                ref={hamMenuRef}
-                className=" bg-[#f9fafc] dark:bg-[#111828] dark:text-white py-3 px-3 rounded-full shadow-md flex justify-center items-center"
-              >
-                <button onClick={toggleHamMenu}>
-                  {showHamMenu ? (
-                    <IoMdClose size={25} />
-                  ) : (
-                    <RxHamburgerMenu size={25} />
-                  )}
-                </button>
-                {showHamMenu && (
-                  <div className="flex flex-col gap-2 absolute top-24 right-0 bg-[#f9fafc] dark:bg-[#111828] rounded-2xl shadow-md z-[100]">
-                    {Cookies.get("access_token") ? (<>
-                      <div>{user?.data?.name}</div>
-                    </>) : (<>
-                      <Link onClick={()=> setShowHamMenu(false)} href={'/login'}>Login</Link>
-                    </>)}
-                    <Link
-                      href="/"
-                      className="p-4"
-                      onClick={() => setShowHamMenu(false)}
-                    >
-                      Download App
-                    </Link>
-                  </div>
-                )}
-              </div>
+             
             </div>
           </div>
         </div>
@@ -297,11 +260,11 @@ const Navbar = () => {
                   <IoIosArrowForward/>
               </a>
               {user.isLogin && 
-              <div className="flex flex-col h-10 pt-5">
-                <h3 className="text-[20px] font-semibold">Recent</h3>
-                <div className="flex flex-col items-start pt-3">
+              <div className="flex flex-col  pt-5">
+                <h3 className="text-[20px]  font-semibold">Recent</h3>
+                <div className="flex flex-col h-[300px] overflow-y-auto items-start pt-3">
                   {recentSearch?.map((item : any , index) => (
-                    <p key={index}>{item?.question}</p>
+                    <p className="flex" key={index}>{item?.question.length > 3 ? `${item?.question.split(0,10)}...` : item?.question}</p>
                   ))}
                 </div>
               </div>
@@ -310,18 +273,19 @@ const Navbar = () => {
                 <div className=" flex items-center gap-2">
                   <FaCircleUser size={30} />
                   <div className="flex flex-col md:w-auto">
-                    <span>{Cookies.get("access_token") ? user?.data?.name : "Guess"}</span>
+                    <span>{user.isLogin ? user?.data?.name : "Guess"}</span>
                     <span className=" text-xs opacity-50">Free plan</span>
                   </div>
                 </div>
 
                 <button className="flex gap-2 h-10 items-center group">
-                  <span className="font-bold">My Profile</span>
+                  {user.isLogin ? <span className="font-bold">My Profile</span> : <Link className="font-bold" href={"/login"}>Login</Link>}
                   <div className=" lg:group-hover:translate-x-1 transition-transform duration-300">
                     <FaArrowRight />
                   </div>
                 </button>
               </div>
+              
               <button
                 onClick={closeLeftMenu}
                 className=" absolute top-2 right-2"

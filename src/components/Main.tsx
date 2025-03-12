@@ -22,12 +22,8 @@ export default function Home() {
       {/* <PreLoader /> */}
       {/* <PreLoader /> */}
       <div className="bg-[#f0f0fc] dark:bg-[#111828]">
-        <div className="w-full flex pt-4 items-center justify-center">
-          <Image className="w-[120px] h-[120px] dark:hidden block" src={LogoBlack} alt="" />
-          <Image className="w-[120px] h-[120px] hidden dark:block" src={LogoWhite} alt="" />
-        </div>
-        <PropmptYard />
         <WhatIsFindora />
+        <PropmptYard />
         <AnimatedText />
         <TabsFeatures />
         <Stats />

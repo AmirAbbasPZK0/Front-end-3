@@ -67,34 +67,34 @@ const Slider = ({images} : {images : {imageUrl : string}[]}) => {
         {isOpen && 
         <AnimatePresence>
                 <div>
-                <div className="fixed inset-0 z-50 flex items-center justify-center">
-                    <button className='p-4 z-50' onClick={()=>{
-                        setOpenedImageSlider((item : any) => item === 0 ? (newImages?.length - 1) : item - 1)
-                    }}><IoIosArrowBack/></button>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 bg-black/50"
-                            onClick={()=> setIsOpen(false)}
-                        />
-                        <motion.div
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
-                            className="relative w-full max-w-md dark:bg-slate-900 gap-2 text-center flex flex-col rounded-2xl bg-white p-8 shadow-xl"
-                        >
-                            {/* <a target="_blank" href={newImages[openedImageSlider as number]?.imageUrl}>
-                                <ImageHandler className="" isForBigSlider={true} handleError={()=> console.log("Failed to load")} item={{imageUrl : newImages[openedImageSlider as number]?.imageUrl}}/>
-                            </a> */}
-                            {newImages?.filter((image : any) => image.loaded)?.map((item : any , index) => (
-                                <img key={index} className={`${index === openedImageSlider ? "flex" : "hidden"}`} src={item.imageUrl} alt="" />
-                            ))}
-                        </motion.div>
-                    <button className='p-4 z-50' onClick={()=>{
-                        setOpenedImageSlider((item : any) => item === (newImages?.length - 1) ? 0 : item + 1)
-                    }}><IoIosArrowForward/></button>
-                </div>
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <button className='p-4 z-50' onClick={()=>{
+                            setOpenedImageSlider((item : any) => item === 0 ? (newImages?.length - 1) : item - 1)
+                        }}><IoIosArrowBack/></button>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 bg-slate-800"
+                                onClick={()=> setIsOpen(false)}
+                            />
+                            <motion.div
+                                initial={{ scale: 0.95, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.95, opacity: 0 }}
+                                className="relative w-full max-w-md dark:bg-slate-900 gap-2 text-center flex flex-col rounded-2xl bg-white p-8 shadow-xl"
+                            >
+                                {/* <a target="_blank" href={newImages[openedImageSlider as number]?.imageUrl}>
+                                    <ImageHandler className="" isForBigSlider={true} handleError={()=> console.log("Failed to load")} item={{imageUrl : newImages[openedImageSlider as number]?.imageUrl}}/>
+                                </a> */}
+                                {newImages?.filter((image : any) => image.loaded)?.map((item : any , index) => (
+                                    <img key={index} className={`${index === openedImageSlider ? "flex" : "hidden"}`} src={item.imageUrl} alt="" />
+                                ))}
+                            </motion.div>
+                        <button className='p-4 z-50' onClick={()=>{
+                            setOpenedImageSlider((item : any) => item === (newImages?.length - 1) ? 0 : item + 1)
+                        }}><IoIosArrowForward/></button>
+                    </div>
                 </div>
         </AnimatePresence>}
     </>)

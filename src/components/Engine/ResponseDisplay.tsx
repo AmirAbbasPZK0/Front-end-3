@@ -11,6 +11,8 @@ import { TbSend2 } from "react-icons/tb";
 import { IoCopyOutline } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
 import FactCheckDisplay from "./FactCheckDisplay";
+import Source from "./Source";
+import { FaTimes } from "react-icons/fa";
 
 interface Source {
     title : string
@@ -49,6 +51,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
+    const [openSources , setOpenSources] = useState(false)
 
     useEffect(()=>{
         setHyperLinkTooltip(snippetAndTitleHandler(sources))
@@ -67,7 +70,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     return(<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
             <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
-                <h2 className="text-[15px] flex items-end justify-end text-end p-2 font-semibold">{query}</h2>
+                <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
             </div>
             <div className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
@@ -82,7 +85,31 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             }}> 
                             {sources ? hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
-                        <div className="flex flex-row">
+                        <div className="flex gap-2 flex-row">
+                            {sources && <button onClick={()=>setOpenSources(true)} className='px-2 rounded-md border-2 border-slate-500 dark:border-slate-100'>Sources</button>}
+                            {openSources && <>
+                                <div onClick={()=>{
+                                    setOpenSources(false)
+                                }} className="fixed inset-0 bg-black bg-opacity-30 z-40"></div>
+                            </>}
+                            <div className={`flex flex-col gap-4 p-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-[2147483647] text-white w-[360px] h-[100vh]`}>
+                                <div className='flex flex-row w-full justify-between'>
+                                <div className='flex flex-col'>
+                                    <h3 className='rounded-md font-semibold text-[30px] dark:text-white text-black'>Sources</h3>
+                                    <p className='text-gray-500'>From {sources?.length - 1} sources</p>
+                                </div>
+                                <button className="p-3 text-[20px]" onClick={()=>{
+                                    setOpenSources(false)
+                                }}><FaTimes className="text-black dark:text-white"/></button>
+                                </div>
+                                <div className='flex flex-col h-[100vh] bg-slate-200 dark:bg-slate-900 w-full gap-4 overflow-auto'>
+                                {sources?.map((source : any, index) => (
+                                    <li key={'source' + index} className="flex w-full p-2 items-start">
+                                        <Source link={source[2]} data={{title : source[3] , snippet : source[4]}} title={source[0]}/>
+                                    </li>
+                                ))}
+                                </div>
+                            </div>
                             <button><IoCopyOutline/></button>
                         </div>
                     </div>
@@ -105,7 +132,10 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 <div className="flex flex-col w-full">
                         {Array.isArray(relatedQuestions) && relatedQuestions?.map((e, index) => (
                         <button
-                            onClick={()=> sendMessage(e)}
+                            onClick={()=> {
+                                sendMessage(e)
+                                setIsSubmited(true)
+                            }}
                             type="button"
                             key={index}
                             className={`border-b-2 w-[90%] border-slate-400 dark:border-slate-100 p-3 flex flex-row justify-between items-center`}
