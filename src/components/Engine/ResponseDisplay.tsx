@@ -16,6 +16,7 @@ import Source from "./Source";
 import { FaTimes } from "react-icons/fa";
 import { sourceList } from "@/functions/sourceList";
 import SourceButton from "./SourceButton";
+import useClipboard from "react-use-clipboard";
 
 interface Source {
     title : string
@@ -56,11 +57,12 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
-    const [copyTextMessage , setCopyTextMessage] = useState("Not Copied")
     
-    const removeMarkdown = (markdown : any) => {
+    const [isCopied , setIsCopied] = useClipboard(`${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n \n ${sourceList(sources)}` : removeMarkdown(response)}`)
+    
+    function removeMarkdown(markdown : any){
         return markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
-    };
+    }
 
     useEffect(()=>{
         setHyperLinkTooltip(snippetAndTitleHandler(sources))
@@ -81,8 +83,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             return d
         })
     },[])
-
-    console.log(images)
 
     if(isLoading){
         return <div className="h-[70vh]">
@@ -139,14 +139,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 ))}
                                 </div>
                             </div>
-                            <CopyToClipboard text={`${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n \n ${sourceList(sources)}` : removeMarkdown(response)}`} onCopy={()=> {
-                                setCopyTextMessage("Copied!")
-                                setTimeout(()=>{
-                                    setCopyTextMessage("Not Copied")
-                                },3000)
-                            }}>
-                                <button><IoCopyOutline/></button>
-                            </CopyToClipboard>
+                            <button onClick={setIsCopied}><IoCopyOutline/></button>
                         </div>
                     </div>
                     {(images && images?.length > 0) && <div className="md:w-[30%] w-full">
