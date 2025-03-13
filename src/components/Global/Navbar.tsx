@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Cookies from "js-cookie";
 import { useAppDispatch } from "@/services/redux/store";
 import endpoints from "@/configs/endpoints";
 import restApi from "@/services/restApi";
@@ -8,8 +7,7 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import Link from "next/link";
 import NavLink from "./NavLink";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IoIosArrowForward, IoIosClose, IoMdClose } from "react-icons/io";
+import { IoIosArrowForward, IoIosClose } from "react-icons/io";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
 import LogoWhite from "@/../public/images/findora_logo_white.png";
 import { useAppSelector } from "@/services/redux/store";
@@ -28,7 +26,7 @@ import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
 import { addRecency, addResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
 import { useRouter } from "next/navigation";
-import { VscDebugBreakpointData } from "react-icons/vsc";
+import { historyHandler } from "@/services/redux/reducers/userSlice";
 
 const Links = [
   { id: 1, title: "Home", icon: RiHome2Line, url: "/" },
@@ -38,11 +36,9 @@ const Links = [
 
 const Navbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [showHamMenu, setShowHamMenu] = useState(false);
   const [recentSearch , setRecentSearch] = useState([])
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const hamMenuRef = useRef<HTMLDivElement>(null);
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -70,7 +66,7 @@ const Navbar = () => {
   const initialApiCalls = async () => {
     if (localStorage.getItem('sessionId')){
       const res = await restApi(endpoints.history, true, true).get();
-      setRecentSearch(res.data)
+      dispatch(historyHandler(res.data))
     }
   };
 
@@ -121,22 +117,7 @@ const Navbar = () => {
     };
   }, []);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutsideHam = (event: MouseEvent) => {
-      if (
-        hamMenuRef.current &&
-        !hamMenuRef.current.contains(event.target as Node)
-      ) {
-        setShowHamMenu(false);
-      }
-    };
 
-    document.addEventListener("mousedown", handleClickOutsideHam);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutsideHam);
-    };
-  }, []);
 
   useEffect(()=>{
     initialApiCalls()
@@ -255,10 +236,6 @@ const Navbar = () => {
                   <span>New Thread</span>
                 </button>
               </div>
-              <a href={"http://185.110.191.217:3000"} className="p-3 mt-3 flex justify-between items-center rounded-md font-semibold border-2 border-slate-800 dark:border-slate-100">
-                  <span>Try Findora</span>
-                  <IoIosArrowForward/>
-              </a>
               {user.isLogin && 
               <div className="flex flex-col  pt-5">
                 <h3 className="text-[20px] font-semibold">Recent</h3>

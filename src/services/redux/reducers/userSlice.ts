@@ -6,6 +6,7 @@ interface initialStateType {
         name : string
         email : string
     }
+    history ?: any
 }
 
 const initialState : initialStateType = {
@@ -19,9 +20,12 @@ const userSlice = createSlice({
         loginHandler : (state , action) => {
             state.isLogin = true,
             state.data = action.payload
+        },
+        historyHandler : (state , action) => {
+            state.history = action.payload
         }
     }
 })
 
-export const {loginHandler} = userSlice.actions
+export const {loginHandler , historyHandler} = userSlice.actions
 export default userSlice.reducer

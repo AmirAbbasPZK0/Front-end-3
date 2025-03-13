@@ -10,17 +10,6 @@ import Carousel from "react-multi-carousel";
 
 const CarouselYard = ({videos} : {videos : any}) => {
 
-    const [newVideos , setNewVideos] = useState([])
-
-    const {isMobile} = useAgent()
-
-    useEffect(()=>{
-        setNewVideos((_)=>{
-            let d = videos.filter((r: { source: string; }) => r.source === "YouTube")
-            return d
-        })
-    },[])
-
     const responsive = {
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
@@ -39,15 +28,10 @@ const CarouselYard = ({videos} : {videos : any}) => {
         }
       };
 
-    
-      console.log(videos)
-
-    console.log(newVideos)
-
     return(<>
-        {newVideos?.length > 0 && (<>
+        {videos?.length > 0 && (<>
           <Carousel responsive={responsive}>
-            {newVideos?.map((item : any , index) => (
+            {videos?.map((item : any , index : number) => (
                 <YouTubeVideos key={index} url={item.link} data={item}/>
             ))}
           </Carousel>

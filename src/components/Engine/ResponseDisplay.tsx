@@ -11,8 +11,11 @@ import { TbSend2 } from "react-icons/tb";
 import { IoCopyOutline } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
 import FactCheckDisplay from "./FactCheckDisplay";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import Source from "./Source";
 import { FaTimes } from "react-icons/fa";
+import { sourceList } from "@/functions/sourceList";
+import SourceButton from "./SourceButton";
 
 interface Source {
     title : string
@@ -49,9 +52,15 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
+    const [newVideos , setNewVideos] = useState<any>([])
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
+    const [copyTextMessage , setCopyTextMessage] = useState("Not Copied")
+    
+    const removeMarkdown = (markdown : any) => {
+        return markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
+    };
 
     useEffect(()=>{
         setHyperLinkTooltip(snippetAndTitleHandler(sources))
@@ -65,6 +74,15 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
         
       }, [openSources]);
+
+    useEffect(()=>{
+        setNewVideos(()=>{
+            let d = videos.filter((r: { source: string; }) => r.source === "YouTube")
+            return d
+        })
+    },[])
+
+    console.log(images)
 
     if(isLoading){
         return <div className="h-[70vh]">
@@ -83,7 +101,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             </div>
             <div className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
-                    <div className="flex flex-col w-[100%] md:w-[70%] gap-4">
+                    <div className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
                         <ReactMarkdown components={{
                             h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
                             h2 : (props) => <h2 className='text-[23px] font-semibold pt-2 pb-2' {...props}/>,
@@ -91,18 +109,17 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             a : (props) => <HyperLink data={hyperLinkTooltip?.[props.href as string]} href={props.href as string}>{props.children}</HyperLink>,
                             ul : (props) => <ul {...props}/>,
                             li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>
-                            }}> 
+                        }}> 
                             {sources ? hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
-                            {sources && <button onClick={()=>{
+                            {sources && <SourceButton sources={sources} onClick={()=>{
                                 setOpenSources(true)
-                                // document.getElementById("body")?.style.overflow = "hidden"
-                            }} className='px-2 rounded-md border-2 border-slate-500 dark:border-slate-100'>Sources</button>}
+                            }}/>}
                             {openSources && <>
                                 <div onClick={()=>{
                                     setOpenSources(false)
-                                }} className="fixed inset-0 bg-black bg-opacity-30 z-40"></div>
+                                }} className="fixed inset-0 bg-black bg-opacity-30 z-40"/>
                             </>}
                             <div className={`flex flex-col gap-4 p-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-[2147483647] text-white w-[360px] h-[100vh]`}>
                                 <div className='flex flex-row w-full justify-between'>
@@ -117,24 +134,31 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 <div className='flex flex-col h-[100vh] bg-slate-200 dark:bg-slate-900 w-full gap-4 overflow-auto'>
                                 {sources?.map((source : any, index) => (
                                     <li key={'source' + index} className="flex w-full p-2 items-start">
-                                        <Source link={source[2]} data={{title : source[3] , snippet : source[4]}} title={source[0]}/>
+                                        <Source data={{title : source[3] , snippet : source[4] , link : source[2]}} title={source[0]}/>
                                     </li>
                                 ))}
                                 </div>
                             </div>
-                            <button><IoCopyOutline/></button>
+                            <CopyToClipboard text={`${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n \n ${sourceList(sources)}` : removeMarkdown(response)}`} onCopy={()=> {
+                                setCopyTextMessage("Copied!")
+                                setTimeout(()=>{
+                                    setCopyTextMessage("Not Copied")
+                                },3000)
+                            }}>
+                                <button><IoCopyOutline/></button>
+                            </CopyToClipboard>
                         </div>
                     </div>
-                    <div className="md:w-[30%] w-full">
-                        {images?.length > 0 && <Slider images={images}/>}
-                    </div>
+                    {(images && images?.length > 0) && <div className="md:w-[30%] w-full">
+                        <Slider images={images}/>
+                    </div>}
                 </div>
             </div>
-            {(videos?.length > 0 && isDone) && (<>
+            {(newVideos?.length > 0 && isDone) && (<>
                 <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
                     <div className="w-full">
-                        <CarouselYard videos={videos}/>
+                        <CarouselYard videos={newVideos}/>
                     </div>
                 </div>
             </>)}

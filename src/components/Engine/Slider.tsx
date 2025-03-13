@@ -54,7 +54,7 @@ const Slider = ({images} : {images : {imageUrl : string}[]}) => {
             }}><IoIosArrowBack/></button>
             <div className="md:w-[80%] w-[100%]">
                 {newImages?.map((item : any , index) => (
-                    <img onClick={()=>{
+                    <img key={index} onClick={()=>{
                         setIsOpen(item?.imageUrl)
                         setOpenedImageSlider(index)
                     }} className={`${isActive === index ? "md:max-w-[270px] md:min-w-[270px]" : "w-0 opacity-0"} cursor-pointer rounded-md`} src={item.imageUrl} alt="" />
