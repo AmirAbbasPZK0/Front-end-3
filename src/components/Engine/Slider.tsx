@@ -33,7 +33,6 @@ const Slider = ({images} : {images : {imageUrl : string}[]}) => {
                 );
             };
             img.onerror = () => {
-                console.log(`Failed to load ${image.imageUrl}`);
                 // Optionally, you can remove or replace the image here
                 setNewImages((prevImages : any) =>
                     prevImages.filter((prevImage : any) => prevImage.imageUrl !== image.imageUrl)

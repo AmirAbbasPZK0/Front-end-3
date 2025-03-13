@@ -20,7 +20,6 @@ const Layout = ({children} : {children : ReactNode}) => {
     const initialApiCalls = async () => {
       if (Cookies.get('access_token') || localStorage.getItem('sessionId')){
         const res = await restApi(endpoints.user, true, true).get();
-        console.log(res)
         if(res.code === 200){
           dispatch(loginHandler(res.data))
         }

@@ -16,6 +16,7 @@ import { FaTimes } from "react-icons/fa";
 import { sourceList } from "@/functions/sourceList";
 import SourceButton from "./SourceButton";
 import useClipboard from "react-use-clipboard";
+import remarkGfm from 'remark-gfm'
 
 interface Source {
     title : string
@@ -52,7 +53,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
-    const [newVideos , setNewVideos] = useState<any>([])
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
@@ -76,13 +76,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         
       }, [openSources]);
 
-    useEffect(()=>{
-        setNewVideos(()=>{
-            let d = videos.filter((r: { source: string; }) => r.source === "YouTube")
-            return d
-        })
-    },[])
-
     if(isLoading){
         return <div className="h-[70vh]">
             <Loading/>
@@ -101,7 +94,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             <div className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
                     <div className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
-                        <ReactMarkdown components={{
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
                             h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
                             h2 : (props) => <h2 className='text-[23px] font-semibold pt-2 pb-2' {...props}/>,
                             h3 : (props) => <h3 className=' text-[20px] font-semibold pt-3' {...props}/>,
@@ -152,7 +145,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
                     <div className="w-full">
-                        <CarouselYard videos={newVideos}/>
+                        <CarouselYard videos={videos}/>
                     </div>
                 </div>
             </>)}

@@ -44,8 +44,6 @@ const PropmptYard = () => {
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
-    console.log(uploadedFiles.urlsOfFiles)
-
     const sendMessage = (prompt: string) => {
       if(selectedResources === "url" && urlInputs.urlInputs.includes("")){
         return false
