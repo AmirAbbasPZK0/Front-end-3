@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { FaPlus } from 'react-icons/fa';
 import { GrUpgrade } from "react-icons/gr";
 import { IoIosArrowForward } from 'react-icons/io';
+import Link from 'next/link';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -20,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const dispatch = useAppDispatch()
 
-  const history = useAppSelector(state => state.userSlice.history)
+  const user = useAppSelector(state => state.userSlice)
 
   return (
     <>
@@ -63,16 +64,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   onClose()
             }} className='flex items-center flex-row gap-2 border-2 rounded-[30px] px-2 py-1 border-slate-950 dark:border-slate-100 bg-none dark:text-white'><FaPlus/><span>New Thread</span></button>
           </nav>
-          <div className='flex flex-col gap-2 pt-3'>
+          {user.isLogin && <div className='flex flex-col gap-2 pt-3'>
             <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
-              {history?.map((item : any , index : number) => (
+              {user.history?.map((item : any , index : number) => (
                 <div key={index}>
                   <p>{item.question}</p>
                 </div>
               ))}
             </nav>
-          </div>
+          </div>}
           <nav className='w-[80%] flex flex-col items-center gap-3 h-[20vh] justify-center fixed bottom-0'>
             <button className='flex items-center flex-row gap-2 border-2 px-4 rounded-[30px] p-3 border-slate-950 dark:border-slate-100 bg-none dark:text-white'>
               <GrUpgrade/>
@@ -82,14 +83,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <div className='flex flex-row items-center gap-2'>
                 <img src="/images/guest-user.webp" alt="Guest User" className="w-12 h-12 rounded-full"/>
                 <div className='flex flex-col'>
-                  <h4 className='dark:text-white'>Guest</h4>
+                  <h4 className='dark:text-white text-[12px]'>{user.isLogin ? user.data?.name : "Guess"}</h4>
                   <p className='text-slate-400 text-[13px]'>Free plan</p>
                 </div>
               </div>
-              <div className='flex dark:text-white flex-row items-center gap-2'>
-                <span>My Profile</span>
-                <IoIosArrowForward/>
-              </div>
+              {user.isLogin ? (<>
+                <div className='flex dark:text-white flex-row items-center gap-2'>
+                  <span className='text-[13px] font-semibold'>My Profile</span>
+                  <IoIosArrowForward/>
+                </div>
+              </>) : (<>
+                <div className='flex dark:text-white flex-row items-center gap-2'>
+                  <Link className='text-[13px] font-semibold' href={"/login"}>Login</Link>
+                  <IoIosArrowForward/>
+                </div>
+              </>)}
             </div>
           </nav>
         </div>

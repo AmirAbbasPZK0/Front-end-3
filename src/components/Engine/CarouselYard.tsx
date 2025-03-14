@@ -28,38 +28,38 @@ const CarouselYard = ({videos} : {videos : any}) => {
 
     return(<>
         <div className="flex flex-row gap-2">
-          <button onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
-        {newVideos?.length > 0 && (<>
-          <Swiper
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
-            breakpoints={{
-              1: {
-                slidesPerView: 1,
-                spaceBetween: 15,
-              },
-              700: {
-                slidesPerView: 4,
-                spaceBetween: 15,
-              },
-            }}
-            freeMode={true}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[ Pagination , Navigation]}
-            
-            className="h-[260px]"
-          >
-            <div>
-            {newVideos?.map((item : any , index : number) => (
-                <SwiperSlide key={index}>
-                  <YouTubeVideos url={item.link} data={item}/>
-                </SwiperSlide>
-            ))}
-            </div>
-          </Swiper>
-        </>)}
-        <button onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+          <button className="pb-[70px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+          {newVideos?.length > 0 && (<>
+            <Swiper
+              onSwiper={(swiper) => (swiperRef.current = swiper)}
+              breakpoints={{
+                1: {
+                  slidesPerView: 1,
+                  spaceBetween: 15,
+                },
+                700: {
+                  slidesPerView: 4,
+                  spaceBetween: 15,
+                },
+              }}
+              freeMode={true}
+              pagination={{
+                clickable: true,
+              }}
+              modules={[ Pagination , Navigation]}
+              
+              className="h-[260px]"
+            >
+              <div>
+              {newVideos?.map((item : any , index : number) => (
+                  <SwiperSlide key={index}>
+                    <YouTubeVideos url={item.link} data={item}/>
+                  </SwiperSlide>
+              ))}
+              </div>
+            </Swiper>
+          </>)}
+          <button className="pb-[70px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
         </div>
     </>)
 }
