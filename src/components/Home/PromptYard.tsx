@@ -265,10 +265,10 @@ const PropmptYard = () => {
               if(prompt !== ""){
                 sendMessage(prompt)
               }
-            }} className='border-2 flex flex-col text-center gap-5 w-full border-slate-400 dark:border-slate-100 p-4 rounded-lg'>
+            }} className='border-2 flex flex-col text-center gap-5 w-full border-slate-400 dark:border-slate-100 p-4 rounded-3xl'>
               <textarea ref={textareaRef} onChange={e => {
-            setPrompt(e.target.value)
-          }} placeholder='Write your text...' rows={2} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-5 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
+                setPrompt(e.target.value)
+              }} placeholder='Write your text...' rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
               <div className='flex flex-row items-center justify-between gap-2 w-full'>
                 <div className='flex flex-row gap-2'>
 

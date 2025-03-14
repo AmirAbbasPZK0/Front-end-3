@@ -1,23 +1,23 @@
 "use client"
 
-import React from "react";
+import React, { useRef } from "react";
 import YouTubeVideos from "./YouTubeVideos";
-import Carousel from "react-multi-carousel";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { IoIosArrowForward , IoIosArrowBack } from "react-icons/io";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
 
-import { FreeMode, Pagination } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import { useEffect , useState } from "react";
-
-import { RxArrowTopRight } from "react-icons/rx";
 
 const CarouselYard = ({videos} : {videos : any}) => {
 
   const [newVideos , setNewVideos] = useState([])
+
+
+  const swiperRef = useRef<any>(null);
 
   useEffect(()=>{
       setNewVideos(()=>{
@@ -27,10 +27,11 @@ const CarouselYard = ({videos} : {videos : any}) => {
   },[])
 
     return(<>
-     
-        
+        <div className="flex flex-row gap-2">
+          <button onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
         {newVideos?.length > 0 && (<>
           <Swiper
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
             breakpoints={{
               1: {
                 slidesPerView: 1,
@@ -45,20 +46,21 @@ const CarouselYard = ({videos} : {videos : any}) => {
             pagination={{
               clickable: true,
             }}
-            modules={[ Pagination]}
-            navigation={{
-              prevEl: ".swiper-button-prev",
-              nextEl: ".swiper-button-next",
-            }}
+            modules={[ Pagination , Navigation]}
+            
             className="h-[260px]"
           >
+            <div>
             {newVideos?.map((item : any , index : number) => (
                 <SwiperSlide key={index}>
                   <YouTubeVideos url={item.link} data={item}/>
                 </SwiperSlide>
             ))}
+            </div>
           </Swiper>
         </>)}
+        <button onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+        </div>
     </>)
 }
 

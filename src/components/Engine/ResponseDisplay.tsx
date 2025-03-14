@@ -93,7 +93,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             </div>
             <div className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
-                    <div className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
+                    <div className={`flex flex-col ${isRTL(query) ? "text-end inset-y-0" : "text-start"} w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
                         <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
                             h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
                             h2 : (props) => <h2 className='text-[23px] font-semibold pt-2 pb-2' {...props}/>,
