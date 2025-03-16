@@ -30,7 +30,6 @@ const NavLink: React.FC<LinkProps> = ({ link }) => {
     <Link 
       onClick={()=> {
         if(link.title === "Home"){
-          dispatch(addRecency())
           dispatch(removeAllFiles())
           dispatch(removeAllUrls())
           dispatch(addResource("web"))

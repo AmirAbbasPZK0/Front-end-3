@@ -39,13 +39,11 @@ const Links = [
 
 const Navbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [recentSearch , setRecentSearch] = useState([])
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const user = useAppSelector(state => state.userSlice)
 
   const openLeftMenu = () => {
     setShowLeftMenu(true);
@@ -149,7 +147,6 @@ const Navbar = () => {
                   ></motion.div>
             </button>
             <button className="" onClick={()=>{
-                dispatch(addRecency())
                 dispatch(removeAllFiles())
                 dispatch(removeAllUrls())
                 dispatch(addResource("web"))

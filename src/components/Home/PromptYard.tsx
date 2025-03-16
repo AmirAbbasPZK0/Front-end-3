@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 // import MenuButtons from './MenuButtons';
 // import AttachFileModal from './AttachFileModal';
 import { useAppSelector , useAppDispatch } from '@/services/redux/store';
-import { removeRecency } from '@/services/redux/reducers/resourceSlice';
+import { addRecency, removeRecency } from '@/services/redux/reducers/resourceSlice';
 // import ChosenIcon from './ChosenIcon';
 // import UploadedFileBox from './UploadedFileBox';
 // import ModuleBar from './ModuleBar';
@@ -209,11 +209,13 @@ const PropmptYard = () => {
     //   });
     // }, [response]);
   
-    // useEffect(()=>{
-    //   if(window.location.href.includes("search")){
-    //     dispatch(removeRecency())
-    //   }
-    // },[])
+    useEffect(()=>{
+      if(window.location.href.includes("search")){
+        dispatch(removeRecency())
+      }else{
+        dispatch(addRecency())
+      }
+    },[])
 
   useEffect(() => {
     if (newResponse.length > 0) {
