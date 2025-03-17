@@ -10,7 +10,6 @@ import NavLink from "./NavLink";
 import { IoIosArrowForward, IoIosClose } from "react-icons/io";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
 import LogoWhite from "@/../public/images/findora_logo_white.png";
-import { useAppSelector } from "@/services/redux/store";
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
@@ -23,12 +22,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FaCircleUser } from "react-icons/fa6";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
 import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
-import { addRecency, addResource } from "@/services/redux/reducers/resourceSlice";
+import { addResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
 import { useRouter } from "next/navigation";
 import { historyHandler } from "@/services/redux/reducers/userSlice";
 import { BsSearch } from "react-icons/bs";
 import Slidebar from "../Engine/Slidebar";
+import MiniSlideBar from "../Engine/MiniSlideBar";
+import useAgent from "@/hooks/useAgent";
 
 const Links = [
   { id: 1, title: "Home", icon: RiHome2Line, url: "/" },
@@ -44,6 +45,8 @@ const Navbar = () => {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const dispatch = useAppDispatch()
   const router = useRouter()
+  const {isMobile} = useAgent()
+
 
   const openLeftMenu = () => {
     setShowLeftMenu(true);
@@ -199,6 +202,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      {(!isMobile && (pathname.includes("search") || pathname === "/")) && <MiniSlideBar/>}
       <AnimatePresence>
         <Slidebar isOpen={showLeftMenu} onClose={()=>setShowLeftMenu(false)}/>
       </AnimatePresence>
