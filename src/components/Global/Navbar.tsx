@@ -160,12 +160,9 @@ const Navbar = () => {
                 <NavLink link={link} key={link.id} />
               ))}
             </div>
-            <button
-              onClick={openLeftMenu}
-              className="hidden lg:flex md:flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
-            >
-              <span className="relative z-10 flex flex-col"><RiBarChartHorizontalLine className="text-[26px]"/></span>
-            </button>
+            <div>
+              <ThemeToggle/>
+            </div>
             <div
               className="relative block xl:hidden bg-[#f9fafc] dark:bg-[#111828] py-3 px-3 rounded-full shadow-md"
               ref={dropdownRef}
@@ -210,4 +207,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar;``
