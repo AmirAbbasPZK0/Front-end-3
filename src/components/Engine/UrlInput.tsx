@@ -18,13 +18,13 @@ const UrlInput = ({...props} : UrlInputProps) => {
     const urls = useAppSelector(state => state.urlInputSlice.urlInputs)
 
     return (<>
-        <div key={props.index} className="flex items-center mb-2 mt-2 w-full gap-2">
+        <div key={props.index} className="flex items-center mb-2 mt-2 w-full justify-center gap-2">
             <input
                 disabled={props.disabled}
                 type="text"
                 value={props.url}
                 onChange={(e) => dispatch(editUrl({index : props.index, value : e.target.value}))}
-                className="border-2 border-slate-400 dark:border-slate-100 px-5 p-[13px] rounded-md bg-transparent w-full"
+                className=" bg-slate-50 shadow-md dark:bg-[#202938] px-5 p-[13px] rounded-2xl w-full"
                 placeholder="Paste your URL here"
             />
             <button
@@ -35,7 +35,7 @@ const UrlInput = ({...props} : UrlInputProps) => {
                         dispatch(addResource("web"))
                     }
                 }}
-                className="bg-transparent border-2 border-slate-400 dark:border-slate-100 text-white p-[16px] rounded"
+                className="bg-slate-50 shadow-md dark:bg-[#202938] p-[16px] rounded-2xl"
                 type="button"
             >
                 <FaMinus className="text-slate-900 dark:text-slate-100"/>

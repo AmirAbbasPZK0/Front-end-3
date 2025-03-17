@@ -21,7 +21,7 @@ import { addUrlToInputArray } from '@/services/redux/reducers/urlInputSlice';
 import UrlInput from '../Engine/UrlInput';
 import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
-import TrendNews from './TrendNews';
+import TrendNewsCarousel from '../Engine/TrendNewsCarousel';
 
 
 const PropmptYard = () => {
@@ -281,13 +281,13 @@ const PropmptYard = () => {
     return (<>
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 justify-center gap-4 flex-col">
           {isNew && (<>
-            <div className="md:w-[40%] w-[80%]">
+            <div className="md:w-[40%] w-[90%]">
             <form onSubmit={e => {
               e.preventDefault()
               if(prompt !== ""){
                 sendMessage(prompt)
               }
-            }} className='border-2 flex flex-col text-center gap-5 w-full border-slate-400 dark:border-slate-100 p-4 rounded-3xl'>
+            }} className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
               <textarea ref={textareaRef} onChange={e => {
                 setPrompt(e.target.value)
               }} placeholder='Write your text...' rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
@@ -316,7 +316,7 @@ const PropmptYard = () => {
                     ))}
                     <button
                       onClick={() => dispatch(addUrlToInputArray())}
-                      className="border-2 border-slate-400 dark:border-slate-100 p-2 flex flex-row gap-2 justify-center rounded mt-2"
+                      className="bg-slate-50 shadow-md dark:bg-[#202938] p-3 flex flex-row gap-2 justify-center rounded-2xl  mt-2"
                       type="button"
                     >
                       <span>Add URL</span>
@@ -327,10 +327,9 @@ const PropmptYard = () => {
               <UploadedFileBox key={index} data={item}/>
             ))}
             </div>
-            <div className='w-full flex justify-center md:items-start items-center md:flex-row flex-col gap-2'>
-              {trendNewsList?.map(item => (
-                <TrendNews data={item}/>
-              ))}
+            <div className='md:w-[40%] w-[90%] rounded-2xl bg-slate-50 shadow-md dark:bg-[#202938]'>
+              <h2 className='mx-8 mt-2 font-semibold text-[25px]'>Trend News</h2>
+              <TrendNewsCarousel data={trendNewsList}/>
             </div>
           </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
