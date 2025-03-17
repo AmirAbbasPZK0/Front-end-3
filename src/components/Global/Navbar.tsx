@@ -21,7 +21,7 @@ import { RiHome2Line } from "react-icons/ri";
 import { GoPeople } from "react-icons/go";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaCircleUser } from "react-icons/fa6";
-import { FaArrowRight, FaBars } from "react-icons/fa";
+import { RiBarChartHorizontalLine } from "react-icons/ri";
 import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
 import { addRecency, addResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
@@ -47,10 +47,6 @@ const Navbar = () => {
 
   const openLeftMenu = () => {
     setShowLeftMenu(true);
-  };
-
-  const closeLeftMenu = () => {
-    setShowLeftMenu(false);
   };
 
   // Find the current page title
@@ -131,20 +127,9 @@ const Navbar = () => {
           <div className="flex justify-between items-center gap-4">
             <button
               onClick={openLeftMenu}
-              className="text-white lg:hidden md:hidden flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
+              className="lg:hidden md:hidden flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
             >
-                  <span className="relative z-10 flex flex-col"><FaBars className="text-[26px]"/></span>
-                  <motion.div
-                    initial={{ left: 0 }}
-                    animate={{ left: "-300%" }}
-                    transition={{
-                      repeat: Infinity,
-                      repeatType: "mirror",
-                      duration: 4,
-                      ease: "linear",
-                    }}
-                    className="bg-[linear-gradient(to_right,#8f14e6,#e614dc,#e61453,#e68414,#e6e614)] absolute z-0 inset-0 w-[400%]"
-                  ></motion.div>
+              <span className="relative z-10 flex flex-col"><RiBarChartHorizontalLine className="text-[26px]"/></span>
             </button>
             <button className="" onClick={()=>{
                 dispatch(removeAllFiles())
@@ -174,20 +159,9 @@ const Navbar = () => {
             </div>
             <button
               onClick={openLeftMenu}
-              className="text-white  hidden lg:flex md:flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
+              className="hidden lg:flex md:flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
             >
-                  <span className="relative z-10 flex flex-col"><FaBars className="text-[26px]"/></span>
-                  <motion.div
-                    initial={{ left: 0 }}
-                    animate={{ left: "-300%" }}
-                    transition={{
-                      repeat: Infinity,
-                      repeatType: "mirror",
-                      duration: 4,
-                      ease: "linear",
-                    }}
-                    className="bg-[linear-gradient(to_right,#8f14e6,#e614dc,#e61453,#e68414,#e6e614)] absolute z-0 inset-0 w-[400%]"
-                  ></motion.div>
+              <span className="relative z-10 flex flex-col"><RiBarChartHorizontalLine className="text-[26px]"/></span>
             </button>
             <div
               className="relative block xl:hidden bg-[#f9fafc] dark:bg-[#111828] py-3 px-3 rounded-full shadow-md"

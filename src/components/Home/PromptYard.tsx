@@ -21,10 +21,31 @@ import { addUrlToInputArray } from '@/services/redux/reducers/urlInputSlice';
 import UrlInput from '../Engine/UrlInput';
 import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
-
+import TrendNews from './TrendNews';
 
 
 const PropmptYard = () => {
+
+    const trendNewsList = [
+      {
+        Title: "Do you consume raw milk? Here are some compelling reasons to avoid it",
+        Description: "Unpasteurized milk is gaining popularity despite its higher risk of causing foodborne illnesses, including bird flu. Only a minority of Americans are",
+        URL: "https://timesofindia.indiatimes.com/life-style/health-fitness/health-news/consuming-raw-milk-amidst-bird-flu-here-are-the-risk-factors/articleshow/119106531.cms",
+        Image: "https://static.toiimg.com/thumb/msid-119106466,width-1070,height-580,imgsize-46836,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg"
+      },
+      {
+        Title: "Trump says he and Putin will discuss 'land and power plants' in Tuesday's Ukraine talks",
+        Description: `"We're already talking about that, dividing up certain assets," the US president says before tomorrow's talks.`,
+        URL: `https://www.bbc.com/news/live/c3e4xzd8qq8t`,
+        Image: `https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/e230/live/a7982be0-02fb-11f0-a8b1-950887ddc6e5.jpg`
+      },
+      {
+        Title:` SpaceX's Crew-10 mission arrives at International Space Station to relieve Starliner astronauts - Space.com`,
+        Description: `Crew-10 docked with the station on Sunday (March 16) at 12:04 a.m. ET.`,
+        URL: `https://www.space.com/space-exploration/international-space-station/spacex-crew-10-astronaut-mission-international-space-station-docking`,
+        Image: `https://cdn.mos.cms.futurecdn.net/BZcQ8mh5LWYZVss6jc2cLd-1200-80.jpg`
+      }
+    ]
 
     const [prompt , setPrompt] = useState("")
     const [selectedDepth , setSelectedDepth] = useState(false)
@@ -39,7 +60,6 @@ const PropmptYard = () => {
     const { socket, response, setResponse, responseRef } = useWebSocket();
     const router = useRouter()
     const [isAttachOpen , setIsAttachOpen] = useState(false)
-    const pathname = usePathname();
     const textareaRef = useRef<any>(null)
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
@@ -303,11 +323,14 @@ const PropmptYard = () => {
                     </button>
                   </div>
             )}
-            
             {uploadedFiles.uploadedFilesUrl.length > 0 && uploadedFiles.uploadedFilesUrl.map((item , index) => (
               <UploadedFileBox key={index} data={item}/>
             ))}
-            
+            </div>
+            <div className='w-full flex justify-center md:items-start items-center md:flex-row flex-col gap-2'>
+              {trendNewsList?.map(item => (
+                <TrendNews data={item}/>
+              ))}
             </div>
           </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
