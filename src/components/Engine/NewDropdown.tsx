@@ -44,7 +44,7 @@ const NewDropdown = ({disabled} : {disabled : boolean}) => {
     const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource)
 
     return (<>
-        <button className="flex gap-2 items-center" onClick={()=> setIsOpen(item => !item)}>
+        <button type="button" className="flex gap-2 items-center" onClick={()=> setIsOpen(item => !item)}>
             <ModuleIcon className={`text-[18px]`} color={"#121212"} moduleName={selectedResources}/>
             <p className="flex items-start text-[14px] md:text-[18px]">{selectedResources.charAt(0).toUpperCase() + selectedResources.slice(1)}</p>
         </button>

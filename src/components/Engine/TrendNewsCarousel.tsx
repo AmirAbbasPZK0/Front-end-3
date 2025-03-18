@@ -26,7 +26,7 @@ const TrendNewsCarousel = ({data} : TrendNewsCarouselProps) => {
 
     return (<>
         <div className="flex flex-row gap-2 w-[100%]">
-          <button className="pb-[70px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+          <button className="pb-[20px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
           {data?.length > 0 && (<>
             <Swiper
                 loop={true}
@@ -52,11 +52,11 @@ const TrendNewsCarousel = ({data} : TrendNewsCarouselProps) => {
               <div>
                 {data?.map(item => (
                     <SwiperSlide key={item.Title} className="w-60 p-4 cursor-grab bg-gradient-to-l rounded-md">
-                        <div className=" flex flex-col gap-1">
-                            <img src={item.Image} className="w-[100%] rounded-md" alt="" />
-                            <div className="flex flex-col gap-1">
-                                <h3 className="font-semibold">{item.Title.slice(0,25)} ...</h3>
-                                <p className="text-[13px]">{item.Description.slice(0,50)} ...</p>
+                        <div className=" flex flex-col gap-1 relative">
+                            <img src={item.Image} className="w-[100%] brightness-50 transition-all rounded-md shadow-inner" alt="" />
+                            <div className="flex flex-col gap-1 absolute top-12 left-2 mt-10">
+                                <h3 className="font-semibold text-[13px] text-white">{item.Title.slice(0,25)} ...</h3>
+                                <p className="text-[10px] text-white">{item.Description.slice(0,30)} ...</p>
                             </div>
                         </div>
                     </SwiperSlide>
@@ -64,7 +64,7 @@ const TrendNewsCarousel = ({data} : TrendNewsCarouselProps) => {
               </div>
             </Swiper>
           </>)}
-          <button className="pb-[70px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+          <button className="pb-[20px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
         </div>
     </>);
 }

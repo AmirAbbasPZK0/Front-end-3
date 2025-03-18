@@ -5,7 +5,6 @@ const initialState = {
     isNew : true
 }
 
-
 const resourceSlice = createSlice({
     name : "resource",
     initialState : initialState,

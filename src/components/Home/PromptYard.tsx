@@ -1,19 +1,10 @@
 "use client"
 import ResponseDisplay from '@/components/Engine/ResponseDisplay';
 import useWebSocket from '@/hooks/useWebSocket';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-// import Switch from 'react-ios-switch';
-// import UrlInput from './UrlInput';
-// import MenuButtons from './MenuButtons';
-// import AttachFileModal from './AttachFileModal';
 import { useAppSelector , useAppDispatch } from '@/services/redux/store';
 import { addRecency, removeRecency } from '@/services/redux/reducers/resourceSlice';
-// import ChosenIcon from './ChosenIcon';
-// import UploadedFileBox from './UploadedFileBox';
-// import ModuleBar from './ModuleBar';
-// import NewDropdown from './NewDropdown';
-// import BackToHomeButton from './BackToHomeButton';
 import { IoIosAttach, IoMdSend } from "react-icons/io";
 import NewDropdown from "../Engine/NewDropdown";
 import { TbSend2 } from 'react-icons/tb';
@@ -110,6 +101,7 @@ const PropmptYard = () => {
           images: [],
           data: null,
           videos : [],
+          findoraMessage : "",
           relatedQuestions: []
         };
   
@@ -130,6 +122,14 @@ const PropmptYard = () => {
           setCode(data.code);
         }
       });
+
+      socket?.on("findora_message" , (data : any) => {
+        setResponse((prev : any) => {
+          const cp = {...prev}
+          cp[localStorage.getItem("prompt") as string].findoraMessage += data.message
+          return cp
+        })
+      })
   
       const onReceiveMessage = (data : any) => {
         responseRef.current += data.message;
@@ -335,6 +335,7 @@ const PropmptYard = () => {
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
               <ResponseDisplay
                 key={key}
+                findoraMessage={value.findoraMessage}
                 isDone={value.isDone}
                 videos={value.videos}
                 query={key}

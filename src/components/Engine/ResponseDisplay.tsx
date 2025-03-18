@@ -12,6 +12,7 @@ import { IoCopyOutline } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
 import FactCheckDisplay from "./FactCheckDisplay";
 import Source from "./Source";
+import { useAppSelector } from "@/services/redux/store";
 import { FaTimes } from "react-icons/fa";
 import { sourceList } from "@/functions/sourceList";
 import SourceButton from "./SourceButton";
@@ -35,6 +36,7 @@ interface ResponseDisplayProps {
     responseRef: any;
     query: string;
     videos: any[]
+    findoraMessage : string
   }
 
 const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
@@ -44,7 +46,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     images , 
     data , 
     relatedQuestions , 
-    sendMessage , 
+    sendMessage ,
+    findoraMessage,
     query ,
     isDone,
     videos
@@ -58,7 +61,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const [openSources , setOpenSources] = useState(false)
     const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n \n ${sourceList(sources)}` : removeMarkdown(response)}`
     const [isCopied, setCopied] = useClipboard(CopyText);
-    
+    const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
+
     function removeMarkdown(markdown : any){
         return markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
     }
@@ -81,6 +85,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             <Loading/>
         </div>
     }
+
+    console.log(sources)
 
     if(data){
         return <FactCheckDisplay data={data?.message} sources={sources} query={query}/>
@@ -105,7 +111,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             {sources ? hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
-                            {sources && <SourceButton sources={sources} onClick={()=>{
+                            {(sources && !(selectedModule === "file" || selectedModule === "url")) && <SourceButton sources={sources} onClick={()=>{
                                 setOpenSources(true)
                             }}/>}
                             {openSources && <>
@@ -141,9 +147,14 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     </div>}
                 </div>
             </div>
+            {findoraMessage !== "" && 
+            <div className="flex flex-col gap-2 w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
+                <h2 className="text-[25px] font-bold">Findora's Answer</h2>
+                {findoraMessage}
+            </div>}
             {(isDone && videos?.length > 0) && (<>
                 <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
-                <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
+                    <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
                     <div className="w-full">
                         <CarouselYard videos={videos}/>
                     </div>

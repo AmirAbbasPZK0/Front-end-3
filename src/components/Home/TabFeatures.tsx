@@ -92,15 +92,15 @@ interface TabsProps {
 
 const Tabs = ({ selected, setSelected }: TabsProps) => {
   const tabsRef = useRef<(HTMLDivElement | null)[]>([]);
-  useEffect(() => {
-    if (tabsRef.current[selected]) {
-      tabsRef.current[selected]?.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
-      });
-    }
-  }, [selected]);
+  // useEffect(() => {
+  //   if (tabsRef.current[selected]) {
+  //     tabsRef.current[selected]?.scrollIntoView({
+  //       behavior: "smooth",
+  //       inline: "center",
+  //       block: "nearest",
+  //     });
+  //   }
+  // }, [selected]);
   return (
     <div className="overflow-x-auto flex tabScroll">
       {FEATURES.map((tab, index) => (
