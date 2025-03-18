@@ -25,10 +25,10 @@ const PropmptYard = () => {
         Image: "https://static.toiimg.com/thumb/msid-119106466,width-1070,height-580,imgsize-46836,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg"
       },
       {
-        Title: "Trump says he and Putin will discuss 'land and power plants' in Tuesday's Ukraine talks",
-        Description: `"We're already talking about that, dividing up certain assets," the US president says before tomorrow's talks.`,
-        URL: `https://www.bbc.com/news/live/c3e4xzd8qq8t`,
-        Image: `https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/e230/live/a7982be0-02fb-11f0-a8b1-950887ddc6e5.jpg`
+        Title: "Hamas claims head of its government in Gaza killed in Israeli strikes",
+        Description: "Middle East News: Hamas claimed its Gaza government head Essam al-Dalis was killed in Israeli strikes that also killed over 300 people. Israel cited Hamas's refusal to",
+        URL: "https://timesofindia.indiatimes.com/world/middle-east/hamas-claims-head-of-its-government-in-gaza-killed-in-israeli-strikes/articleshow/119157089.cms",
+        Image: "https://static.toiimg.com/thumb/msid-119157648,width-1070,height-580,imgsize-173014,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg",
       },
       {
         Title:` SpaceX's Crew-10 mission arrives at International Space Station to relieve Starliner astronauts - Space.com`,
