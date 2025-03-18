@@ -48,7 +48,7 @@ const PropmptYard = () => {
     const uploadedFiles = useAppSelector(state => state.fileUploadsSlice)
     const urlInputs = useAppSelector(state => state.urlInputSlice)
     const dispatch = useAppDispatch()
-    const { socket, response, setResponse, responseRef } = useWebSocket();
+    const { socket, response, setResponse, responseRef , findoraMessageRef} = useWebSocket();
     const router = useRouter()
     const [isAttachOpen , setIsAttachOpen] = useState(false)
     const textareaRef = useRef<any>(null)
@@ -64,6 +64,7 @@ const PropmptYard = () => {
       if (selectedResources == 'url' && urlInputs.urlInputs.filter(e => e.length > 0).length == 0) {
         return;
       }
+      findoraMessageRef.current = ""
       const url = new URL(window.location.href);
       const codde = url.pathname.split('/search/')[1];
       responseRef.current = ''; // Reset the ref for the next response
@@ -122,14 +123,6 @@ const PropmptYard = () => {
           setCode(data.code);
         }
       });
-
-      socket?.on("findora_message" , (data : any) => {
-        setResponse((prev : any) => {
-          const cp = {...prev}
-          cp[localStorage.getItem("prompt") as string].findoraMessage += data.message
-          return cp
-        })
-      })
   
       const onReceiveMessage = (data : any) => {
         responseRef.current += data.message;
@@ -147,7 +140,7 @@ const PropmptYard = () => {
           return cp;
         });
       };
-  
+      
       socket?.on('receive_message', onReceiveMessage);
       socket?.on('receive_images', (data: { images: any; }) => {
         setResponse((prev: any) => {
@@ -208,6 +201,7 @@ const PropmptYard = () => {
               // cp[prom].images = null
               cp[prom].data = null
               cp[prom].text = responseRef.current;
+              cp[prom].findoraMessage = findoraMessageRef.current
             }
             return cp;
           });
@@ -221,6 +215,22 @@ const PropmptYard = () => {
         socket.off('receive_message', onReceiveMessage);
       };
     }, [socket]);
+
+    useEffect(()=>{
+      const onReceiveFindoraMessage = (data : any)=>{
+        findoraMessageRef.current += data.message
+        setResponse((prev : any) => {
+          const cp = {...prev}
+          cp[localStorage.getItem("prompt") as string].findoraMessage = findoraMessageRef.current
+          cp[localStorage.getItem("prompt") as string].isLoading = false
+          return cp
+        })
+      }
+  
+      socket?.on("findora_message" , onReceiveFindoraMessage)
+
+      return () => socket?.off("findora_message" , onReceiveFindoraMessage)
+    },[socket])
 
     // useEffect(() => {
     //   window.scrollTo({

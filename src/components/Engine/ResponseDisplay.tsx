@@ -86,8 +86,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         </div>
     }
 
-    console.log(sources)
-
     if(data){
         return <FactCheckDisplay data={data?.message} sources={sources} query={query}/>
     }
@@ -97,6 +95,14 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
                 <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
             </div>
+            {(findoraMessage !== "" && selectedModule === "medical") && 
+            <div className="flex flex-col gap-2 w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
+                <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
+              Find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra's Answer
+            </h2>
+                {findoraMessage}
+            </div>}
+            {response !== "" && 
             <div className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
                     <div className={`flex flex-col ${isRTL(query) ? "text-end inset-y-0" : "text-start"} w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
@@ -146,11 +152,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         <Slider images={images}/>
                     </div>}
                 </div>
-            </div>
-            {findoraMessage !== "" && 
-            <div className="flex flex-col gap-2 w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
-                <h2 className="text-[25px] font-bold">Findora's Answer</h2>
-                {findoraMessage}
             </div>}
             {(isDone && videos?.length > 0) && (<>
                 <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">

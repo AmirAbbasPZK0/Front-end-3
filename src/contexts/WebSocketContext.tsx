@@ -11,6 +11,7 @@ interface WebSocketContextType {
   response: any;
   setResponse: any;
   responseRef: any;
+  findoraMessageRef : any;
 }
 
 export const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
@@ -22,6 +23,7 @@ const WebSocketProvider: React.FC<{
   const socketRef = useRef<any>(null);
   const [response, setResponse] = useState({});
   const responseRef = useRef<string>('');
+  const findoraMessageRef = useRef<string>("")
 
   const pathname = usePathname()
   useEffect(() => {
@@ -65,7 +67,8 @@ const WebSocketProvider: React.FC<{
       isConnected,
       response,
       setResponse,
-      responseRef
+      responseRef,
+      findoraMessageRef
     }}>
       {children}
     </WebSocketContext.Provider>
