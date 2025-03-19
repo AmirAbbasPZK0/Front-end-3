@@ -158,7 +158,7 @@ const Navbar = () => {
                 <NavLink link={link} key={link.id} />
               ))}
             </div>
-            <div className="md:flex hidden">
+            <div className="md:hidden hidden">
               <ThemeToggle/>
             </div>
             <div className="flex flex-col gap-2 items-center justify-center">
