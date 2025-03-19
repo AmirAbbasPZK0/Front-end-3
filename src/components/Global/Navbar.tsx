@@ -161,38 +161,41 @@ const Navbar = () => {
             <div className="md:flex hidden">
               <ThemeToggle/>
             </div>
-            <div
-              className="relative block xl:hidden bg-[#f9fafc] dark:bg-[#111828] py-3 px-3 rounded-full shadow-md"
-              ref={dropdownRef}
-            >
-              <button
-                onClick={toggleDropDown}
-                className="flex items-center gap-2"
+            <div className="flex flex-col gap-2 items-center justify-center">
+              <ThemeToggle/>
+              <div
+                className="relative block xl:hidden bg-[#f9fafc] dark:bg-[#111828] py-3 px-3 rounded-full shadow-md"
+                ref={dropdownRef}
               >
-                {currentPage.icon && <currentPage.icon className="w-5 h-5" />}
-                {/* Icon */}
-                <span>{currentPage.title}</span> {/* Title */}
-                {showDropDown ? (
-                  <MdOutlineKeyboardArrowUp />
-                ) : (
-                  <MdOutlineKeyboardArrowDown />
+                <button
+                  onClick={toggleDropDown}
+                  className="flex items-center gap-2"
+                >
+                  {currentPage.icon && <currentPage.icon className="w-5 h-5" />}
+                  {/* Icon */}
+                  <span>{currentPage.title}</span> {/* Title */}
+                  {showDropDown ? (
+                    <MdOutlineKeyboardArrowUp />
+                  ) : (
+                    <MdOutlineKeyboardArrowDown />
+                  )}
+                </button>
+                {showDropDown && (
+                  <div className="flex flex-col gap-2 absolute top-14 right-0 bg-[#f9fafc] dark:bg-[#111828] rounded-2xl shadow-md z-[100]">
+                    {Links.map((link) => (
+                      <Link
+                        key={link.id}
+                        href={link.url}
+                        className="flex items-center gap-2 px-4 py-2"
+                        onClick={() => setShowDropDown(false)} // Close dropdown on link click
+                      >
+                        <link.icon />
+                        {link.title}
+                      </Link>
+                    ))}
+                  </div>
                 )}
-              </button>
-              {showDropDown && (
-                <div className="flex flex-col gap-2 absolute top-14 right-0 bg-[#f9fafc] dark:bg-[#111828] rounded-2xl shadow-md z-[100]">
-                  {Links.map((link) => (
-                    <Link
-                      key={link.id}
-                      href={link.url}
-                      className="flex items-center gap-2 px-4 py-2"
-                      onClick={() => setShowDropDown(false)} // Close dropdown on link click
-                    >
-                      <link.icon />
-                      {link.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </div>

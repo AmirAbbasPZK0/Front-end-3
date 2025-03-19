@@ -81,7 +81,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <GrUpgrade/>
               <span>Upgrade plan</span>
             </button>
-            <ThemeToggle/>
             </div>
             <div className='flex flex-row justify-between items-center w-full'>
               <div className='flex flex-row items-center gap-2'>
