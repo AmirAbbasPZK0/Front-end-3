@@ -117,8 +117,6 @@ const Navbar = () => {
     };
   }, []);
 
-
-
   useEffect(()=>{
     initialApiCalls()
   },[])
@@ -160,7 +158,7 @@ const Navbar = () => {
                 <NavLink link={link} key={link.id} />
               ))}
             </div>
-            <div>
+            <div className="md:flex hidden">
               <ThemeToggle/>
             </div>
             <div

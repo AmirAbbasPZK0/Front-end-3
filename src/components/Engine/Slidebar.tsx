@@ -9,6 +9,7 @@ import { FaPlus } from 'react-icons/fa';
 import { GrUpgrade } from "react-icons/gr";
 import { IoIosArrowForward } from 'react-icons/io';
 import Link from 'next/link';
+import ThemeToggle from '../Global/ThemeToggle/ThemeToggle';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -75,10 +76,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </nav>
           </div>}
           <nav className='w-[80%] flex flex-col items-center gap-3 h-[20vh] justify-center fixed bottom-0'>
+            <div className='flex items-center justify-between gap-6'>
             <button className='flex items-center flex-row gap-2 border-2 px-4 rounded-[30px] p-3 border-slate-950 dark:border-slate-100 bg-none dark:text-white'>
               <GrUpgrade/>
               <span>Upgrade plan</span>
             </button>
+            <ThemeToggle/>
+            </div>
             <div className='flex flex-row justify-between items-center w-full'>
               <div className='flex flex-row items-center gap-2'>
                 <img src="/images/guest-user.webp" alt="Guest User" className="w-12 h-12 rounded-full"/>

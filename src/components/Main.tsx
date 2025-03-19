@@ -11,16 +11,16 @@ import WhatIsFindora from "@/components/Home/WhatIsFindora";
 import WhyFindora from "@/components/Home/WhyFindora";
 import PropmptYard from "./Home/PromptYard";
 import AnimatedText from "./Home/AnimatedText";
-import LogoBlack from "@/../public/images/findora_logo_black.png";
-import LogoWhite from "@/../public/images/findora_logo_white.png";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Home() {
+
+  const pathname = usePathname()
 
   return (
     <div>
       {/* <PreLoader /> */}
-      {/* <PreLoader /> */}
+      {!(pathname.includes("search")) && <PreLoader />}
       <div className="bg-[#f0f0fc] dark:bg-[#111828]">
         <div className="pt-[100px] flex items-center justify-center">
           <h1 className="text-[30px] font-semibold">What is on your mind</h1>
