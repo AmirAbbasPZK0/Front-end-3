@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <div>
       {/* <PreLoader /> */}
-      {!(pathname.includes("search")) && <PreLoader />}
+      {/* {!(pathname.includes("search")) && <PreLoader />} */}
       <div className="bg-[#f0f0fc] dark:bg-[#111828]">
         <div className="pt-[100px] flex items-center justify-center">
           <h1 className="text-[30px] font-semibold">What is on your mind</h1>

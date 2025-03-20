@@ -1,7 +1,6 @@
 "use client"
 
 import { ReactNode, useEffect } from "react"
-import useAsync from "@/hooks/useAsync"
 import Cookies from "js-cookie"
 import WebSocketProvider from "@/contexts/WebSocketContext"
 import restApi from "@/services/restApi"
@@ -10,6 +9,7 @@ import { useAppDispatch } from "@/services/redux/store"
 import { loginHandler } from "@/services/redux/reducers/userSlice"
 import { useState } from "react"
 import Loading from "./Loading"
+import PreLoader from "../Home/PreLoader"
 
 const Layout = ({children} : {children : ReactNode}) => {
 
@@ -41,6 +41,7 @@ const Layout = ({children} : {children : ReactNode}) => {
 
     return(<>
         <WebSocketProvider>
+            <PreLoader/>
             {children}
         </WebSocketProvider>
     </>)
