@@ -52,13 +52,13 @@ const TrendNewsCarousel = ({data} : TrendNewsCarouselProps) => {
               <div>
                 {data?.map(item => (
                     <SwiperSlide key={item.Title} className="w-60 p-4 cursor-grab bg-gradient-to-l rounded-md">
-                        <div className=" flex flex-col gap-1 relative">
+                        <a href={item.URL} className=" flex flex-col gap-1 relative">
                             <img src={item.Image} className="w-[100%] brightness-50 transition-all rounded-md shadow-inner" alt="" />
                             <div className="flex flex-col gap-1 absolute top-12 left-2 mt-10">
                                 <h3 className="font-semibold text-[13px] text-white">{item.Title.slice(0,25)} ...</h3>
                                 <p className="text-[10px] text-white">{item.Description.slice(0,30)} ...</p>
                             </div>
-                        </div>
+                        </a>
                     </SwiperSlide>
                 ))}
               </div>
