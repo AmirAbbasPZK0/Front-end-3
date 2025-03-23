@@ -78,7 +78,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             document.body.style.overflow = "auto";
         }
         
-      }, [openSources]);
+    }, [openSources]);
 
     if(isLoading){
         return <div className="h-[70vh]">
