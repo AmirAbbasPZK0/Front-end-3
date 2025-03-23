@@ -6,9 +6,9 @@ import HyperLink from "./HyperLink";
 import { hyperTextForMarkDown } from "@/functions/hypertext";
 import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import Loading from "./Loading";
-import Slider from "./Slider";
+// import Slider from "./Slider";
 import { TbSend2 } from "react-icons/tb";
-import { IoCopyOutline } from "react-icons/io5";
+import { IoCopyOutline , IoCopy } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
 import FactCheckDisplay from "./FactCheckDisplay";
 import Source from "./Source";
@@ -18,6 +18,7 @@ import { sourceList } from "@/functions/sourceList";
 import SourceButton from "./SourceButton";
 import useClipboard from "react-use-clipboard";
 import remarkGfm from 'remark-gfm'
+import NewSlider from "./NewSlider";
 
 interface Source {
     title : string
@@ -59,8 +60,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
-    const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n \n ${sourceList(sources)}` : removeMarkdown(response)}`
-    const [isCopied, setCopied] = useClipboard(CopyText);
+    const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
+    const [isCopied, setIsCopied] = useClipboard(CopyText);
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
 
     function removeMarkdown(markdown : any){
@@ -77,7 +78,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }else{
             document.body.style.overflow = "auto";
         }
-        
     }, [openSources]);
 
     if(isLoading){
@@ -143,13 +143,13 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 ))}
                                 </div>
                             </div>
-                            <button type="submit" onClick={setCopied}>
-                                <IoCopyOutline/>
+                            <button type="button" onClick={setIsCopied}>
+                                {isCopied ? <IoCopy/> : <IoCopyOutline/>}
                             </button>
                         </div>
                     </div>
                     {(images && images?.length > 0) && <div className="md:w-[30%] w-full">
-                        <Slider images={images}/>
+                        <NewSlider images={images}/>
                     </div>}
                 </div>
             </div>}

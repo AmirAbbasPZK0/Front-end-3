@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useActionState } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
@@ -39,9 +39,7 @@ const SignUpFormHandler: React.FC = () => {
         return false
       }else{
         Cookies.set("access_token" , result?.data?.token , {path : "/" , expires : 60 * 60 * 60 * 24})
-  
         dispatch(loginHandler(result?.data?.user))
-  
         router.push("/")
       }
   

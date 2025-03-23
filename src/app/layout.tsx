@@ -7,6 +7,9 @@ import { Suspense } from "react";
 import Layout from "@/components/Engine/Layout";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import 'react-multi-carousel/lib/styles.css';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/free-mode";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,10 +39,14 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com"/>
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
+          <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
           <meta name="theme-color" content="#b898fd" />
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
+        style={{ fontFamily: "'Roboto', sans-serif" }}
+          className={`antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
         >
           <EdgeStoreProvider>
             <Layout>

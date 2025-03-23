@@ -45,7 +45,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="p-6 flex flex-col gap-3">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl flex items-center bottom-0 font-semibold dark:text-white">
-              Find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra
+              Find<img className='w-[14px] h-[14px] mt-0.5' src='/images/o.png' alt="/logo.png" />ra
             </h2>
             <button onClick={()=>{
               onClose()

@@ -5,10 +5,6 @@ import YouTubeVideos from "./YouTubeVideos";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward , IoIosArrowBack } from "react-icons/io";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/free-mode";
-
 import { Navigation, Pagination } from "swiper/modules";
 import { useEffect , useState } from "react";
 
