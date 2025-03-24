@@ -1,6 +1,6 @@
 "use client"
 
-import React , {useEffect, useState} from "react";
+import React , {useEffect, useRef, useState} from "react";
 import ReactMarkdown from 'react-markdown';
 import HyperLink from "./HyperLink";
 import { hyperTextForMarkDown } from "@/functions/hypertext";
@@ -19,6 +19,7 @@ import SourceButton from "./SourceButton";
 import useClipboard from "react-use-clipboard";
 import remarkGfm from 'remark-gfm'
 import NewSlider from "./NewSlider";
+import { isRTL } from "@/functions/isRTL";
 
 interface Source {
     title : string
@@ -54,8 +55,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     videos
 }) => {
 
-    const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
-
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
@@ -63,6 +62,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
     const [isCopied, setIsCopied] = useClipboard(CopyText);
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
+    const textareaRef = useRef<any>(null)
 
     function removeMarkdown(markdown : any){
         return markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
@@ -79,6 +79,13 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             document.body.style.overflow = "auto";
         }
     }, [openSources]);
+
+    useEffect(() => {
+        if (textareaRef.current) {
+          textareaRef.current.style.height = 'auto';
+          textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+        }
+      }, [followUp]);
 
     if(isLoading){
         return <div className="h-[70vh]">
@@ -103,9 +110,9 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 {findoraMessage}
             </div>}
             {response !== "" && 
-            <div className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
+            <div dir="auto" className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
-                    <div className={`flex flex-col ${isRTL(query) ? "text-end inset-y-0" : "text-start"} w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
+                    <div className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
                         <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
                             h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
                             h2 : (props) => <h2 className='text-[23px] font-semibold pt-2 pb-2' {...props}/>,
@@ -149,7 +156,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         </div>
                     </div>
                     {(images && images?.length > 0) && <div className="md:w-[30%] w-full">
-                        <NewSlider images={images}/>
+                        <NewSlider query={query} images={images}/>
                     </div>}
                 </div>
             </div>}
@@ -176,7 +183,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             className={`border-b-2 w-[90%] border-slate-400 dark:border-slate-100 p-3 flex flex-row justify-between items-center`}
                         >
                             {isRTL(query) ? (<>
-                            <p className="text-xs sm:text-sm text-right text-gray-600 dark:text-white">{e}</p>
+                            <p className="text-xs sm:text-sm text-left text-gray-600 dark:text-white">{e}</p>
                                 </>) : (<>
                             <p className="text-xs sm:text-sm text-left text-gray-600 dark:text-white">{e}</p>
                             </>)}
@@ -194,7 +201,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             sendMessage(followUp)
                         }
                     }} className="w-full flex flex-row gap-2" action="">
-                        <input value={followUp} onChange={(e)=> setFollowUp(e.target.value)} type="text" placeholder="Follow-Up" className="w-full bg-transparent outline-none" />
+                        <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>
                         <button className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
                     </form>
                 </div>

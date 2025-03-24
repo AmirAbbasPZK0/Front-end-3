@@ -24,7 +24,7 @@ const CarouselYard = ({videos} : {videos : any}) => {
 
     return(<>
         <div className="flex flex-row gap-2">
-          <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+          {newVideos?.length > 4 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>}
           {newVideos?.length > 0 && (<>
             <Swiper
               onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -55,7 +55,7 @@ const CarouselYard = ({videos} : {videos : any}) => {
               </div>
             </Swiper>
           </>)}
-          <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+          {newVideos?.length > 4 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>}
         </div>
     </>)
 }

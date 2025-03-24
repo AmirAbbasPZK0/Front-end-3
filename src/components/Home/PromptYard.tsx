@@ -300,7 +300,7 @@ const PropmptYard = () => {
             }} className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
               <textarea ref={textareaRef} onChange={e => {
                 setPrompt(e.target.value)
-              }} placeholder='Write your text...' rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
+              }} placeholder='Write your text...' dir="auto" rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
               <div className='flex flex-row items-center justify-between gap-2 w-full'>
                 <div className='flex flex-row gap-2'>
 

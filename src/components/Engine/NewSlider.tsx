@@ -2,8 +2,9 @@ import React , {useRef , useState , useEffect} from "react"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward , IoIosArrowBack } from "react-icons/io";
 import { Navigation } from "swiper/modules";
+import { isRTL } from "@/functions/isRTL";
 
-const NewSlider = ({images} : {images : {imageUrl : string}[]}) => {
+const NewSlider = ({images , query} : {images : {imageUrl : string}[] , query : string}) => {
 
     const [newImages , setNewImages] = useState<typeof images>([])
     const swiperRef = useRef<any>(null);
@@ -45,7 +46,7 @@ const NewSlider = ({images} : {images : {imageUrl : string}[]}) => {
 
     return (<>
         <div className="flex flex-row gap-2 items-center justify-center">
-            <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+            <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}>{isRTL(query) ? <IoIosArrowForward/> : <IoIosArrowBack/>}</button>
             <Swiper
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
                 loop={true}
@@ -63,12 +64,12 @@ const NewSlider = ({images} : {images : {imageUrl : string}[]}) => {
                 className="flex items-center rounded-md p-3 justify-center"
             >
                 {newImages?.map((item , index) => (
-                    <SwiperSlide className="h-[300px]" key={index}>
-                        <img className=" flex items-center justify-center" src={item.imageUrl} alt="" />
+                    <SwiperSlide className="w-full" key={index}>
+                        <img className=" flex items-center w-full justify-center" src={item.imageUrl} alt="" />
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+            <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}>{isRTL(query) ? <IoIosArrowBack/> : <IoIosArrowForward/>}</button>
         </div>
     </>)
 }
