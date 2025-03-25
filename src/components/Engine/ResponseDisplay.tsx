@@ -174,6 +174,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 <div className="flex flex-col w-full">
                         {Array.isArray(relatedQuestions) && relatedQuestions?.map((e, index) => (
                         <button
+                        dir="auto"
                             onClick={()=> {
                                 sendMessage(e)
                                 setIsSubmited(true)
@@ -183,9 +184,9 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             className={`border-b-2 w-[90%] border-slate-400 dark:border-slate-100 p-3 flex flex-row justify-between items-center`}
                         >
                             {isRTL(query) ? (<>
-                            <p className="text-xs sm:text-sm text-left text-gray-600 dark:text-white">{e}</p>
+                            <p className="text-xs sm:text-sm text-gray-600 dark:text-white">{e}</p>
                                 </>) : (<>
-                            <p className="text-xs sm:text-sm text-left text-gray-600 dark:text-white">{e}</p>
+                            <p className="text-xs sm:text-sm text-gray-600 dark:text-white">{e}</p>
                             </>)}
                         </button>
                         ))}
