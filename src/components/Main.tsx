@@ -29,7 +29,7 @@ export default function Home() {
         <Stats />
         <MovingBoxes />
         <Cards />
-        <IntroVideo />
+        {/* <IntroVideo /> */}
       </div>
       <WhyFindora />
       <BrowserSearch />
