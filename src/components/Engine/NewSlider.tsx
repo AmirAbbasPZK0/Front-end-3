@@ -64,8 +64,8 @@ const NewSlider = ({images , query} : {images : {imageUrl : string}[] , query : 
                 className="flex items-center rounded-md p-3 justify-center"
             >
                 {newImages?.map((item , index) => (
-                    <SwiperSlide className="w-full" key={index}>
-                        <img className=" flex items-center w-full justify-center" src={item.imageUrl} alt="" />
+                    <SwiperSlide className="w-full flex items-center justify-center" key={index}>
+                        <img className=" flex items-center w-full justify-center text-center rounded-md" src={item.imageUrl} alt="" />
                     </SwiperSlide>
                 ))}
             </Swiper>
