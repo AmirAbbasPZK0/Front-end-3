@@ -10,41 +10,41 @@ const IntroVideo = () => {
   const backgroundVideoRef = useRef<HTMLVideoElement>(null);
   const [lastTime, setLastTime] = useState(0);
 
-  useEffect(() => {
-    // Disable scrolling when video is playing
-    if (isPlaying) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+  // useEffect(() => {
+  //   // Disable scrolling when video is playing
+  //   if (isPlaying) {
+  //     document.body.style.overflow = "hidden";
+  //   } else {
+  //     document.body.style.overflow = "auto";
+  //   }
 
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isPlaying]);
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, [isPlaying]);
 
-  const handlePlay = () => {
-    setIsPlaying(true);
+  // const handlePlay = () => {
+  //   setIsPlaying(true);
 
-    setTimeout(() => {
-      if (videoRef.current) {
-        if (isFirstPlay) {
-          videoRef.current.currentTime = 0; // First time: start from beginning
-          setIsFirstPlay(false);
-        } else {
-          videoRef.current.currentTime = lastTime; // Resume from last background video position
-        }
+  //   setTimeout(() => {
+  //     if (videoRef.current) {
+  //       if (isFirstPlay) {
+  //         videoRef.current.currentTime = 0; // First time: start from beginning
+  //         setIsFirstPlay(false);
+  //       } else {
+  //         videoRef.current.currentTime = lastTime; // Resume from last background video position
+  //       }
 
-        videoRef.current.volume = 0.2;
-        videoRef.current.play();
-      }
-    }, 500);
+  //       videoRef.current.volume = 0.2;
+  //       videoRef.current.play();
+  //     }
+  //   }, 500);
 
-    if (backgroundVideoRef.current) {
-      setLastTime(backgroundVideoRef.current.currentTime); // Save current time
-      backgroundVideoRef.current.pause();
-    }
-  };
+  //   if (backgroundVideoRef.current) {
+  //     setLastTime(backgroundVideoRef.current.currentTime); // Save current time
+  //     backgroundVideoRef.current.pause();
+  //   }
+  // };
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -81,7 +81,7 @@ const IntroVideo = () => {
         {/* Play Button (Only visible when not playing) */}
         {!isPlaying && (
           <button
-            onClick={handlePlay}
+            // onClick={handlePlay}
             className="absolute top-0 left-0 right-0 bottom-0 w-fit h-fit m-auto backdrop-blur-md text-4xl md:text-6xl underline bg-opacity-50 px-16 py-6 bg-black/40 rounded-2xl z-10 lg:hover:scale-110 transition-transform duration-300"
           >
             <FaPlay size={40} color="white" />

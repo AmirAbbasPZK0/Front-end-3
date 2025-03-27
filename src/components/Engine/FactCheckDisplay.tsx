@@ -6,7 +6,7 @@ import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import { FaRegCheckCircle , FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCalendarMinus } from "react-icons/fa6";
 
-const FactCheckDisplay = ({data , sources , query } : {data : any , sources : any , query : string}) => {
+const FactCheckDisplay = ({data , sources , query} : {data : any , sources : any , query : string}) => {
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
 

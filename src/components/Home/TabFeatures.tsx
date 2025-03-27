@@ -92,12 +92,19 @@ interface TabsProps {
 
 const Tabs = ({ selected, setSelected }: TabsProps) => {
   const tabsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [isActive , setIsActive] = useState(false)
+
+  const handleActiveClick = () => {
+    setIsActive(true)
+  }
+
   useEffect(() => {
-    if (tabsRef.current[selected]) {
+    console.log(selected)
+    if (tabsRef.current[selected] && isActive) {
       tabsRef.current[selected]?.scrollIntoView({
         behavior: "smooth",
         inline: "center",
-        block: "nearest",
+        // block: "nearest",
       });
     }
   }, [selected]);
@@ -112,6 +119,7 @@ const Tabs = ({ selected, setSelected }: TabsProps) => {
           className="flex-shrink-0"
         >
           <Tab
+            handleActiveClick={handleActiveClick}
             setSelected={setSelected}
             selected={selected === index}
             Icon={tab.Icon}
@@ -132,6 +140,7 @@ interface TabProps {
   setSelected: Dispatch<SetStateAction<number>>;
   tabNum: number;
   bgColor: string;
+  handleActiveClick : () => void
 }
 
 const Tab = ({
@@ -141,11 +150,15 @@ const Tab = ({
   setSelected,
   tabNum,
   bgColor,
+  handleActiveClick
 }: TabProps) => {
   return (
     <div className="relative w-full">
       <button
-        onClick={() => setSelected(tabNum)}
+        onClick={() => {
+          setSelected(tabNum)
+          handleActiveClick()
+        }}
         className="relative z-0 flex w-full flex-row items-center justify-center gap-4 border-b-4 p-6 md:flex-col"
       >
         <span
