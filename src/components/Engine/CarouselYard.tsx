@@ -12,7 +12,6 @@ const CarouselYard = ({videos} : {videos : any}) => {
 
   const [newVideos , setNewVideos] = useState([])
 
-
   const swiperRef = useRef<any>(null);
 
   useEffect(()=>{
@@ -44,7 +43,7 @@ const CarouselYard = ({videos} : {videos : any}) => {
               }}
               modules={[ Pagination , Navigation]}
               
-              className="h-[260px]"
+              className="h-[260px] w-full"
             >
               <div>
               {newVideos?.map((item : any , index : number) => (
