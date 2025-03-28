@@ -3,8 +3,7 @@ import { hyperTextForMarkDown } from "@/functions/hypertext";
 import { useState , useEffect} from "react";
 import HyperLink from "./HyperLink";
 import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
-import { FaRegCheckCircle , FaRegTimesCircle } from "react-icons/fa";
-import { FaRegCalendarMinus } from "react-icons/fa6";
+import { FaMinusCircle, FaRegCheckCircle , FaRegTimesCircle } from "react-icons/fa";
 
 const FactCheckDisplay = ({data , sources , query} : {data : any , sources : any , query : string}) => {
 
@@ -23,13 +22,13 @@ const FactCheckDisplay = ({data , sources , query} : {data : any , sources : any
                 
                 const styles = item?.answer?.Verdict === "True" ? "text-green-500" : item?.answer?.Verdict === "False" ? "text-red-300" : "text-yellow-400"
 
-                const verdictStatus = item?.answer?.Verdict === "True" ? <FaRegCheckCircle/> : item?.answer?.Verdict === "False" ? <FaRegTimesCircle/> : <FaRegCalendarMinus/>
+                const verdictStatus = item?.answer?.Verdict === "True" ? <FaRegCheckCircle/> : item?.answer?.Verdict === "False" ? <FaRegTimesCircle/> : <FaMinusCircle/>
 
                 return(<>
                     <div className="dark:bg-[#202938] bg-white flex flex-col w-full shadow-md rounded-3xl gap-2 p-4">
                         <div className="flex flex-row gap-2 items-center justify-between">
-                            <h1 className="font-bold text-slate-700 dark:text-slate-300 text-[24px]">{item?.claim}</h1>
-                            <p className={`text-[20px] rounded-md ${styles}`}>{verdictStatus}</p>
+                            <h1 className="font-bold text-slate-700 dark:text-slate-300 text-[24px] flex items-center gap-1"><p className={`text-[20px] rounded-md ${styles}`}>{verdictStatus}</p>{item?.claim}</h1>
+                            <h2 className={`p-2 rounded-xl ${item?.answer?.Verdict === "True" ? "bg-green-500 text-white" : item?.answer?.Verdict === "False" ? "bg-red-500 text-white" : "bg-yellow-400"}`}>{item?.answer?.Verdict}</h2>
                         </div>
                         <ReactMarkdown components={{
                             h1 : (props) => <h1 className='text-[20px] font-bold pt-2 pb-2' {...props}/>,

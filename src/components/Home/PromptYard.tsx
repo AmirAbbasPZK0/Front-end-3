@@ -231,13 +231,6 @@ const PropmptYard = () => {
 
       return () => socket?.off("findora_message" , onReceiveFindoraMessage)
     },[socket])
-
-    // useEffect(() => {
-    //   window.scrollTo({
-    //     top: document.documentElement.scrollHeight,
-    //     behavior: "smooth",
-    //   });
-    // }, [response]);
   
     useEffect(()=>{
       if(window.location.href.includes("search")){
@@ -339,7 +332,7 @@ const PropmptYard = () => {
             </div>
             <div className='md:w-[40%] w-[90%] rounded-2xl bg-slate-50 shadow-md dark:bg-[#202938]'>
               <h2 className='mx-8 mt-2 font-semibold text-[25px]'>Trend News</h2>
-              <TrendNewsCarousel data={trendNewsList}/>
+              <TrendNewsCarousel/>
             </div>
           </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>

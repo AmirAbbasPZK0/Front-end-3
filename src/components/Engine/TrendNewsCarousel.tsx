@@ -1,33 +1,45 @@
 "use client"
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import YouTubeVideos from "./YouTubeVideos";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward , IoIosArrowBack } from "react-icons/io";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
+import { useAsync } from "@/hooks/useAsync";
+import { GiConsoleController } from "react-icons/gi";
 
 interface TrendNewsProps {
-    Image : string
-    URL : string
+    image : string
+    url : string
     Title : string
     Description : string
 }
 
-interface TrendNewsCarouselProps {
-    data : TrendNewsProps[]
-}
 
-const TrendNewsCarousel = ({data} : TrendNewsCarouselProps) => {
+const TrendNewsCarousel = () => {
+
+    const [data , setData] = useState<any>([])
+
+    const [category , setCategory] = useState("top")
+
+    const {run} = useAsync(category , "GET")
+
+    useEffect(()=>{
+      run().then(resData => {
+        console.log(resData)
+        setData(resData)
+      })
+    },[category])
 
     const swiperRef = useRef<any>(null);
 
     return (<>
         <div className="flex flex-row gap-2 w-[100%]">
           <button className="pb-[20px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
-          {data?.length > 0 && (<>
+          {data?.articles?.length > 0 && (<>
             <Swiper
                 loop={true}
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -50,13 +62,13 @@ const TrendNewsCarousel = ({data} : TrendNewsCarouselProps) => {
               className=" w-full"
             >
               <div>
-                {data?.map(item => (
-                    <SwiperSlide key={item.Title} className="w-60 p-4 cursor-grab bg-gradient-to-l rounded-md">
-                        <a href={item.URL} target="_blank" className=" flex flex-col gap-1 relative">
-                            <img src={item.Image} className="w-[100%] brightness-50 transition-all rounded-md shadow-inner" alt="" />
+                {data?.articles?.map((item : any) => (
+                    <SwiperSlide key={item?.title} className="w-60 p-4 cursor-grab bg-gradient-to-l rounded-md">
+                        <a href={item?.url} target="_blank" className=" flex flex-col gap-1 relative">
+                            <img src={item?.image} className="w-[100%] brightness-50 transition-all rounded-md shadow-inner" alt="" />
                             <div className="flex flex-col gap-1 absolute top-12 left-2 mt-10">
-                                <h3 className="font-semibold text-[13px] text-white">{item.Title.slice(0,25)} ...</h3>
-                                <p className="text-[10px] text-white">{item.Description.slice(0,30)} ...</p>
+                                <h3 className="font-semibold text-[13px] text-white">{item?.title.slice(0,25)} ...</h3>
+                                <p className="text-[10px] text-white">{item?.description.slice(0,30)} ...</p>
                             </div>
                         </a>
                     </SwiperSlide>
