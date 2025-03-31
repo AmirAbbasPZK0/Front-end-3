@@ -4,13 +4,15 @@ import React, { useRef } from "react";
 import YouTubeVideos from "./YouTubeVideos";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward , IoIosArrowBack } from "react-icons/io";
-
 import { Navigation, Pagination } from "swiper/modules";
 import { useEffect , useState } from "react";
+import useAgent from "@/hooks/useAgent";
 
 const CarouselYard = ({videos} : {videos : any}) => {
 
   const [newVideos , setNewVideos] = useState([])
+
+  const {isMobile} = useAgent()
 
   const swiperRef = useRef<any>(null);
 
@@ -23,7 +25,8 @@ const CarouselYard = ({videos} : {videos : any}) => {
 
     return(<>
         <div className="flex flex-row gap-2">
-          <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+          {isMobile ? videos?.length > 1 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button> : 
+           videos?.length > 4 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>}
           {newVideos?.length > 0 && (<>
             <Swiper
               onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -54,7 +57,8 @@ const CarouselYard = ({videos} : {videos : any}) => {
               </div>
             </Swiper>
           </>)}
-          <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+          {isMobile ? videos?.length > 1 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button> : 
+          videos?.length > 4 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>}
         </div>
     </>)
 }

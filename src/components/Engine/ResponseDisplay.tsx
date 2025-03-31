@@ -87,6 +87,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
       }, [followUp]);
 
+    console.log(relatedQuestions)
+
     if(isLoading){
         return <div className="h-[70vh]">
             <Loading/>

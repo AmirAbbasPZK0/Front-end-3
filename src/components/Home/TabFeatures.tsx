@@ -17,6 +17,7 @@ import { RxCross2 } from "react-icons/rx";
 const TabsFeatures = () => {
   const [selected, setSelected] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isActive2 , setIsActive2] = useState(false)
 
   // Track if tab is in view
   const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -48,13 +49,16 @@ const TabsFeatures = () => {
       {/* Left Arrow */}
       {selected > 0 && (
         <button
-          onClick={() => setSelected((prev) => prev - 1)}
+          onClick={() => {
+            setSelected((prev) => prev - 1)
+            setIsActive2(true)
+          }}
           className="absolute left-5 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-[#202938]"
         >
           <GoArrowLeft size={24} />
         </button>
       )}
-      <Tabs selected={selected} setSelected={setSelected} />
+      <Tabs isActive2={isActive2} selected={selected} setSelected={setSelected} />
       <AnimatePresence mode="wait">
         {FEATURES.map((tab, index) => {
           return selected === index ? (
@@ -75,7 +79,10 @@ const TabsFeatures = () => {
       {/* Right Arrow */}
       {selected < FEATURES.length - 1 && (
         <button
-          onClick={() => setSelected((prev) => prev + 1)}
+          onClick={() => {
+            setSelected((prev) => prev + 1)
+            setIsActive2(true)
+          }}
           className="absolute right-5 top-1/2 z-50 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-[#202938]"
         >
           <GoArrowRight size={24} />
@@ -88,9 +95,10 @@ const TabsFeatures = () => {
 interface TabsProps {
   selected: number;
   setSelected: Dispatch<SetStateAction<number>>;
+  isActive2 : boolean
 }
 
-const Tabs = ({ selected, setSelected }: TabsProps) => {
+const Tabs = ({ selected, setSelected , isActive2}: TabsProps) => {
   const tabsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [isActive , setIsActive] = useState(false)
 
@@ -99,8 +107,7 @@ const Tabs = ({ selected, setSelected }: TabsProps) => {
   }
 
   useEffect(() => {
-    console.log(selected)
-    if (tabsRef.current[selected] && isActive) {
+    if (tabsRef.current[selected] && (isActive || isActive2)) {
       tabsRef.current[selected]?.scrollIntoView({
         behavior: "smooth",
         inline: "center",

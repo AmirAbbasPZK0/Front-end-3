@@ -14,8 +14,8 @@ import { GiConsoleController } from "react-icons/gi";
 interface TrendNewsProps {
     image : string
     url : string
-    Title : string
-    Description : string
+    title : string
+    description : string
 }
 
 
@@ -23,16 +23,14 @@ const TrendNewsCarousel = () => {
 
     const [data , setData] = useState<any>([])
 
-    const [category , setCategory] = useState("top")
-
-    const {run} = useAsync(category , "GET")
+    const {run} = useAsync("top" , "GET")
 
     useEffect(()=>{
       run().then(resData => {
         console.log(resData)
         setData(resData)
       })
-    },[category])
+    },[])
 
     const swiperRef = useRef<any>(null);
 
@@ -62,10 +60,10 @@ const TrendNewsCarousel = () => {
               className=" w-full"
             >
               <div>
-                {data?.articles?.map((item : any) => (
+                {data?.articles?.map((item : TrendNewsProps) => (
                     <SwiperSlide key={item?.title} className="w-60 p-4 cursor-grab bg-gradient-to-l rounded-md">
-                        <a href={item?.url} target="_blank" className=" flex flex-col gap-1 relative">
-                            <img src={item?.image} className="w-[100%] brightness-50 transition-all rounded-md shadow-inner" alt="" />
+                        <a href={item?.url} target="_blank" className="flex flex-col gap-1 relative">
+                            <img src={item?.image} className="w-[100%] h-[140px] object-cover object-center brightness-50 transition-all rounded-md shadow-inner" alt="" />
                             <div className="flex flex-col gap-1 absolute top-12 left-2 mt-10">
                                 <h3 className="font-semibold text-[13px] text-white">{item?.title.slice(0,25)} ...</h3>
                                 <p className="text-[10px] text-white">{item?.description.slice(0,30)} ...</p>

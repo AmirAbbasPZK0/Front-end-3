@@ -1,10 +1,11 @@
-import DiscTabsPage from "@/components/Global/DiscTabsPage";
+
+import DiscoverPage from "@/components/Home/DiscoverPage";
 import React from "react";
 
 const Discovery = () => {
   return (
     <div>
-      <DiscTabsPage />
+      <DiscoverPage/>
     </div>
   );
 };
