@@ -7,7 +7,7 @@ import {BiSolidBadgeCheck} from "react-icons/bi"
 interface HyperLinkProps {
     children : ReactNode
     href : string
-    data : string[]
+    data ?: string[]
 }
 
 const HyperLink = ({...props} : HyperLinkProps) => {

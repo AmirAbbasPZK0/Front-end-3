@@ -7,14 +7,29 @@ import { IoIosArrowForward , IoIosArrowBack } from "react-icons/io";
 import { Navigation, Pagination } from "swiper/modules";
 import { useEffect , useState } from "react";
 import useAgent from "@/hooks/useAgent";
+import { Swiper as SwiperType } from 'swiper';
+import { RefObject } from 'react';
 
-const CarouselYard = ({videos} : {videos : any}) => {
 
-  const [newVideos , setNewVideos] = useState([])
+
+interface Video {
+  title : string
+  url : string
+  source : string
+  link : string
+}
+
+interface CarouselYardProps {
+  videos : Video[]
+}
+
+const CarouselYard = ({videos} : CarouselYardProps) => {
+
+  const [newVideos , setNewVideos] = useState<Video[]>([])
 
   const {isMobile} = useAgent()
 
-  const swiperRef = useRef<any>(null);
+  const swiperRef: RefObject<SwiperType | null> = useRef(null);
 
   useEffect(()=>{
       setNewVideos(()=>{
@@ -49,7 +64,7 @@ const CarouselYard = ({videos} : {videos : any}) => {
               className="h-[260px] w-full"
             >
               <div>
-              {newVideos?.map((item : any , index : number) => (
+              {newVideos?.map((item : Video , index : number) => (
                   <SwiperSlide key={index}>
                     <YouTubeVideos url={item.link} data={item}/>
                   </SwiperSlide>

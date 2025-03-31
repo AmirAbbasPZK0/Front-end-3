@@ -39,7 +39,11 @@ interface ResponseDisplayProps {
     query: string;
     videos: any[]
     findoraMessage : string
-  }
+}
+
+interface HyperLink {
+    [link : string] : string[]
+}
 
 const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     response ,
@@ -55,7 +59,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     videos
 }) => {
 
-    const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
+    const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null>(null)
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
@@ -85,9 +89,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
           textareaRef.current.style.height = 'auto';
           textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
         }
-      }, [followUp]);
-
-    console.log(relatedQuestions)
+    }, [followUp]);
 
     if(isLoading){
         return <div className="h-[70vh]">
@@ -98,6 +100,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     if(data){
         return <FactCheckDisplay data={data?.message} sources={sources} query={query}/>
     }
+
+    console.log(sources)
 
     return(<>
         <div className={`p-4 ${openSources && "overflow-hidden"} rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
@@ -119,7 +123,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
                             h2 : (props) => <h2 className='text-[23px] font-semibold pt-2 pb-2' {...props}/>,
                             h3 : (props) => <h3 className=' text-[20px] font-semibold pt-3' {...props}/>,
-                            a : (props) => <HyperLink data={hyperLinkTooltip?.[props.href as string]} href={props.href as string}>{props.children}</HyperLink>,
+                            a : (props) => <HyperLink data={hyperLinkTooltip?.[props?.href as string]} href={props.href as string}>{props.children}</HyperLink>,
                             ul : (props) => <ul {...props}/>,
                             li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>
                         }}> 

@@ -3,20 +3,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useEdgeStore } from '@/lib/edgestore';
-import { useAppDispatch , useAppSelector} from '@/services/redux/store';
+import { useAppDispatch } from '@/services/redux/store';
 import {addUrl , removeFile} from "@/services/redux/reducers/fileUploadSlice"
 
 const FileUploader = () => {
-  const [files, setFiles] = useState<any>([]);
-  const [uploadedFiles , setUploadedFiles] = useState<any>([])
+  const [files, setFiles] = useState<File[]>([]);
+  const [uploadedFiles , setUploadedFiles] = useState<File[]>([])
   const [uploadStatus, setUploadStatus] = useState(false);
   const {edgestore} = useEdgeStore()
   const dispatch = useAppDispatch()
-  const urls = useAppSelector(state => state.fileUploadsSlice.uploadedFilesUrl)
 
-  const onDrop = useCallback((acceptedFiles : any) => {
+  const onDrop = useCallback((acceptedFiles : File[]) => {
     setFiles(
-      acceptedFiles.map((file : any) => Object.assign(file, { preview: URL.createObjectURL(file) }))
+      acceptedFiles.map((file : File) => Object.assign(file, { preview: URL.createObjectURL(file) }))
     );
   }, []);
 
@@ -29,8 +28,6 @@ const FileUploader = () => {
         const res = await edgestore.myFiles.upload({file : files[0]})
         dispatch(addUrl({url : res.url , name : files?.[0].name}))
         setUploadedFiles([...uploadedFiles , files?.[0]])
-        
-      
       }
     }catch(err){
     }finally{
@@ -64,9 +61,7 @@ const FileUploader = () => {
               {/* <ChosenIcon e={files?.[0].name.split(".")[files?.[0].name.split(".").length -1]} className="text-[20px] flex flex-row gap-2"/> */}
               {files?.[0].name.slice(0,8)}...{files?.[0].name.split(".")[files?.[0].name.split(".").length -1]}
             </span>
-            <button onClick={()=>{
-              dispatch(removeFile(files?.[0]))
-            }} className='top-0' type='button'>Pending..</button>
+            <button className='top-0' type='button'>Pending..</button>
           </p>
       </div>
         )}

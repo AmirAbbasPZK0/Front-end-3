@@ -5,9 +5,36 @@ import HyperLink from "./HyperLink";
 import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import { FaMinusCircle, FaRegCheckCircle , FaRegTimesCircle } from "react-icons/fa";
 
-const FactCheckDisplay = ({data , sources , query} : {data : any , sources : any , query : string}) => {
+interface ClaimAnswerProps { 
+    answer : {
+        Reasoning : string
+        Verdict : string
+    },
+    claim : string
+}
 
-    const [hyperLinkTooltip , setHyperLinkTooltip] = useState<any>(null)
+interface DataProps {
+    claim_1 ?: ClaimAnswerProps,
+    claim_2 ?: ClaimAnswerProps,
+    claim_3 ?: ClaimAnswerProps,
+}
+
+type Sources = {
+    [id : string] : string[]
+}
+
+interface Source {
+    title : string
+    url : string
+}
+
+interface HyperLink {
+    [link : string] : string[]
+}
+
+const FactCheckDisplay = ({data , sources , query} : {data : DataProps , sources : Sources[] | Source[] , query : string}) => {
+
+    const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null>(null)
 
     useEffect(()=>{
         setHyperLinkTooltip(snippetAndTitleHandler(sources))
@@ -18,7 +45,7 @@ const FactCheckDisplay = ({data , sources , query} : {data : any , sources : any
             <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-4">
                 <h2 className="text-[15px] flex items-end justify-end text-end p-2 font-semibold">{query}</h2>
             </div>
-            {Object.values(data)?.map((item : any) => {
+            {Object.values(data)?.map((item : ClaimAnswerProps) => {
                 
                 const styles = item?.answer?.Verdict === "True" ? "text-green-500" : item?.answer?.Verdict === "False" ? "text-red-300" : "text-yellow-400"
 

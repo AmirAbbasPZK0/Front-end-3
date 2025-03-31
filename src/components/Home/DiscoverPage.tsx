@@ -53,7 +53,7 @@ const DiscoverPage = () => {
     
     const [data , setData] = useState([])
 
-    const tabRef = useRef<any>(null)
+    const tabRef = useRef<HTMLDivElement>(null)
     
     const [active , setActive] = useState("top")
     
@@ -68,7 +68,7 @@ const DiscoverPage = () => {
     return (<>
         <div ref={tabRef} className="flex p-3  flex-row gap-2 overflow-x-auto">
                 {isMobile && <button onClick={()=>{
-                    tabRef.current.scrollTo({
+                    tabRef.current?.scrollTo({
                         left: 0,
                         behavior: "smooth",
                     })
@@ -78,7 +78,7 @@ const DiscoverPage = () => {
                     <button onClick={()=> setActive(item.tag)} className={`${active === item.tag && "border-b-2 border-slate-400 "} p-2 px-4`}>{item.title}</button>
                 ))}
                 {isMobile && <button onClick={()=>{
-                    tabRef.current.scrollTo({
+                    tabRef.current?.scrollTo({
                         left: 890,
                         behavior: "smooth",
                     })
