@@ -57,6 +57,7 @@ const NewSlider = ({images , query} : {images : HandleImageType[] , query : stri
             <Swiper
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
                 loop={true}
+                centeredSlides={true}
                 breakpoints={{
                     1: {
                         slidesPerView: 1,
@@ -67,12 +68,12 @@ const NewSlider = ({images , query} : {images : HandleImageType[] , query : stri
                 pagination={{
                     clickable: true,
                 }}
-                modules={[ Navigation]}
-                className="flex items-center rounded-md p-3 justify-center"
+                modules={[Navigation]}
+                className="flex items-center justify-center"
             >
                 {newImages?.map((item , index) => (
-                    <SwiperSlide className="w-full flex items-center justify-center" key={index}>
-                        <img className=" flex items-center w-full justify-center text-center rounded-md" src={item.imageUrl} alt="" />
+                    <SwiperSlide className=" flex items-center justify-center" key={index}>
+                        <img className="flex items-center w-full justify-center rounded-md" src={item.imageUrl} alt="" />
                     </SwiperSlide>
                 ))}
             </Swiper>

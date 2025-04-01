@@ -309,10 +309,10 @@ const PropmptYard = () => {
               <UploadedFileBox key={index} data={item}/>
             ))}
             </div>
-            <div className='md:w-[40%] w-[90%] rounded-2xl bg-slate-50 shadow-md dark:bg-[#202938]'>
+            {/* <div className='md:w-[40%] w-[90%] rounded-2xl bg-slate-50 shadow-md dark:bg-[#202938]'>
               <h2 className='mx-8 mt-2 font-semibold text-[25px]'>Trend News</h2>
               <TrendNewsCarousel/>
-            </div>
+            </div> */}
           </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
               <ResponseDisplay
