@@ -11,6 +11,8 @@ import WhyFindora from "@/components/Home/WhyFindora";
 import PropmptYard from "./Home/PromptYard";
 import AnimatedText from "./Home/AnimatedText";
 
+
+
 export default function Home() {
 
 

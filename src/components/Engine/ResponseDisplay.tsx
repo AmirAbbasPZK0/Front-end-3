@@ -27,7 +27,12 @@ interface Video {
     url : string
     source : string
     link : string
-}
+    date : string
+    imageUrl : string
+    imageHeight : string
+    imageWidth : string
+  }
+  
 
 type HandleImageType = {
     imageWidth : number

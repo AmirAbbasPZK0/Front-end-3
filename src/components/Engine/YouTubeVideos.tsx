@@ -3,7 +3,19 @@
 import {useEffect , useState } from "react";
 import { isRTL } from "@/functions/isRTL";
 
-const YouTubeVideos = ({ url , data } : {url : string , data : {title : string , date : string , source : string , imageUrl : string}}) => {
+interface Video {
+  title : string
+  url : string
+  source : string
+  link : string
+  date : string
+  imageUrl : string
+  imageHeight : string
+  imageWidth : string
+}
+
+
+const YouTubeVideos = ({ url , data } : {url : string , data : Video}) => {
   const [videoId, setVideoId] = useState("");
 
   const [alternativeImage , setAlternativeImage] = useState<string | null>(null)

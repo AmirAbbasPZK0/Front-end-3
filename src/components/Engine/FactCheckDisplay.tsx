@@ -31,10 +31,10 @@ interface HyperLink {
 
 const FactCheckDisplay = ({data , sources , query} : {data : DataProps , sources : Sources[] | Source , query : string}) => {
 
-    const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null>(null)
+    const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null >(null)
 
     useEffect(()=>{
-        setHyperLinkTooltip(snippetAndTitleHandler(sources))
+        setHyperLinkTooltip(snippetAndTitleHandler(sources as Array<Array<string>>))
     },[sources])
 
     return (<>
