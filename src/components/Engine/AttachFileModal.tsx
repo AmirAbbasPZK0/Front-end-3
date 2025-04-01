@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FileUploader from './FileUploader';
 import { FaTimes } from 'react-icons/fa';
 
+
 interface AttachFileModalProps {
-  setClose : (inner : (secondInner : boolean) => void) => void
+  setClose : (inner : boolean) => void
 }
 
 const AttachFileModal = ({setClose} : AttachFileModalProps) => {
@@ -17,7 +18,7 @@ const AttachFileModal = ({setClose} : AttachFileModalProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/50"
-            onClick={()=> setClose((item : boolean) => !item)}
+            onClick={()=> setClose(false)}
           />
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
@@ -28,7 +29,7 @@ const AttachFileModal = ({setClose} : AttachFileModalProps) => {
             <div className='flex flex-row w-full justify-between'>
               <h1 className='text-black dark:text-slate-300 font-bold text-[30px]'>Attach Files</h1>
               <button className='text-[20px]' onClick={()=>{
-                setClose((item : boolean) => !item)
+                setClose(false)
               }}><FaTimes/></button>
             </div>
             <FileUploader/>

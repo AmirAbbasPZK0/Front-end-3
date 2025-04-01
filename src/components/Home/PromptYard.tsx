@@ -2,10 +2,10 @@
 import ResponseDisplay from '@/components/Engine/ResponseDisplay';
 import useWebSocket from '@/hooks/useWebSocket';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useAppSelector , useAppDispatch } from '@/services/redux/store';
 import { addRecency, removeRecency } from '@/services/redux/reducers/resourceSlice';
-import { IoIosAttach, IoMdSend } from "react-icons/io";
+import { IoIosAttach } from "react-icons/io";
 import NewDropdown from "../Engine/NewDropdown";
 import { TbSend2 } from 'react-icons/tb';
 import { addUrlToInputArray } from '@/services/redux/reducers/urlInputSlice';
@@ -16,27 +16,6 @@ import TrendNewsCarousel from '../Engine/TrendNewsCarousel';
 
 
 const PropmptYard = () => {
-
-    const trendNewsList = [
-      {
-        Title: "Do you consume raw milk? Here are some compelling reasons to avoid it",
-        Description: "Unpasteurized milk is gaining popularity despite its higher risk of causing foodborne illnesses, including bird flu. Only a minority of Americans are",
-        URL: "https://timesofindia.indiatimes.com/life-style/health-fitness/health-news/consuming-raw-milk-amidst-bird-flu-here-are-the-risk-factors/articleshow/119106531.cms",
-        Image: "https://static.toiimg.com/thumb/msid-119106466,width-1070,height-580,imgsize-46836,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg"
-      },
-      {
-        Title: "Hamas claims head of its government in Gaza killed in Israeli strikes",
-        Description: "Middle East News: Hamas claimed its Gaza government head Essam al-Dalis was killed in Israeli strikes that also killed over 300 people. Israel cited Hamas's refusal to",
-        URL: "https://timesofindia.indiatimes.com/world/middle-east/hamas-claims-head-of-its-government-in-gaza-killed-in-israeli-strikes/articleshow/119157089.cms",
-        Image: "https://static.toiimg.com/thumb/msid-119157648,width-1070,height-580,imgsize-173014,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg",
-      },
-      {
-        Title:` SpaceX's Crew-10 mission arrives at International Space Station to relieve Starliner astronauts - Space.com`,
-        Description: `Crew-10 docked with the station on Sunday (March 16) at 12:04 a.m. ET.`,
-        URL: `https://www.space.com/space-exploration/international-space-station/spacex-crew-10-astronaut-mission-international-space-station-docking`,
-        Image: `https://cdn.mos.cms.futurecdn.net/BZcQ8mh5LWYZVss6jc2cLd-1200-80.jpg`
-      }
-    ]
 
     const [prompt , setPrompt] = useState("")
     const [selectedDepth , setSelectedDepth] = useState(false)
@@ -51,7 +30,7 @@ const PropmptYard = () => {
     const { socket, response, setResponse, responseRef , findoraMessageRef} = useWebSocket();
     const router = useRouter()
     const [isAttachOpen , setIsAttachOpen] = useState(false)
-    const textareaRef = useRef<any>(null)
+    const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 

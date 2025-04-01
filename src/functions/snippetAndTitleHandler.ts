@@ -1,7 +1,7 @@
-export function snippetAndTitleHandler(sources : any){
+export function snippetAndTitleHandler(sources : Array<Array<String>>){
     let data = {}
-    sources?.map((item : any) => {
-        data = {...data , [item?.[2]] : item}
+    sources?.map((item) => {
+        data = {...data , [item?.[2] as string] : item}
     })
 
     return data

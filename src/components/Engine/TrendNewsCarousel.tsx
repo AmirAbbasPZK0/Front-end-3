@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react";
-import YouTubeVideos from "./YouTubeVideos";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward , IoIosArrowBack } from "react-icons/io";
 import "swiper/css";
@@ -9,7 +8,12 @@ import "swiper/css/pagination";
 import "swiper/css/free-mode";
 import { Navigation } from "swiper/modules";
 import { useAsync } from "@/hooks/useAsync";
-import { GiConsoleController } from "react-icons/gi";
+import { RefObject } from "react";
+import {Swiper as SwiperType} from "swiper";
+
+type DataTypes = {
+  articles : TrendNewsProps[]
+}
 
 interface TrendNewsProps {
     image : string
@@ -18,21 +22,19 @@ interface TrendNewsProps {
     description : string
 }
 
-
 const TrendNewsCarousel = () => {
 
-    const [data , setData] = useState<any>([])
+    const [data , setData] = useState<DataTypes>({
+      articles : []
+    })
 
     const {run} = useAsync("top" , "GET")
 
     useEffect(()=>{
-      run().then(resData => {
-        console.log(resData)
-        setData(resData)
-      })
+      run().then((resData : DataTypes) => setData(resData))
     },[])
 
-    const swiperRef = useRef<any>(null);
+    const swiperRef : RefObject<SwiperType | null> = useRef(null);
 
     return (<>
         <div className="flex flex-row gap-2 w-[100%]">

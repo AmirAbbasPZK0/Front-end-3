@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { ChangeEvent, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
@@ -17,13 +17,14 @@ const SignUpFormHandler: React.FC = () => {
   
     const router = useRouter()
   
-    const onSubmit = async (e : any) => {
+    const onSubmit = async (e :  ChangeEvent<HTMLFormElement>) => {
       e.preventDefault()
       let data = {
-        name : e.target.name.value,
-        email : e.target.email.value,
-        password : e.target.password.value
+        name : e.target?.named?.value,
+        email : e.target?.email?.value,
+        password : e.target?.password?.value
       }
+      console.log(data)
       let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register/` , {
         method : "POST",
         body : JSON.stringify(data),
@@ -64,7 +65,7 @@ const SignUpFormHandler: React.FC = () => {
               </label>
               <input
                 type="text"
-                name="name"
+                name="named"
                 className="outline-none border-2 border-[#d7d7d9] dark:bg-[#111828] rounded-lg focus:border-[#6803f5] py-1 px-2"
                 required
               />

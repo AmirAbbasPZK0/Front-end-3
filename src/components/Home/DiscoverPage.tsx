@@ -44,14 +44,28 @@ const listOfTopics = [
     }
 ]
 
+type DataTypes = {
+    articles : TrendNewsProps[]
+  }
+  
+  interface TrendNewsProps {
+      image : string
+      url : string
+      title : string
+      description : string
+  }
+  
+
 
 const DiscoverPage = () => {
     
     const {isMobile} = useAgent()
 
     const [buttonDisplay , setButtonDisplay] = useState(false)
+
     
-    const [data , setData] = useState([])
+    
+    const [data , setData] = useState<TrendNewsProps[]>([])
 
     const tabRef = useRef<HTMLDivElement>(null)
     
@@ -60,7 +74,7 @@ const DiscoverPage = () => {
     const {run , isLoading} = useAsync(active , "GET")
 
     useEffect(()=>{
-        run().then((resData : any) => {
+        run().then((resData : DataTypes) => {
             setData(resData.articles)
         })
     },[active])

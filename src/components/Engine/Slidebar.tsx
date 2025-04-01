@@ -67,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           {user.isLogin && <div className='flex flex-col gap-2 pt-3'>
             <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
-              {user.history?.map((item : any , index : number) => (
+              {user.history?.map((item : {question : string} , index : number) => (
                 <div key={index}>
                   <p>{item.question}</p>
                 </div>

@@ -23,16 +23,13 @@ type Sources = {
     [id : string] : string[]
 }
 
-interface Source {
-    title : string
-    url : string
-}
+type Source = Array<Array<string>>
 
 interface HyperLink {
     [link : string] : string[]
 }
 
-const FactCheckDisplay = ({data , sources , query} : {data : DataProps , sources : Sources[] | Source[] , query : string}) => {
+const FactCheckDisplay = ({data , sources , query} : {data : DataProps , sources : Sources[] | Source , query : string}) => {
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null>(null)
 

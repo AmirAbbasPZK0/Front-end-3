@@ -3,14 +3,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward , IoIosArrowBack } from "react-icons/io";
 import { Navigation } from "swiper/modules";
 import { isRTL } from "@/functions/isRTL";
+import {Swiper as SwiperType} from "swiper";
 
-const NewSlider = ({images , query} : {images : {imageUrl : string}[] , query : string}) => {
+type HandleImageType = {
+    imageWidth : number
+    imageHeight : number
+    imageUrl : string
+}
+
+const NewSlider = ({images , query} : {images : HandleImageType[] , query : string}) => {
 
     const [newImages , setNewImages] = useState<typeof images>([])
-    const swiperRef = useRef<any>(null);
+    const swiperRef = useRef<SwiperType | null>(null);
 
-    const handleImages = (imageList : any) => {
-        let newArray = imageList.filter((item : any) => {
+    const handleImages = (imageList : HandleImageType[]) => {
+        let newArray = imageList.filter((item : HandleImageType) => {
             if(!(item.imageHeight > item.imageWidth * 2)){
                 return item
             }
@@ -23,8 +30,8 @@ const NewSlider = ({images , query} : {images : {imageUrl : string}[] , query : 
             const img = new Image();
             img.src = image.imageUrl;
             img.onload = () => {
-                setNewImages((prevImages : any) =>
-                    prevImages.map((prevImage : any) =>
+                setNewImages((prevImages : HandleImageType[]) =>
+                    prevImages.map((prevImage) =>
                         prevImage.imageUrl === image.imageUrl
                             ? { ...prevImage, loaded: true }
                             : prevImage
@@ -33,8 +40,8 @@ const NewSlider = ({images , query} : {images : {imageUrl : string}[] , query : 
             };
             img.onerror = () => {
                 // Optionally, you can remove or replace the image here
-                setNewImages((prevImages : any) =>
-                    prevImages.filter((prevImage : any) => prevImage.imageUrl !== image.imageUrl)
+                setNewImages((prevImages : HandleImageType[]) =>
+                    prevImages.filter((prevImage) => prevImage.imageUrl !== image.imageUrl)
                 );
             };
         });

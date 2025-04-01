@@ -1,6 +1,6 @@
 "use client"
 
-import React , {useEffect, useRef, useState} from "react";
+import React , {RefObject, useEffect, useRef, useState} from "react";
 import ReactMarkdown from 'react-markdown';
 import HyperLink from "./HyperLink";
 import { hyperTextForMarkDown } from "@/functions/hypertext";
@@ -21,23 +21,46 @@ import remarkGfm from 'remark-gfm'
 import NewSlider from "./NewSlider";
 import { isRTL } from "@/functions/isRTL";
 
-interface Source {
+
+interface Video {
     title : string
     url : string
+    source : string
+    link : string
+}
+
+type HandleImageType = {
+    imageWidth : number
+    imageHeight : number
+    imageUrl : string
+}
+
+interface ClaimAnswerProps { 
+    answer : {
+        Reasoning : string
+        Verdict : string
+    },
+    claim : string
+}
+
+interface DataProps {
+    claim_1 ?: ClaimAnswerProps,
+    claim_2 ?: ClaimAnswerProps,
+    claim_3 ?: ClaimAnswerProps,
 }
 
 interface ResponseDisplayProps {
     response: string;
-    sources: Source[];
+    sources: Array<Array<string>>;
     isLoading: boolean;
-    images: any[];
+    images: HandleImageType[];
     isDone : boolean;
-    data: any
-    relatedQuestions: any[],
+    data: {message : DataProps}
+    relatedQuestions: string[],
     sendMessage: (prompt: string) => void;
-    responseRef: any;
+    responseRef: string;
     query: string;
-    videos: any[]
+    videos: Video[]
     findoraMessage : string
 }
 
@@ -66,9 +89,9 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
     const [isCopied, setIsCopied] = useClipboard(CopyText);
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
-    const textareaRef = useRef<any>(null)
+    const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
 
-    function removeMarkdown(markdown : any){
+    function removeMarkdown(markdown : string){
         return markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
     }
 
@@ -149,7 +172,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 }}><FaTimes className="text-black dark:text-white"/></button>
                                 </div>
                                 <div className='flex flex-col h-[100vh] bg-slate-200 dark:bg-slate-900 w-full gap-4 overflow-auto'>
-                                {sources?.map((source : any, index) => (
+                                {sources?.map((source : string[], index : number) => (
                                     <li key={'source' + index} className="flex w-full p-2 items-start">
                                         <Source data={{title : source[3] , snippet : source[4] , link : source[2]}} title={source[0]}/>
                                     </li>

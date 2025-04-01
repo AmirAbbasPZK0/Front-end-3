@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { ChangeEvent, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -16,11 +16,11 @@ const LoginFormHandler: React.FC = () => {
 
   const router = useRouter()
 
-  const onSubmit = async (e : any) => {
+  const onSubmit = async (e :  ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     let data = {
-      email : e.target.email.value,
-      password : e.target.password.value
+      email : e.target?.email.value,
+      password : e.target?.password.value
     }
     let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login/` , {
       method : "POST",

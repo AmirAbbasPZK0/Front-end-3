@@ -2,7 +2,7 @@ export const hyperTextForMarkDown = (markdown : string , sources : any) => {
 
     const main_reg = /\[(\d+)\]/g
         
-        let number_of_array : any = []
+        let number_of_array : (number)[] = []
 
         let newMarkDown: string
     

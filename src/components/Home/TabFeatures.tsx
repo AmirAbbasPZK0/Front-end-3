@@ -64,7 +64,7 @@ const TabsFeatures = () => {
           return selected === index ? (
             <motion.div
               ref={(el) => {
-                tabRefs.current[index] = el; // Assign to the ref array without returning anything
+                tabRefs.current[index] = el; 
               }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
