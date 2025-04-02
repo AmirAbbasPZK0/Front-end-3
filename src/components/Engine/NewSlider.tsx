@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react"
 import { useState , useEffect } from "react"
 import { IoIosArrowBack , IoIosArrowForward } from "react-icons/io"
 
-const NewSlider = ({images} : {images : {imageUrl : string}[]}) => {
+const NewSlider = ({query , images} : {query : string , images : {imageUrl : string}[]}) => {
 
     const [isActive , setIsActive] = useState(0)
     const [newImages , setNewImages] = useState([])
