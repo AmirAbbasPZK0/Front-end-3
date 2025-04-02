@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import ScrollToTop from "./utils/ScrollToTop";
 import Providers from "@/services/redux/Providers";
 import { Suspense } from "react";
 import Layout from "@/components/Engine/Layout";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

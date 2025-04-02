@@ -1,14 +1,25 @@
 "use client"
 import { AnimatePresence, motion } from "motion/react"
-import { useState , useEffect } from "react"
+import { useState , useEffect, useRef } from "react"
+import { Navigation } from "swiper/modules";
 import { IoIosArrowBack , IoIosArrowForward } from "react-icons/io"
+import { Swiper , SwiperSlide} from "swiper/react"
+import {Swiper as SwiperType} from "swiper"
+import { RefObject } from "react"
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-const NewSlider = ({query , images} : {query : string , images : {imageUrl : string}[]}) => {
+interface Image {
+    imageUrl : string
+}
 
-    const [isActive , setIsActive] = useState(0)
-    const [newImages , setNewImages] = useState([])
-    const [isOpen , setIsOpen] = useState<string | boolean>(false)
-    const [openedImageSlider , setOpenedImageSlider] = useState<number | boolean>(false)
+
+const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
+
+    const [newImages , setNewImages] = useState<Image[]>([])
+
+    const swiperRef : RefObject<SwiperType | null> = useRef(null);
 
     const handleImages = (imageList : any) => {
         let newArray = imageList.filter((item : any) => {
@@ -48,55 +59,33 @@ const NewSlider = ({query , images} : {query : string , images : {imageUrl : str
 
 
     return(<>
-        <div className="flex flex-row gap-2 w-full">
-            <button onClick={()=>{
-                setIsActive(item => item === 0 ? (newImages?.length - 1) : item - 1)
-            }}><IoIosArrowBack/></button>
-            <div className="md:w-[80%] w-[100%]">
-                {newImages?.map((item : any , index) => (
-                    <img onClick={()=>{
-                        setIsOpen(item?.imageUrl)
-                        setOpenedImageSlider(index)
-                    }} className={`${isActive === index ? "md:max-w-full md:min-w-full min-h-[300px] max-h-[300px]" : "w-0 opacity-0"} object-cover cursor-pointer rounded-md`} src={item.imageUrl} alt="" />
+        <div className="flex flex-row gap-2 items-center justify-center">
+            <button className="pb-[120px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+            <Swiper 
+                loop={true}
+                onSwiper={(swiper) => (swiperRef.current = swiper)}
+                breakpoints={{
+                1: {
+                  slidesPerView: 1,
+                  spaceBetween: 15,
+                },
+              }}
+              freeMode={true}
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Navigation]}
+              
+              className="w-full flex bg-slate-200 dark:bg-slate-900 rounded-md"
+            >
+                {newImages?.map((item , index) => (
+                    <SwiperSlide className="flex items-center justify-center" key={index}>
+                        <img className="w-full block ml-auto rounded-md mr-auto" src={item.imageUrl} alt="" />
+                    </SwiperSlide>
                 ))}
-            </div>
-            <button onClick={()=>{
-                setIsActive(item => item === (newImages?.length - 1) ? 0 : item + 1)
-            }}><IoIosArrowForward/></button>
+            </Swiper>
+            <button className="pb-[120px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
         </div>
-        {isOpen && 
-        <AnimatePresence>
-                <div>
-                <div className="fixed inset-0 z-50 flex items-center justify-center">
-                    <button className='p-4 z-50' onClick={()=>{
-                        setOpenedImageSlider((item : any) => item === 0 ? (newImages?.length - 1) : item - 1)
-                    }}><IoIosArrowBack/></button>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 bg-black/50"
-                            onClick={()=> setIsOpen(false)}
-                        />
-                        <motion.div
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
-                            className="relative w-full dark:bg-slate-900 gap-2 text-center flex flex-col rounded-2xl bg-white p-8 shadow-xl"
-                        >
-                            {/* <a target="_blank" href={newImages[openedImageSlider as number]?.imageUrl}>
-                                <ImageHandler className="" isForBigSlider={true} handleError={()=> console.log("Failed to load")} item={{imageUrl : newImages[openedImageSlider as number]?.imageUrl}}/>
-                            </a> */}
-                            {newImages?.filter((image : any) => image.loaded)?.map((item : any , index) => (
-                                <img key={index} className={`${index === openedImageSlider ? "flex" : "hidden"}`} src={item.imageUrl} alt="" />
-                            ))}
-                        </motion.div>
-                    <button className='p-4 z-50' onClick={()=>{
-                        setOpenedImageSlider((item : any) => item === (newImages?.length - 1) ? 0 : item + 1)
-                    }}><IoIosArrowForward/></button>
-                </div>
-                </div>
-        </AnimatePresence>}
     </>)
 }
 

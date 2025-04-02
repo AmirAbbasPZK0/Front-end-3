@@ -59,7 +59,7 @@ const TrendNewsCarousel = () => {
               }}
               modules={[ Navigation]}
               
-              className=" w-full"
+              className="w-full"
             >
               <div>
                 {data?.articles?.map((item : TrendNewsProps) => (
