@@ -60,7 +60,7 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
 
     return(<>
         <div className="flex flex-row gap-2 items-center justify-center">
-            <button className="pb-[110px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+            <button className="pb-[50px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
             <Swiper 
                 loop={true}
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -76,7 +76,7 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
               }}
               modules={[Navigation]}
               
-              className="w-full flex bg-slate-200 dark:bg-slate-900 rounded-md"
+              className="w-full flex bg-slate-200 dark:bg-slate-900 rounded-md h-auto"
             >
                 {newImages?.map((item , index) => (
                     <SwiperSlide className="flex items-center justify-center" key={index}>
@@ -84,7 +84,7 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <button className="pb-[110px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+            <button className="pb-[50px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
         </div>
     </>)
 }
