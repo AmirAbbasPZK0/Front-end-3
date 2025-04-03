@@ -1,5 +1,4 @@
 "use client"
-import { AnimatePresence, motion } from "motion/react"
 import { useState , useEffect, useRef } from "react"
 import { Navigation } from "swiper/modules";
 import { IoIosArrowBack , IoIosArrowForward } from "react-icons/io"
@@ -60,7 +59,7 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
 
     return(<>
         <div className="flex flex-row gap-2 items-center justify-center">
-            <button className="pb-[50px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+            <button className="" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
             <Swiper 
                 loop={true}
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -80,11 +79,11 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
             >
                 {newImages?.map((item , index) => (
                     <SwiperSlide className="flex items-center justify-center" key={index}>
-                        <img className="w-full block ml-auto rounded-md mr-auto" src={item.imageUrl} alt="" />
+                        <img className="w-full rounded-md items-center min-h-[300px] max-h-[300px] object-contain" src={item.imageUrl} alt="" />
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <button className="pb-[50px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+            <button className="" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
         </div>
     </>)
 }
