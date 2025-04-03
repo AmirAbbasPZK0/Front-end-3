@@ -60,7 +60,7 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
 
     return(<>
         <div className="flex flex-row gap-2 items-center justify-center">
-            <button className="pb-[120px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
+            <button className="pb-[110px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>
             <Swiper 
                 loop={true}
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -84,7 +84,7 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <button className="pb-[120px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
+            <button className="pb-[110px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>
         </div>
     </>)
 }

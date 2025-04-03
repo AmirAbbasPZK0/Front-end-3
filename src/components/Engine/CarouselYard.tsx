@@ -48,8 +48,8 @@ const CarouselYard = ({videos} : CarouselYardProps) => {
             <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
             <div className="w-full">
               <div className="flex flex-row gap-2">
-                {isMobile ? newVideos?.length > 1 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button> : 
-                newVideos?.length > 4 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>}
+                {isMobile ? newVideos?.length > 1 && <button className="pb-[120px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button> : 
+                newVideos?.length > 4 && <button className="pb-[120px]" onClick={() => swiperRef.current?.slidePrev()}><IoIosArrowBack/></button>}
                 {newVideos?.length > 0 && (<>
                   <Swiper
                     onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -80,8 +80,8 @@ const CarouselYard = ({videos} : CarouselYardProps) => {
                     </div>
                   </Swiper>
                 </>)}
-                {isMobile ? newVideos?.length > 1 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button> : 
-                newVideos?.length > 4 && <button className="pb-[100px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>}
+                {isMobile ? newVideos?.length > 1 && <button className="pb-[120px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button> : 
+                newVideos?.length > 4 && <button className="pb-[120px]" onClick={() => swiperRef.current?.slideNext()}><IoIosArrowForward/></button>}
               </div>
             </div>
           </div>

@@ -6,7 +6,8 @@ import HyperLink from "./HyperLink";
 import { hyperTextForMarkDown } from "@/functions/hypertext";
 import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import Loading from "./Loading";
-// import Slider from "./Slider";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dracula , materialLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'; // Choose a style
 import { TbSend2 } from "react-icons/tb";
 import { IoCopyOutline , IoCopy } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
@@ -20,6 +21,14 @@ import useClipboard from "react-use-clipboard";
 import remarkGfm from 'remark-gfm'
 import NewSlider from "./NewSlider";
 import { isRTL } from "@/functions/isRTL";
+
+
+interface CodeComponentProps {
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+  [key: string]: any; // For additional props
+}
 
 
 interface Video {
@@ -129,8 +138,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         return <FactCheckDisplay data={data?.message} sources={sources} query={query}/>
     }
 
-    console.log(sources)
-
     return(<>
         <div className={`p-4 ${openSources && "overflow-hidden"} rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
             <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
@@ -148,6 +155,23 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
                     <div className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
                         <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
+                            code({ node, inline, className, children, ...props } : CodeComponentProps) {
+                                const match = /language-(\w+)/.exec(className || '');
+                                return !inline && match ? (
+                                  <SyntaxHighlighter
+                                    style={dracula} // You can replace this with any theme
+                                    language={match[1]}
+                                    PreTag="div" // Optional: Ensures compatibility with Next.js
+                                    {...props}
+                                  >
+                                    {String(children).replace(/\n$/, '')} // Remove trailing newline
+                                  </SyntaxHighlighter>
+                                ) : (
+                                  <code className={className} {...props}>
+                                    {children}
+                                  </code>
+                                );
+                              },
                             h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
                             h2 : (props) => <h2 className='text-[23px] font-semibold pt-2 pb-2' {...props}/>,
                             h3 : (props) => <h3 className=' text-[20px] font-semibold pt-3' {...props}/>,
