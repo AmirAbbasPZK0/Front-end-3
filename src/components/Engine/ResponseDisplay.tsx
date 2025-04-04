@@ -7,7 +7,7 @@ import { hyperTextForMarkDown } from "@/functions/hypertext";
 import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import Loading from "./Loading";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dracula , materialLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'; // Choose a style
+import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'; // Choose a style
 import { TbSend2 } from "react-icons/tb";
 import { IoCopyOutline , IoCopy } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
@@ -21,6 +21,7 @@ import useClipboard from "react-use-clipboard";
 import remarkGfm from 'remark-gfm'
 import NewSlider from "./NewSlider";
 import { isRTL } from "@/functions/isRTL";
+import { FiClipboard } from "react-icons/fi";
 
 
 interface CodeComponentProps {
@@ -101,7 +102,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const [isSubmmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
     const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
-    const [isCopied, setIsCopied] = useClipboard(CopyText);
+    const [isCopied, copyText] = useClipboard(CopyText);
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
 
@@ -157,16 +158,22 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
                             code({ node, inline, className, children, ...props } : CodeComponentProps) {
                                 const match = /language-(\w+)/.exec(className || '');
-                                return !inline && match ? (
+                                return !inline && match ? (<>
                                   <SyntaxHighlighter
+                                    customStyle={{position:"relative"}}
                                     style={dracula} // You can replace this with any theme
                                     language={match[1]}
                                     PreTag="div" // Optional: Ensures compatibility with Next.js
                                     {...props}
                                   >
-                                    {String(children).replace(/\n$/, '')} // Remove trailing newline
-                                  </SyntaxHighlighter>
-                                ) : (
+                                    {String(children).replace(/\n$/, '')}
+                                    </SyntaxHighlighter>
+                                    <div className="">
+                                        <FiClipboard onClick={()=>{
+                                            navigator.clipboard.writeText(children as string);
+                                        }} className="cursor-pointer"/>
+                                    </div>
+                                  </>) : (
                                   <code className={className} {...props}>
                                     {children}
                                   </code>
@@ -208,7 +215,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 ))}
                                 </div>
                             </div>
-                            <button type="button" onClick={setIsCopied}>
+                            <button type="button" onClick={copyText}>
                                 {isCopied ? <IoCopy/> : <IoCopyOutline/>}
                             </button>
                         </div>
