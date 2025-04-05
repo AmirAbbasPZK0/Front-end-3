@@ -107,7 +107,7 @@ const Tabs = ({ selected, setSelected , isActive2}: TabsProps) => {
   }
 
   useEffect(() => {
-    if (tabsRef.current[selected] && (isActive || isActive2)) {
+    if (tabsRef.current[selected]) {
       tabsRef.current[selected]?.scrollIntoView({
         behavior: "smooth",
         inline: "center",

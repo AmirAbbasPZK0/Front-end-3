@@ -41,7 +41,7 @@ interface Video {
     imageUrl : string
     imageHeight : string
     imageWidth : string
-  }
+}
   
 
 type HandleImageType = {
@@ -129,6 +129,22 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
     }, [followUp]);
 
+    useEffect(() => {
+        const handleKeyDown = (event: { key: string; }) => {
+          if (event.key === "Enter") {
+            if(followUp !== ""){
+              sendMessage(followUp)
+            }
+          }
+        };
+    
+        window.addEventListener("keydown", handleKeyDown);
+    
+        return () => {
+          window.removeEventListener("keydown", handleKeyDown);
+        };
+      }, [followUp]);
+
     if(isLoading){
         return <div className="h-[70vh]">
             <Loading/>
@@ -141,7 +157,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 
     return(<>
         <div className={`p-4 ${openSources && "overflow-hidden"} rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
-            <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
+            <div className="dark:bg-[#202938] flex flex-row justify-end text-end shadow-md items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
                 <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
             </div>
             {(findoraMessage !== "" && selectedModule === "medical") && 

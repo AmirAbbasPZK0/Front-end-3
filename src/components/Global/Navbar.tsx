@@ -30,12 +30,15 @@ import { BsSearch } from "react-icons/bs";
 import Slidebar from "../Engine/Slidebar";
 import MiniSlideBar from "../Engine/MiniSlideBar";
 import useAgent from "@/hooks/useAgent";
+import { BsCpu } from "react-icons/bs";
+import { url } from "inspector";
 
 const Links = [
   { id: 1, title: "Home", icon: RiHome2Line, url: "/" },
   { id: 2, title: "Discover", icon: BsSearch, url: "/discover" },
   { id: 3, title: "About", icon: GoPeople, url: "/about" },
   { id: 4, title: "Contact", icon: FiPhone, url: "/contact" },
+  {id : 5, title : "Search Engine" , icon :BsCpu , url :"/search-engine" }
 ];
 
 const Navbar = () => {
@@ -200,7 +203,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {(!isMobile && (pathname.includes("search") || pathname === "/")) && <MiniSlideBar/>}
+      {(!isMobile && (pathname.includes("search") || pathname === "/search-engine")) && <MiniSlideBar/>}
       <AnimatePresence>
         <Slidebar isOpen={showLeftMenu} onClose={()=>setShowLeftMenu(false)}/>
       </AnimatePresence>

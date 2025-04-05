@@ -12,7 +12,6 @@ import { addUrlToInputArray } from '@/services/redux/reducers/urlInputSlice';
 import UrlInput from '../Engine/UrlInput';
 import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
-import TrendNewsCarousel from '../Engine/TrendNewsCarousel';
 
 
 const PropmptYard = () => {
@@ -45,7 +44,8 @@ const PropmptYard = () => {
       }
       findoraMessageRef.current = ""
       const url = new URL(window.location.href);
-      const codde = url.pathname.split('/search/')[1];
+      const codde = url.pathname.split('/search-engine/search/')[1];
+      console.log(codde)
       responseRef.current = ''; // Reset the ref for the next response
       if(uploadedFiles.uploadedFilesUrl.length > 0){
         socket?.emit('send_message', {
@@ -98,7 +98,8 @@ const PropmptYard = () => {
         code: string
       }) => {
         if(!window.location.href.includes(data.code)){
-          router.push('/search/' + data.code);
+          router.push('/search-engine/search/' + data.code);
+          
           setCode(data.code);
         }
       });
@@ -212,7 +213,7 @@ const PropmptYard = () => {
     },[socket])
   
     useEffect(()=>{
-      if(window.location.href.includes("search")){
+      if(window.location.href.includes("search-engine/search")){
         dispatch(removeRecency())
       }else{
         dispatch(addRecency())
