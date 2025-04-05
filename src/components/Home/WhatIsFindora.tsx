@@ -24,8 +24,8 @@ const WhatIsFindora = () => {
         engine fact-checks sources, analyzes content, and provides reliable,
         transparent answers.
       </p>
-      <div className="flex flex-row items-center gap-4 text-zinc-700 dark:text-slate-200">
-        <p className="text-[20px]">Do you have any questions?</p>
+      <div className="flex flex-col md:flex-row items-center gap-4 text-zinc-700 dark:text-slate-200">
+      
         <Link href={"/search-engine"} className="flex items-center justify-center gap-2 bg-black dark:bg-white text-white dark:text-black font-medium rounded-full px-4 py-3 lg:hover:scale-105 transition-all duration-300 ease-in-out">Get Started <span><IoIosArrowRoundForward className="text-[33px] pt-1"/></span></Link>
       </div>
     </div>
