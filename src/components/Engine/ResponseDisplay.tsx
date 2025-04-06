@@ -205,7 +205,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             {sources ? hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
-                            {(sources && !(selectedModule === "file" || selectedModule === "url")) && <SourceButton sources={sources} onClick={()=>{
+                            {(sources && !(selectedModule === "file")) && <SourceButton sources={sources} onClick={()=>{
                                 setOpenSources(true)
                             }}/>}
                             {openSources && <>
