@@ -22,6 +22,7 @@ import remarkGfm from 'remark-gfm'
 import NewSlider from "./NewSlider";
 import { isRTL } from "@/functions/isRTL";
 import { FiClipboard } from "react-icons/fi";
+import { checkIsEmpty } from "@/functions/checkIsEmpty";
 
 
 interface CodeComponentProps {
@@ -130,10 +131,12 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     }, [followUp]);
 
     useEffect(() => {
+
         const handleKeyDown = (event: { key: string; }) => {
           if (event.key === "Enter") {
-            if(followUp !== ""){
-              sendMessage(followUp)
+            if(checkIsEmpty(followUp)){
+                setIsSubmited(true)
+                sendMessage(followUp)
             }
           }
         };
@@ -143,7 +146,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         return () => {
           window.removeEventListener("keydown", handleKeyDown);
         };
-      }, [followUp]);
+    }, [followUp]);
 
     if(isLoading){
         return <div className="h-[70vh]">
@@ -152,7 +155,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     }
 
     if(data){
-        return <FactCheckDisplay data={data?.message} sources={sources} query={query}/>
+        return <FactCheckDisplay sendMessage={sendMessage} data={data?.message} sources={sources} query={query}/>
     }
 
     return(<>
@@ -251,11 +254,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         {Array.isArray(relatedQuestions) && relatedQuestions?.map((e, index) => (
                         <button
                         dir="auto"
-                        onClick={()=> {
-                            sendMessage(e)
-                            setIsSubmited(true)
-                        }}
-                        type="button"
+                        type="submit"
                         key={index}
                         className={`border-b-2 w-[90%] border-slate-400 dark:border-slate-100 p-3 flex flex-row justify-between items-center`}
                         >
@@ -272,10 +271,10 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             {!isSubmmited && (<>
                 <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md w-[100%] p-3 flex flex-col">
                     <form onSubmit={(e)=>{
-                        setIsSubmited(true)
                         e.preventDefault()
-                        if(followUp !== ""){
+                        if(checkIsEmpty(followUp)){
                             sendMessage(followUp)
+                            setIsSubmited(true)
                         }
                     }} className="w-full flex flex-row gap-2" action="">
                         <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>

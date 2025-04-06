@@ -12,6 +12,7 @@ import { addUrlToInputArray } from '@/services/redux/reducers/urlInputSlice';
 import UrlInput from '../Engine/UrlInput';
 import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
+import { checkIsEmpty } from '@/functions/checkIsEmpty';
 
 
 const PropmptYard = () => {
@@ -45,7 +46,6 @@ const PropmptYard = () => {
       findoraMessageRef.current = ""
       const url = new URL(window.location.href);
       const codde = url.pathname.split('/search-engine/search/')[1];
-      console.log(codde)
       responseRef.current = ''; // Reset the ref for the next response
       if(uploadedFiles.uploadedFilesUrl.length > 0){
         socket?.emit('send_message', {
@@ -241,7 +241,7 @@ const PropmptYard = () => {
     useEffect(() => {
       const handleKeyDown = (event: { key: string; }) => {
         if (event.key === "Enter") {
-          if(prompt !== ""){
+          if(checkIsEmpty(prompt)){
             sendMessage(prompt)
           }
         }
@@ -267,7 +267,7 @@ const PropmptYard = () => {
             <div className="md:w-[40%] w-[90%]">
             <form onSubmit={e => {
               e.preventDefault()
-              if(prompt !== ""){
+              if(checkIsEmpty(prompt)){
                 sendMessage(prompt)
               }
             }} className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>

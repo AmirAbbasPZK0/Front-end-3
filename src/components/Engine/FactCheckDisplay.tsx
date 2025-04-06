@@ -1,11 +1,13 @@
 import ReactMarkdown from "react-markdown"
 import { hyperTextForMarkDown } from "@/functions/hypertext";
-import { useState , useEffect} from "react";
+import { useState , useEffect, RefObject, useRef} from "react";
 import HyperLink from "./HyperLink";
 import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import { FaMinusCircle, FaRegCheckCircle , FaRegTimesCircle } from "react-icons/fa";
 import Source from "./Source";
 import SourceButton from "./SourceButton";
+import { TbSend2 } from "react-icons/tb";
+import { isRTL } from "@/functions/isRTL";
 
 interface ClaimAnswerProps { 
     answer : {
@@ -31,15 +33,52 @@ interface HyperLink {
     [link : string] : string[]
 }
 
-const FactCheckDisplay = ({data , sources , query} : {data : DataProps , sources : Sources[] | Source , query : string}) => {
+interface FactCheckDisplayProps {
+    data : DataProps , 
+    sources : Sources[] | Source , 
+    query : string 
+    sendMessage : (prompt : string) => void
+}
+
+const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisplayProps) => {
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null >(null)
 
+    const [followUp , setFollowUp] = useState("")
+
     const [openSources, setOpenSources] = useState(false)
+
+    const [isSubmited , setIsSubmited] = useState(false)
+
+    const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
 
     useEffect(()=>{
         setHyperLinkTooltip(snippetAndTitleHandler(sources as Array<Array<string>>))
     },[sources])
+
+    useEffect(() => {
+            if (textareaRef.current) {
+              textareaRef.current.style.height = 'auto';
+              textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+            }
+    }, [followUp]);
+    
+    useEffect(() => {
+            const handleKeyDown = (event: { key: string; }) => {
+              if (event.key === "Enter") {
+                if(followUp !== ""){
+                  sendMessage(followUp)
+                  setIsSubmited(true)
+                }
+              }
+            };
+        
+            window.addEventListener("keydown", handleKeyDown);
+        
+            return () => {
+              window.removeEventListener("keydown", handleKeyDown);
+            };
+    }, [followUp]);
 
     return (<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
@@ -95,6 +134,21 @@ const FactCheckDisplay = ({data , sources , query} : {data : DataProps , sources
                             </>)
                         }
             )}
+
+            {!isSubmited && (<>
+                <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md w-[100%] p-3 flex flex-col">
+                    <form onSubmit={(e)=>{
+                        setIsSubmited(true)
+                        e.preventDefault()
+                        if(followUp !== ""){
+                            sendMessage(followUp)
+                        }
+                    }} className="w-full flex flex-row gap-2" action="">
+                        <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>
+                        <button className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
+                    </form>
+                </div>
+            </>)}
             
         </div>
     </>);
