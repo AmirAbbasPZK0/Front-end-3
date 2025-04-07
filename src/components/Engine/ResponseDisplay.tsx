@@ -130,24 +130,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
     }, [followUp]);
 
-    useEffect(() => {
-
-        const handleKeyDown = (event: { key: string; }) => {
-          if (event.key === "Enter") {
-            if(checkIsEmpty(followUp)){
-                setIsSubmited(true)
-                sendMessage(followUp)
-            }
-          }
-        };
-    
-        window.addEventListener("keydown", handleKeyDown);
-    
-        return () => {
-          window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [followUp]);
-
     if(isLoading){
         return <div className="h-[70vh]">
             <Loading/>
@@ -255,6 +237,10 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         <button
                         dir="auto"
                         type="submit"
+                        onClick={()=>{
+                            sendMessage(e)
+                            setIsSubmited(true)
+                        }}
                         key={index}
                         className={`border-b-2 w-[90%] border-slate-400 dark:border-slate-100 p-3 flex flex-row justify-between items-center`}
                         >

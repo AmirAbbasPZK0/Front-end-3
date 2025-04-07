@@ -7,14 +7,21 @@ import { useAppDispatch } from "@/services/redux/store";
 import { loginHandler } from "@/services/redux/reducers/userSlice";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { signUp } from "@/actions/signUp";
+import { FcGoogle } from 'react-icons/fc';
 
 const LoginFormHandler: React.FC = () => {
 
   const form = useRef<HTMLFormElement | null>(null);
 
-  const dispatch = useAppDispatch()
-
   const router = useRouter()
+
+  const login = async () => {
+    await signUp()
+    // router.push("/")
+  }
+
+  const dispatch = useAppDispatch()
 
   const onSubmit = async (e :  ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -75,6 +82,17 @@ const LoginFormHandler: React.FC = () => {
                 className="outline-none border-2 border-[#d7d7d9] dark:bg-[#111828] rounded-lg focus:border-[#6803f5] py-1 px-2"
                 required
               />
+            </div>
+            <div className="text-center flex items-center justify-center">
+              <h2>Or</h2>
+            </div>
+            <div className="flex flex-col text-center w-full">
+              <div>
+                <button onClick={login} className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-700 shadow-sm hover:bg-gray-50">
+                  <FcGoogle className="h-5 w-5" />
+                  <span>Continue with Google</span>
+                </button>
+              </div>
             </div>
           </div>
           <div>

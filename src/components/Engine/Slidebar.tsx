@@ -9,6 +9,10 @@ import { FaPlus } from 'react-icons/fa';
 import { GrUpgrade } from "react-icons/gr";
 import { IoIosArrowForward } from 'react-icons/io';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { logOut } from '@/actions/logOut';
+import { TbLogout2 } from "react-icons/tb";
+import Cookies from 'js-cookie';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -22,6 +26,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const dispatch = useAppDispatch()
 
   const user = useAppSelector(state => state.userSlice)
+
+  const {data : session} = useSession()
+
+  const logout = async () => {
+    await logOut()
+    router.push("/")
+  }
+
 
   return (
     <>
@@ -64,7 +76,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   onClose()
             }} className='flex items-center flex-row gap-2 border-2 rounded-[30px] px-2 py-1 border-slate-950 dark:border-slate-100 bg-none dark:text-white'><FaPlus/><span>New Thread</span></button>
           </nav>
-          {user.isLogin && <div className='flex flex-col gap-2 pt-3'>
+          {(user.isLogin || session) && <div className='flex flex-col gap-2 pt-3'>
             <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
               {user.history?.map((item : {question : string} , index : number) => (
@@ -83,22 +95,34 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </div>
             <div className='flex flex-row justify-between items-center w-full'>
               <div className='flex flex-row items-center gap-2'>
-                <img src="/images/guest-user.webp" alt="Guest User" className="w-12 h-12 rounded-full"/>
+                <img src={`${session ? session.user?.image : "/images/guest-user.webp"}`} alt="Guest User" className="w-10 h-10 rounded-full"/>
                 <div className='flex flex-col'>
-                  <h4 className='dark:text-white text-[12px]'>{user.isLogin ? user.data?.name : "Guess"}</h4>
+                  {session ? <h4 className='dark:text-white text-[12px]'>{session.user?.name}</h4> : <h4 className='dark:text-white text-[12px]'>{user.isLogin ? user.data?.name : "Guess"}</h4>}
                   <p className='text-slate-400 text-[13px]'>Free plan</p>
                 </div>
               </div>
               {user.isLogin ? (<>
                 <div className='flex dark:text-white flex-row items-center gap-2'>
-                  <span className='text-[13px] font-semibold'>My Profile</span>
-                  <IoIosArrowForward/>
+                  <button className='p-2 flex gap-2 items-center rounded-xl bg-red-500 text-[11px] text-white' onClick={()=>{
+                      Cookies.set("access_token" , "" , {expires : 0})
+                      window.location.reload()
+                  }}>Log Out <TbLogout2 className='text-[12px]'/></button>
                 </div>
               </>) : (<>
-                <div className='flex dark:text-white flex-row items-center gap-2'>
-                  <Link className='text-[13px] font-semibold' href={"/login"}>Login</Link>
-                  <IoIosArrowForward/>
-                </div>
+                {session ? (<>
+                  <div className='flex dark:text-white flex-row items-center gap-2'>
+                    <button className='p-2 flex gap-2 items-center rounded-xl bg-red-500 text-[11px] text-white' onClick={()=>{
+                      logout()
+                      router.push("/")
+                    }}>
+                      Log Out <TbLogout2 className='text-[12px]'/></button>
+                  </div>
+                </>) : (<>
+                  <div className='flex dark:text-white flex-row items-center gap-2'>
+                    <Link className='text-[13px] font-semibold' href={"/login"}>Login</Link>
+                    <IoIosArrowForward/>
+                  </div>
+                </>)}
               </>)}
             </div>
           </nav>

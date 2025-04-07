@@ -6,6 +6,7 @@ import Providers from "@/services/redux/Providers";
 import { Suspense } from "react";
 import Layout from "@/components/Engine/Layout";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { AuthProvider } from "@/components/AuthProvider";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -43,6 +44,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f5f5ff] text-black dark:bg-[#202938] dark:text-white`}
         >
+          <AuthProvider>
           <EdgeStoreProvider>
             <Layout>
               <Suspense>
@@ -50,6 +52,7 @@ export default function RootLayout({
               </Suspense>
             </Layout>
           </EdgeStoreProvider>
+          </AuthProvider>
         </body>
       </html>
     </Providers>

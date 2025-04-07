@@ -68,7 +68,7 @@ const Navbar = () => {
 
   const initialApiCalls = async () => {
     if (localStorage.getItem('sessionId')){
-      const res = await restApi(endpoints.history, false, true).get();
+      const res = await restApi(endpoints.history, false, false).get();
       dispatch(historyHandler(res.data))
     }
   };
