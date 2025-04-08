@@ -11,6 +11,8 @@ import 'swiper/css/pagination';
 
 interface Image {
     imageUrl : string
+    imageHeight : number
+    imageWidth : number
 }
 
 
@@ -20,8 +22,8 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
 
     const swiperRef : RefObject<SwiperType | null> = useRef(null);
 
-    const handleImages = (imageList : any) => {
-        let newArray = imageList.filter((item : any) => {
+    const handleImages = (imageList : Image[]) => {
+        let newArray = imageList.filter((item : Image) => {
             if(!(item.imageHeight > item.imageWidth * 2)){
                 return item
             }
@@ -34,8 +36,8 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
             const img = new Image();
             img.src = image.imageUrl;
             img.onload = () => {
-                setNewImages((prevImages : any) =>
-                    prevImages.map((prevImage : any) =>
+                setNewImages((prevImages : Image[]) =>
+                    prevImages.map((prevImage : Image) =>
                         prevImage.imageUrl === image.imageUrl
                             ? { ...prevImage, loaded: true }
                             : prevImage
@@ -45,8 +47,8 @@ const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
             img.onerror = () => {
                 console.log(`Failed to load ${image.imageUrl}`);
                 // Optionally, you can remove or replace the image here
-                setNewImages((prevImages : any) =>
-                    prevImages.filter((prevImage : any) => prevImage.imageUrl !== image.imageUrl)
+                setNewImages((prevImages : Image[]) =>
+                    prevImages.filter((prevImage : Image) => prevImage.imageUrl !== image.imageUrl)
                 );
             };
         });

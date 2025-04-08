@@ -30,7 +30,7 @@ interface CodeComponentProps {
   inline?: boolean;
   className?: string;
   children?: React.ReactNode;
-  [key: string]: any; // For additional props
+  [key: string]: any;
 }
 
 

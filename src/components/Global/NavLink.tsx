@@ -4,7 +4,6 @@ import React from "react";
 import { IconType } from "react-icons";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/services/redux/store";
-import { addRecency } from "@/services/redux/reducers/resourceSlice";
 import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
 import { addResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";

@@ -8,6 +8,7 @@ import Source from "./Source";
 import SourceButton from "./SourceButton";
 import { TbSend2 } from "react-icons/tb";
 import { isRTL } from "@/functions/isRTL";
+import { LiaTimesSolid } from "react-icons/lia";
 
 interface ClaimAnswerProps { 
     answer : {
@@ -82,7 +83,7 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
 
     return (<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
-            <div className="dark:bg-[#202938] flex flex-row justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-4">
+            <div className="dark:bg-[#202938] flex flex-row shadow-md justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-4">
                 <h2 className="text-[15px] flex items-end justify-end text-end p-2 font-semibold">{query}</h2>
             </div>
             {Object.values(data as DataProps)?.map((item : ClaimAnswerProps) => {
@@ -95,7 +96,7 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                     <div className="dark:bg-[#202938] bg-white flex flex-col w-full shadow-md rounded-3xl gap-2 p-4">
                         <div className="flex flex-row gap-2 items-center justify-between">
                             <h1 className="font-bold text-slate-700 dark:text-slate-300 text-[24px] flex items-center gap-1"><p className={`text-[20px] rounded-md ${styles}`}>{verdictStatus}</p>{item?.claim}</h1>
-                            <h2 className={`p-2 rounded-xl ${item?.answer?.Verdict === "True" ? "border-2 border-green-500 text-green-500" : item?.answer?.Verdict === "False" ? "border-2 border-red-500 text-red-500" : "border-2 border-yellow-400 text-yellow-400"}`}>{item?.answer?.Verdict}</h2>
+                            <h2 className={`p-2 rounded-xl border-2 font-semibold ${item?.answer?.Verdict === "True" ? "border-green-500 text-green-500" : item?.answer?.Verdict === "False" ? "border-red-500 text-red-500" : "border-yellow-400 text-yellow-400"}`}>{item?.answer?.Verdict}</h2>
                         </div>
                         <ReactMarkdown components={{
                             h1 : (props) => <h1 className='text-[20px] font-bold pt-2 pb-2' {...props}/>,
@@ -109,10 +110,10 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                         {sources && <SourceButton sources={[]} onClick={()=> setOpenSources(true)} factCheckSources={sources}/>}
                         {openSources && <>
                             <div onClick={()=>{
-                                    setOpenSources(false)
+                                setOpenSources(false)
                             }} className="fixed inset-0 bg-black bg-opacity-30 z-40"></div>
                         </>}
-                            <div className={`flex flex-col gap-4 p-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-50 text-white w-[360px] h-[100vh]`}>
+                            <div className={`flex flex-col gap-4 p-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-50 dark:text-white w-[360px] h-[100vh]`}>
                                     <div className='flex flex-row w-full justify-between'>
                                         <div className='flex flex-col'>
                                         <h3 className='text-slate-900 dark:text-slate-100 font-semibold text-[30px]'>Sources</h3>
@@ -120,7 +121,7 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                                         </div>
                                         <button className="p-3 text-[20px]" onClick={()=>{
                                             setOpenSources(false)
-                                        }}>Close</button>
+                                        }}><LiaTimesSolid/></button>
                                     </div>
                                     <div className='flex flex-col h-[100vh] bg-slate-200 dark:bg-slate-900 w-full gap-4 overflow-auto'>
                                         {Object.values(sources?.[0])?.map((source, index) => (

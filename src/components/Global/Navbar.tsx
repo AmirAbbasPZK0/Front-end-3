@@ -31,14 +31,15 @@ import Slidebar from "../Engine/Slidebar";
 import MiniSlideBar from "../Engine/MiniSlideBar";
 import useAgent from "@/hooks/useAgent";
 import { BsCpu } from "react-icons/bs";
-import { url } from "inspector";
+import { IoLogInOutline } from "react-icons/io5";
 
 const Links = [
   { id: 1, title: "Home", icon: RiHome2Line, url: "/" },
   { id: 2, title: "Discover", icon: BsSearch, url: "/discover" },
   { id: 3, title: "About", icon: GoPeople, url: "/about" },
   { id: 4, title: "Contact", icon: FiPhone, url: "/contact" },
-  {id : 5, title : "Search Engine" , icon :BsCpu , url :"/search-engine" }
+  { id: 5, title : "Search Engine" , icon :BsCpu , url :"/search-engine" },
+  { id: 6, title : "Login" , icon : IoLogInOutline , url : "/login"}
 ];
 
 const Navbar = () => {
