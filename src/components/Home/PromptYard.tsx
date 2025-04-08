@@ -18,9 +18,9 @@ import { checkIsEmpty } from '@/functions/checkIsEmpty';
 const PropmptYard = () => {
 
     const [prompt , setPrompt] = useState("")
-    const [selectedDepth , setSelectedDepth] = useState(false)
-    const [selectedAnswerStyle , setSelectedAnswerStyle] = useState("")
-    const [code , setCode] = useState("")
+    const selectedDepth = false
+    const selectedAnswerStyle = ""
+    // const [code , setCode] = useState("")
     const [newResponse, setNewResponse] = useState('');
     const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource)
     const isNew = useAppSelector(state => state.resourceSlice.isNew)
@@ -100,7 +100,7 @@ const PropmptYard = () => {
         if(!window.location.href.includes(data.code)){
           router.push('/search-engine/search/' + data.code);
           
-          setCode(data.code);
+          // setCode(data.code);
         }
       });
   
@@ -284,7 +284,7 @@ const PropmptYard = () => {
                   {isAttachOpen && <AttachFileModal setClose={setIsAttachOpen}/>}
                   
                   {/* Modules */}
-                  <NewDropdown disabled={uploadedFiles.uploadedFilesUrl.length > 0 || !isNew}/>
+                  <NewDropdown/>
                     
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>

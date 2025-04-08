@@ -6,8 +6,6 @@ interface SourceButtonProps {
 
 const SourceButton = ({onClick , sources , factCheckSources} : SourceButtonProps) => {
 
-    console.log(factCheckSources)
-
     if(sources?.length === 0){
         return(<>
             <button className="flex flex-row text-end items-end gap-2 w-[160px] p-1 pl-3 pr-2 rounded-full border-slate-400 border-2" onClick={onClick}>

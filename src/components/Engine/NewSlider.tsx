@@ -16,7 +16,7 @@ interface Image {
 }
 
 
-const NewSlider = ({query , images} : {query : string , images : Image[]}) => {
+const NewSlider = ({images} : {images : Image[]}) => {
 
     const [newImages , setNewImages] = useState<Image[]>([])
 

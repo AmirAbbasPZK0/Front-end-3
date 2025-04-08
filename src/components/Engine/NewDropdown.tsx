@@ -37,7 +37,7 @@ const moduleList = [
 ]
 
 
-const NewDropdown = ({disabled} : {disabled : boolean}) => {
+const NewDropdown = () => {
     
     const [isOpen , setIsOpen] = useState(false)
 

@@ -58,7 +58,7 @@ const TabsFeatures = () => {
           <GoArrowLeft size={24} />
         </button>
       )}
-      <Tabs isActive2={isActive2} selected={selected} setSelected={setSelected} />
+      <Tabs selected={selected} setSelected={setSelected} />
       <AnimatePresence mode="wait">
         {FEATURES.map((tab, index) => {
           return selected === index ? (
@@ -95,16 +95,10 @@ const TabsFeatures = () => {
 interface TabsProps {
   selected: number;
   setSelected: Dispatch<SetStateAction<number>>;
-  isActive2 : boolean
 }
 
-const Tabs = ({ selected, setSelected , isActive2}: TabsProps) => {
+const Tabs = ({ selected, setSelected}: TabsProps) => {
   const tabsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const [isActive , setIsActive] = useState(false)
-
-  const handleActiveClick = () => {
-    setIsActive(true)
-  }
 
   useEffect(() => {
     if (tabsRef.current[selected]) {
@@ -126,14 +120,14 @@ const Tabs = ({ selected, setSelected , isActive2}: TabsProps) => {
           className="flex-shrink-0"
         >
           <Tab
-            handleActiveClick={handleActiveClick}
             setSelected={setSelected}
             selected={selected === index}
             Icon={tab.Icon}
             title={tab.title}
             tabNum={index}
-            bgColor={tab.bgColor}
-          />
+            bgColor={tab.bgColor} handleActiveClick={function (): void {
+              throw new Error("Function not implemented.");
+            } }          />
         </div>
       ))}
     </div>
@@ -156,15 +150,13 @@ const Tab = ({
   title,
   setSelected,
   tabNum,
-  bgColor,
-  handleActiveClick
+  bgColor
 }: TabProps) => {
   return (
     <div className="relative w-full">
       <button
         onClick={() => {
           setSelected(tabNum)
-          handleActiveClick()
         }}
         className="relative z-0 flex w-full flex-row items-center justify-center gap-4 border-b-4 p-6 md:flex-col"
       >

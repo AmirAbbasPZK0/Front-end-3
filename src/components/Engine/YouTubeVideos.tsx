@@ -16,6 +16,7 @@ interface Video {
 
 
 const YouTubeVideos = ({ url , data } : {url : string , data : Video}) => {
+
   const [videoId, setVideoId] = useState("");
 
   const [alternativeImage , setAlternativeImage] = useState<string | null>(null)
@@ -33,10 +34,6 @@ const YouTubeVideos = ({ url , data } : {url : string , data : Video}) => {
     const id = getVideoId(url);
     if (id) setVideoId(id);
   }, [url]);
-
-  if (!videoId) {
-    return 
-  }
 
   return (<>
     <a target="_blank" href={url} className="md:w-[260px] w-[100%] md:h-[230px] h-[220px] flex flex-col gap-2 rounded-md">

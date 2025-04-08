@@ -17,7 +17,6 @@ import { useAppSelector } from "@/services/redux/store";
 import { FaTimes } from "react-icons/fa";
 import { sourceList } from "@/functions/sourceList";
 import SourceButton from "./SourceButton";
-import useClipboard from "react-use-clipboard";
 import remarkGfm from 'remark-gfm'
 import NewSlider from "./NewSlider";
 import { isRTL } from "@/functions/isRTL";
@@ -104,7 +103,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const [isSubmmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
     const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
-    const [isCopied, copyText] = useClipboard(CopyText);
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
 
@@ -130,12 +128,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
           textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
         }
     }, [followUp]);
-
-    useEffect(()=>{
-        if(isCopied){
-            toast.success("Copied!")
-        }
-    },[isCopied])
 
     if(isLoading){
         return <div className="h-[70vh]">
@@ -223,13 +215,16 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 ))}
                                 </div>
                             </div>
-                            <button type="button" onClick={copyText}>
+                            <button type="button" onClick={()=>{
+                                navigator.clipboard.writeText(CopyText as string);
+                                toast.success("Copied!")
+                            }}>
                                 <IoCopyOutline/>
                             </button>
                         </div>
                     </div>
                     {(images && images?.length > 0) && <div className="md:w-[30%] w-full">
-                        <NewSlider query={query} images={images}/>
+                        <NewSlider images={images}/>
                     </div>}
                 </div>
             </div>}

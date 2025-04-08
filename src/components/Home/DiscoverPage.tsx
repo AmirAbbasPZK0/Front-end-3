@@ -63,8 +63,6 @@ const DiscoverPage = () => {
 
     const [buttonDisplay , setButtonDisplay] = useState(false)
 
-    
-    
     const [data , setData] = useState<TrendNewsProps[]>([])
 
     const tabRef = useRef<HTMLDivElement>(null)
