@@ -17,7 +17,7 @@ const UploadedFileBox = ({data} : UploadedFileBoxProps) => {
     const dispatch = useAppDispatch()
     
     return (<>
-        <div className="w-full border-dashed p-2 flex flex-row border-2 mt-3 border-slate-400 rounded-md justify-between">
+        <div className="flex flex-row mt-2 justify-between text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-2xl">
             <p className="flex flex-row items-center gap-3">
                 {/* {
                     data.name.split(".")[data.name.split(".").length -1] === "png" ||

@@ -23,6 +23,7 @@ import NewSlider from "./NewSlider";
 import { isRTL } from "@/functions/isRTL";
 import { FiClipboard } from "react-icons/fi";
 import { checkIsEmpty } from "@/functions/checkIsEmpty";
+import toast from "react-hot-toast";
 
 
 interface CodeComponentProps {
@@ -130,6 +131,12 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
     }, [followUp]);
 
+    useEffect(()=>{
+        if(isCopied){
+            toast.success("Copied!")
+        }
+    },[isCopied])
+
     if(isLoading){
         return <div className="h-[70vh]">
             <Loading/>
@@ -217,7 +224,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 </div>
                             </div>
                             <button type="button" onClick={copyText}>
-                                {isCopied ? <IoCopy/> : <IoCopyOutline/>}
+                                <IoCopyOutline/>
                             </button>
                         </div>
                     </div>

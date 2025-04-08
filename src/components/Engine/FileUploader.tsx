@@ -4,7 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useEdgeStore } from '@/lib/edgestore';
 import { useAppDispatch } from '@/services/redux/store';
-import {addUrl , removeFile} from "@/services/redux/reducers/fileUploadSlice"
+import {addUrl} from "@/services/redux/reducers/fileUploadSlice"
+import toast from "react-hot-toast";
 
 const FileUploader = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -28,8 +29,17 @@ const FileUploader = () => {
         const res = await edgestore.myFiles.upload({file : files[0]})
         dispatch(addUrl({url : res.url , name : files?.[0].name}))
         setUploadedFiles([...uploadedFiles , files?.[0]])
+        toast.success("File has been uploaded Successfully", {
+          duration: 3000,
+          style: {
+            borderRadius: "10px",
+            background: "white",
+            color: "black",
+          },
+        });
       }
     }catch(err){
+      console.log(err)
     }finally{
       setUploadStatus(false)
     }
