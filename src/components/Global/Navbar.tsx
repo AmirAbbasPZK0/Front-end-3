@@ -38,7 +38,7 @@ const Links = [
   { id: 2, title: "Discover", icon: BsSearch, url: "/discover" },
   { id: 3, title: "About", icon: GoPeople, url: "/about" },
   { id: 4, title: "Contact", icon: FiPhone, url: "/contact" },
-  { id: 5, title : "Search Engine" , icon :BsCpu , url :"/search-engine" },
+  { id: 5, title : "Search Engine" , icon :BsCpu , url :"/search" },
   { id: 6, title : "Login" , icon : IoLogInOutline , url : "/login"}
 ];
 
@@ -205,7 +205,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {(!isMobile && (pathname.includes("search") || pathname === "/search-engine")) && <MiniSlideBar/>}
+      {(!isMobile && (pathname.includes("/c/") || pathname === "/search")) && <MiniSlideBar/>}
       <AnimatePresence>
         <Slidebar isOpen={showLeftMenu} onClose={()=>setShowLeftMenu(false)}/>
       </AnimatePresence>

@@ -46,7 +46,7 @@ const MiniSlideBar : React.FC = () => {
                     dispatch(addResource("web"))
                     dispatch(removeAllFiles())
                     dispatch(removeAllUrls())
-                    router.push("/search-engine")
+                    router.push("/search")
                 }}>
                     <CiCirclePlus className="text-[35px]" />
                 </button>
