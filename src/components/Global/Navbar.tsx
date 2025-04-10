@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import Link from "next/link";
 import NavLink from "./NavLink";
-import { IoIosArrowForward, IoIosClose } from "react-icons/io";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
 import LogoWhite from "@/../public/images/findora_logo_white.png";
 import {
@@ -18,7 +17,7 @@ import Image from "next/image";
 import { FiPhone, FiPlus } from "react-icons/fi";
 import { RiHome2Line } from "react-icons/ri";
 import { GoPeople } from "react-icons/go";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { FaCircleUser } from "react-icons/fa6";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
 import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";

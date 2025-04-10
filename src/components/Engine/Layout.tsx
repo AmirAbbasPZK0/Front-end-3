@@ -10,8 +10,11 @@ import { loginHandler } from "@/services/redux/reducers/userSlice"
 import { useState } from "react"
 import Loading from "./Loading"
 import PreLoader from "../Home/PreLoader"
+import { useSession } from "next-auth/react"
 
 const Layout = ({children} : {children : ReactNode}) => {
+
+  const {data : session} = useSession()
 
   const [isLoading , setIsLoading] = useState(true)
 
@@ -32,6 +35,9 @@ const Layout = ({children} : {children : ReactNode}) => {
     useEffect(() => {
       initialApiCalls()
     }, []);
+    useEffect(()=>{
+      
+    },[])
 
     if(isLoading){
       return <div className="h-[100vh] flex items-center justify-center">

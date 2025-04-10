@@ -9,7 +9,7 @@ import Loading from "./Loading";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'; // Choose a style
 import { TbSend2 } from "react-icons/tb";
-import { IoCopyOutline , IoCopy } from "react-icons/io5";
+import { IoCopyOutline } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
 import FactCheckDisplay from "./FactCheckDisplay";
 import Source from "./Source";
@@ -249,7 +249,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             {isRTL(query) ? (<>
                             <p className="text-xs sm:text-sm text-gray-600 dark:text-white">{e}</p>
                                 </>) : (<>
-                            <p className="text-xs sm:text-sm text-gray-600 dark:text-white">{e}</p>
+                            <p className="text-xs text-left sm:text-sm text-gray-600 dark:text-white">{e}</p>
                             </>)}
                         </button>
                         ))}
