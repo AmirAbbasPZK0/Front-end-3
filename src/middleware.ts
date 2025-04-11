@@ -20,7 +20,7 @@ export async function middleware(req : NextRequest){
         }
     })
 
-    const user = await res.json()
+    const user = res.ok ? await res.json() : {data : false}
 
     if(isInPrivateRoute && (!user.data || !google_token)){
         return NextResponse.redirect(new URL('/login' , req.nextUrl))

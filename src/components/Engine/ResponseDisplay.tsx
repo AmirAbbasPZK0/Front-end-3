@@ -23,6 +23,7 @@ import { isRTL } from "@/functions/isRTL";
 import { FiClipboard } from "react-icons/fi";
 import { checkIsEmpty } from "@/functions/checkIsEmpty";
 import toast from "react-hot-toast";
+import CommentSection from "./CommentSesction";
 
 
 interface CodeComponentProps {
@@ -197,7 +198,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                     setOpenSources(false)
                                 }} className="fixed inset-0 bg-black bg-opacity-30 z-40"/>
                             </>}
-                            <div className={`flex flex-col gap-4 p-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-[2147483647] text-white w-[360px] h-[100vh]`}>
+                            <div className={`flex flex-col gap-4 p-3 pb-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-[2147483647] text-white w-[360px] h-[100vh]`}>
                                 <div className='flex flex-row w-full justify-between'>
                                 <div className='flex flex-col'>
                                     <h3 className='rounded-md font-semibold text-[30px] dark:text-white text-black'>Sources</h3>
@@ -215,7 +216,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 ))}
                                 </div>
                             </div>
-                            <button type="button" onClick={()=>{
+                            <CommentSection/>
+                            <button className="text-[20px]" type="button" onClick={()=>{
                                 navigator.clipboard.writeText(CopyText as string);
                                 toast.success("Copied!")
                             }}>
@@ -240,8 +242,12 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         dir="auto"
                         type="submit"
                         onClick={()=>{
-                            sendMessage(e)
-                            setIsSubmited(true)
+                            if(isSubmmited){
+                                return
+                            }else{
+                                sendMessage(e)
+                                setIsSubmited(true)
+                            }
                         }}
                         key={index}
                         className={`border-b-2 w-[90%] border-slate-400 dark:border-slate-100 p-3 flex flex-row justify-between items-center`}

@@ -63,23 +63,6 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
               textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
             }
     }, [followUp]);
-    
-    useEffect(() => {
-            const handleKeyDown = (event: { key: string; }) => {
-              if (event.key === "Enter") {
-                if(followUp !== ""){
-                  sendMessage(followUp)
-                  setIsSubmited(true)
-                }
-              }
-            };
-        
-            window.addEventListener("keydown", handleKeyDown);
-        
-            return () => {
-              window.removeEventListener("keydown", handleKeyDown);
-            };
-    }, [followUp]);
 
     return (<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
@@ -134,7 +117,7 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                             </div>
                             </>)
                         }
-            )}
+                )}
 
             {!isSubmited && (<>
                 <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md w-[100%] p-3 flex flex-col">
