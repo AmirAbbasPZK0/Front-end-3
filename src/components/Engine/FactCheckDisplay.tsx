@@ -9,12 +9,16 @@ import SourceButton from "./SourceButton";
 import { TbSend2 } from "react-icons/tb";
 import { isRTL } from "@/functions/isRTL";
 import { LiaTimesSolid } from "react-icons/lia";
+import FactCheckSourceList from "./FactCheckSourceList";
 
 interface ClaimAnswerProps { 
     answer : {
         Reasoning : string
         Verdict : string
     },
+    citation : {
+        [key : number] : string[]
+    }
     claim : string
 }
 
@@ -54,29 +58,30 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
 
     useEffect(()=>{
-        setHyperLinkTooltip(snippetAndTitleHandler(sources as Array<Array<string>>))
+        setHyperLinkTooltip(snippetAndTitleHandler(Object.values(data as DataProps)))
     },[sources])
 
     useEffect(() => {
-            if (textareaRef.current) {
-              textareaRef.current.style.height = 'auto';
-              textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
-            }
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+        }
     }, [followUp]);
+
 
     return (<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
             <div className="dark:bg-[#202938] flex flex-row shadow-md justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-4">
                 <h2 className="text-[15px] flex items-end justify-end text-end p-2 font-semibold">{query}</h2>
             </div>
-            {Object.values(data as DataProps)?.map((item : ClaimAnswerProps) => {
+            {Object.values(data as DataProps)?.map((item : ClaimAnswerProps , index : number) => {
                 
                 const styles = item?.answer?.Verdict === "True" ? "text-green-500" : item?.answer?.Verdict === "False" ? "text-red-300" : "text-yellow-400"
 
                 const verdictStatus = item?.answer?.Verdict === "True" ? <FaRegCheckCircle/> : item?.answer?.Verdict === "False" ? <FaRegTimesCircle/> : <FaMinusCircle/>
 
                 return(<>
-                    <div className="dark:bg-[#202938] bg-white flex flex-col w-full shadow-md rounded-3xl gap-2 p-4">
+                    <div key={index} className="dark:bg-[#202938] bg-white flex flex-col w-full shadow-md rounded-3xl gap-2 p-4">
                         <div className="flex flex-row gap-2 items-center justify-between">
                             <h1 className="font-bold text-slate-700 dark:text-slate-300 text-[24px] flex items-center gap-1"><p className={`text-[20px] rounded-md ${styles}`}>{verdictStatus}</p>{item?.claim}</h1>
                             <h2 className={`p-2 rounded-xl border-2 font-semibold ${item?.answer?.Verdict === "True" ? "border-green-500 text-green-500" : item?.answer?.Verdict === "False" ? "border-red-500 text-red-500" : "border-yellow-400 text-yellow-400"}`}>{item?.answer?.Verdict}</h2>
@@ -88,36 +93,32 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                             ul : (props) => <ul {...props}/>,
                             li : (props) => <li {...props} className='p-2 flex gap-2'><div>{props.children}</div></li>
                         }} >
-                            {sources ? hyperTextForMarkDown(item?.answer?.Reasoning , Object.values(sources?.[0])) : item?.answer?.Reasoning}
+                            {Object.values(item?.citation) ? hyperTextForMarkDown(item?.answer?.Reasoning , Object.values(item?.citation)) : item?.answer?.Reasoning}
                         </ReactMarkdown>
-                        {sources && <SourceButton sources={[]} onClick={()=> setOpenSources(true)} factCheckSources={sources}/>}
-                        {openSources && <>
-                            <div onClick={()=>{
-                                setOpenSources(false)
-                            }} className="fixed inset-0 bg-black bg-opacity-30 z-40"></div>
-                        </>}
-                            <div className={`flex flex-col gap-4 p-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-50 dark:text-white w-[360px] h-[100vh]`}>
-                                    <div className='flex flex-row w-full justify-between'>
-                                        <div className='flex flex-col'>
-                                        <h3 className='text-slate-900 dark:text-slate-100 font-semibold text-[30px]'>Sources</h3>
-                                        <p className='text-gray-500'>From {Object.values(sources?.[0])?.length - 1} sources</p>
+                            <FactCheckSourceList sources={Object.values(item.citation)}/>
+                                    <div className={`flex flex-col gap-4 p-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-50 dark:text-white w-[360px] h-[100vh]`}>
+                                        <div className='flex flex-row w-full justify-between'>
+                                                <div className='flex flex-col'>
+                                                    <h3 className='text-slate-900 dark:text-slate-100 font-semibold text-[30px]'>Sources</h3>
+                                                    <p className='text-gray-500'>From {Object.values(item?.citation).length - 1} sources</p>
+                                                </div>
+                                                <button className="p-3 text-[20px]" onClick={()=>{
+                                                    setOpenSources(false)
+                                                }}><LiaTimesSolid/></button>
                                         </div>
-                                        <button className="p-3 text-[20px]" onClick={()=>{
-                                            setOpenSources(false)
-                                        }}><LiaTimesSolid/></button>
+                                            <div className='flex flex-col h-[100vh] bg-slate-200 dark:bg-slate-900 w-full gap-4 overflow-auto'>
+                                                {Object.values(item?.citation)?.map((source , key) => (
+                                                    <li key={key} className="flex w-full p-2 items-start">
+                                                        <Source data={{title : source[3] , snippet : source[4] , link : source[2]}} title={source[0]}/>
+                                                    </li>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className='flex flex-col h-[100vh] bg-slate-200 dark:bg-slate-900 w-full gap-4 overflow-auto'>
-                                        {Object.values(sources?.[0])?.map((source, index) => (
-                                            <li key={'source' + index} className="flex w-full p-2 items-start">
-                                                <Source data={{title : Object.values(sources?.[0])[index][3] , snippet : Object.values(sources?.[0])[index][4] , link : Object.values(sources?.[0])[index][2]}} title={source[0]}/>
-                                            </li>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                            </>)
-                        }
-                )}
+                                </>)
+                            }
+                        )}
+                
 
             {!isSubmited && (<>
                 <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md w-[100%] p-3 flex flex-col">

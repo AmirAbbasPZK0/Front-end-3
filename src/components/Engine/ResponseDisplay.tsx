@@ -57,6 +57,9 @@ interface ClaimAnswerProps {
         Reasoning : string
         Verdict : string
     },
+    citation : {
+        [key : number] : string[]
+    }
     claim : string
 }
 
