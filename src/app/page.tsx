@@ -1,1 +1,1 @@
-export {default} from "../components/Main"
+export {default} from "../components/Engine/SearchEngine"

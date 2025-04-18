@@ -1,4 +1,5 @@
 {
+  "proxy" : "http://185.202.113.221:5000",
   "name": "findora",
   "version": "0.1.0",
   "private": true,

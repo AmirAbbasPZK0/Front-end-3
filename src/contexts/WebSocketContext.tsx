@@ -56,7 +56,7 @@ const WebSocketProvider: React.FC<{
   }, []);
 
   useEffect(() => {
-    if (pathname == '/search'){
+    if (pathname == '/'){
       setResponse({})
     }
   }, [pathname]);

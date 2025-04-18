@@ -106,6 +106,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
+    const uploadedFiles = useAppSelector(state => state.fileUploadsSlice.uploadedFilesUrl)
     const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
@@ -144,7 +145,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     }
 
     return(<>
-        <div className={`p-4 ${openSources && "overflow-hidden"} rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
+        <div className={`p-4 ${openSources && "overflow-hidden"}  pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
             <div className="dark:bg-[#202938] flex flex-row justify-end text-end shadow-md items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
                 <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
             </div>
@@ -190,7 +191,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             ul : (props) => <ul {...props}/>,
                             li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>
                         }}> 
-                            {sources ? hyperTextForMarkDown(response , sources) : response}
+                            {(sources && !(selectedModule === "url" || uploadedFiles.length > 0)) ? hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
                             {(sources && !(selectedModule === "file")) && <SourceButton sources={sources} onClick={()=>{

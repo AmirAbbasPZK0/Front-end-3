@@ -21,7 +21,7 @@ const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
       <Toaster position="top-center" reverseOrder={false} />
       <Navbar />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </ReactLenis>
   );
 };

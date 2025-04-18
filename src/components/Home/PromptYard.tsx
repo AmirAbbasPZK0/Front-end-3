@@ -45,7 +45,7 @@ const PropmptYard = () => {
       }
       findoraMessageRef.current = ""
       const url = new URL(window.location.href);
-      const codde = url.pathname.split('/search/c/')[1];
+      const codde = url.pathname.split('/c/')[1];
       responseRef.current = ''; // Reset the ref for the next response
       if(uploadedFiles.uploadedFilesUrl.length > 0){
         socket?.emit('send_message', {
@@ -98,7 +98,7 @@ const PropmptYard = () => {
         code: string
       }) => {
         if(!window.location.href.includes(data.code)){
-          router.push('/search/c/' + data.code);
+          router.push('/c/' + data.code);
           
           // setCode(data.code);
         }
@@ -213,7 +213,7 @@ const PropmptYard = () => {
     },[socket])
   
     useEffect(()=>{
-      if(window.location.href.includes("search/c")){
+      if(window.location.href.includes("/c")){
         dispatch(removeRecency())
       }else{
         dispatch(addRecency())
@@ -317,7 +317,7 @@ const PropmptYard = () => {
           </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
               <ResponseDisplay
-                key={key}
+                key={index}
                 findoraMessage={value.findoraMessage}
                 isDone={value.isDone}
                 videos={value.videos}

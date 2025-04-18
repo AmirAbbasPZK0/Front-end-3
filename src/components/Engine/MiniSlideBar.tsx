@@ -6,12 +6,13 @@ import LogoBlack from "@/../public/images/findora_logo_black.png";
 import LogoWhite from "@/../public/images/findora_logo_white.png";
 import { CiCirclePlus } from "react-icons/ci";
 import { useAppDispatch } from "@/services/redux/store";
-import { FaRegArrowAltCircleRight } from "react-icons/fa";
+import { IoIosArrowDropright } from "react-icons/io";
 import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
 import { addResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
 import { useRouter } from "next/navigation";
 import Slidebar from "./Slidebar";
+import ThemeToggle from "../Global/ThemeToggle/ThemeToggle";
 
 
 const MiniSlideBar : React.FC = () => {
@@ -46,17 +47,18 @@ const MiniSlideBar : React.FC = () => {
                     dispatch(addResource("web"))
                     dispatch(removeAllFiles())
                     dispatch(removeAllUrls())
-                    router.push("/search")
+                    router.push("/")
                 }}>
                     <CiCirclePlus className="text-[35px]" />
                 </button>
                 
             </div>
-            <div className="flex flex-col gap-2 p-4">
+            <div className="flex flex-col gap-4 p-4 items-center justify-center">
+                <ThemeToggle/>
                 <button onClick={()=>{
                     setIsOpen(item => !item)
                 }}>
-                    <FaRegArrowAltCircleRight className="text-[25px]"/>
+                    <IoIosArrowDropright className="text-[35px]"/>
                 </button>
             </div>
         </div>
