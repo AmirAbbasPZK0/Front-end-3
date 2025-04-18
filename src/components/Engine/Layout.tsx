@@ -9,7 +9,6 @@ import { useAppDispatch } from "@/services/redux/store"
 import { loginHandler } from "@/services/redux/reducers/userSlice"
 import { useState } from "react"
 import Loading from "./Loading"
-import PreLoader from "../Home/PreLoader"
 import { useSession } from "next-auth/react"
 
 const Layout = ({children} : {children : ReactNode}) => {

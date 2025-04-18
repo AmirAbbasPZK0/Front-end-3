@@ -24,6 +24,7 @@ import { FiClipboard } from "react-icons/fi";
 import { checkIsEmpty } from "@/functions/checkIsEmpty";
 import toast from "react-hot-toast";
 import CommentSection from "./CommentSesction";
+import { removeHyperText } from "@/functions/removeSources";
 
 
 interface CodeComponentProps {
@@ -191,7 +192,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             ul : (props) => <ul {...props}/>,
                             li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>
                         }}> 
-                            {(sources && !(selectedModule === "url" || uploadedFiles.length > 0)) ? hyperTextForMarkDown(response , sources) : response}
+                            {(sources && !(selectedModule === "url" || uploadedFiles.length > 0)) ? hyperTextForMarkDown(response , sources) : removeHyperText(response , sources)}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
                             {(sources && !(selectedModule === "file")) && <SourceButton sources={sources} onClick={()=>{
