@@ -13,6 +13,7 @@ import { useSession } from 'next-auth/react';
 import { logOut } from '@/actions/logOut';
 import { TbLogout2 } from "react-icons/tb";
 import Cookies from 'js-cookie';
+// import useWebSocket from '@/hooks/useWebSocket';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -20,6 +21,8 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+
+  // const {socket} = useWebSocket()
 
   const router = useRouter()
 
@@ -72,6 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   dispatch(removeAllFiles())
                   dispatch(removeAllUrls())
                   dispatch(addResource("web"))
+                  // socket.removeAllListeners();
                   router.push("/")
                   onClose()
             }} className='flex items-center flex-row gap-2 border-2 rounded-[30px] px-2 py-1 border-slate-950 dark:border-slate-100 bg-none dark:text-white'><FaPlus/><span>New Thread</span></button>

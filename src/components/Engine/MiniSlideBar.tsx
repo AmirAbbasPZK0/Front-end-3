@@ -12,12 +12,15 @@ import { addResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
 import { useRouter } from "next/navigation";
 import Slidebar from "./Slidebar";
+// import useWebSocket from "@/hooks/useWebSocket";
 import ThemeToggle from "../Global/ThemeToggle/ThemeToggle";
 
 
 const MiniSlideBar : React.FC = () => {
 
     const [isOpen , setIsOpen] = useState(false)
+
+    // const {socket} = useWebSocket()
     
     const dispatch = useAppDispatch()
 
@@ -47,6 +50,7 @@ const MiniSlideBar : React.FC = () => {
                     dispatch(addResource("web"))
                     dispatch(removeAllFiles())
                     dispatch(removeAllUrls())
+                    // socket.removeAllListeners();
                     router.push("/")
                 }}>
                     <CiCirclePlus className="text-[35px]" />

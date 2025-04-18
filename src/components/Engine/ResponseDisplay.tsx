@@ -135,6 +135,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
     }, [followUp]);
 
+    console.log(response)
+
     if(isLoading){
         return <div className="h-[70vh]">
             <Loading/>
@@ -192,7 +194,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             ul : (props) => <ul {...props}/>,
                             li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>
                         }}> 
-                            {(sources && !(selectedModule === "url" || uploadedFiles.length > 0)) ? hyperTextForMarkDown(response , sources) : removeHyperText(response , sources)}
+                            {(sources) ? (uploadedFiles.length > 0 || selectedModule === "url") ? removeHyperText(response , sources) : hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
                             {(sources && !(selectedModule === "file")) && <SourceButton sources={sources} onClick={()=>{
