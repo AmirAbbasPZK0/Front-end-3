@@ -47,7 +47,6 @@ const Layout = ({children} : {children : ReactNode}) => {
 
     return(<>
         <WebSocketProvider>
-            <PreLoader/>
             {children}
         </WebSocketProvider>
     </>)
