@@ -65,7 +65,7 @@ function DislikeModal({handleClose} : {handleClose : () => void}){
                     exit={{ scale: 0.95, opacity: 0 }}
                     className="relative w-full max-w-md dark:bg-slate-900 gap-2 text-center flex flex-col rounded-2xl bg-white p-8 shadow-xl"
                 >
-                    <h1 className="text-[30px]">Leave a Reply</h1>
+                    <h1 className="text-[30px]">Leave a Comment</h1>
                     <h1 className="text-[16px]">We would like to know about your opinion</h1>
                     <input type="email" className="p-2 rounded-md border-2 border-slate-500 bg-transparent dark:border-slate-100" placeholder="Email"/>
                     <textarea  className="p-2 rounded-md border-2 h-40 outline-none border-slate-500 bg-transparent dark:border-slate-100"></textarea>

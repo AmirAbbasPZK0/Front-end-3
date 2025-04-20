@@ -13,22 +13,26 @@ export async function middleware(req : NextRequest){
     const isInPrivateRoute = privateRoutes.includes(req.nextUrl.pathname)
     const isInPublicRoute = publicRoutes.includes(req.nextUrl.pathname)
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user` , {
-        method : "GET",
-        headers : {
-            "Authorization" : `Bearer ${token}`
-        }
-    })
+    // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user` , {
+    //     method : "GET",
+    //     headers : {
+    //         "Authorization" : `Bearer ${token}`
+    //     }
+    // })
 
-    const user = res.ok ? await res.json() : {data : false}
+    // let user : {data : any} = {data : false}
 
-    if(isInPrivateRoute && (!user.data || !google_token)){
-        return NextResponse.redirect(new URL('/login' , req.nextUrl))
-    }
+    // if(res.ok){
+    //     user = await res.json()
+    // }
 
-    if(isInPublicRoute && (user.data || google_token)){
-        return NextResponse.redirect(new URL('/' , req.nextUrl))
-    }
+    // if(isInPrivateRoute && (!user.data || !google_token)){
+    //     return NextResponse.redirect(new URL('/login' , req.nextUrl))
+    // }
+
+    // if(isInPublicRoute && (user.data || google_token)){
+    //     return NextResponse.redirect(new URL('/' , req.nextUrl))
+    // }
 
     return NextResponse.next()
 }

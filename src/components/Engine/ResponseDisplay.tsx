@@ -135,8 +135,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
     }, [followUp]);
 
-    console.log(response)
-
     if(isLoading){
         return <div className="h-[70vh]">
             <Loading/>
