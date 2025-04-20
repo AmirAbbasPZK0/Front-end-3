@@ -31,6 +31,7 @@ const WebSocketProvider: React.FC<{
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
+      transports: ["websocket"],
       withCredentials : true,
       timeout: 600000, // 60 second,
       extraHeaders: {
