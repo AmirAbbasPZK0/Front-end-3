@@ -223,7 +223,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 <div className='flex flex-row w-full justify-between'>
                                 <div className='flex flex-col'>
                                     <h3 className='rounded-md font-semibold text-[30px] dark:text-white text-black'>Sources</h3>
-                                    <p className='text-gray-500'>From {sources?.length - 1} sources</p>
+                                    <p className='text-gray-500'>From {sources?.length} sources</p>
                                 </div>
                                 <button className="p-3 text-[20px]" onClick={()=>{
                                     setOpenSources(false)
