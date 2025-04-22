@@ -12,9 +12,9 @@ const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
 
   const lenis = useLenis();
 
-  useEffect(() => {
-    lenis?.scrollTo(0, { immediate: true });
-  }, [pathname, searchParams, lenis]);
+  // useEffect(() => {
+  //   lenis?.scrollTo(0, { immediate: true });
+  // }, [pathname, searchParams, lenis]);
 
   return (
     <ReactLenis root options={{ lerp: 0.05 }}>

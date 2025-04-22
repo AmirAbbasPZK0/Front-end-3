@@ -8,6 +8,7 @@ import fileUploadsSlice from './reducers/fileUploadSlice'
 import resourceSlice from "./reducers/resourceSlice"
 import urlInputSlice from "./reducers/urlInputSlice"
 import userSlice from "./reducers/userSlice"
+import newThreadSlice from "./reducers/newThreadSlice"
 
 const rootReducer = combineReducers({
   // userReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   fileUploadsSlice,
   resourceSlice,
   urlInputSlice,
-  userSlice
+  userSlice,
+  newThreadSlice
 });
 
 const store = configureStore({

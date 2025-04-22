@@ -22,7 +22,6 @@ import { BsSearch } from "react-icons/bs";
 import Slidebar from "../Engine/Slidebar";
 import MiniSlideBar from "../Engine/MiniSlideBar";
 import useAgent from "@/hooks/useAgent";
-import { BsCpu } from "react-icons/bs";
 import { IoLogInOutline } from "react-icons/io5";
 
 const Links = [

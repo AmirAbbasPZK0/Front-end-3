@@ -5,10 +5,21 @@ import { usePathname } from 'next/navigation';
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 
+interface Response {
+  text: any,
+  isLoading: boolean,
+  isDone : boolean,
+  images: any,
+  data: any,
+  videos : any,
+  findoraMessage : any,
+  relatedQuestions: any
+}
+
 interface WebSocketContextType {
   socket: any;
   isConnected: boolean;
-  response: any;
+  response: {} | Response;
   setResponse: any;
   responseRef: any;
   findoraMessageRef : any;

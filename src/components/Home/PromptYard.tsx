@@ -13,7 +13,7 @@ import UrlInput from '../Engine/UrlInput';
 import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
-
+import { makeItFalse } from '@/services/redux/reducers/newThreadSlice';
 
 const PropmptYard = () => {
 
@@ -31,10 +31,12 @@ const PropmptYard = () => {
     const router = useRouter()
     const [isAttachOpen , setIsAttachOpen] = useState(false)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
+  
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const sendMessage = (prompt: string) => {
+      dispatch(makeItFalse())
       if(selectedResources === "url" && urlInputs.urlInputs.includes("")){
         return false
       }
@@ -265,12 +267,7 @@ const PropmptYard = () => {
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 justify-center gap-4 flex-col">
           {isNew && (<>
             <div className="md:w-[40%] w-[90%]">
-            <form onSubmit={e => {
-              e.preventDefault()
-              if(checkIsEmpty(prompt)){
-                sendMessage(prompt)
-              }
-            }} className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
+            <div className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
               <textarea ref={textareaRef} onChange={e => {
                 setPrompt(e.target.value)
               }} placeholder='Write your text...' dir="auto" rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
@@ -288,10 +285,14 @@ const PropmptYard = () => {
                     
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
-                  <button className='text-[20px] p-1' type='submit'><TbSend2/></button>
+                  <button onClick={()=> {
+                    if(checkIsEmpty(prompt)){
+                      sendMessage(prompt)
+                    }
+                  }} className='text-[20px] p-1' type='submit'><TbSend2/></button>
                 </div>
               </div>
-            </form>
+            </div>
             {selectedResources === 'url' && isNew && (
                   <div className='w-full'>
                     {urlInputs.urlInputs.map((url, index) => (

@@ -13,7 +13,7 @@ import { IoCopyOutline } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
 import FactCheckDisplay from "./FactCheckDisplay";
 import Source from "./Source";
-import { useAppSelector } from "@/services/redux/store";
+import { useAppSelector , useAppDispatch } from "@/services/redux/store";
 import { FaTimes } from "react-icons/fa";
 import { sourceList } from "@/functions/sourceList";
 import SourceButton from "./SourceButton";
@@ -25,6 +25,9 @@ import { checkIsEmpty } from "@/functions/checkIsEmpty";
 import toast from "react-hot-toast";
 import CommentSection from "./CommentSesction";
 import { removeHyperText } from "@/functions/removeSources";
+import { makeItTrue } from "@/services/redux/reducers/newThreadSlice";
+import { FaRegCircleStop } from "react-icons/fa6";
+import useWebSocket from "@/hooks/useWebSocket";
 
 
 interface CodeComponentProps {
@@ -103,6 +106,9 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     videos
 }) => {
 
+
+    const {socket} = useWebSocket()
+    const dispatch = useAppDispatch()
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null>(null)
     const [followUp , setFollowUp] = useState("")
     const [isSubmmited , setIsSubmited] = useState(false)
@@ -111,6 +117,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
+    const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
     function removeMarkdown(markdown : string){
         return markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
@@ -135,8 +142,17 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
     }, [followUp]);
 
+    useEffect(()=>{
+        if(isDone){
+            dispatch(makeItTrue())
+        }
+    },[isDone])
+
     if(isLoading){
-        return <div className="h-[70vh]">
+        return <div className="h-[70vh] w-full items-end p-3 flex flex-col gap-6">
+            <div className="dark:bg-[#202938] flex flex-row justify-start items-start text-start shadow-md bg-white rounded-b-3xl rounded-tl-3xl p-2">
+                <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
+            </div>
             <Loading/>
         </div>
     }
@@ -277,7 +293,13 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         }
                     }} className="w-full flex flex-row gap-2" action="">
                         <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>
-                        <button className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
+                        {isGenerating ? (<>
+                            <button type="submit" className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
+                        </>) : (<>
+                            <button type="button" onClick={()=>{
+                                socket.emit("cancel_generation")
+                            }} className="rounded-full0 p-2"><FaRegCircleStop className="text-[30px]"/></button>
+                        </>)}
                     </form>
                 </div>
             </>)}
