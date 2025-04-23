@@ -2,10 +2,11 @@
 
 import { ReactNode } from "react";
 import { BiSolidBadgeCheck } from "react-icons/bi";
+import { PiSealWarningFill } from "react-icons/pi";
 
 interface SourceProps {
     title : string | ReactNode
-    data : {title : string , snippet : string , link : string}
+    data : {title : string , snippet : string , link : string , verify: any}
 }
 
 const Source = ({title , data} : SourceProps) => {
@@ -20,7 +21,11 @@ const Source = ({title , data} : SourceProps) => {
             <h3 className="font-bold text-slate-900 dark:text-slate-100">{data.title}</h3>
             <p className="text-gray-500">{data.snippet?.length > 50 ? `${data.snippet?.slice(0,50)}...` : data.snippet} </p>
             <div className="flex w-full items-end justify-end">
-               <BiSolidBadgeCheck className="text-green-500"/>
+               {data.verify ? (<>
+                <BiSolidBadgeCheck className="text-green-500"/>
+               </>) : (<>
+                <PiSealWarningFill className="text-red-500"/>
+               </>)}
             </div>
         </a>
     </>);
