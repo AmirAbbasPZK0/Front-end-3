@@ -1,13 +1,15 @@
 import { AnimatePresence, motion } from "motion/react";
 import { IoEarth } from "react-icons/io5";
-import { FaLink } from "react-icons/fa6";
+import { FaC, FaLink } from "react-icons/fa6";
 import { FaRegLightbulb } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { FaGraduationCap } from "react-icons/fa6";
 import { CiMedicalCase } from "react-icons/ci";
-import { useAppDispatch } from "@/services/redux/store";
+import { useAppDispatch , useAppSelector } from "@/services/redux/store";
 import { addResource } from "@/services/redux/reducers/resourceSlice";
+import { FaCheck } from "react-icons/fa6";
+
 
 interface ModulesModalProps {
     setClose : (value : boolean) => void
@@ -17,38 +19,40 @@ const moduleList = [
     {
         title : "web",
         color : "#008f7a",
-        description : "This module fetches fresh content from the web, pulling in relevant pages or data based on user queries."
+        description : "Fresh web results"
     },
     {
         title : "url",
         color : "#EDD598",
-        description : "Users can submit a link, and the bot summarizes or extracts key information directly from that webpage."
+        description : "Answers from links"
     },
     {
         title : "fact check",
         color : "#0b87b6",
-        description : "This module checks whether a statement is true or false using reliable sources or fact-checking databases."
+        description : "True or False?"
     },
     {
         title : "videos",
         color : "#7332a1",
-        description : "It locates videos (e.g., from YouTube) based on a query and optionally summarizes the key points or provides transcripts."
+        description : "Answers from videos"
     },
     {
         title : "academic",
         color : "#c31069",
-        description : "This module pulls scholarly articles, papers, and citations from sources like Google Scholar or Semantic Scholar."
+        description : "Scholarly sources"
     },
     {
         title : "medical",
         color : "#c67f48",
-        description : "It answers health-related questions using reputable medical sources like Mayo Clinic or WebMD, with disclaimers when necessary."
+        description : "Trusted health info"
     }
 ]
 
 const ModulesModal = ({setClose} : ModulesModalProps) => {
 
     const dispatch = useAppDispatch()
+
+    const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
 
     return (<>
         <AnimatePresence>
@@ -70,18 +74,21 @@ const ModulesModal = ({setClose} : ModulesModalProps) => {
                     <div/>
                     <button onClick={()=>setClose(false)}><RxCross1 /></button>
                 </div>
-                <h1 className="text-[20px] font-semibold">Select a Module</h1>
-                <div className="grid grid-cols-2 mt-3 md:grid-cols-1 md:gap-4">
+                <h1 className="text-[25px] font-semibold">Select a Module</h1>
+                <div className="grid grid-cols-2 mt-10 md:grid-cols-1 md:gap-4">
                     {moduleList?.map(item => (
-                        <button type="button" onClick={()=>{
+                        <button className="transition-all flex flex-row items-center justify-between hover:scale-[1.05] border-2 rounded-md border-slate-300" type="button" onClick={()=>{
                             setClose(false)
                             dispatch(addResource(item.title))
-                        }} className="flex gap-2 md:flex-row flex-col items-center cursor-pointer justify-center text-center md:justify-start md:text-start p-3 transition-all hover:scale-[1.05] border-2 rounded-md border-slate-300">
-                            <ModuleIcon  moduleName={item.title}/> 
-                            <div className="flex flex-col gap-1">
-                                <h4 className="text-[15px]">{item.title.charAt(0).toUpperCase() + item.title.slice(1)}</h4>
-                                <p className="text-[10px]">{item.description}</p>
+                        }}>
+                            <div className="flex gap-2 md:flex-row flex-col items-center cursor-pointer justify-center text-center md:justify-start md:text-start p-3 ">
+                                <ModuleIcon  moduleName={item.title}/> 
+                                <div className="flex flex-col">
+                                    <h4 className="text-[15px] font-semibold">{item.title.charAt(0).toUpperCase() + item.title.slice(1)}</h4>
+                                    <p className="text-[13px]">{item.description}</p>
+                                </div>
                             </div>
+                            {item.title === selectedModule && <span className="p-3 text-green-600"><FaCheck/></span>}
                         </button>
                     ))}
                 </div>
@@ -99,13 +106,13 @@ const ModuleIcon = ({moduleName , className} : {moduleName : string , className 
         case "url":
             return <FaLink style={{color : "#EDD598"}} className={`${className} text-[40px]`}/>
         case "fact check":
-            return <FaRegLightbulb style={{color : "#0b87b6"}} className={`${className} text-[30px]`}/>
+            return <FaRegLightbulb style={{color : "#0b87b6"}} className={`${className} text-[37px]`}/>
         case "videos":
             return <MdOutlineOndemandVideo style={{color : "#7332a1"}} className={`${className} text-[40px]`}/>
         case "academic":
             return <FaGraduationCap style={{color : "#c31069"}} className={`${className} text-[40px]`}/>
         case "medical":
-            return <CiMedicalCase style={{color : "#c67f48"}} className={`${className} text-[50px]`}/>
+            return <CiMedicalCase style={{color : "#c67f48"}} className={`${className} text-[42px]`}/>
     }
 }
  
