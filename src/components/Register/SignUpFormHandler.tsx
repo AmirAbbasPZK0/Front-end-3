@@ -19,31 +19,13 @@ interface SignUpFormProps {
 
 const SignUpFormHandler: React.FC = () => {
 
-  function run(body : SignUpFormProps){
-    fetch(`http://185.110.191.217:5000/register` , {
-      method :"POST",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      body : JSON.stringify(body)
-    }).then(res => {
-      if(res.ok){
-        return res.json()
-      }
-    }).then(resData => {
-      console.log(resData)
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
   const form = useRef<HTMLFormElement | null>(null);
 
   const dispatch = useAppDispatch()
   
   const router = useRouter()
   
-  const onSubmit = (e :  ChangeEvent<HTMLFormElement>) => {
+  const onSubmit = async (e :  ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     let data = {
@@ -54,9 +36,11 @@ const SignUpFormHandler: React.FC = () => {
       password : e.target?.password?.value
     }
 
-    run(data)
+    // run(data)
 
-      // const res = await restApi(endpoints.register , false , false).post(data)
+    const res = await restApi(endpoints.register , false , false).post(data)
+
+    console.log(res)
       
   }
 
