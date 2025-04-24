@@ -20,11 +20,12 @@ const SignUpFormHandler: React.FC = () => {
     const onSubmit = async (e :  ChangeEvent<HTMLFormElement>) => {
       e.preventDefault()
       let data = {
-        name : e.target?.named?.value,
+        first_name : e.target?.first_name?.value,
+        last_name : e.target?.last_name?.value,
+        confirm_password : e.target?.confirm_password?.value,
         email : e.target?.email?.value,
         password : e.target?.password?.value
       }
-      console.log(data)
       let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register/` , {
         method : "POST",
         body : JSON.stringify(data),
@@ -61,11 +62,22 @@ const SignUpFormHandler: React.FC = () => {
           <div className="flex flex-col justify-between gap-6">
             <div className="flex flex-col w-full gap-1">
               <label className="self-start text-sm font-semibold">
-                Name
+                First Name
               </label>
               <input
                 type="text"
-                name="named"
+                name="first_name"
+                className="outline-none border-2 border-[#d7d7d9] dark:bg-[#111828] rounded-lg focus:border-[#6803f5] py-1 px-2"
+                required
+              />
+            </div>
+            <div className="flex flex-col w-full gap-1">
+              <label className="self-start text-sm font-semibold">
+                Last Name
+              </label>
+              <input
+                type="text"
+                name="last_name"
                 className="outline-none border-2 border-[#d7d7d9] dark:bg-[#111828] rounded-lg focus:border-[#6803f5] py-1 px-2"
                 required
               />
@@ -88,6 +100,17 @@ const SignUpFormHandler: React.FC = () => {
               <input
                 type="password"
                 name="password"
+                className="outline-none border-2 border-[#d7d7d9] dark:bg-[#111828] rounded-lg focus:border-[#6803f5] py-1 px-2"
+                required
+              />
+            </div>
+            <div className="flex flex-col w-full gap-1">
+              <label className="self-start text-sm font-semibold">
+                 Confirm Password
+              </label>
+              <input
+                type="password"
+                name="confirm_password"
                 className="outline-none border-2 border-[#d7d7d9] dark:bg-[#111828] rounded-lg focus:border-[#6803f5] py-1 px-2"
                 required
               />

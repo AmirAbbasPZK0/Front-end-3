@@ -77,7 +77,7 @@ const ModulesModal = ({setClose} : ModulesModalProps) => {
                 <h1 className="text-[25px] font-semibold">Select a Module</h1>
                 <div className="grid grid-cols-2 mt-10 md:grid-cols-1 md:gap-4">
                     {moduleList?.map(item => (
-                        <button className="transition-all flex flex-row items-center justify-between hover:scale-[1.05] border-2 rounded-md border-slate-300" type="button" onClick={()=>{
+                        <button className="transition-all flex flex-col md:flex-row items-center justify-between hover:scale-[1.05] border-2 rounded-md border-slate-300" type="button" onClick={()=>{
                             setClose(false)
                             dispatch(addResource(item.title))
                         }}>
@@ -88,7 +88,7 @@ const ModulesModal = ({setClose} : ModulesModalProps) => {
                                     <p className="text-[13px]">{item.description}</p>
                                 </div>
                             </div>
-                            {item.title === selectedModule && <span className="p-3 text-green-600"><FaCheck/></span>}
+                            {item.title === selectedModule && <span className="p-3 md:block hidden text-green-600"><FaCheck/></span>}
                         </button>
                     ))}
                 </div>
