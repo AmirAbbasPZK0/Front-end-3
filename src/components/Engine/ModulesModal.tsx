@@ -77,7 +77,7 @@ const ModulesModal = ({setClose} : ModulesModalProps) => {
                 <h1 className="text-[25px] font-semibold">Select a Module</h1>
                 <div className="grid grid-cols-2 mt-10 md:grid-cols-1 md:gap-4">
                     {moduleList?.map(item => (
-                        <button className="transition-all flex flex-col md:flex-row items-center justify-between hover:scale-[1.05] border-2 rounded-md border-slate-300" type="button" onClick={()=>{
+                        <button className={`transition-all flex flex-col md:flex-row items-center justify-between hover:scale-[1.05] md:border-2 rounded-md ${selectedModule === item.title && "border-2 border-green-500"}`} type="button" onClick={()=>{
                             setClose(false)
                             dispatch(addResource(item.title))
                         }}>

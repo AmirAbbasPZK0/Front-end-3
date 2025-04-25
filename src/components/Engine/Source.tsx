@@ -22,9 +22,9 @@ const Source = ({title , data} : SourceProps) => {
             <p className="text-gray-500">{data.snippet?.length > 50 ? `${data.snippet?.slice(0,50)}...` : data.snippet} </p>
             <div className="flex w-full items-end justify-end">
                {data.verify ? (<>
-                <BiSolidBadgeCheck className="text-green-500"/>
+                <BiSolidBadgeCheck className="text-green-500 text-[20px]"/>
                </>) : (<>
-                <PiSealWarningFill className="text-red-500"/>
+                <PiSealWarningFill className="text-red-500 text-[20px]"/>
                </>)}
             </div>
         </a>
