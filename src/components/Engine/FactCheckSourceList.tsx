@@ -28,7 +28,7 @@ const FactCheckSourceList = ({sources} : {sources : Array<string[]>}) => {
                                             <div className='flex flex-col h-[100vh] bg-slate-200 dark:bg-slate-900 w-full gap-4 overflow-auto'>
                                                 {sources?.map((source , key) => (
                                                     <li key={key} className="flex w-full p-2 items-start">
-                                                        <Source data={{title : source[3] , snippet : source[4] , link : source[2]}} title={source[0]}/>
+                                                        <Source data={{title : source[3] , snippet : source[4] , link : source[2] , verify : source[5]}} title={source[0]}/>
                                                     </li>
                                                 ))}
                                             </div>

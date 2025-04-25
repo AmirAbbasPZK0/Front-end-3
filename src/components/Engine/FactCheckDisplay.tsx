@@ -10,6 +10,7 @@ import { TbSend2 } from "react-icons/tb";
 import { isRTL } from "@/functions/isRTL";
 import { LiaTimesSolid } from "react-icons/lia";
 import FactCheckSourceList from "./FactCheckSourceList";
+import React from "react";
 
 interface ClaimAnswerProps { 
     answer : {
@@ -17,7 +18,7 @@ interface ClaimAnswerProps {
         Verdict : string
     },
     citation : {
-        [key : number] : string[]
+        [key : number] : any[]
     }
     claim : string
 }
@@ -29,7 +30,7 @@ interface DataProps {
 }
 
 type Sources = {
-    [id : string] : string[]
+    [id : string] : any[]
 }
 
 type Source = Array<Array<string>>
@@ -68,7 +69,6 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
         }
     }, [followUp]);
 
-
     return (<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
             <div className="dark:bg-[#202938] flex flex-row shadow-md justify-end text-end items-end bg-white rounded-b-3xl rounded-tl-3xl p-4">
@@ -80,8 +80,10 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
 
                 const verdictStatus = item?.answer?.Verdict === "True" ? <FaRegCheckCircle/> : item?.answer?.Verdict === "False" ? <FaRegTimesCircle/> : <FaMinusCircle/>
 
-                return(<>
-                    <div key={index} className="dark:bg-[#202938] bg-white flex flex-col w-full shadow-md rounded-3xl gap-2 p-4">
+                console.log(Object.values(item.citation))
+
+                return(<React.Fragment key={index}>
+                    <div className="dark:bg-[#202938] bg-white flex flex-col w-full shadow-md rounded-3xl gap-2 p-4">
                         <div className="flex flex-row gap-2 items-center justify-between">
                             <h1 className="font-bold text-slate-700 dark:text-slate-300 text-[24px] flex items-center gap-1"><p className={`text-[20px] rounded-md ${styles}`}>{verdictStatus}</p>{item?.claim}</h1>
                             <h2 className={`p-2 rounded-xl border-2 font-semibold ${item?.answer?.Verdict === "True" ? "border-green-500 text-green-500" : item?.answer?.Verdict === "False" ? "border-red-500 text-red-500" : "border-yellow-400 text-yellow-400"}`}>{item?.answer?.Verdict}</h2>
@@ -100,22 +102,24 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                                         <div className='flex flex-row w-full justify-between'>
                                                 <div className='flex flex-col'>
                                                     <h3 className='text-slate-900 dark:text-slate-100 font-semibold text-[30px]'>Sources</h3>
-                                                    <p className='text-gray-500'>From {Object.values(item?.citation).length - 1} sources</p>
+                                                    <p className='text-gray-500'>From {Object.values(item?.citation).length} sources</p>
                                                 </div>
                                                 <button className="p-3 text-[20px]" onClick={()=>{
                                                     setOpenSources(false)
                                                 }}><LiaTimesSolid/></button>
                                         </div>
                                             <div className='flex flex-col h-[100vh] bg-slate-200 dark:bg-slate-900 w-full gap-4 overflow-auto'>
-                                                {Object.values(item?.citation)?.map((source , key) => (
-                                                    <li key={key} className="flex w-full p-2 items-start">
-                                                        <Source data={{title : source[3] , snippet : source[4] , link : source[2]}} title={source[0]}/>
-                                                    </li>
-                                                ))}
+                                                {Object.values(item?.citation)?.map((source , key) => {
+                                                    return(<React.Fragment key={key}>
+                                                        <li key={key} className="flex w-full p-2 items-start">
+                                                            <Source data={{title : source?.[3] , snippet : source?.[4] , link : source?.[2] , verify : source?.[5]}} title={source[0]}/>
+                                                        </li>
+                                                    </React.Fragment>)
+                                                })}
                                             </div>
                                         </div>
                                     </div>
-                                </>)
+                                </React.Fragment>)
                             }
                         )}
                 
