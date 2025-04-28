@@ -54,10 +54,9 @@ const LoginFormHandler: React.FC = () => {
       dispatch(loginHandler(result?.data?.user))
       router.push("/")
       window.location.reload()
-    }
-    
+    } 
   }
-
+  
   useEffect(()=>{
     if(isLogin){
       router.push("/")

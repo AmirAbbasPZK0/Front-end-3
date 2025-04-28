@@ -11,13 +11,13 @@ export async function middleware(req : NextRequest){
     const isInPrivateRoute = privateRoutes.includes(req.nextUrl.pathname)
     const isInPublicRoute = publicRoutes.includes(req.nextUrl.pathname)
 
-    if(isInPrivateRoute && !google_token){
-        return NextResponse.redirect(new URL('/login' , req.nextUrl))
-    }
+    // if(isInPrivateRoute && !google_token){
+    //     return NextResponse.redirect(new URL('/login' , req.nextUrl))
+    // }
 
-    if(isInPublicRoute && google_token){
-        return NextResponse.redirect(new URL('/' , req.nextUrl))
-    }
+    // if(isInPublicRoute && google_token){
+    //     return NextResponse.redirect(new URL('/' , req.nextUrl))
+    // }
 
     return NextResponse.next()
 }
