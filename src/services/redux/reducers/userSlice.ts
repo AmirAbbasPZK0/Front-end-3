@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 interface initialStateType { 
     isLogin : boolean
     data ?: {
-        name : string
+        first_name : string
+        last_name : string
         email : string
     }
     history ?: any

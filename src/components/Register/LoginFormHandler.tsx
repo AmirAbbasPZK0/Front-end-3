@@ -93,7 +93,7 @@ const LoginFormHandler: React.FC = () => {
             </div>
             <div className="flex flex-col text-center w-full">
               <div>
-                <button onClick={login} className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-700 shadow-sm hover:bg-gray-50">
+                <button type="button" onClick={login} className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-700 shadow-sm hover:bg-gray-50">
                   
                   {pending ? (<>
                     <svg aria-hidden="true" className="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
