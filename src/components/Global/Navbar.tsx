@@ -57,12 +57,12 @@ const Navbar = () => {
     setShowDropDown((prev) => !prev);
   };
 
-  const initialApiCalls = async () => {
-    if (localStorage.getItem('sessionId')){
-      const res = await restApi(endpoints.history , false , true).get();
-      dispatch(historyHandler(res.data))
-    }
-  };
+  // const initialApiCalls = async () => {
+  //   if (localStorage.getItem('sessionId')){
+  //     const res = await restApi(endpoints.history , false , true).get();
+  //     dispatch(historyHandler(res.data))
+  //   }
+  // };
 
   const leftMenuRef = useRef<HTMLDivElement>(null);
 
@@ -111,9 +111,9 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(()=>{
-    initialApiCalls()
-  },[])
+  // useEffect(()=>{
+    // initialApiCalls()
+  // },[])
 
   // return(<>
   //   {(!isMobile && (pathname.includes("/c/") || pathname === "/search")) && <MiniSlideBar/>}

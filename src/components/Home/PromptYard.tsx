@@ -1,7 +1,7 @@
 "use client"
 import ResponseDisplay from '@/components/Engine/ResponseDisplay';
 import useWebSocket from '@/hooks/useWebSocket';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { useAppSelector , useAppDispatch } from '@/services/redux/store';
 import { addRecency, removeRecency } from '@/services/redux/reducers/resourceSlice';
@@ -14,6 +14,7 @@ import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { makeItFalse } from '@/services/redux/reducers/newThreadSlice';
+import Cookies from 'js-cookie';
 
 const PropmptYard = () => {
 
@@ -31,6 +32,9 @@ const PropmptYard = () => {
     const router = useRouter()
     const [isAttachOpen , setIsAttachOpen] = useState(false)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
+    const user_email = useAppSelector(state => state?.userSlice?.data?.email)
+    const isLogin = useAppSelector(state => state.userSlice.isLogin)
+    const pathname = usePathname()
   
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
@@ -59,6 +63,7 @@ const PropmptYard = () => {
           depth: selectedDepth,
           urls: uploadedFiles.urlsOfFiles,
           sessionId: localStorage.getItem('sessionId'),
+          email : user_email,
           code: codde
         });
       }else{
@@ -71,6 +76,7 @@ const PropmptYard = () => {
           depth: selectedDepth,
           urls: urlInputs.urlInputs,
           sessionId: localStorage.getItem('sessionId'),
+          email : user_email,
           code: codde
         });
       }
@@ -262,6 +268,12 @@ const PropmptYard = () => {
         textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
       }
     }, [prompt]);
+
+    useEffect(()=>{
+      if(!isLogin){
+        router.push("/login")
+      }
+    },[pathname])
 
     return (<>
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 justify-center gap-4 flex-col">

@@ -20,6 +20,24 @@ const Layout = ({children} : {children : ReactNode}) => {
     const dispatch = useAppDispatch()
 
     const initialApiCalls = async () => {
+
+      // const token = Cookies.get("access_token")
+
+      // try{
+      //   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user` , {
+      //     method : "GET",
+      //     headers : {
+      //       "Authorization" : `Bearer ${token}`
+      //     }
+      //   })
+      //   const data = await res.json()
+      //   console.log(data)
+      // }catch(err){
+      //   console.log(err)
+      // }finally{
+      //   setIsLoading(false)
+      // }
+
       if (Cookies.get('access_token') || localStorage.getItem('sessionId')){
         const res = await restApi(endpoints.user, true, true).get();
         if(res.code === 200){
@@ -29,14 +47,12 @@ const Layout = ({children} : {children : ReactNode}) => {
       }else{
         setIsLoading(false)
       }
+
     };
     
     useEffect(() => {
       initialApiCalls()
     }, []);
-    useEffect(()=>{
-      
-    },[])
 
     if(isLoading){
       return <div className="h-[100vh] flex items-center justify-center">

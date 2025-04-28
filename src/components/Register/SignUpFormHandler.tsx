@@ -50,7 +50,7 @@ const SignUpFormHandler: React.FC = () => {
         <div className="text-center space-y-4">
           <h6 className="text-4xl font-bold">Sign Up</h6>
         <p className="text-lg md:w-[600px]">
-        Logging in allows you to save search preferences, access search history, and enjoy a more tailored browsing experience.
+        Create and account to access search history, and enjoy a more tailored browsing experience.
         </p>
         </div>
         <form ref={form} onSubmit={onSubmit} className="flex flex-col gap-6">

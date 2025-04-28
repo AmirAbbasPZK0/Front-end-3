@@ -45,8 +45,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     setSessionData(session)
   },[session])
 
-  console.log(user)
-
   return (
     <>
       {/* Overlay */}

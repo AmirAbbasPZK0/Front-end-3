@@ -2,7 +2,7 @@ import { NextResponse , NextRequest } from "next/server";
 
 
 const publicRoutes = ["/login" , "/signup"]
-const privateRoutes = ["/private"]
+const privateRoutes = ["/"]
 
 export async function middleware(req : NextRequest){
 

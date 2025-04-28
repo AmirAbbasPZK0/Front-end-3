@@ -3,14 +3,13 @@ import React, { ChangeEvent, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { useAppDispatch } from "@/services/redux/store";
+import { useAppDispatch, useAppSelector } from "@/services/redux/store";
 import { loginHandler } from "@/services/redux/reducers/userSlice";
-import { useRouter } from "next/navigation";
+import { useRouter , usePathname } from "next/navigation";
 import Cookies from "js-cookie";
 import { signUp } from "@/actions/signUp";
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from "react";
-import { isPending } from "@reduxjs/toolkit";
 
 const LoginFormHandler: React.FC = () => {
 
@@ -18,6 +17,8 @@ const LoginFormHandler: React.FC = () => {
   const [pending , setPending] = useState(false)
 
   const router = useRouter()
+  const pathname = usePathname()
+  const isLogin = useAppSelector(state => state.userSlice.isLogin)
 
   const login = async () => {
     setPending(true)
@@ -48,12 +49,20 @@ const LoginFormHandler: React.FC = () => {
       toast("Failed to Fetch")
       return false
     }else{
-      Cookies.set("access_token" , result?.data?.token , {path : "/"})
+      Cookies.set("access_token" , result?.data?.jwt , {path : "/" , maxAge : "1h"})
+      console.log(result)
       dispatch(loginHandler(result?.data?.user))
       router.push("/")
+      window.location.reload()
     }
     
   }
+
+  useEffect(()=>{
+    if(isLogin){
+      router.push("/")
+    }
+  },[pathname])
 
   return (
     <div className="px-4 md:px-8 py-10 md:py-9 flex justify-center items-center">

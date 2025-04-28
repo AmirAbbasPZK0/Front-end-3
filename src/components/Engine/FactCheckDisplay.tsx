@@ -80,8 +80,6 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
 
                 const verdictStatus = item?.answer?.Verdict === "True" ? <FaRegCheckCircle/> : item?.answer?.Verdict === "False" ? <FaRegTimesCircle/> : <FaMinusCircle/>
 
-                console.log(Object.values(item.citation))
-
                 return(<React.Fragment key={index}>
                     <div className="dark:bg-[#202938] bg-white flex flex-col w-full shadow-md rounded-3xl gap-2 p-4">
                         <div className="flex flex-row gap-2 items-center justify-between">
