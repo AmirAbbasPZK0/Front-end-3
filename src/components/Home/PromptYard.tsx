@@ -268,16 +268,15 @@ const PropmptYard = () => {
     }, [prompt]);
 
     useEffect(()=>{
-      if(window.location.href.includes("/c/")){
+      const url = new URL(window.location.href);
+      if(url.pathname.includes("/c/")){
         user?.history?.find((item : any) => {
           // console.log(item)
-          console.log(item?.code , " | " , window.location.href.split("/c/")[1])
           if(item?.code === window.location.href.split("/c/")[1]){
             console.log(item?.conversation)
             item?.conversation?.map((d : any) => {
               setResponse((prev : any) => {
                 const cp: any = { ...prev };
-                console.log(Object?.values(d?.citations))
                 cp[d?.question] = {
                   text: d?.answer,
                   isLoading: false,

@@ -41,7 +41,9 @@ const SignUpFormHandler: React.FC = () => {
 
     const res = await restApi(endpoints.register , false , false).post(data)
 
-    if(res.code === 200){
+    console.log(res)
+
+    if(res.code === 201){
       toast.success("your account has been created successfully", {
         duration: 3000,
         style: {
