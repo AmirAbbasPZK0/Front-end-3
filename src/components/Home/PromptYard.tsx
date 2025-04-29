@@ -270,10 +270,11 @@ const PropmptYard = () => {
     useEffect(()=>{
       const url = new URL(window.location.href);
       if(url.pathname.includes("/c/")){
+        console.log(user?.history)
         user?.history?.find((item : any) => {
           // console.log(item)
           if(item?.code === window.location.href.split("/c/")[1]){
-            console.log(item?.conversation)
+            // console.log(item?.conversation)
             item?.conversation?.map((d : any) => {
               setResponse((prev : any) => {
                 const cp: any = { ...prev };
