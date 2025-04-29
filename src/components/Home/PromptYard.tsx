@@ -14,10 +14,14 @@ import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { makeItFalse } from '@/services/redux/reducers/newThreadSlice';
+import restApi from '@/services/restApi';
+import Cookies from 'js-cookie';
+import endpoints from '@/configs/endpoints';
 
 const PropmptYard = () => {
 
     const [prompt , setPrompt] = useState("")
+    const [history , setHistory] = useState([])
     const selectedDepth = false
     const selectedAnswerStyle = ""
     // const [code , setCode] = useState("")
@@ -268,10 +272,14 @@ const PropmptYard = () => {
     }, [prompt]);
 
     useEffect(()=>{
-      const url = new URL(window.location.href);
+        const url = new URL(window.location.href);
+        let history
+        if(localStorage.getItem("history")){
+          history = JSON.parse(localStorage?.getItem("history") as any)
+        }
       if(url.pathname.includes("/c/")){
-        console.log(user?.history)
-        user?.history?.find((item : any) => {
+        console.log(user.history)
+        history?.find((item : any) => {
           // console.log(item)
           if(item?.code === window.location.href.split("/c/")[1]){
             // console.log(item?.conversation)

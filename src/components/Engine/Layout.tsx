@@ -23,8 +23,9 @@ const Layout = ({children} : {children : ReactNode}) => {
       if (Cookies.get("access_token")){
         const res = await restApi(endpoints.history , true , true).get();
         dispatch(historyHandler(res.data))
+        localStorage.setItem("history" , JSON.stringify(res.data))
       }
-  };
+    };
 
     const initialApiCalls = async () => {
 
