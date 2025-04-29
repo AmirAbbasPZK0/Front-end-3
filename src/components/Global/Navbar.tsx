@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useAppDispatch } from "@/services/redux/store";
-import endpoints from "@/configs/endpoints";
-import restApi from "@/services/restApi";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
@@ -57,13 +55,6 @@ const Navbar = () => {
     setShowDropDown((prev) => !prev);
   };
 
-  // const initialApiCalls = async () => {
-  //   if (localStorage.getItem('sessionId')){
-  //     const res = await restApi(endpoints.history , false , true).get();
-  //     dispatch(historyHandler(res.data))
-  //   }
-  // };
-
   const leftMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -110,10 +101,6 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  // useEffect(()=>{
-    // initialApiCalls()
-  // },[])
 
   // return(<>
   //   {(!isMobile && (pathname.includes("/c/") || pathname === "/search")) && <MiniSlideBar/>}

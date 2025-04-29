@@ -14,7 +14,6 @@ import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { makeItFalse } from '@/services/redux/reducers/newThreadSlice';
-import Cookies from 'js-cookie';
 
 const PropmptYard = () => {
 
@@ -32,9 +31,7 @@ const PropmptYard = () => {
     const router = useRouter()
     const [isAttachOpen , setIsAttachOpen] = useState(false)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
-    const user_email = useAppSelector(state => state?.userSlice?.data?.email)
-    const isLogin = useAppSelector(state => state.userSlice.isLogin)
-    const pathname = usePathname()
+    const user = useAppSelector(state => state?.userSlice)
   
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
@@ -63,7 +60,7 @@ const PropmptYard = () => {
           depth: selectedDepth,
           urls: uploadedFiles.urlsOfFiles,
           sessionId: localStorage.getItem('sessionId'),
-          email : user_email,
+          email : user?.data?.email,
           code: codde
         });
       }else{
@@ -76,7 +73,7 @@ const PropmptYard = () => {
           depth: selectedDepth,
           urls: urlInputs.urlInputs,
           sessionId: localStorage.getItem('sessionId'),
-          email : user_email,
+          email : user?.data?.email,
           code: codde
         });
       }
@@ -99,6 +96,7 @@ const PropmptYard = () => {
       setPrompt('');
 
     };
+
     useEffect(() => {
       if (!socket) return;
   
@@ -228,23 +226,23 @@ const PropmptYard = () => {
       }
     },[])
 
-  useEffect(() => {
-    if (newResponse.length > 0) {
+    useEffect(() => {
+      if (newResponse.length > 0) {
 
-      setResponse((prev: any) => {
-        const cp: any = { ...prev };
-        const prom = localStorage.getItem('prompt') || prompt;
-        if (prom) {
-          if (!cp[prom]) {
-            cp[prom] = {};
+        setResponse((prev: any) => {
+          const cp: any = { ...prev };
+          const prom = localStorage.getItem('prompt') || prompt;
+          if (prom) {
+            if (!cp[prom]) {
+              cp[prom] = {};
+            }
+            cp[prom].isLoading = false;
           }
-          cp[prom].isLoading = false;
-        }
-        return cp;
-      });
+          return cp;
+        });
 
-    }
-  }, [newResponse]);
+      }
+    }, [newResponse]);
   
     useEffect(() => {
       const handleKeyDown = (event: { key: string; }) => {
@@ -270,10 +268,36 @@ const PropmptYard = () => {
     }, [prompt]);
 
     useEffect(()=>{
-      if(!isLogin){
-        router.push("/login")
+      if(window.location.href.includes("/c/")){
+        user?.history?.find((item : any) => {
+          // console.log(item)
+          console.log(item?.code , " | " , window.location.href.split("/c/")[1])
+          if(item?.code === window.location.href.split("/c/")[1]){
+            console.log(item?.conversation)
+            item?.conversation?.map((d : any) => {
+              setResponse((prev : any) => {
+                const cp: any = { ...prev };
+                console.log(Object?.values(d?.citations))
+                cp[d?.question] = {
+                  text: d?.answer,
+                  isLoading: false,
+                  isDone : true,
+                  images: d?.images,
+                  data: null,
+                  videos : d?.videos,
+                  findoraMessage : "",
+                  relatedQuestions: [],
+                  sources : Object?.values(d?.citations)
+                };
+          
+                return cp;
+              });
+            })
+            return item
+          }
+        })
       }
-    },[pathname])
+    },[window.location.href])
 
     return (<>
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 justify-center gap-4 flex-col">

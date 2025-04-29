@@ -45,9 +45,9 @@ const WebSocketProvider: React.FC<{
       transports: ["websocket"],
       withCredentials : true,
       timeout: 600000, // 60 second,
-      auth: {
-        Authorization: `Bearer ${Cookies.get("access_token")}`,
-      },
+      // auth: {
+      //   Authorization: `Bearer ${Cookies.get("access_token")}`,
+      // },
     });
 
     socket.on('connected', () => {

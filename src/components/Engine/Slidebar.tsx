@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { logOut } from '@/actions/logOut';
 import { TbLogout2 } from "react-icons/tb";
-// import useWebSocket from '@/hooks/useWebSocket';
+import useWebSocket from '@/hooks/useWebSocket';
 import Cookies from 'js-cookie';
 
 interface SidebarProps {
@@ -21,13 +21,11 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
-  // const {socket} = useWebSocket()
+  const {setResponse} = useWebSocket()
 
   const router = useRouter()
 
   const dispatch = useAppDispatch()
-
-
 
   const [sessionData , setSessionData] = useState<any>({})
 
@@ -44,6 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   useEffect(()=>{
     setSessionData(session)
   },[session])
+
 
   return (
     <>
@@ -116,10 +115,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           {(user.isLogin || session) && <div className='flex flex-col gap-2 pt-3'>
             <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
-              {user.history?.map((item : {question : string} , index : number) => (
-                <div key={index}>
-                  <p>{item.question}</p>
-                </div>
+              {user.history?.map((item : any , index : number) => (
+                <button className='text-left' onClick={()=> {
+                    if(window.location.href.split("/c/")[1] === item.code){
+                      console.log("current")
+                    }else{
+                      router.push(`/c/${item.code}`)
+                      setResponse({})
+                      onClose()
+                    }
+                  }} key={index}>
+                  <p>{item.title}</p>
+                </button>
               ))}
             </nav>
           </div>}

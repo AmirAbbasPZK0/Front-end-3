@@ -50,18 +50,17 @@ const LoginFormHandler: React.FC = () => {
       return false
     }else{
       Cookies.set("access_token" , result?.data?.jwt , {path : "/" , maxAge : "1h"})
-      console.log(result)
       dispatch(loginHandler(result?.data?.user))
       router.push("/")
       window.location.reload()
     } 
   }
   
-  useEffect(()=>{
-    if(isLogin){
-      router.push("/")
-    }
-  },[pathname])
+  // useEffect(()=>{
+  //   if(isLogin){
+  //     router.push("/")
+  //   }
+  // },[pathname])
 
   return (
     <div className="px-4 md:px-8 py-10 md:py-9 flex justify-center items-center">

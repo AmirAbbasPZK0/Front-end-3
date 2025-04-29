@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { loginHandler } from "@/services/redux/reducers/userSlice";
 import restApi from "@/services/restApi";
 import endpoints from "@/configs/endpoints";
+import toast from "react-hot-toast";
 
 interface SignUpFormProps {
   first_name : string
@@ -40,7 +41,17 @@ const SignUpFormHandler: React.FC = () => {
 
     const res = await restApi(endpoints.register , false , false).post(data)
 
-    console.log(res)
+    if(res.code === 200){
+      toast.success("your account has been created successfully", {
+        duration: 3000,
+        style: {
+          borderRadius: "10px",
+          background: "#4ABB13",
+          color: "white",
+        },
+      });
+      router.push("/login")
+    }
       
   }
 
