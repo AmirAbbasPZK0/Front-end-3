@@ -186,7 +186,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        {(!isMobile && (pathname.includes("/c/") || pathname === "/")) && <MiniSlideBar/>}
+        {(!isMobile) && <MiniSlideBar/>}
               <AnimatePresence>
                 <Slidebar isOpen={showLeftMenu} onClose={()=>setShowLeftMenu(false)}/>
               </AnimatePresence>

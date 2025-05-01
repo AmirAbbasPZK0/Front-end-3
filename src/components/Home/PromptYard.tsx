@@ -308,7 +308,7 @@ const PropmptYard = () => {
     },[window.location.href])
 
     return (<>
-        <div className="flex w-[100%] items-center min-h-[20vh] pt-4 justify-center gap-4 flex-col">
+        <div className="flex w-[100%] items-center min-h-[20vh] pt-4 pb-20 justify-center gap-4 flex-col">
           {isNew && (<>
             <div className="md:w-[40%] w-[90%]">
             <div className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>

@@ -62,8 +62,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 ease-in-out z-50`}
       >
-        <div className="p-6 flex flex-col gap-3">
-          <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col gap-3">
+          <div className="p-6 flex justify-between items-center mb-6">
             <h2 className="text-2xl flex items-center bottom-0 font-semibold dark:text-white">
               find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra
             </h2>
@@ -112,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               </button>
             </>)}
           </nav>
-          {(user.isLogin || session) && <div className='flex flex-col gap-2 pt-3'>
+          {(user.isLogin || session) && <div className='flex p-3 flex-col gap-2 pt-3'>
             <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
               {user.history?.map((item : any , index : number) => (
@@ -125,12 +125,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                       onClose()
                     }
                   }} key={index}>
-                  <p>{item.title}</p>
+                  <p className="text-[12px]">{item.title}</p>
                 </button>
               ))}
             </nav>
           </div>}
-          <nav className='w-[80%] flex flex-col items-center gap-3 h-[20vh] justify-center fixed bottom-0'>
+          <nav className='w-full flex flex-col items-center gap-3 h-[20vh] justify-center fixed bottom-0'>
             <div className='flex items-center justify-between gap-6'>
             <button className='flex items-center flex-row gap-2 border-2 px-4 rounded-[30px] p-3 border-slate-950 dark:border-slate-100 bg-none dark:text-white'>
               <GrUpgrade/>
@@ -138,42 +138,32 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </button>
             </div>
             <div className='flex flex-row justify-between items-center w-full'>
-              <div className='flex flex-row items-center gap-2'>
-                <img src={`${session ? session.user?.image : "/images/guest-user.webp"}`} alt="Guest User" className="w-10 h-10 rounded-full"/>
-                <div className='flex flex-col'>
-                  {session ? <h4 className='dark:text-white text-[12px]'>{session.user?.name}</h4> : <h4 className='dark:text-white text-[10px] w-[20px]'>{user.isLogin ? user.data?.first_name : "Guess"}</h4>}
-                  <p className='text-slate-400 text-[13px]'>Free plan</p>
-                </div>
-              </div>
-              {user.isLogin ? (<>
-                <div className='flex dark:text-white flex-row items-center gap-2'>
-                  <button className='p-3 flex gap-2 items-center rounded-xl bg-red-500 text-[11px] text-white' onClick={ async ()=>{
-                      Cookies.set("access_token" , "" , {expires : 0})
-                      window.location.reload()
-                  }}>Log Out <TbLogout2 className='text-[12px]'/></button>
-                </div>
-              </>) : (<>
-                {status === "loading" ? <div>
-                  <svg aria-hidden="true" className="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                      <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-                  </svg>
-                </div> : sessionData ? (<>
-                  <div className='flex dark:text-white flex-row items-center gap-2'>
-                    <button className='p-3 flex gap-2 items-center rounded-xl bg-red-500 text-[11px] text-white' onClick={ async()=>{
-                      await logout()
-                    }}>
-                      <span className='text-[12px]'>Log Out</span> <TbLogout2 className='text-[14px]'/></button>
+              <div className='flex flex-row w-full items-center gap-2'>
+                {user.isLogin ? (<>
+                  <div className='flex w-full p-3 flex-col pb-10 gap-2'>
+                      <div>
+                        <h1 className='text-[14px] font-semibold'>{user.data?.email}</h1>
+                      </div>
+                      <button onClick={()=>{
+                        Cookies.set("access_token" , "" , {expires : 0})
+                        window.location.reload()
+                      }} className="w-full items-center text-center p-2 font-semibold transition-all bg-red-500  text-white rounded-md">
+                        Logout
+                      </button>
                   </div>
                 </>) : (<>
-                  <div className='flex dark:text-white flex-row items-center gap-2'>
-                    <Link onClick={()=> onClose()} className='text-[13px] font-semibold flex items-center justify-center gap-2' href={"/login"}>
-                      <span>Login</span>
-                      <IoIosArrowForward/>
-                    </Link>
+                  <div className='flex pb-10 p-3 flex-col w-full gap-2'>
+                    <div>
+                      <h1 className="text-[14px] font-semibold">Guest</h1>
+                    </div>
+                    <div className='flex w-full flex-row items-center'>
+                      <Link onClick={()=> onClose()} href={"/login"} className="w-full items-center text-center p-2 font-semibold transition-all bg-slate-950 hover:bg-slate-50 border-2 border-slate-950 hover:text-black text-white rounded-md">
+                        Login
+                      </Link>
+                    </div>
                   </div>
                 </>)}
-              </>)}
+              </div>
             </div>
           </nav>
         </div>

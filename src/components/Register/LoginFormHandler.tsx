@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { signUp } from "@/actions/signUp";
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from "react";
+import { googleBackHandler } from "@/actions/googleBackHandler";
 
 const LoginFormHandler: React.FC = () => {
 
@@ -17,12 +18,11 @@ const LoginFormHandler: React.FC = () => {
   const [pending , setPending] = useState(false)
 
   const router = useRouter()
-  const pathname = usePathname()
-  const isLogin = useAppSelector(state => state.userSlice.isLogin)
 
   const login = async () => {
     setPending(true)
     await signUp()
+    await googleBackHandler()
     // router.push("/")
     setPending(false)
   }

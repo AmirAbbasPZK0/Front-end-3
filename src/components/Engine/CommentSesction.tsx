@@ -1,7 +1,10 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiDislike , BiSolidLike , BiLike , BiSolidDislike } from "react-icons/bi";
 import { AnimatePresence , motion } from "framer-motion"
+import { IoAttachOutline } from "react-icons/io5";
+import { useDropzone } from "react-dropzone";
+import { useEdgeStore } from '@/lib/edgestore';
 
 const CommentSection = () => {
 
@@ -49,6 +52,43 @@ const CommentSection = () => {
 }
 
 function DislikeModal({handleClose} : {handleClose : () => void}){
+
+    const [files, setFiles] = useState<File[]>([]);
+    const [uploadedFiles , setUploadedFiles] = useState<File[]>([])
+    const [uploadStatus, setUploadStatus] = useState(false);
+    const {getInputProps, open} = useDropzone({noClick: true})
+    const {edgestore} = useEdgeStore()
+
+    const handleUpload = async () => {
+
+        setUploadStatus(true)
+        
+        try{
+          if(files[0]){
+            const res = await edgestore.myFiles.upload({file : files[0]})
+            // dispatch(addUrl({url : res.url , name : files?.[0].name}))
+            setUploadedFiles([...uploadedFiles , files?.[0]])
+            // toast.success("File has been uploaded Successfully", {
+            //   duration: 3000,
+            //   style: {
+            //     borderRadius: "10px",
+            //     background: "white",
+            //     color: "black",
+            //   },
+            // });
+          }
+        }catch(err){
+          console.log(err)
+        }finally{
+          setUploadStatus(false)
+        }
+    
+      };
+    
+      useEffect(()=>{
+        handleUpload()
+      },[files])
+
     return(<>
         <AnimatePresence>
             <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -68,7 +108,9 @@ function DislikeModal({handleClose} : {handleClose : () => void}){
                     <h1 className="text-[30px]">Leave a Comment</h1>
                     <h1 className="text-[16px]">We would like to know about your opinion</h1>
                     <input type="email" className="p-2 rounded-md border-2 border-slate-500 bg-transparent dark:border-slate-100" placeholder="Email"/>
-                    <textarea  className="p-2 rounded-md border-2 h-40 outline-none border-slate-500 bg-transparent dark:border-slate-100"></textarea>
+                    <textarea className="p-2 rounded-md border-2 h-40 outline-none border-slate-500 bg-transparent dark:border-slate-100"></textarea>
+                    <input {...getInputProps()} />
+                    <button onClick={open} type="button" className="flex flex-row gap-1 items-center justify-start border-1 dark:border-slate-100 border-slate-900 p-2 rounded-md"><IoAttachOutline/><span>Attach File</span></button>
                     <button className="p-2 rounded-md bg-blue-600 text-white " type="submit">Submit</button>
                 </motion.form>
             </div>
