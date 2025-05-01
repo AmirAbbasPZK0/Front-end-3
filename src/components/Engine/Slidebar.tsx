@@ -27,7 +27,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const dispatch = useAppDispatch()
 
-  const [sessionData , setSessionData] = useState<any>({})
 
   const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
@@ -38,11 +37,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const logout = async () => {
     await logOut()
   }
-
-  useEffect(()=>{
-    setSessionData(session)
-  },[session])
-
 
   return (
     <>
@@ -112,20 +106,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               </button>
             </>)}
           </nav>
-          {(user?.isLogin || session) && <div className='flex p-3 flex-col gap-2 pt-3'>
+          {(user?.isLogin) && <div className='flex p-3 flex-col gap-2 pt-3'>
             <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
               {user?.history?.map((item : any , index : number) => (
                 <button className='text-left' onClick={()=> {
-                    if(window.location.href.split("/c/")[1] === item.code){
+                    if(window.location.href.split("/c/")[1] === item?.code){
                       console.log("current")
                     }else{
-                      router.push(`/c/${item.code}`)
+                      router.push(`/c/${item?.code}`)
                       setResponse({})
                       onClose()
                     }
                   }} key={index}>
-                  <p className="text-[12px]">{item.title}</p>
+                  <p className="text-[12px]">{item?.title}</p>
                 </button>
               ))}
             </nav>
