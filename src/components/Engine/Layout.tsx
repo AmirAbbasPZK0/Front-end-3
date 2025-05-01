@@ -16,7 +16,6 @@ const Layout = ({children} : {children : ReactNode}) => {
   const {data : session} = useSession()
 
   const [isLoading , setIsLoading] = useState(true)
-  const isLogin = useAppSelector(state => state.userSlice.isLogin)
 
     const dispatch = useAppDispatch()
 
@@ -48,7 +47,7 @@ const Layout = ({children} : {children : ReactNode}) => {
 
     useEffect(()=>{
       initialApiCallsH()
-    },[isLoading , initialApiCalls])
+    },[initialApiCalls])
 
     if(isLoading){
       return <div className="h-[100vh] flex items-center justify-center">
