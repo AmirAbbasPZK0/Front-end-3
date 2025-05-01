@@ -1,10 +1,15 @@
 "use client"
-import { useEffect, useState } from "react";
+
+import { useCallback, useEffect, useState } from "react";
 import { BiDislike , BiSolidLike , BiLike , BiSolidDislike } from "react-icons/bi";
 import { AnimatePresence , motion } from "framer-motion"
 import { IoAttachOutline } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
 import { useEdgeStore } from '@/lib/edgestore';
+import toast from "react-hot-toast";
+import { useAppDispatch , useAppSelector } from "@/services/redux/store";
+import { addUrl } from "@/services/redux/reducers/commentFileUploaderSlice";
+
 
 const CommentSection = () => {
 
@@ -56,26 +61,28 @@ function DislikeModal({handleClose} : {handleClose : () => void}){
     const [files, setFiles] = useState<File[]>([]);
     const [uploadedFiles , setUploadedFiles] = useState<File[]>([])
     const [uploadStatus, setUploadStatus] = useState(false);
-    const {getInputProps, open} = useDropzone({noClick: true})
+    const {getInputProps, open} = useDropzone({noClick : true})
     const {edgestore} = useEdgeStore()
+    const dispatch = useAppDispatch()
+    const filesD = useAppSelector(state => state.commentFileUploaderSlice.uploadedFile)
 
     const handleUpload = async () => {
 
         setUploadStatus(true)
-        
+
         try{
           if(files[0]){
             const res = await edgestore.myFiles.upload({file : files[0]})
-            // dispatch(addUrl({url : res.url , name : files?.[0].name}))
+            dispatch(addUrl({url : res.url , name : files?.[0].name}))
             setUploadedFiles([...uploadedFiles , files?.[0]])
-            // toast.success("File has been uploaded Successfully", {
-            //   duration: 3000,
-            //   style: {
-            //     borderRadius: "10px",
-            //     background: "white",
-            //     color: "black",
-            //   },
-            // });
+            toast.success("File has been uploaded Successfully", {
+              duration: 3000,
+              style: {
+                borderRadius: "10px",
+                background: "white",
+                color: "black",
+              },
+            });
           }
         }catch(err){
           console.log(err)
@@ -85,9 +92,11 @@ function DislikeModal({handleClose} : {handleClose : () => void}){
     
       };
     
-      useEffect(()=>{
+    useEffect(()=>{
         handleUpload()
-      },[files])
+    },[])
+
+    console.log(filesD)
 
     return(<>
         <AnimatePresence>
@@ -110,6 +119,9 @@ function DislikeModal({handleClose} : {handleClose : () => void}){
                     <input type="email" className="p-2 rounded-md border-2 border-slate-500 bg-transparent dark:border-slate-100" placeholder="Email"/>
                     <textarea className="p-2 rounded-md border-2 h-40 outline-none border-slate-500 bg-transparent dark:border-slate-100"></textarea>
                     <input {...getInputProps()} />
+                    {filesD?.map((item , index) => (
+                        <div key={index}>{item.name}</div>
+                    ))}
                     <button onClick={open} type="button" className="flex flex-row gap-1 items-center justify-start border-1 dark:border-slate-100 border-slate-900 p-2 rounded-md"><IoAttachOutline/><span>Attach File</span></button>
                     <button className="p-2 rounded-md bg-blue-600 text-white " type="submit">Submit</button>
                 </motion.form>

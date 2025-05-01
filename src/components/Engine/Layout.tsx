@@ -5,7 +5,7 @@ import Cookies from "js-cookie"
 import WebSocketProvider from "@/contexts/WebSocketContext"
 import restApi from "@/services/restApi"
 import endpoints from "@/configs/endpoints"
-import { useAppDispatch } from "@/services/redux/store"
+import { useAppDispatch, useAppSelector } from "@/services/redux/store"
 import { historyHandler, loginHandler } from "@/services/redux/reducers/userSlice"
 import { useState } from "react"
 import Loading from "./Loading"
@@ -16,6 +16,7 @@ const Layout = ({children} : {children : ReactNode}) => {
   const {data : session} = useSession()
 
   const [isLoading , setIsLoading] = useState(true)
+  const isLogin = useAppSelector(state => state.userSlice.isLogin)
 
     const dispatch = useAppDispatch()
 
@@ -47,7 +48,7 @@ const Layout = ({children} : {children : ReactNode}) => {
 
     useEffect(()=>{
       initialApiCallsH()
-    },[initialApiCallsH])
+    },[isLoading , initialApiCalls])
 
     if(isLoading){
       return <div className="h-[100vh] flex items-center justify-center">
