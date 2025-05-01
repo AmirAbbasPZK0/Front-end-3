@@ -6,8 +6,11 @@ import { removeAllUrls } from '@/services/redux/reducers/urlInputSlice';
 import { useRouter } from 'next/navigation';
 import { FaPlus } from 'react-icons/fa';
 import { GrUpgrade } from "react-icons/gr";
+import { IoIosArrowForward } from 'react-icons/io';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { logOut } from '@/actions/logOut';
+import { TbLogout2 } from "react-icons/tb";
 import useWebSocket from '@/hooks/useWebSocket';
 import Cookies from 'js-cookie';
 
@@ -24,21 +27,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const dispatch = useAppDispatch()
 
-  const [historyD , setHistoryD] = useState([]) 
 
   const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
   const user = useAppSelector(state => state.userSlice)
 
+  const {data : session , status} = useSession()
+
   const logout = async () => {
     await logOut()
   }
-
-  useEffect(()=>{
-    if(localStorage.getItem("history")){
-      setHistoryD(JSON.parse(localStorage.getItem("history") as any))
-    }
-  },[])
 
   return (
     <>
@@ -89,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               >
                 <svg
                   aria-hidden="true"
-                  // role="status"
+                  role="status"
                   className="inline w-5 h-5 mr-2 darktext-white animate-spin"
                   viewBox="0 0 100 101"
                   fill="none"
@@ -111,7 +109,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           {(user?.isLogin && user?.data !== undefined) && <div className='flex p-3 flex-col gap-2 pt-3'>
             <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
-              {historyD.map((item : any , index : number) => (
+              {user?.history?.map((item : any , index : number) => (
                 <button className='text-left' onClick={()=> {
                     if(window.location.href.split("/c/")[1] === item?.code){
                       console.log("current")
