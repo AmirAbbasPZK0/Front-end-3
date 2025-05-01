@@ -47,7 +47,7 @@ const Layout = ({children} : {children : ReactNode}) => {
 
     useEffect(()=>{
       initialApiCallsH()
-    },[initialApiCalls])
+    },[initialApiCallsH])
 
     if(isLoading){
       return <div className="h-[100vh] flex items-center justify-center">

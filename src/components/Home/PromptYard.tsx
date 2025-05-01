@@ -275,7 +275,7 @@ const PropmptYard = () => {
         const url = new URL(window.location.href);
         let history
         console.log(localStorage.getItem("history"))
-        if(localStorage.getItem("history") !== null){
+        if(localStorage.getItem("history") !== null || localStorage.getItem("history") !== undefined){
           history = JSON.parse(localStorage.getItem("history") as any)
         }
       if(url.pathname.includes("/c/")){
