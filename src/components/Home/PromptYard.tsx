@@ -274,8 +274,9 @@ const PropmptYard = () => {
     useEffect(()=>{
         const url = new URL(window.location.href);
         let history
-        if(localStorage.getItem("history")){
-          history = JSON.parse(localStorage?.getItem("history") as any)
+        console.log(localStorage.getItem("history"))
+        if(localStorage.getItem("history") !== null){
+          history = JSON.parse(localStorage.getItem("history") as any)
         }
       if(url.pathname.includes("/c/")){
         history?.find((item : any) => {
