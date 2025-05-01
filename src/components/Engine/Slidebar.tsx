@@ -106,7 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               </button>
             </>)}
           </nav>
-          {(user?.isLogin) && <div className='flex p-3 flex-col gap-2 pt-3'>
+          {(user?.isLogin && user?.data !== undefined) && <div className='flex p-3 flex-col gap-2 pt-3'>
             <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
               {user?.history?.map((item : any , index : number) => (
@@ -133,7 +133,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </div>
             <div className='flex flex-row justify-between items-center w-full'>
               <div className='flex flex-row w-full items-center gap-2'>
-                {user?.isLogin ? (<>
+                {(user?.isLogin || user?.data !== undefined) ? (<>
                   <div className='flex w-full p-3 flex-col pb-10 gap-2'>
                       <div>
                         <h1 className='text-[14px] font-semibold'>{user?.data?.email}</h1>
