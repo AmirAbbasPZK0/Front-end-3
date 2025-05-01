@@ -52,7 +52,7 @@ const LoginFormHandler: React.FC = () => {
       Cookies.set("access_token" , result?.data?.jwt , {path : "/" , sameSite:'strict'})
       dispatch(loginHandler(result?.data?.user))
       router.push("/")
-      window.location.reload()
+      // window.location.reload()
     } 
   }
   
