@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   }
 
   useEffect(()=>{
-    if(localStorage.getItem("history") !== null){
+    if(localStorage.getItem("history")){
       setHistoryD(JSON.parse(localStorage.getItem("history") as any))
     }
   },[])
