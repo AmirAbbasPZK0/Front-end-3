@@ -124,7 +124,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               ))}
             </nav>
           </div>}
-          {/* <nav className='w-full flex flex-col items-center gap-3 h-[20vh] justify-center fixed bottom-0'>
+          <nav className='w-full flex flex-col items-center gap-3 h-[20vh] justify-center fixed bottom-0'>
             <div className='flex items-center justify-between gap-6'>
             <button className='flex items-center flex-row gap-2 border-2 px-4 rounded-[30px] p-3 border-slate-950 dark:border-slate-100 bg-none dark:text-white'>
               <GrUpgrade/>
@@ -159,7 +159,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 </>)}
               </div>
             </div>
-          </nav> */}
+          </nav>
         </div>
       </div>
     </>
