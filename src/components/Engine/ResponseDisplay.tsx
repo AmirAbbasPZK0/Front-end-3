@@ -207,8 +207,9 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             a : (props) => <HyperLink data={hyperLinkTooltip?.[props?.href as string]} href={props.href as string}>{props.children}</HyperLink>,
                             ul : (props) => <ul {...props}/>,
                             li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>
-                        }}> 
-                            {(sources) ? (uploadedFiles.length > 0 || selectedModule === "url") ? removeHyperText(response , sources) : hyperTextForMarkDown(response , sources) : response}
+                        }}>
+                            {/*{response}*/}
+                            {(sources?.length > 0) ? (uploadedFiles.length > 0 || selectedModule === "url") ? removeHyperText(response , sources) : hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
                             {(sources && !(selectedModule === "file")) && <SourceButton sources={sources} onClick={()=>{
