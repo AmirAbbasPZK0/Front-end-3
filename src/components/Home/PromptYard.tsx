@@ -274,16 +274,14 @@ const PropmptYard = () => {
     useEffect(()=>{
         const url = new URL(window.location.href);
         let history
-        console.log(localStorage.getItem("history"))
-        if(localStorage.getItem("history") !== null || localStorage.getItem("history") !== undefined){
-          history = JSON.parse(localStorage.getItem("history") as any)
-        }
+      if(localStorage.getItem("history") !== null || localStorage.getItem("history") !== undefined){
+        history = JSON.parse(localStorage.getItem("history") as any)
+      }
       if(url.pathname.includes("/c/")){
         history?.find((item : any) => {
-          // console.log(item)
           if(item?.code === window.location.href.split("/c/")[1]){
-            // console.log(item?.conversation)
             item?.conversation?.map((d : any) => {
+              console.log(d?.answer)
               setResponse((prev : any) => {
                 const cp: any = { ...prev };
                 cp[d?.question] = {

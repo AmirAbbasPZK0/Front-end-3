@@ -96,7 +96,6 @@ function DislikeModal({handleClose} : {handleClose : () => void}){
         handleUpload()
     },[])
 
-    console.log(filesD)
 
     return(<>
         <AnimatePresence>
