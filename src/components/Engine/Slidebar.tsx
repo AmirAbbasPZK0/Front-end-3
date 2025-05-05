@@ -132,7 +132,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </button> */}
             </div>
             
-            {/* <div className='flex flex-row justify-between items-center w-full'>
+            <div className='flex flex-row justify-between items-center w-full'>
               <div className='flex flex-row w-full items-center gap-2'>
                 {(user?.isLogin || user?.data !== undefined) ? (<>
                   <div className='flex w-full p-3 flex-col pb-10 gap-2'>
@@ -152,14 +152,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                       <h1 className="text-[14px] font-semibold">Guest</h1>
                     </div>
                     <div className='flex w-full flex-row items-center'>
-                      <Link onClick={()=> onClose()} href={"/login"} className="w-full items-center text-center p-2 font-semibold transition-all bg-slate-950 hover:bg-slate-50 border-2 border-slate-950 hover:text-black text-white rounded-md">
+                      <Link onClick={()=> onClose()} href={"/login"} className="w-full items-center text-center p-2 font-semibold transition-all bg-slate-950  border-2 border-slate-950  text-white rounded-md">
                         Login
                       </Link>
                     </div>
                   </div>
                 </>)}
               </div>
-            </div> */}
+            </div>
           </nav>
         </div>
       </div>

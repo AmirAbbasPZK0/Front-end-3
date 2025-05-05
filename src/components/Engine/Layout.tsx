@@ -5,21 +5,23 @@ import Cookies from "js-cookie"
 import WebSocketProvider from "@/contexts/WebSocketContext"
 import restApi from "@/services/restApi"
 import endpoints from "@/configs/endpoints"
-import { useAppDispatch, useAppSelector } from "@/services/redux/store"
+import { useAppDispatch , useAppSelector } from "@/services/redux/store"
 import { historyHandler, loginHandler } from "@/services/redux/reducers/userSlice"
 import { useState } from "react"
 import Loading from "./Loading"
-import { useSession } from "next-auth/react"
+
 
 const Layout = ({children} : {children : ReactNode}) => {
 
-  const {data : session} = useSession()
-
   const [isLoading , setIsLoading] = useState(true)
+  
+  const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
-    const dispatch = useAppDispatch()
+  const isLogin = useAppSelector(state => state.userSlice.isLogin)
 
-    const initialApiCallsH = async () => {
+  const dispatch = useAppDispatch()
+
+  const initialApiCallsH = async () => {
       if (Cookies.get("access_token")){
         const res = await restApi(endpoints.history , true , true).get();
         dispatch(historyHandler(res.data))
@@ -49,7 +51,7 @@ const Layout = ({children} : {children : ReactNode}) => {
 
     useEffect(()=>{
       initialApiCallsH()
-    },[initialApiCallsH])
+    },[initialApiCallsH , isGenerating , isLogin])
 
     if(isLoading){
       return <div className="h-[100vh] flex items-center justify-center">

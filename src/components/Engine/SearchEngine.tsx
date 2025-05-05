@@ -1,6 +1,6 @@
 "use client"
 
-import PropmptYard from "../Home/PromptYard";
+import PropmptYard from "../Register/PromptYard";
 import { useAppSelector } from "@/services/redux/store";
 
 const SearchEngine = () => {
