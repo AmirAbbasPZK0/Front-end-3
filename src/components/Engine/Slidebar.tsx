@@ -5,8 +5,7 @@ import { removeAllFiles } from '@/services/redux/reducers/fileUploadSlice';
 import { removeAllUrls } from '@/services/redux/reducers/urlInputSlice';
 import { useRouter } from 'next/navigation';
 import { FaPlus } from 'react-icons/fa';
-import { GrUpgrade } from "react-icons/gr";
-import { IoIosArrowForward } from 'react-icons/io';
+import ProfileAvatar from "./ProfileAvatar"
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { logOut } from '@/actions/logOut';
@@ -37,6 +36,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const logout = async () => {
     await logOut()
   }
+
+  console.log(user.history)
 
   return (
     <>
@@ -136,7 +137,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <div className='flex flex-row w-full items-center gap-2'>
                 {(user?.isLogin || user?.data !== undefined) ? (<>
                   <div className='flex w-full p-3 flex-col pb-10 gap-2'>
-                      <div>
+                      <div className='flex flex-row gap-3 items-center justify-start'>
+                        <ProfileAvatar name={`${user?.data?.first_name} ${user?.data?.last_name}`}/>
                         <h1 className='text-[14px] font-semibold'>{user?.data?.email}</h1>
                       </div>
                       <button onClick={()=>{

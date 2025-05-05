@@ -270,36 +270,35 @@ const PropmptYard = () => {
     useEffect(()=>{
         const url = new URL(window.location.href);
         let history
-      if(localStorage.getItem("history") !== null || localStorage.getItem("history") !== undefined){
-        history = JSON.parse(localStorage.getItem("history") as any)
-      }
-      if(url.pathname.includes("/c/")){
-        history?.find((item : any) => {
-          if(item?.code === window.location.href.split("/c/")[1]){
-            item?.conversation?.map((d : any) => {
-              console.log(d?.answer)
-              setResponse((prev : any) => {
-                const cp: any = { ...prev };
-                cp[d?.question] = {
-                  text: d?.answer,
-                  isLoading: false,
-                  isDone : true,
-                  images: d?.images,
-                  data: null,
-                  videos : d?.videos,
-                  findoraMessage : "",
-                  relatedQuestions: [],
-                  sources : Object?.values(d?.citations)
-                };
-          
-                return cp;
-              });
-            })
-            return item
-          }
-        })
-      }
-    },[window.location.href])
+        if(localStorage.getItem("history") !== null || localStorage.getItem("history") !== undefined){
+          history = JSON.parse(localStorage.getItem("history") as any)
+        }
+        if(url.pathname.includes("/c/")){
+          history?.find((item : any) => {
+            if(item?.code === window.location.href.split("/c/")[1]){
+              item?.conversation?.map((d : any) => {
+                setResponse((prev : any) => {
+                  const cp: any = { ...prev };
+                  cp[d?.question] = {
+                    text: d?.answer,
+                    isLoading: false,
+                    isDone : true,
+                    images: d?.images,
+                    data: null,
+                    videos : d?.videos,
+                    findoraMessage : "",
+                    relatedQuestions: [],
+                    sources : Object?.values(d?.citations)
+                  };
+            
+                  return cp;
+                });
+              })
+              return item
+            }
+          })
+        }
+      },[window.location.href])
 
     return (<>
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 pb-20 justify-center gap-4 flex-col">

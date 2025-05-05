@@ -150,7 +150,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 
     useEffect(() => {
         const handleKeyDown = (event: { key: string; }) => {
-            console.log(isSubmmited)
             if(isSubmmited){
                return  
             }else{
