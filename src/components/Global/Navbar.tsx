@@ -84,7 +84,6 @@ const Navbar = () => {
     };
   }, [showLeftMenu]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

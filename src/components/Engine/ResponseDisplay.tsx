@@ -148,8 +148,32 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         }
     },[isDone])
 
+    useEffect(() => {
+        const handleKeyDown = (event: { key: string; }) => {
+            console.log(isSubmmited)
+            if(isSubmmited){
+               return  
+            }else{
+                if(event.key === "Enter") {
+                    if(checkIsEmpty(followUp)){
+                        sendMessage(followUp)
+                        setIsSubmited(true)
+                        setFollowUp("")
+                    }
+                }
+            }
+        };
+    
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+          window.removeEventListener("keydown", handleKeyDown);
+        };
+
+      }, [followUp]);
+
     if(isLoading){
-        return <div className="h-[70vh] w-full items-end p-3 flex flex-col gap-6">
+        return <div className="h-[70vh] pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
             <div className="dark:bg-[#202938] flex flex-row justify-start items-start text-start shadow-md bg-white rounded-b-3xl rounded-tl-3xl p-2">
                 <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
             </div>
@@ -291,6 +315,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         if(checkIsEmpty(followUp)){
                             sendMessage(followUp)
                             setIsSubmited(true)
+                            setFollowUp("")
                         }
                     }} className="w-full flex flex-row gap-2" action="">
                         <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>
