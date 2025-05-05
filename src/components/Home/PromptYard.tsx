@@ -14,14 +14,10 @@ import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { makeItFalse } from '@/services/redux/reducers/newThreadSlice';
-import restApi from '@/services/restApi';
-import Cookies from 'js-cookie';
-import endpoints from '@/configs/endpoints';
 
 const PropmptYard = () => {
 
     const [prompt , setPrompt] = useState("")
-    const [history , setHistory] = useState([])
     const selectedDepth = false
     const selectedAnswerStyle = ""
     // const [code , setCode] = useState("")

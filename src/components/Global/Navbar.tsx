@@ -15,7 +15,6 @@ import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
 import { addResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
 import { useRouter } from "next/navigation";
-import { historyHandler } from "@/services/redux/reducers/userSlice";
 import { BsSearch } from "react-icons/bs";
 import Slidebar from "../Engine/Slidebar";
 import MiniSlideBar from "../Engine/MiniSlideBar";

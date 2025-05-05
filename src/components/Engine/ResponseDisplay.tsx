@@ -285,7 +285,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 </div>
             </>)}
             {!isSubmmited && (<>
-                <div className="rounded-3xl fixed bottom-2 w-[300px] md:w-[1220px] left-[10%] z-30 dark:bg-[#202938] bg-white border-2 border-[#bababa]  shadow-md p-3 flex flex-col">
+                <div className="rounded-3xl fixed bottom-2 w-[80%] left-[10%] z-30 dark:bg-[#202938] bg-white border-2 border-[#bababa]  shadow-md p-3 flex flex-col">
                     <form onSubmit={(e)=>{
                         e.preventDefault()
                         if(checkIsEmpty(followUp)){
