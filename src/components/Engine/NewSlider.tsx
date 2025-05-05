@@ -81,7 +81,9 @@ const NewSlider = ({images} : {images : Image[]}) => {
             >
                 {newImages?.map((item , index) => (
                     <SwiperSlide className="flex items-center justify-center" key={index}>
-                        <img className="w-full rounded-md items-center min-h-[300px] max-h-[300px] object-contain" src={item.imageUrl} alt="" />
+                        <a target="_blank" href={item.imageUrl}>
+                            <img className="w-full rounded-md items-center min-h-[300px] max-h-[300px] object-contain" src={item.imageUrl} alt="" />
+                        </a>
                     </SwiperSlide>
                 ))}
             </Swiper>
