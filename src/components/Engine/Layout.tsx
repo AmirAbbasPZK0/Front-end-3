@@ -24,8 +24,8 @@ const Layout = ({children} : {children : ReactNode}) => {
   const initialApiCallsH = async () => {
       if (Cookies.get("access_token")){
         const res = await restApi(endpoints.history , true , true).get();
-        dispatch(historyHandler(res.data))
         if(res.code === 200){
+          dispatch(historyHandler(res.data))
           localStorage.setItem("history" , JSON.stringify(res.data))
         }
       }

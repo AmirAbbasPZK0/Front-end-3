@@ -10,9 +10,9 @@ const apiRequest = async (url: string, useToken = false, useSessionId = false, m
 
   if (useSessionId) {
     const sessionId = localStorage.getItem('sessionId');
-    // if (sessionId) {
-    //   headers['X-Session-Id'] = sessionId;
-    // }
+    if (sessionId) {
+      headers['X-Session-Id'] = sessionId;
+    }
   }
 
   if (headers['content-type'] === 'application/json' && body) {
