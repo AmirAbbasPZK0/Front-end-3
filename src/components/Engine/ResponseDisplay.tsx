@@ -194,12 +194,16 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             {(findoraMessage !== "" && selectedModule === "medical") && 
             <div className="flex flex-col gap-2 w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
-              Find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra's Search Engine Answer
-            </h2>
+                    Find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra's Answer
+                </h2>
                 {findoraMessage}
             </div>}
             {response !== "" && 
             <div dir="auto" className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
+                {(findoraMessage !== "" && selectedModule === "medical") && 
+                    <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
+                        Search Engine Answer
+                    </h2>}
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
                     <div className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
                         <ReactMarkdown remarkPlugins={[remarkGfm]} components={{

@@ -287,7 +287,7 @@ const PropmptYard = () => {
                     images: d?.images,
                     data: Object.values(d?.fact_check_data)?.length > 0 ? {message : d?.fact_check_data} : null,
                     videos : d?.videos,
-                    findoraMessage : "",
+                    findoraMessage : d?.findora_message,
                     relatedQuestions: [],
                     sources : Object?.values(d?.citations)
                   };
