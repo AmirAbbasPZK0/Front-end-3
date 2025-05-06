@@ -14,6 +14,7 @@ import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { makeItFalse } from '@/services/redux/reducers/newThreadSlice';
+import { addResource } from '@/services/redux/reducers/resourceSlice';
 
 const PropmptYard = () => {
 
@@ -284,7 +285,7 @@ const PropmptYard = () => {
                     isLoading: false,
                     isDone : true,
                     images: d?.images,
-                    data: null,
+                    data: Object.values(d?.fact_check_data)?.length > 0 ? {message : d?.fact_check_data} : null,
                     videos : d?.videos,
                     findoraMessage : "",
                     relatedQuestions: [],
@@ -293,6 +294,7 @@ const PropmptYard = () => {
             
                   return cp;
                 });
+                dispatch(addResource(d?.module ? d?.module : "web"))
               })
               return item
             }

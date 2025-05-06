@@ -11,6 +11,11 @@ import { isRTL } from "@/functions/isRTL";
 import { LiaTimesSolid } from "react-icons/lia";
 import FactCheckSourceList from "./FactCheckSourceList";
 import React from "react";
+import { checkIsEmpty } from "@/functions/checkIsEmpty";
+import ModuleIcon from "./ModuleIcons";
+import useWebSocket from "@/hooks/useWebSocket";
+import { useAppSelector } from "@/services/redux/store";
+import { FaRegCircleStop } from "react-icons/fa6";
 
 interface ClaimAnswerProps { 
     answer : {
@@ -50,6 +55,12 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null >(null)
 
+    const {socket} = useWebSocket()
+
+    const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
+
+    const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
+
     const [followUp , setFollowUp] = useState("")
 
     const [openSources, setOpenSources] = useState(false)
@@ -68,6 +79,8 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
             textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
         }
     }, [followUp]);
+
+    
 
     return (<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
@@ -95,7 +108,7 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                         }} >
                             {Object.values(item?.citation) ? hyperTextForMarkDown(item?.answer?.Reasoning , Object.values(item?.citation)) : item?.answer?.Reasoning}
                         </ReactMarkdown>
-                            <FactCheckSourceList sources={Object.values(item.citation)}/>
+                            <FactCheckSourceList sources={Object.values(item?.citation)}/>
                                     <div className={`flex flex-col gap-4 p-3 bg-slate-200 dark:bg-slate-900 ${openSources ? 'translate-x-0' : 'translate-x-full'} transition-all duration-300 ease-in-out right-0 top-0 fixed flex-col z-50 dark:text-white w-[360px] h-[100vh]`}>
                                         <div className='flex flex-row w-full justify-between'>
                                                 <div className='flex flex-col'>
@@ -122,17 +135,27 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                         )}
                 
 
-            {!isSubmited && (<>
-                <div className="rounded-3xl bg-white dark:bg-[#202938] shadow-md w-[100%] p-3 flex flex-col">
+                {!isSubmited && (<>
+                <div className="rounded-3xl fixed bottom-2 w-[80%] left-[10%] z-30 dark:bg-[#202938] bg-white border-2 border-[#bababa]  shadow-md p-3 flex flex-col">
                     <form onSubmit={(e)=>{
-                        setIsSubmited(true)
                         e.preventDefault()
-                        if(followUp !== ""){
+                        if(checkIsEmpty(followUp)){
                             sendMessage(followUp)
+                            setIsSubmited(true)
+                            setFollowUp("")
                         }
-                    }} className="w-full flex flex-row gap-2" action="">
+                    }} className="flex items-center justify-center w-ful flex-row gap-2" action="">
+                        <button type="button">
+                            <ModuleIcon className="text-[10px] p-2" moduleName={selectedModule}/>
+                        </button>
                         <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>
-                        <button className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
+                        {isGenerating ? (<>
+                            <button type="submit" className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
+                        </>) : (<>
+                            <button type="button" onClick={()=>{
+                                socket.emit("cancel_generation")
+                            }} className="rounded-full0 p-2"><FaRegCircleStop className="text-[30px]"/></button>
+                        </>)}
                     </form>
                 </div>
             </>)}

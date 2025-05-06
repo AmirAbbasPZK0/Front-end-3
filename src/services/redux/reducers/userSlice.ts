@@ -24,6 +24,10 @@ const userSlice = createSlice({
         },
         historyHandler : (state , action) => {
             state.history = action.payload
+        },
+        addHistory : (state , action) => {
+            let target_history = action.payload
+            
         }
     }
 })

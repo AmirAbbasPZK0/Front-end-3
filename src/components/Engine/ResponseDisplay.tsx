@@ -28,6 +28,7 @@ import { removeHyperText } from "@/functions/removeSources";
 import { makeItTrue } from "@/services/redux/reducers/newThreadSlice";
 import { FaRegCircleStop } from "react-icons/fa6";
 import useWebSocket from "@/hooks/useWebSocket";
+import ModuleIcon from "./ModuleIcons";
 
 
 interface CodeComponentProps {
@@ -183,6 +184,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     if(data){
         return <FactCheckDisplay sendMessage={sendMessage} data={data?.message} sources={sources} query={query}/>
     }
+    
 
     return(<>
         <div className={`p-4 ${openSources && "overflow-hidden"} pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
@@ -192,7 +194,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             {(findoraMessage !== "" && selectedModule === "medical") && 
             <div className="flex flex-col gap-2 w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
-              Find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra's Answer
+              Find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra's Search Engine Answer
             </h2>
                 {findoraMessage}
             </div>}
@@ -316,7 +318,10 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             setIsSubmited(true)
                             setFollowUp("")
                         }
-                    }} className="w-full flex flex-row gap-2" action="">
+                    }} className="flex items-center justify-center w-ful flex-row gap-2" action="">
+                        <button type="button">
+                            <ModuleIcon className="text-[10px] p-2" moduleName={selectedModule}/>
+                        </button>
                         <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>
                         {isGenerating ? (<>
                             <button type="submit" className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>

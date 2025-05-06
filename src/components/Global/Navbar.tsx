@@ -112,13 +112,13 @@ const Navbar = () => {
       <div className="border-b-2 border-[#e8e9f3] dark:border-black">
         <div className="px-4 md:px-8 py-3">
           <div className="flex md:hidden justify-between items-center gap-4">
-            <button
-              onClick={openLeftMenu}
-              className="lg:hidden md:hidden flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
-            >
-              <span className="relative z-10 flex flex-col"><RiBarChartHorizontalLine className="text-[26px]"/></span>
-            </button>
-            <button className="" onClick={()=>{
+              <button
+                onClick={openLeftMenu}
+                className="lg:hidden md:hidden flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
+              >
+                <span className="relative z-10 flex flex-col"><RiBarChartHorizontalLine className="text-[26px]"/></span>
+              </button>
+              <button className="" onClick={()=>{
                 dispatch(removeAllFiles())
                 dispatch(removeAllUrls())
                 dispatch(addResource("web"))

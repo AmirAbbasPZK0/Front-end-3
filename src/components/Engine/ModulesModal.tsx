@@ -1,14 +1,9 @@
 import { AnimatePresence, motion } from "motion/react";
-import { IoEarth } from "react-icons/io5";
-import { FaC, FaLink } from "react-icons/fa6";
-import { FaRegLightbulb } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
-import { MdOutlineOndemandVideo } from "react-icons/md";
-import { FaGraduationCap } from "react-icons/fa6";
-import { CiMedicalCase } from "react-icons/ci";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
 import { addResource } from "@/services/redux/reducers/resourceSlice";
 import { FaCheck } from "react-icons/fa6";
+import ModuleIcon from "./ModuleIcons";
 
 
 interface ModulesModalProps {
@@ -77,7 +72,7 @@ const ModulesModal = ({setClose} : ModulesModalProps) => {
                 <h1 className="text-[25px] font-semibold">Select a Module</h1>
                 <div className="grid grid-cols-2 mt-10 md:grid-cols-1 md:gap-4">
                     {moduleList?.map(item => (
-                        <button className={`transition-all flex flex-col md:flex-row items-center justify-between hover:scale-[1.05] md:border-2 rounded-md ${selectedModule === item.title && "border-2 border-green-500"}`} type="button" onClick={()=>{
+                        <button key={item.title} className={`transition-all flex flex-col md:flex-row items-center justify-between hover:scale-[1.05] md:border-2 rounded-md ${selectedModule === item.title && "border-2 border-green-500"}`} type="button" onClick={()=>{
                             setClose(false)
                             dispatch(addResource(item.title))
                         }}>
@@ -98,22 +93,5 @@ const ModulesModal = ({setClose} : ModulesModalProps) => {
     </>);
 }
 
-
-const ModuleIcon = ({moduleName , className} : {moduleName : string , className ?: string }) => {
-    switch(moduleName){
-        case "web":
-            return <IoEarth style={{color : "#008f7a"}} className={`${className} text-[40px]`}/>
-        case "url":
-            return <FaLink style={{color : "#EDD598"}} className={`${className} text-[40px]`}/>
-        case "fact check":
-            return <FaRegLightbulb style={{color : "#0b87b6"}} className={`${className} text-[37px]`}/>
-        case "videos":
-            return <MdOutlineOndemandVideo style={{color : "#7332a1"}} className={`${className} text-[40px]`}/>
-        case "academic":
-            return <FaGraduationCap style={{color : "#c31069"}} className={`${className} text-[40px]`}/>
-        case "medical":
-            return <CiMedicalCase style={{color : "#c67f48"}} className={`${className} text-[42px]`}/>
-    }
-}
  
 export default ModulesModal;
