@@ -49,7 +49,7 @@ const LoginFormHandler: React.FC = () => {
       toast("Failed to Fetch")
       return false
     }else{
-      Cookies.set("access_token" , result?.data?.jwt , {path : "/" , sameSite:'strict' , expires : 1})
+      Cookies.set("access_token" , result?.data?.jwt , {path : "/" , sameSite:'strict'})
       dispatch(loginHandler(result?.data?.user))
       router.push("/")
     } 
