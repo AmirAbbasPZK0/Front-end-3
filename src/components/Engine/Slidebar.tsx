@@ -7,9 +7,6 @@ import { useRouter } from 'next/navigation';
 import { FaPlus } from 'react-icons/fa';
 import ProfileAvatar from "./ProfileAvatar"
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import { logOut } from '@/actions/logOut';
-import { TbLogout2 } from "react-icons/tb";
 import useWebSocket from '@/hooks/useWebSocket';
 import Cookies from 'js-cookie';
 
@@ -31,13 +28,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const user = useAppSelector(state => state.userSlice)
 
-  const {data : session , status} = useSession()
+  // const {data : session , status} = useSession()
 
-  const logout = async () => {
-    await logOut()
-  }
-
-  console.log(user.history)
+  // const logout = async () => {
+  //   await logOut()
+  // }
 
   return (
     <>

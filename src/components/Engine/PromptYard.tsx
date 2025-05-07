@@ -140,9 +140,14 @@ const PropmptYard = () => {
           return cp;
         });
       });
+
       socket?.on('new_session', (data : any) => {
-        localStorage.setItem('sessionId', data.sessionId);
+        console.log(data)
+        if(data.id !== "session exists"){
+          localStorage.setItem('sessionId', data?.id);
+        }
       });
+
       socket?.on('receive_citation', (data : any) => {
         setResponse((prev : any) => {
           const cp = { ...prev };
