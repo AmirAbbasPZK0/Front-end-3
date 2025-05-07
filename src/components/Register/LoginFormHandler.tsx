@@ -11,11 +11,14 @@ import { signUp } from "@/actions/signUp";
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from "react";
 import { googleBackHandler } from "@/actions/googleBackHandler";
+import { useSession } from "next-auth/react";
 
 const LoginFormHandler: React.FC = () => {
 
   const form = useRef<HTMLFormElement | null>(null);
   const [pending , setPending] = useState(false)
+  const {data} = useSession()
+  // console.log(data)
 
   const router = useRouter()
 
@@ -23,8 +26,6 @@ const LoginFormHandler: React.FC = () => {
     setPending(true)
     await signUp()
     await googleBackHandler()
-    // router.push("/")
-    setPending(false)
   }
 
   const dispatch = useAppDispatch()

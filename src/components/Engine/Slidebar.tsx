@@ -9,6 +9,7 @@ import ProfileAvatar from "./ProfileAvatar"
 import Link from 'next/link';
 import useWebSocket from '@/hooks/useWebSocket';
 import Cookies from 'js-cookie';
+import { logOut } from '@/actions/logOut';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -23,16 +24,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const dispatch = useAppDispatch()
 
-
   const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
   const user = useAppSelector(state => state.userSlice)
 
-  // const {data : session , status} = useSession()
 
-  // const logout = async () => {
-  //   await logOut()
-  // }
+  const logout = async () => {
+    await logOut()
+  }
 
   return (
     <>
@@ -138,6 +137,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                       </div>
                       <button onClick={()=>{
                         Cookies.set("access_token" , "" , {expires : 0})
+                        logout()
                         window.location.reload()
                       }} className="w-full items-center text-center p-2 font-semibold transition-all bg-red-500  text-white rounded-md">
                         Logout
