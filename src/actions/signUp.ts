@@ -6,6 +6,4 @@ export async function signUp(){
 
     await signIn("google")
     
-    
-    // redirect("/")
 }

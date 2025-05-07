@@ -68,6 +68,16 @@ function DislikeModal({handleClose} : {handleClose : () => void}){
 
     const handleUpload = async () => {
 
+    const onSubmit = (e : any) => {
+        e.preventDefault()
+        let body = {
+            email : "",
+            comment : "",
+            rating : "negative",
+            // message_id : 
+        }
+    }
+
         setUploadStatus(true)
 
         try{
