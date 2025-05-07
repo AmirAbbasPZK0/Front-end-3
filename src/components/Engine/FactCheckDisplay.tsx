@@ -48,7 +48,7 @@ interface FactCheckDisplayProps {
     data : DataProps , 
     sources : Sources[] | Source , 
     query : string 
-    sendMessage : (prompt : string) => void
+    sendMessage : (followUp : string) => void
 }
 
 const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisplayProps) => {
@@ -80,7 +80,27 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
         }
     }, [followUp]);
 
+    useEffect(() => {
+        const handleKeyDown = (event: { key: string; }) => {
+            if(isSubmited){
+                return  
+            }else{
+                if(event.key === "Enter") {
+                    if(checkIsEmpty(followUp)){
+                        sendMessage(followUp)
+                        setIsSubmited(true)
+                        setFollowUp("")
+                    }
+                }
+            }
+        };
     
+        window.addEventListener("keydown", handleKeyDown);
+    
+        return () => {
+          window.removeEventListener("keydown", handleKeyDown);
+        };
+      }, [followUp]);    
 
     return (<>
         <div className="p-4 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
@@ -141,8 +161,6 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                         e.preventDefault()
                         if(checkIsEmpty(followUp)){
                             sendMessage(followUp)
-                            setIsSubmited(true)
-                            setFollowUp("")
                         }
                     }} className="flex items-center justify-center w-ful flex-row gap-2" action="">
                         <button type="button">

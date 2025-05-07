@@ -112,7 +112,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const dispatch = useAppDispatch()
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null>(null)
     const [followUp , setFollowUp] = useState("")
-    const [isSubmmited , setIsSubmited] = useState(false)
+    const [isSubmited , setIsSubmited] = useState(false)
     const [openSources , setOpenSources] = useState(false)
     const uploadedFiles = useAppSelector(state => state.fileUploadsSlice.uploadedFilesUrl)
     const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
@@ -151,7 +151,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 
     useEffect(() => {
         const handleKeyDown = (event: { key: string; }) => {
-            if(isSubmmited){
+            if(isSubmited){
                return  
             }else{
                 if(event.key === "Enter") {
@@ -293,7 +293,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         dir="auto"
                         type="submit"
                         onClick={()=>{
-                            if(isSubmmited){
+                            if(isSubmited){
                                 return
                             }else{
                                 sendMessage(e)
@@ -313,7 +313,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     </div>
                 </div>
             </>)}
-            {!isSubmmited && (<>
+            {!isSubmited && (<>
                 <div className="rounded-3xl fixed bottom-2 w-[80%] left-[10%] z-30 dark:bg-[#202938] bg-white border-2 border-[#bababa]  shadow-md p-3 flex flex-col">
                     <form onSubmit={(e)=>{
                         e.preventDefault()
