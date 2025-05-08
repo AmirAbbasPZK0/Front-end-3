@@ -1,13 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+interface StateInterface {
+    isAllowed : boolean
+    history : boolean
+}
 
 const initialState = {
-    isAllowed : true
+    isAllowed : true,
+    history : false
 }
 
 const newThreadSlice = createSlice({
     name : "new-thread",
     initialState,
     reducers : {
+
+        checkHistory : (state , action : PayloadAction<boolean>) => {
+            state.history = action.payload
+        },
 
         makeItFalse : (state) => {
             state.isAllowed = false
@@ -19,5 +29,5 @@ const newThreadSlice = createSlice({
     }
 })
 
-export const {makeItFalse , makeItTrue} = newThreadSlice.actions
+export const {makeItFalse , makeItTrue , checkHistory} = newThreadSlice.actions
 export default newThreadSlice.reducer

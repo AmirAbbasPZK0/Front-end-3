@@ -118,12 +118,7 @@ const Navbar = () => {
               >
                 <span className="relative z-10 flex flex-col"><RiBarChartHorizontalLine className="text-[26px]"/></span>
               </button>
-              <button className="" onClick={()=>{
-                dispatch(removeAllFiles())
-                dispatch(removeAllUrls())
-                dispatch(addResource("web"))
-                router.push("/")
-              }}>
+              <a href="https://findora.ai">
                 <Image
                   src={LogoBlack}
                   alt="logo"
@@ -138,7 +133,7 @@ const Navbar = () => {
                   height={80}
                   className="hidden dark:block"
                 />
-              </button>
+              </a>
             {/* <div className="hidden xl:flex items-center bg-[#f0f0fc] dark:bg-[#111828] dark:text-white p-2 border-2 border-[#e7e7f2] shadow-inner rounded-full">
               {Links.map((link) => (
                 <NavLink link={link} key={link.id} />

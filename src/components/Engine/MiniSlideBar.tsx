@@ -19,7 +19,7 @@ import ThemeToggle from "../Global/ThemeToggle/ThemeToggle";
 
 const MiniSlideBar : React.FC = () => {
 
-    const {socket , setResponse} = useWebSocket()
+    const {setResponse} = useWebSocket()
 
     const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
@@ -33,13 +33,7 @@ const MiniSlideBar : React.FC = () => {
         <div className={`fixed z-50 flex items-center w-[100px] justify-between p-2 flex-col inset-y-0 left-0  max-w-full bg-white dark:bg-[#1F2937] shadow-lg transform
         translate-x-0 transition-transform duration-300 ease-in-out`}>
             <div className="flex flex-col items-center justify-center gap-2">
-                <button onClick={()=>{
-                    // dispatch(addRecency())
-                    dispatch(removeAllFiles())
-                    dispatch(removeAllUrls())
-                    dispatch(addResource("web"))
-                    router.push("/")
-                }}>
+                <a href="https://findora.ai">
                     <Image
                     src={LogoBlack}
                     alt="logo"
@@ -54,7 +48,7 @@ const MiniSlideBar : React.FC = () => {
                     height={80}
                     className="hidden dark:block"
                     />
-                </button>
+                </a>
                 {isGenerating ? (<button className="p-3" onClick={()=>{
                     dispatch(addRecency())
                     dispatch(addResource("web"))

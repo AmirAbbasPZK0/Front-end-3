@@ -13,8 +13,9 @@ import UrlInput from '../Engine/UrlInput';
 import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
-import { makeItFalse } from '@/services/redux/reducers/newThreadSlice';
+import { checkHistory, makeItFalse } from '@/services/redux/reducers/newThreadSlice';
 import { addResource } from '@/services/redux/reducers/resourceSlice';
+import SkeletonLoading from './SkeletonLoading';
 
 const PropmptYard = () => {
 
@@ -33,6 +34,7 @@ const PropmptYard = () => {
     const [isAttachOpen , setIsAttachOpen] = useState(false)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
     const user = useAppSelector(state => state?.userSlice)
+    const historyChecker = useAppSelector(state => state?.newThreadSlice.history)
   
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
@@ -304,8 +306,15 @@ const PropmptYard = () => {
               return item
             }
           })
+          dispatch(checkHistory(false))
         }
       },[window.location.href])
+     
+    if(historyChecker){
+      return <div className='flex w-[90%] items-end justify-end h-screen '>
+        <SkeletonLoading/>
+      </div>
+    }
 
     return (<>
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 pb-20 justify-center gap-4 flex-col">

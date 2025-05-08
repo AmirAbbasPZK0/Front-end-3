@@ -118,7 +118,7 @@ function DislikeModal({handleClose , message_id , setStatus} : {handleClose : ()
                         <div key={index}>{item.name}</div>
                     ))} */}
                     {/* <button onClick={open} type="button" className="flex flex-row gap-1 items-center justify-start border-1 dark:border-slate-100 border-slate-900 p-2 rounded-md"><IoAttachOutline/><span>Attach File</span></button> */}
-                    <button className="p-2 rounded-md bg-blue-600 text-white " type="submit">Submit</button>
+                    <button className="p-2 rounded-md bg-blue-600 text-white" type="submit">Submit</button>
                 </motion.form>
             </div>
         </AnimatePresence>
