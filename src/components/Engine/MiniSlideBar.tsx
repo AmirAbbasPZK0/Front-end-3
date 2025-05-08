@@ -34,6 +34,7 @@ const MiniSlideBar : React.FC = () => {
         translate-x-0 transition-transform duration-300 ease-in-out`}>
             <div className="flex flex-col items-center justify-center gap-2">
                 <button onClick={()=>{
+                    // dispatch(addRecency())
                     dispatch(removeAllFiles())
                     dispatch(removeAllUrls())
                     dispatch(addResource("web"))
@@ -59,14 +60,7 @@ const MiniSlideBar : React.FC = () => {
                     dispatch(addResource("web"))
                     dispatch(removeAllFiles())
                     dispatch(removeAllUrls())
-                    socket.off("receive_message")
-                    socket.off("receive_citation")
-                    socket.off("receive_images")
-                    socket.off("new_session")
-                    socket.off("receive_relevant")
-                    socket.off("suggested videos")
                     setResponse({})
-                    socket.emit("cancel_generation")
                     router.push("/")
                 }}>
                     <CiCirclePlus className="text-[35px]" />
