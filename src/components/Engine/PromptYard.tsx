@@ -38,7 +38,7 @@ const PropmptYard = () => {
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const sendMessage = (prompt: string) => {
-      if(localStorage.getItem("sessionId") === "session_exist"){
+      if(localStorage.getItem("sessionId") === "session_exist" || localStorage.getItem("sessionId") === undefined){
         localStorage.removeItem("sessionId")
       }
       dispatch(makeItFalse())
