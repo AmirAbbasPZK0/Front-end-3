@@ -3,21 +3,20 @@ import React, { ChangeEvent, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { useAppDispatch, useAppSelector } from "@/services/redux/store";
+import { useAppDispatch } from "@/services/redux/store";
 import { loginHandler } from "@/services/redux/reducers/userSlice";
-import { useRouter , usePathname } from "next/navigation";
+import { useRouter  } from "next/navigation";
 import Cookies from "js-cookie";
 import { signUp } from "@/actions/signUp";
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from "react";
 import { googleBackHandler } from "@/actions/googleBackHandler";
-import { useSession } from "next-auth/react";
 
 const LoginFormHandler: React.FC = () => {
 
   const form = useRef<HTMLFormElement | null>(null);
   const [pending , setPending] = useState(false)
-  const {data} = useSession()
+  const [error , setError] = useState("")
   // console.log(data)
 
   const router = useRouter()
@@ -36,6 +35,17 @@ const LoginFormHandler: React.FC = () => {
       email : e.target?.email.value,
       password : e.target?.password.value
     }
+
+    if(data.email === ""){
+      toast.error("Email is Required", {
+        duration: 3000,
+      });
+    }else if(data.password === ""){
+      toast.error("Password is Required", {
+        duration: 3000,
+      });
+    }
+
     let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login/` , {
       method : "POST",
       body : JSON.stringify(data),
@@ -47,11 +57,30 @@ const LoginFormHandler: React.FC = () => {
     let result = await res.json()
 
     if(result.code !== 200){
-      toast("Failed to Fetch")
-      return false
+      switch(result.code){
+        case 401:
+          setError("Email or Password is wrong! Please Try again")
+          toast.error(error, {
+            duration: 3000,
+          });
+        case 400:
+          setError("Bad Request")
+          toast.error(error, {
+            duration: 3000,
+          });
+          break
+      }
     }else{
       Cookies.set("access_token" , result?.data?.jwt , {path : "/" , sameSite:'strict'})
       dispatch(loginHandler(result?.data?.user))
+      toast.success("Logged in Successfully", {
+        duration: 3000,
+        // style: {
+        //   borderRadius: "10px",
+        //   background: "#6a0dad",
+        //   color: "white",
+        // },
+      });
       router.push("/")
     } 
   }
