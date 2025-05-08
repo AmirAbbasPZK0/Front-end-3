@@ -68,7 +68,6 @@ function DislikeModal({handleClose , message_id , setStatus} : {handleClose : ()
     const dispatch = useAppDispatch()
     const filesD = useAppSelector(state => state.commentFileUploaderSlice.uploadedFile)
     const user = useAppSelector(state => state.userSlice)
-    
 
     const onSubmit = async (e : any) => {
         e.preventDefault()
@@ -76,7 +75,7 @@ function DislikeModal({handleClose , message_id , setStatus} : {handleClose : ()
             email : user?.isLogin ? user?.data?.email : e?.target?.email?.value,
             comment : e?.target?.comment?.value,
             rating : "negative",
-            message_id
+            thread_code : window.location.href.split("/c/")[1]
         }
         const restData = await restApi(endpoints.feedback , false , false).post(body)
         if(restData.code === 201){
