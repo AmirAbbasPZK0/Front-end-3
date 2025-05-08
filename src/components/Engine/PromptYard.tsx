@@ -38,6 +38,9 @@ const PropmptYard = () => {
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const sendMessage = (prompt: string) => {
+      if(localStorage.getItem("sessionId") === "session_exist"){
+        localStorage.removeItem("sessionId")
+      }
       dispatch(makeItFalse())
       if(selectedResources === "url" && urlInputs.urlInputs.includes("")){
         return false
@@ -142,10 +145,7 @@ const PropmptYard = () => {
       });
 
       socket?.on('new_session', (data : any) => {
-        console.log(data)
-        if(data.id !== "session exists"){
-          localStorage.setItem('sessionId', data?.id);
-        }
+        localStorage.setItem("sessionId" , data.id)
       });
 
       socket?.on('receive_citation', (data : any) => {
