@@ -363,6 +363,7 @@ const PropmptYard = () => {
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
               <ResponseDisplay
                 key={index}
+                id={index + 1}
                 findoraMessage={value.findoraMessage}
                 isDone={value.isDone}
                 videos={value.videos}

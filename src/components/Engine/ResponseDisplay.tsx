@@ -86,6 +86,7 @@ interface ResponseDisplayProps {
     responseRef: string;
     query: string;
     videos: Video[]
+    id : number
     findoraMessage : string
 }
 
@@ -96,6 +97,7 @@ interface HyperLink {
 const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     response ,
     sources ,
+    id,
     isLoading , 
     images , 
     data , 
@@ -267,7 +269,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 ))}
                                 </div>
                             </div>
-                            <CommentSection/>
+                            <CommentSection message_id={id}/>
                             <button className="text-[20px]" type="button" onClick={()=>{
                                 navigator.clipboard.writeText(CopyText as string);
                                 toast.success("Copied!")

@@ -6,5 +6,6 @@ const endpoints = {
   login: formatUrl('login'),
   user: formatUrl('user/'),
   history: formatUrl('user/history'),
+  feedback : formatUrl("feedback")
 }
 export default endpoints;
