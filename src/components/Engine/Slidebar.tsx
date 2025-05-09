@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useAppSelector , useAppDispatch} from '@/services/redux/store';
 import { addRecency , addResource, removeRecency } from '@/services/redux/reducers/resourceSlice';
 import { removeAllFiles } from '@/services/redux/reducers/fileUploadSlice';
@@ -27,6 +27,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const dispatch = useAppDispatch()
 
   const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
+
+  const counter = useAppSelector(state => state.newThreadSlice.counter)
 
   const user = useAppSelector(state => state.userSlice)
 
@@ -73,6 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   dispatch(removeAllUrls())
                   dispatch(addResource("web"))
                   dispatch(setCounterToZero(0))
+                  localStorage.setItem("counter" , `${counter}`)
                   // socket.removeAllListeners();
                   router.push("/")
                   onClose()
@@ -118,6 +121,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                       dispatch(checkHistory(true))
                       dispatch(removeRecency())
                       dispatch(setCounterToZero(item?.conversation?.[item?.conversation?.length - 1]?.id + 1))
+                      localStorage.setItem("counter" , `${counter}`)
                       onClose()
                     }
                   }}>

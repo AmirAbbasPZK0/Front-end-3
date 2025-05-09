@@ -44,7 +44,7 @@ const PropmptYard = () => {
     const sendMessage = (prompt: string) => {
 
       dispatch(increaseCounter())
-      localStorage.setItem("counter" , `${counter}`)
+      localStorage.setItem('counter' , `${counter}`);
 
       if(localStorage.getItem("sessionId") === "session_exist" || localStorage.getItem("sessionId") === undefined){
         localStorage.removeItem("sessionId")
@@ -91,7 +91,7 @@ const PropmptYard = () => {
       }
       setResponse((prev : any) => {
         const cp: any = { ...prev };
-        cp[counter] = {
+        cp[localStorage.getItem("counter") as string] = {
           question : prompt,
           text: '',
           isLoading: true,
@@ -129,11 +129,11 @@ const PropmptYard = () => {
         setResponse((prev : any) => {
           const cp = { ...prev };
   
-          cp[counter].text += data.message;
+          cp[localStorage.getItem('counter') as string].text += data.message;
   
           // Fact Check
           if(data.message.claim_1){
-            cp[counter].data = data;
+            cp[localStorage.getItem('counter') as string].data = data;
           }
   
           return cp;
@@ -144,7 +144,10 @@ const PropmptYard = () => {
       socket?.on('receive_images', (data: { images: any; }) => {
         setResponse((prev: any) => {
           const cp = { ...prev };
-          cp[counter].images = data?.images;
+  
+          if(cp[localStorage.getItem("counter") as string]?.images){
+            cp[localStorage.getItem("counter") as string].images = data.images;
+          }
   
           return cp;
         });
@@ -158,7 +161,7 @@ const PropmptYard = () => {
         setResponse((prev : any) => {
           const cp = { ...prev };
   
-          cp[counter].sources = Object.values(data);
+          cp[localStorage.getItem('counter') as string].sources = Object.values(data);
           return cp;
         });
       });
@@ -166,7 +169,7 @@ const PropmptYard = () => {
         setResponse((prev : any) => {
           const cp = { ...prev };
   
-          cp[counter].relatedQuestions = data?.data?.followUp;
+          cp[localStorage.getItem('counter') as string].relatedQuestions = data.data?.followUp;
   
           return cp;
         });
@@ -176,7 +179,7 @@ const PropmptYard = () => {
         setResponse((prev : any) => {
           const cp = {...prev}
   
-          cp[counter].videos = data?.data
+          cp[localStorage.getItem("counter") as string].videos = data.data
           
           return cp
         })
@@ -190,7 +193,7 @@ const PropmptYard = () => {
           // console.log()
           setResponse((prev : any) => {
             const cp: any = { ...prev };
-            const prom = counter || prompt;
+            const prom = localStorage.getItem('counter') || prompt;
             if (prom) {
               if (!cp[prom]) {
                 cp[prom] = {};
@@ -220,8 +223,8 @@ const PropmptYard = () => {
         findoraMessageRef.current += data.message
         setResponse((prev : any) => {
           const cp = {...prev}
-          cp[counter].findoraMessage = findoraMessageRef.current
-          cp[counter].isLoading = false
+          cp[localStorage.getItem("counter") as string].findoraMessage = findoraMessageRef.current
+          cp[localStorage.getItem("counter") as string].isLoading = false
           return cp
         })
       }
@@ -290,6 +293,7 @@ const PropmptYard = () => {
           history?.find((item : any) => {
             if(item?.code === window.location.href.split("/c/")[1]){
               dispatch(setCounterToZero(item?.conversation?.[item?.conversation?.length - 1]?.id + 1))
+              localStorage.setItem('counter' , `${counter}`);
               item?.conversation?.map((d : any) => {
                 setResponse((prev : any) => {
                   const cp: any = { ...prev };

@@ -23,6 +23,8 @@ const MiniSlideBar : React.FC = () => {
     const {setResponse} = useWebSocket()
 
     const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
+    
+    const counter = useAppSelector(state => state.newThreadSlice.counter)
 
     const [isOpen , setIsOpen] = useState(false)
     
@@ -51,6 +53,7 @@ const MiniSlideBar : React.FC = () => {
                     />
                 </a>
                 {isGenerating ? (<button className="p-3" onClick={()=>{
+                    localStorage.setItem("counter" , `${0}`)
                     dispatch(addRecency())
                     dispatch(addResource("web"))
                     dispatch(removeAllFiles())
