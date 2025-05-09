@@ -1,10 +1,9 @@
 interface SourceButtonProps {
     onClick ?: () => void
     sources : Array<Array<string>>
-    factCheckSources ?: any
 }
 
-const SourceButton = ({onClick , sources , factCheckSources} : SourceButtonProps) => {
+const SourceButton = ({onClick , sources} : SourceButtonProps) => {
     return (<>
         <button className="flex w-[160px] flex-row gap-2 items-center p-1 pl-3 pr-2 rounded-full border-slate-400 border-2" onClick={onClick}>
             <span className="text-[17px] font-semibold">Sources</span>

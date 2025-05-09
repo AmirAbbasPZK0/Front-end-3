@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import useWebSocket from "@/hooks/useWebSocket";
 import Slidebar from "./Slidebar";
 import ThemeToggle from "../Global/ThemeToggle/ThemeToggle";
+import { setCounterToZero } from "@/services/redux/reducers/newThreadSlice";
 
 
 
@@ -54,6 +55,7 @@ const MiniSlideBar : React.FC = () => {
                     dispatch(addResource("web"))
                     dispatch(removeAllFiles())
                     dispatch(removeAllUrls())
+                    dispatch(setCounterToZero(0))
                     setResponse({})
                     router.push("/")
                 }}>

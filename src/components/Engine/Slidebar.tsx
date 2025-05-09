@@ -11,6 +11,7 @@ import useWebSocket from '@/hooks/useWebSocket';
 import Cookies from 'js-cookie';
 import { logOut } from '@/actions/logOut';
 import { checkHistory } from '@/services/redux/reducers/newThreadSlice';
+import { setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -28,7 +29,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
   const user = useAppSelector(state => state.userSlice)
-
 
   const logout = async () => {
     await logOut()
@@ -72,6 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   dispatch(removeAllFiles())
                   dispatch(removeAllUrls())
                   dispatch(addResource("web"))
+                  dispatch(setCounterToZero(0))
                   // socket.removeAllListeners();
                   router.push("/")
                   onClose()
@@ -112,10 +113,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     if(window.location.href.split("/c/")[1] === item?.code){
                       console.log("current")
                     }else{
+                      setResponse({})
                       router.push(`/c/${item?.code}`)
                       dispatch(checkHistory(true))
                       dispatch(removeRecency())
-                      setResponse({})
+                      dispatch(setCounterToZero(item?.conversation?.[item?.conversation?.length - 1]?.id + 1))
                       onClose()
                     }
                   }}>

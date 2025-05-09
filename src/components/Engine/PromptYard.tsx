@@ -13,7 +13,7 @@ import UrlInput from '../Engine/UrlInput';
 import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
-import { checkHistory, makeItFalse } from '@/services/redux/reducers/newThreadSlice';
+import { checkHistory, increaseCounter, makeItFalse , setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
 import { addResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 
@@ -35,19 +35,25 @@ const PropmptYard = () => {
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
     const user = useAppSelector(state => state?.userSlice)
     const historyChecker = useAppSelector(state => state?.newThreadSlice.history)
-  
+    const counter = useAppSelector(state => state.newThreadSlice.counter)
+
+    // console.log(counter)
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const sendMessage = (prompt: string) => {
+
+      dispatch(increaseCounter())
+
       if(localStorage.getItem("sessionId") === "session_exist" || localStorage.getItem("sessionId") === undefined){
         localStorage.removeItem("sessionId")
+        
       }
       dispatch(makeItFalse())
       if(selectedResources === "url" && urlInputs.urlInputs.includes("")){
         return false
       }
-      localStorage.setItem('prompt', prompt);
+      localStorage.setItem('counter' , `${counter}`);
       dispatch(removeRecency())
       if (selectedResources == 'url' && urlInputs.urlInputs.filter(e => e.length > 0).length == 0) {
         return;
@@ -85,7 +91,8 @@ const PropmptYard = () => {
       }
       setResponse((prev : any) => {
         const cp: any = { ...prev };
-        cp[prompt] = {
+        cp[counter] = {
+          question : prompt,
           text: '',
           isLoading: true,
           isDone : false,
@@ -122,11 +129,11 @@ const PropmptYard = () => {
         setResponse((prev : any) => {
           const cp = { ...prev };
   
-          cp[localStorage.getItem('prompt') as string].text += data.message;
+          cp[localStorage.getItem('counter') as string].text += data.message;
   
           // Fact Check
           if(data.message.claim_1){
-            cp[localStorage.getItem('prompt') as string].data = data;
+            cp[localStorage.getItem('counter') as string].data = data;
           }
   
           return cp;
@@ -138,8 +145,8 @@ const PropmptYard = () => {
         setResponse((prev: any) => {
           const cp = { ...prev };
   
-          if(cp[localStorage.getItem("prompt") as string]?.images){
-            cp[localStorage.getItem('prompt') as string].images = data.images;
+          if(cp[counter]?.images){
+            cp[counter].images = data.images;
           }
   
           return cp;
@@ -154,7 +161,7 @@ const PropmptYard = () => {
         setResponse((prev : any) => {
           const cp = { ...prev };
   
-          cp[localStorage.getItem('prompt') as string].sources = Object.values(data);
+          cp[localStorage.getItem('counter') as string].sources = Object.values(data);
           return cp;
         });
       });
@@ -162,7 +169,7 @@ const PropmptYard = () => {
         setResponse((prev : any) => {
           const cp = { ...prev };
   
-          cp[localStorage.getItem('prompt') as string].relatedQuestions = data.data?.followUp;
+          cp[localStorage.getItem('counter') as string].relatedQuestions = data.data?.followUp;
   
           return cp;
         });
@@ -172,7 +179,7 @@ const PropmptYard = () => {
         setResponse((prev : any) => {
           const cp = {...prev}
   
-          cp[localStorage.getItem("prompt") as string].videos = data.data
+          cp[counter].videos = data.data
           
           return cp
         })
@@ -183,9 +190,10 @@ const PropmptYard = () => {
       }) => {
         if (data.message == 'done#') {
           // Update the state with the final response
+          // console.log()
           setResponse((prev : any) => {
             const cp: any = { ...prev };
-            const prom = localStorage.getItem('prompt') || prompt;
+            const prom = localStorage.getItem('counter') || prompt;
             if (prom) {
               if (!cp[prom]) {
                 cp[prom] = {};
@@ -215,8 +223,8 @@ const PropmptYard = () => {
         findoraMessageRef.current += data.message
         setResponse((prev : any) => {
           const cp = {...prev}
-          cp[localStorage.getItem("prompt") as string].findoraMessage = findoraMessageRef.current
-          cp[localStorage.getItem("prompt") as string].isLoading = false
+          cp[counter].findoraMessage = findoraMessageRef.current
+          cp[counter].isLoading = false
           return cp
         })
       }
@@ -239,7 +247,7 @@ const PropmptYard = () => {
 
         setResponse((prev: any) => {
           const cp: any = { ...prev };
-          const prom = localStorage.getItem('prompt') || prompt;
+          const prom = localStorage.getItem('counter') || prompt;
           if (prom) {
             if (!cp[prom]) {
               cp[prom] = {};
@@ -284,11 +292,13 @@ const PropmptYard = () => {
         if(url.pathname.includes("/c/")){
           history?.find((item : any) => {
             if(item?.code === window.location.href.split("/c/")[1]){
+              dispatch(setCounterToZero(item?.conversation?.[item?.conversation?.length - 1]?.id + 1))
               item?.conversation?.map((d : any) => {
                 setResponse((prev : any) => {
                   const cp: any = { ...prev };
-                  cp[d?.question] = {
+                  cp[d?.id] = {
                     text: d?.answer,
+                    question : d?.question,
                     isLoading: false,
                     isDone : true,
                     images: d?.images,
@@ -298,7 +308,7 @@ const PropmptYard = () => {
                     relatedQuestions: [],
                     sources : Object?.values(d?.citations)
                   };
-            
+                  console.log(d?.id)
                   return cp;
                 });
                 dispatch(addResource(d?.module ? d?.module : "web"))
@@ -376,7 +386,7 @@ const PropmptYard = () => {
                 findoraMessage={value.findoraMessage}
                 isDone={value.isDone}
                 videos={value.videos}
-                query={key}
+                query={value?.question}
                 data={value.data ? value?.data : false}
                 response={value.text}
                 sources={value.sources}
