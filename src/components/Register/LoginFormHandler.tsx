@@ -10,7 +10,6 @@ import Cookies from "js-cookie";
 import { signUp } from "@/actions/signUp";
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from "react";
-import { googleBackHandler } from "@/actions/googleBackHandler";
 
 const LoginFormHandler: React.FC = () => {
 

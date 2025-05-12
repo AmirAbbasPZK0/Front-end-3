@@ -9,11 +9,15 @@ import { useAppDispatch } from "@/services/redux/store"
 import { historyHandler, loginHandler } from "@/services/redux/reducers/userSlice"
 import Loading from "./Loading"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const MAX_HISTORY_ITEMS = 50
 
 const Layout = ({ children }: { children: ReactNode }) => {
+
   const [isLoading, setIsLoading] = useState(true)
+
+  const router = useRouter()
 
   const {data} = useSession()
 
@@ -71,10 +75,11 @@ const Layout = ({ children }: { children: ReactNode }) => {
   }, [dispatch])
 
   useEffect(() => {
-    console.log(data)
+    console.log(data )
     if(data?.user?.email !== undefined){
       fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/google/auth` , {
         method : "POST",
+        mode : "cors",
         headers : {
           "Content-Type" : "application/json"
         },
@@ -85,6 +90,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         }
       }).then(data => {
         Cookies.set("access_token" , data?.data?.jwt , {expires : 1})
+        router.push("/")
       })
     }
   }, [data?.user?.email])
