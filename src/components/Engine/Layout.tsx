@@ -71,6 +71,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   }, [dispatch])
 
   useEffect(() => {
+    console.log(data)
     if(data?.user?.email !== undefined){
       fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/google/auth` , {
         method : "POST",
