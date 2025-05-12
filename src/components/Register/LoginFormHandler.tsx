@@ -22,10 +22,8 @@ const LoginFormHandler: React.FC = () => {
 
   const router = useRouter()
 
-  const login = async () => {
-    // setPending(true)
-    await signUp()
-    await googleBackHandler()
+  const login = () => {
+    signUp()
   }
 
   const dispatch = useAppDispatch()

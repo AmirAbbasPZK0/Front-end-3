@@ -8,11 +8,14 @@ import endpoints from "@/configs/endpoints"
 import { useAppDispatch } from "@/services/redux/store"
 import { historyHandler, loginHandler } from "@/services/redux/reducers/userSlice"
 import Loading from "./Loading"
+import { useSession } from "next-auth/react"
 
 const MAX_HISTORY_ITEMS = 50
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true)
+
+  const {data} = useSession()
 
   const dispatch = useAppDispatch()
 
@@ -66,6 +69,24 @@ const Layout = ({ children }: { children: ReactNode }) => {
       console.error("History fetch failed", err)
     }
   }, [dispatch])
+
+  useEffect(() => {
+    if(data?.user?.email !== undefined){
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/google/auth` , {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({email : data?.user?.email})
+      }).then(res => {
+        if(res.ok){
+          return res.json()
+        }
+      }).then(data => {
+        Cookies.set("access_token" , data?.data?.jwt , {expires : 1})
+      })
+    }
+  }, [data?.user?.email])
 
   useEffect(() => {
     fetchUserData()
