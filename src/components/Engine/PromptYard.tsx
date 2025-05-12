@@ -1,7 +1,7 @@
 "use client"
 import ResponseDisplay from '@/components/Engine/ResponseDisplay';
 import useWebSocket from '@/hooks/useWebSocket';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { useAppSelector , useAppDispatch } from '@/services/redux/store';
 import { addRecency, removeRecency } from '@/services/redux/reducers/resourceSlice';
@@ -19,52 +19,50 @@ import SkeletonLoading from './SkeletonLoading';
 
 const PropmptYard = () => {
 
-    const [prompt , setPrompt] = useState("")
-    const selectedDepth = false
-    const selectedAnswerStyle = ""
-    // const [code , setCode] = useState("")
+    const [prompt , setPrompt] = useState("");
     const [newResponse, setNewResponse] = useState('');
-    const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource)
-    const isNew = useAppSelector(state => state.resourceSlice.isNew)
-    const uploadedFiles = useAppSelector(state => state.fileUploadsSlice)
-    const urlInputs = useAppSelector(state => state.urlInputSlice)
-    const dispatch = useAppDispatch()
-    const { socket, response, setResponse, responseRef , findoraMessageRef} = useWebSocket();
-    const router = useRouter()
-    const [isAttachOpen , setIsAttachOpen] = useState(false)
-    const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
-    const user = useAppSelector(state => state?.userSlice)
-    const historyChecker = useAppSelector(state => state?.newThreadSlice.history)
-    const counter = useAppSelector(state => state.newThreadSlice.counter)
+    const [isAttachOpen , setIsAttachOpen] = useState(false);
+    const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null);
 
-    // console.log(counter)
+    // Redux selectors (no shallowEqual)
+    const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource);
+    const isNew = useAppSelector(state => state.resourceSlice.isNew);
+    const uploadedFiles = useAppSelector(state => state.fileUploadsSlice);
+    const urlInputs = useAppSelector(state => state.urlInputSlice);
+    const user = useAppSelector(state => state?.userSlice);
+    const historyChecker = useAppSelector(state => state?.newThreadSlice.history);
+    const counter = useAppSelector(state => state.newThreadSlice.counter);
+
+    const dispatch = useAppDispatch();
+    const { socket, response, setResponse, responseRef , findoraMessageRef} = useWebSocket();
+    const router = useRouter();
+
+    const selectedDepth = false;
+    const selectedAnswerStyle = "";
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
 
     const sendMessage = (prompt: string) => {
-
-      dispatch(increaseCounter())
+      dispatch(increaseCounter());
       localStorage.setItem('counter' , `${counter}`);
 
       if(localStorage.getItem("sessionId") === "session_exist" || localStorage.getItem("sessionId") === undefined){
-        localStorage.removeItem("sessionId")
-        
+        localStorage.removeItem("sessionId");
       }
-      dispatch(makeItFalse())
+      dispatch(makeItFalse());
       if(selectedResources === "url" && urlInputs.urlInputs.includes("")){
-        return false
+        return false;
       }
-      dispatch(removeRecency())
-      if (selectedResources == 'url' && urlInputs.urlInputs.filter(e => e.length > 0).length == 0) {
+      dispatch(removeRecency());
+      if (selectedResources === 'url' && urlInputs.urlInputs.filter(e => e.length > 0).length === 0) {
         return;
       }
-      findoraMessageRef.current = ""
+      findoraMessageRef.current = "";
       const url = new URL(window.location.href);
       const codde = url.pathname.split('/c/')[1];
       responseRef.current = ''; // Reset the ref for the next response
       if(uploadedFiles.uploadedFilesUrl.length > 0){
         socket?.emit('send_message', {
-          // code: code,
           query: prompt,
           source: "file",
           answerType: selectedAnswerStyle,
@@ -75,9 +73,8 @@ const PropmptYard = () => {
           email : user?.data?.email,
           code: codde
         });
-      }else{
+      } else {
         socket?.emit('send_message', {
-          // code: code,
           query: prompt,
           source: selectedResources,
           answerType: selectedAnswerStyle,
@@ -102,65 +99,51 @@ const PropmptYard = () => {
           findoraMessage : "",
           relatedQuestions: []
         };
-  
         return cp;
       });
-  
       setPrompt('');
-
     };
 
     useEffect(() => {
       if (!socket) return;
-  
-      socket?.on('receive_start', (data: {
-        code: string
-      }) => {
+
+      socket?.on('receive_start', (data: { code: string }) => {
         if(!window.location.href.includes(data.code)){
           router.push('/c/' + data.code);
-          
-          // setCode(data.code);
         }
       });
-  
+
       const onReceiveMessage = (data : any) => {
         responseRef.current += data.message;
         setNewResponse(prev => prev + data.message);
         setResponse((prev : any) => {
           const cp = { ...prev };
-  
           cp[localStorage.getItem('counter') as string].text += data.message;
-  
-          // Fact Check
           if(data.message.claim_1){
             cp[localStorage.getItem('counter') as string].data = data;
           }
-  
           return cp;
         });
       };
-      
+
       socket?.on('receive_message', onReceiveMessage);
       socket?.on('receive_images', (data: { images: any; }) => {
         setResponse((prev: any) => {
           const cp = { ...prev };
-  
           if(cp[localStorage.getItem("counter") as string]?.images){
             cp[localStorage.getItem("counter") as string].images = data.images;
           }
-  
           return cp;
         });
       });
 
       socket?.on('new_session', (data : any) => {
-        localStorage.setItem("sessionId" , data.id)
+        localStorage.setItem("sessionId" , data.id);
       });
 
       socket?.on('receive_citation', (data : any) => {
         setResponse((prev : any) => {
           const cp = { ...prev };
-  
           cp[localStorage.getItem('counter') as string].sources = Object.values(data);
           return cp;
         });
@@ -168,29 +151,21 @@ const PropmptYard = () => {
       socket?.on('receive_relevant', (data : any) => {
         setResponse((prev : any) => {
           const cp = { ...prev };
-  
           cp[localStorage.getItem('counter') as string].relatedQuestions = data.data?.followUp;
-  
           return cp;
         });
       });
-  
+
       socket?.on("suggested videos" , (data : any) => {
         setResponse((prev : any) => {
-          const cp = {...prev}
-  
-          cp[localStorage.getItem("counter") as string].videos = data.data
-          
-          return cp
-        })
-      })
-  
-      socket?.on('response_done', (data: {
-        message: string
-      }) => {
-        if (data.message == 'done#') {
-          // Update the state with the final response
-          // console.log()
+          const cp = {...prev};
+          cp[localStorage.getItem("counter") as string].videos = data.data;
+          return cp;
+        });
+      });
+
+      socket?.on('response_done', (data: { message: string }) => {
+        if (data.message === 'done#') {
           setResponse((prev : any) => {
             const cp: any = { ...prev };
             const prom = localStorage.getItem('counter') || prompt;
@@ -199,20 +174,17 @@ const PropmptYard = () => {
                 cp[prom] = {};
               }
               cp[prom].isLoading = false;
-              cp[prom].isDone = true
-              // cp[prom].images = null
-              cp[prom].data = null
+              cp[prom].isDone = true;
+              cp[prom].data = null;
               cp[prom].text = responseRef.current;
-              cp[prom].findoraMessage = findoraMessageRef.current
+              cp[prom].findoraMessage = findoraMessageRef.current;
             }
             return cp;
           });
-        }
-  
-        if (data.message == 'done#') {
           setNewResponse('');
         }
       });
+
       return () => {
         socket.off('receive_message', onReceiveMessage);
       };
@@ -220,31 +192,28 @@ const PropmptYard = () => {
 
     useEffect(()=>{
       const onReceiveFindoraMessage = (data : any)=>{
-        findoraMessageRef.current += data.message
+        findoraMessageRef.current += data.message;
         setResponse((prev : any) => {
-          const cp = {...prev}
-          cp[localStorage.getItem("counter") as string].findoraMessage = findoraMessageRef.current
-          cp[localStorage.getItem("counter") as string].isLoading = false
-          return cp
-        })
-      }
-  
-      socket?.on("findora_message" , onReceiveFindoraMessage)
+          const cp = {...prev};
+          cp[localStorage.getItem("counter") as string].findoraMessage = findoraMessageRef.current;
+          cp[localStorage.getItem("counter") as string].isLoading = false;
+          return cp;
+        });
+      };
+      socket?.on("findora_message" , onReceiveFindoraMessage);
+      return () => socket?.off("findora_message" , onReceiveFindoraMessage);
+    },[socket]);
 
-      return () => socket?.off("findora_message" , onReceiveFindoraMessage)
-    },[socket])
-  
     useEffect(()=>{
       if(window.location.href.includes("/c")){
-        dispatch(removeRecency())
+        dispatch(removeRecency());
       }else{
-        dispatch(addRecency())
+        dispatch(addRecency());
       }
-    },[])
+    },[]);
 
     useEffect(() => {
       if (newResponse.length > 0) {
-
         setResponse((prev: any) => {
           const cp: any = { ...prev };
           const prom = localStorage.getItem('counter') || prompt;
@@ -256,21 +225,18 @@ const PropmptYard = () => {
           }
           return cp;
         });
-
       }
     }, [newResponse]);
-  
+
     useEffect(() => {
       const handleKeyDown = (event: { key: string; }) => {
         if (event.key === "Enter") {
           if(checkIsEmpty(prompt)){
-            sendMessage(prompt)
+            sendMessage(prompt);
           }
         }
       };
-  
       window.addEventListener("keydown", handleKeyDown);
-  
       return () => {
         window.removeEventListener("keydown", handleKeyDown);
       };
@@ -283,48 +249,45 @@ const PropmptYard = () => {
       }
     }, [prompt]);
 
+    // Batched history restoration for performance
     useEffect(()=>{
-        const url = new URL(window.location.href);
-        let history
-        if(localStorage.getItem("history") !== null || localStorage.getItem("history") !== undefined){
-          history = JSON.parse(localStorage.getItem("history") as any)
+      const url = new URL(window.location.href);
+      let history;
+      if(localStorage.getItem("history") !== null && localStorage.getItem("history") !== undefined){
+        history = JSON.parse(localStorage.getItem("history") as any);
+      }
+      if(url.pathname.includes("/c/")){
+        const found = history?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
+        if (found) {
+          dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
+          localStorage.setItem('counter' , `${counter}`);
+          // Batch restore
+          const newResponses: any = {};
+          found?.conversation?.forEach((d : any) => {
+            newResponses[d?.id] = {
+              text: d?.answer,
+              question : d?.question,
+              isLoading: false,
+              isDone : true,
+              images: d?.images,
+              data: Object.values(d?.fact_check_data)?.length > 0 ? {message : d?.fact_check_data} : null,
+              videos : d?.videos,
+              findoraMessage : d?.findora_message,
+              relatedQuestions: [],
+              sources : Object?.values(d?.citations)
+            };
+            dispatch(addResource(d?.module ? d?.module : "web"));
+          });
+          setResponse((prev: any) => ({ ...prev, ...newResponses }));
         }
-        if(url.pathname.includes("/c/")){
-          history?.find((item : any) => {
-            if(item?.code === window.location.href.split("/c/")[1]){
-              dispatch(setCounterToZero(item?.conversation?.[item?.conversation?.length - 1]?.id + 1))
-              localStorage.setItem('counter' , `${counter}`);
-              item?.conversation?.map((d : any) => {
-                setResponse((prev : any) => {
-                  const cp: any = { ...prev };
-                  cp[d?.id] = {
-                    text: d?.answer,
-                    question : d?.question,
-                    isLoading: false,
-                    isDone : true,
-                    images: d?.images,
-                    data: Object.values(d?.fact_check_data)?.length > 0 ? {message : d?.fact_check_data} : null,
-                    videos : d?.videos,
-                    findoraMessage : d?.findora_message,
-                    relatedQuestions: [],
-                    sources : Object?.values(d?.citations)
-                  };
-                  console.log(d?.id)
-                  return cp;
-                });
-                dispatch(addResource(d?.module ? d?.module : "web"))
-              })
-              return item
-            }
-          })
-          dispatch(checkHistory(false))
-        }
-      },[window.location.href])
-     
+        dispatch(checkHistory(false));
+      }
+    },[window.location.href]);
+
     if(historyChecker){
       return <div className='flex w-[90%] items-end justify-end h-screen '>
         <SkeletonLoading/>
-      </div>
+      </div>;
     }
 
     return (<>
@@ -333,25 +296,22 @@ const PropmptYard = () => {
             <div className="md:w-[40%] w-[90%]">
             <div className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
               <textarea ref={textareaRef} onChange={e => {
-                setPrompt(e.target.value)
-              }} placeholder='Write your text...' dir="auto" rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
+                setPrompt(e.target.value);
+              }} value={prompt} placeholder='Write your text...' dir="auto" rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
               <div className='flex flex-row items-center justify-between gap-2 w-full'>
                 <div className='flex flex-row gap-2'>
-
                   {/* Attach File Modal */}
                   <button onClick={()=>{
-                    setIsAttachOpen(true)
+                    setIsAttachOpen(true);
                   }} type='button' className='flex flex-row gap-2 text-[20px] items-center justify-center'><IoIosAttach/></button>
                   {isAttachOpen && <AttachFileModal setClose={setIsAttachOpen}/>}
-                  
                   {/* Modules */}
                   <NewDropdown/>
-                    
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
-                  <button onClick={()=> {
+                  <button onClick={()=>{
                     if(checkIsEmpty(prompt)){
-                      sendMessage(prompt)
+                      sendMessage(prompt);
                     }
                   }} className='text-[20px] p-1' type='submit'><TbSend2/></button>
                 </div>
@@ -375,10 +335,6 @@ const PropmptYard = () => {
               <UploadedFileBox key={index} data={item}/>
             ))}
             </div>
-            {/* <div className='md:w-[40%] w-[90%] rounded-2xl bg-slate-50 shadow-md dark:bg-[#202938]'>
-              <h2 className='mx-8 mt-2 font-semibold text-[25px]'>Trend News</h2>
-              <TrendNewsCarousel/>
-            </div> */}
           </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
               <ResponseDisplay
@@ -394,12 +350,12 @@ const PropmptYard = () => {
                 isLoading={value.isLoading}
                 images={value.images}
                 relatedQuestions={value.relatedQuestions}
-                responseRef={(index == Object.keys(response).length - 1 && !value.text) ? responseRef : undefined}
+                responseRef={(index === Object.keys(response).length - 1 && !value.text) ? responseRef : undefined}
                 sendMessage={sendMessage}
               />
           )}
         </div>
     </>);
-}
- 
+};
+
 export default PropmptYard;

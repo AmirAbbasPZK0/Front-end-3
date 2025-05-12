@@ -5,7 +5,7 @@ import Cookies from "js-cookie"
 import WebSocketProvider from "@/contexts/WebSocketContext"
 import restApi from "@/services/restApi"
 import endpoints from "@/configs/endpoints"
-import { useAppDispatch, useAppSelector } from "@/services/redux/store"
+import { useAppDispatch } from "@/services/redux/store"
 import { historyHandler, loginHandler } from "@/services/redux/reducers/userSlice"
 import Loading from "./Loading"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import React , {RefObject, useEffect, useRef, useState} from "react";
+import React , {RefObject, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import ReactMarkdown from 'react-markdown';
 import HyperLink from "./HyperLink";
 import { hyperTextForMarkDown } from "@/functions/hypertext";
@@ -110,83 +110,72 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 }) => {
 
 
-    const {socket} = useWebSocket()
-    const dispatch = useAppDispatch()
-    const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null>(null)
-    const [followUp , setFollowUp] = useState("")
-    const [isSubmited , setIsSubmited] = useState(false)
-    const [openSources , setOpenSources] = useState(false)
-    const uploadedFiles = useAppSelector(state => state.fileUploadsSlice.uploadedFilesUrl)
-    const CopyText = `${sources?.length > 0 ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}` : removeMarkdown(response)}`
-    const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
-    const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null)
-    const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
+    const { socket } = useWebSocket();
+  const dispatch = useAppDispatch();
+  const [hyperLinkTooltip, setHyperLinkTooltip] = useState<HyperLink | null>(null);
+  const [followUp, setFollowUp] = useState("");
+  const [isSubmited, setIsSubmited] = useState(false);
+  const [openSources, setOpenSources] = useState(false);
+  const uploadedFiles = useAppSelector(state => state.fileUploadsSlice.uploadedFilesUrl);
+  const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource);
+  const textareaRef: RefObject<HTMLTextAreaElement | null> = useRef(null);
+  const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed);
 
-    function removeMarkdown(markdown : string){
-        return markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
+  const removeMarkdown = (markdown: string) =>
+    markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
+
+  const CopyText = useMemo(() => {
+    return sources?.length > 0
+      ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}`
+      : removeMarkdown(response);
+  }, [response, sources]);
+
+  useEffect(() => {
+    setHyperLinkTooltip(snippetAndTitleHandler(sources));
+  }, [sources]);
+
+  useEffect(() => {
+    document.body.style.overflow = openSources ? "hidden" : "auto";
+  }, [openSources]);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
     }
+  }, [followUp]);
 
-    useEffect(()=>{
-        setHyperLinkTooltip(snippetAndTitleHandler(sources))
-    },[sources])
+  useEffect(() => {
+    if (isDone) dispatch(makeItTrue());
+  }, [isDone]);
 
-    useEffect(() => {
-        if(openSources){
-            document.body.style.overflow = "hidden";
-        }else{
-            document.body.style.overflow = "auto";
-        }
-    }, [openSources]);
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (!isSubmited && event.key === "Enter" && checkIsEmpty(followUp)) {
+      sendMessage(followUp);
+      setIsSubmited(true);
+      setFollowUp("");
+    }
+  }, [isSubmited, followUp, sendMessage]);
 
-    useEffect(() => {
-        if (textareaRef.current) {
-          textareaRef.current.style.height = 'auto';
-          textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
-        }
-    }, [followUp]);
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
 
-    useEffect(()=>{
-        if(isDone){
-            dispatch(makeItTrue())
-        }
-    },[isDone])
-
-    useEffect(() => {
-        const handleKeyDown = (event: { key: string; }) => {
-            if(isSubmited){
-               return  
-            }else{
-                if(event.key === "Enter") {
-                    if(checkIsEmpty(followUp)){
-                        sendMessage(followUp)
-                        setIsSubmited(true)
-                        setFollowUp("")
-                    }
-                }
-            }
-        };
-    
-        window.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-          window.removeEventListener("keydown", handleKeyDown);
-        };
-
-      }, [followUp]);
-
-    if(isLoading){
-        return <div className="h-[70vh] pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
-            <div className="dark:bg-[#202938] flex flex-row justify-start items-start text-start shadow-md bg-white rounded-b-3xl rounded-tl-3xl p-2">
-                <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
-            </div>
-            <Loading/>
+  if (isLoading) {
+    return (
+      <div className="h-[70vh] pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
+        <div className="dark:bg-[#202938] flex flex-row justify-start items-start text-start shadow-md bg-white rounded-b-3xl rounded-tl-3xl p-2">
+          <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
         </div>
-    }
+        <Loading />
+      </div>
+    );
+  }
 
-    if(data){
-        return <FactCheckDisplay sendMessage={sendMessage} data={data?.message} sources={sources} query={query}/>
+    if (data) {
+        return <FactCheckDisplay sendMessage={sendMessage} data={data?.message} sources={sources} query={query} />
     }
-    
 
     return(<>
         <div className={`p-4 ${openSources && "overflow-hidden"} pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
@@ -343,4 +332,4 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     </>)
 }
 
-export default ResponseDisplay
+export default React.memo(ResponseDisplay);
