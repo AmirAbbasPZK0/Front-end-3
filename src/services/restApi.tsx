@@ -22,6 +22,7 @@ const apiRequest = async (url: string, useToken = false, useSessionId = false, m
     return await fetch(url, {
       method: method,
       headers: headers,
+      mode : "cors"
     })
     .then(async (response: any) => {
       return await response.blob();
@@ -34,6 +35,7 @@ const apiRequest = async (url: string, useToken = false, useSessionId = false, m
   return await fetch(url, {
     method: method,
     headers: headers,
+    mode : "cors",
     body: (body !== '{}') ? body : undefined
   })
   .then(async (response: any) => {

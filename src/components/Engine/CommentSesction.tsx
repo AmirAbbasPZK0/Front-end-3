@@ -3,12 +3,10 @@
 import { useState } from "react";
 import { BiDislike , BiSolidLike , BiLike , BiSolidDislike } from "react-icons/bi";
 import { AnimatePresence , motion } from "framer-motion"
-import { IoAttachOutline } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
 import { useEdgeStore } from '@/lib/edgestore';
 import toast from "react-hot-toast";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
-import { addUrl } from "@/services/redux/reducers/commentFileUploaderSlice";
 import endpoints from "@/configs/endpoints";
 import restApi from "@/services/restApi";
 
