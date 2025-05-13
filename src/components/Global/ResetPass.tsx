@@ -44,7 +44,7 @@ export default function ResetPass() {
           <p>After changing the password this code will be expired</p>
         </div>
         <form onSubmit={onSubmit} className="flex flex-col gap-2 ">
-          <input placeholder="New Password" type="password" className="rounded-md outline-none border-2 p-2"/>
+          <input name="password" placeholder="New Password" type="password" className="rounded-md outline-none border-2 p-2"/>
           <button type="submit" className="p-2 rounded-md bg-blue-600 transition hover:bg-blue-950 text-white">Submit</button>
         </form>
       </div>
