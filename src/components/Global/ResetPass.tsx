@@ -13,7 +13,7 @@ export default function ResetPass() {
   const onSubmit = (e : ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     let data = {
-      new_password : e.target.email.value,
+      new_password : e.target.email.password,
       token
     }
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/reset-password/confirm/` , {
@@ -44,7 +44,7 @@ export default function ResetPass() {
           <p>After changing the password this code will be expired</p>
         </div>
         <form onSubmit={onSubmit} className="flex flex-col gap-2 ">
-          <input placeholder="Enter Your Email" type="password" className="rounded-md outline-none border-2 p-2"/>
+          <input placeholder="New Password" type="password" className="rounded-md outline-none border-2 p-2"/>
           <button type="submit" className="p-2 rounded-md bg-blue-600 transition hover:bg-blue-950 text-white">Submit</button>
         </form>
       </div>
