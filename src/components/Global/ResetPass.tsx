@@ -13,7 +13,7 @@ export default function ResetPass() {
   const onSubmit = (e : ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     let data = {
-      new_password : e.target.email.password,
+      new_password : e.target.password?.value,
       token
     }
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/reset-password/confirm/` , {
