@@ -17,7 +17,6 @@ const LoginFormHandler: React.FC = () => {
   const [pending , setPending] = useState(false)
   const [loading , setLoading] = useState(false)
   const [error , setError] = useState("")
-  // console.log(data)
 
   const router = useRouter()
 
@@ -89,7 +88,7 @@ const LoginFormHandler: React.FC = () => {
 
   return (
     <div className="px-4 md:px-8 py-10 md:py-9 flex justify-center items-center">
-      <div className="flex flex-col gap-10 relative z-10">
+      <div className="flex flex-col gap-2 relative z-10">
         <div className="text-center space-y-4">
           <h6 className="text-4xl font-bold">Login</h6>
         <p className="text-lg md:w-[600px]">
@@ -119,10 +118,10 @@ const LoginFormHandler: React.FC = () => {
                 className="outline-none border-2 border-[#d7d7d9] dark:bg-[#111828] rounded-lg focus:border-[#6803f5] py-1 px-2"
                 required
               />
-            </div>
-            <div className="flex flex-row w-full justify-between">
-              <span>Forget Password?</span>
-              <Link className="text-blue-500" href={"/reset-password"}>Reset Password</Link>
+              <div className="flex flex-row w-full justify-between">
+                <span>Forget Password?</span>
+                <Link className="text-blue-500" href={"/reset-password"}>Reset Password</Link>
+              </div>
             </div>
             <div className="text-center flex items-center justify-center">
               <h2>Or</h2>

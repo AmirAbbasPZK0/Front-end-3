@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import { logOut } from '@/actions/logOut';
 import { checkHistory } from '@/services/redux/reducers/newThreadSlice';
 import { setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
+import { signOut } from 'next-auth/react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -147,7 +148,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         <ProfileAvatar name={`${user?.data?.first_name} ${user?.data?.last_name}`}/>
                         <h1 className='text-[14px] font-semibold'>{user?.data?.email}</h1>
                       </div>
-                      <button onClick={()=>{
+                      <button onClick={ async()=>{
+                        await signOut()
                         Cookies.set("access_token" , "" , {expires : 0})
                         logout()
                         window.location.reload()

@@ -5,7 +5,7 @@ import Cookies from "js-cookie"
 import WebSocketProvider from "@/contexts/WebSocketContext"
 import restApi from "@/services/restApi"
 import endpoints from "@/configs/endpoints"
-import { useAppDispatch } from "@/services/redux/store"
+import { useAppDispatch, useAppSelector } from "@/services/redux/store"
 import { historyHandler, loginHandler } from "@/services/redux/reducers/userSlice"
 import Loading from "./Loading"
 import { useSession } from "next-auth/react"
@@ -16,6 +16,8 @@ const MAX_HISTORY_ITEMS = 50
 const Layout = ({ children }: { children: ReactNode }) => {
 
   const [isLoading, setIsLoading] = useState(true)
+
+  const isLogin = useAppSelector(state => state.userSlice.isLogin)
 
   const router = useRouter()
 
@@ -75,7 +77,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   }, [dispatch])
 
   useEffect(() => {
-    console.log(data )
+    setIsLoading(true)
     if(data?.user?.email !== undefined){
       fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/google/auth` , {
         method : "POST",
@@ -91,17 +93,18 @@ const Layout = ({ children }: { children: ReactNode }) => {
       }).then(data => {
         Cookies.set("access_token" , data?.data?.jwt , {expires : 1})
         router.push("/")
+        setIsLoading(false)
       })
     }
   }, [data?.user?.email])
 
   useEffect(() => {
     fetchUserData()
-  }, [fetchUserData])
+  }, [fetchUserData , Cookies.get("access_token")])
 
   useEffect(() => {
     fetchUserHistory()
-  }, [fetchUserHistory])
+  }, [fetchUserHistory , isLoading ])
 
   if (isLoading) {
     return (
