@@ -1,6 +1,7 @@
 "use client"
 
 import { ChangeEvent, useState } from "react";
+import toast from "react-hot-toast";
 
 const ResetPassEmailSender = () => {
     
@@ -22,7 +23,9 @@ const ResetPassEmailSender = () => {
                 return res.json()
             }
         }).then(data => {
-            console.log(data)
+            toast.success(data?.msg , {
+                duration : 1200
+            })
         }).catch(err => {
             console.log(err)
         })
