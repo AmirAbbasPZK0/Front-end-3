@@ -1,5 +1,5 @@
 {
-  "proxy" : "http://185.202.113.221:5000",
+  "proxy": "http://185.202.113.221:5000",
   "name": "findora",
   "version": "0.1.0",
   "private": true,
@@ -27,6 +27,7 @@
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.4.0",
     "react-markdown": "^10.0.1",
+    "react-medium-image-zoom": "^5.2.14",
     "react-multi-carousel": "^2.8.5",
     "react-redux": "^9.2.0",
     "react-slick": "^0.30.3",

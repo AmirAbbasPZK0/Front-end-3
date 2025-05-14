@@ -10,6 +10,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'react-medium-image-zoom/dist/styles.css'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
