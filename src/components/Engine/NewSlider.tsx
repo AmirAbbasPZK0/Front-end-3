@@ -102,7 +102,7 @@ const ModalSlider = ({setClose , newImages , keyIndex} : {setClose : (val : bool
 
     useEffect(()=>{
         swiperRef.current?.slideTo(keyIndex)
-    },)
+    },[])
 
     return (<>
         <AnimatePresence>
