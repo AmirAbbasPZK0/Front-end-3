@@ -113,8 +113,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 
 
     const { socket } = useWebSocket();
-    const containerRef = useRef<HTMLDivElement>(null)
-    
     const dispatch = useAppDispatch();
     const [hyperLinkTooltip, setHyperLinkTooltip] = useState<HyperLink | null>(null);
     const [followUp, setFollowUp] = useState("");
@@ -125,6 +123,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const textareaRef: RefObject<HTMLTextAreaElement | null> = useRef(null);
     const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed);
     const chatContainerRef = useRef<HTMLDivElement>(null);
+    const [autoScroll , setAutoScrol] = useState(true)
 
     const removeMarkdown = (markdown: string) =>
     markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
@@ -167,16 +166,15 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [handleKeyDown]);
 
-    // useScrollbarClick(() => {
-    //     console.log('Clicked on scrollbar!');
-    // });
+    useScrollbarClick(() => {
+       setAutoScrol(false)
+    });
 
-    // useEffect(() => {
-    //     // Scroll to the bottom when messages change
-    //     chatContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
-    // }, [response]);
-    
-
+    useEffect(() => {
+        if(autoScroll){
+            chatContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [response]);
 
     if (isLoading) {
         return (
@@ -210,7 +208,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         Search Engine Answer
                     </h2>}
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
-                    <div className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
+                    <div ref={chatContainerRef} className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
                         <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
                             code({ node, inline, className, children, ...props } : CodeComponentProps) {
                                 const match = /language-(\w+)/.exec(className || '');
