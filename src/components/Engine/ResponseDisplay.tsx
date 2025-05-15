@@ -29,6 +29,8 @@ import { makeItTrue } from "@/services/redux/reducers/newThreadSlice";
 import { FaRegCircleStop } from "react-icons/fa6";
 import useWebSocket from "@/hooks/useWebSocket";
 import ModuleIcon from "./ModuleIcons";
+import PromptEditSection from "./PromptEditSection";
+import useScrollbarClick from "@/hooks/useScrollbarClick";
 
 
 interface CodeComponentProps {
@@ -111,67 +113,81 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 
 
     const { socket } = useWebSocket();
-  const dispatch = useAppDispatch();
-  const [hyperLinkTooltip, setHyperLinkTooltip] = useState<HyperLink | null>(null);
-  const [followUp, setFollowUp] = useState("");
-  const [isSubmited, setIsSubmited] = useState(false);
-  const [openSources, setOpenSources] = useState(false);
-  const uploadedFiles = useAppSelector(state => state.fileUploadsSlice.uploadedFilesUrl);
-  const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource);
-  const textareaRef: RefObject<HTMLTextAreaElement | null> = useRef(null);
-  const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed);
+    const containerRef = useRef<HTMLDivElement>(null)
+    
+    const dispatch = useAppDispatch();
+    const [hyperLinkTooltip, setHyperLinkTooltip] = useState<HyperLink | null>(null);
+    const [followUp, setFollowUp] = useState("");
+    const [isSubmited, setIsSubmited] = useState(false);
+    const [openSources, setOpenSources] = useState(false);
+    const uploadedFiles = useAppSelector(state => state.fileUploadsSlice.uploadedFilesUrl);
+    const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource);
+    const textareaRef: RefObject<HTMLTextAreaElement | null> = useRef(null);
+    const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed);
+    const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const removeMarkdown = (markdown: string) =>
+    const removeMarkdown = (markdown: string) =>
     markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
 
-  const CopyText = useMemo(() => {
-    return sources?.length > 0
-      ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}`
-      : removeMarkdown(response);
-  }, [response, sources]);
+    const CopyText = useMemo(() => {
+        return sources?.length > 0
+        ? `${removeMarkdown(response)} \n\n Sources \n\n ${sourceList(sources)}`
+        : removeMarkdown(response);
+    }, [response, sources]);
 
-  useEffect(() => {
-    setHyperLinkTooltip(snippetAndTitleHandler(sources));
-  }, [sources]);
+    useEffect(() => {
+        setHyperLinkTooltip(snippetAndTitleHandler(sources));
+    }, [sources]);
 
-  useEffect(() => {
-    document.body.style.overflow = openSources ? "hidden" : "auto";
-  }, [openSources]);
+    useEffect(() => {
+        document.body.style.overflow = openSources ? "hidden" : "auto";
+    }, [openSources]);
 
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
-    }
-  }, [followUp]);
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = "auto";
+            textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
+        }
+    }, [followUp]);
 
-  useEffect(() => {
-    if (isDone) dispatch(makeItTrue());
-  }, [isDone]);
+    useEffect(() => {
+        if (isDone) dispatch(makeItTrue());
+    }, [isDone]);
 
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    if (!isSubmited && event.key === "Enter" && checkIsEmpty(followUp)) {
-      sendMessage(followUp);
-      setIsSubmited(true);
-      setFollowUp("");
-    }
-  }, [isSubmited, followUp, sendMessage]);
+    const handleKeyDown = useCallback((event: KeyboardEvent) => {
+        if (!isSubmited && event.key === "Enter" && checkIsEmpty(followUp)) {
+            sendMessage(followUp);
+            setIsSubmited(true);
+            setFollowUp("");
+        }
+    }, [isSubmited, followUp, sendMessage]);
 
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleKeyDown]);
+    useEffect(() => {
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [handleKeyDown]);
 
-  if (isLoading) {
-    return (
-      <div className="h-[70vh] pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
-        <div className="dark:bg-[#202938] flex flex-row justify-start items-start text-start shadow-md bg-white rounded-b-3xl rounded-tl-3xl p-2">
-          <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
+    // useScrollbarClick(() => {
+    //     console.log('Clicked on scrollbar!');
+    // });
+
+    // useEffect(() => {
+    //     // Scroll to the bottom when messages change
+    //     chatContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // }, [response]);
+    
+
+
+    if (isLoading) {
+        return (
+        <div className="h-[70vh] pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
+            <div className="dark:bg-[#202938] flex flex-row justify-start items-start text-start shadow-md bg-white rounded-b-3xl rounded-tl-3xl p-2">
+            <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
+            </div>
+            <Loading />
         </div>
-        <Loading />
-      </div>
-    );
-  }
+        );
+    }
 
     if (data) {
         return <FactCheckDisplay sendMessage={sendMessage} data={data?.message} sources={sources} query={query} />
@@ -179,9 +195,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 
     return(<>
         <div className={`p-4 ${openSources && "overflow-hidden"} pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
-            <div className="dark:bg-[#202938] flex flex-row justify-end text-end shadow-md items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
-                <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
-            </div>
+            <PromptEditSection id={id} query={query}/>
             {(findoraMessage !== "" && selectedModule === "medical") && 
             <div className="flex flex-col gap-2 w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
@@ -277,8 +291,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
             </>)}
             {(relatedQuestions?.length > 0 && isDone) && (<>
                 <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
-                <h1 className="text-[20px] p-2 font-semibold">Related Questions</h1>
-                <div className="flex flex-col w-full">
+                    <h1 className="text-[20px] p-2 font-semibold">Related Questions</h1>
+                    <div className="flex flex-col w-full">
                         {Array.isArray(relatedQuestions) && relatedQuestions?.map((e, index) => (
                         <button
                         dir="auto"
