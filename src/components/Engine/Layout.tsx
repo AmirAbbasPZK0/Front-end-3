@@ -70,7 +70,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
             console.warn("localStorage write failed", e)
           }
         }, 0)
+      }else{
+        return false
       }
+
     } catch (err) {
       console.error("History fetch failed", err)
     }
@@ -104,7 +107,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     fetchUserHistory()
-  }, [fetchUserHistory , isLoading ])
+  }, [fetchUserHistory , isLoading , isLogin])
 
   if (isLoading) {
     return (

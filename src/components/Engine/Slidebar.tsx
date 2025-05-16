@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector , useAppDispatch} from '@/services/redux/store';
-import { addRecency , addResource, removeRecency } from '@/services/redux/reducers/resourceSlice';
+import { addRecency , addResource } from '@/services/redux/reducers/resourceSlice';
 import { removeAllFiles } from '@/services/redux/reducers/fileUploadSlice';
 import { removeAllUrls } from '@/services/redux/reducers/urlInputSlice';
 import { useRouter } from 'next/navigation';
@@ -10,9 +10,9 @@ import Link from 'next/link';
 import useWebSocket from '@/hooks/useWebSocket';
 import Cookies from 'js-cookie';
 import { logOut } from '@/actions/logOut';
-import { checkHistory } from '@/services/redux/reducers/newThreadSlice';
 import { setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
 import { signOut } from 'next-auth/react';
+import HistoryButtons from './HistoryButtons';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -108,26 +108,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </>)}
           </nav>
           {(user?.isLogin && user?.data !== undefined) && <div className='flex p-3 flex-col gap-2 pt-3'>
-            <h3 className='text-[20px] font-semibold'>Recent Searches</h3>
+            <h3 className='text-[20px] p-1 font-semibold'>Recent Searches</h3>
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
               {user?.history?.map((item : any) => (
                 <div key={item?.code}>
                   {item.conversation?.length > 0 &&
-                   <button className='text-left' onClick={()=> {
-                    if(window.location.href.split("/c/")[1] === item?.code){
-                      console.log("current")
-                    }else{
-                      setResponse({})
-                      router.push(`/c/${item?.code}`)
-                      dispatch(checkHistory(true))
-                      dispatch(removeRecency())
-                      dispatch(setCounterToZero(item?.conversation?.[item?.conversation?.length - 1]?.id + 1))
-                      localStorage.setItem("counter" , `${counter}`)
-                      onClose()
-                    }
-                  }}>
-                    <p className="text-[12px]">{item?.title}</p>
-                  </button>}
+                    <HistoryButtons item={item} onClose={onClose}/>
+                  }
                 </div>
               ))}
             </nav>
