@@ -8,8 +8,8 @@ const ThemeToggle = () => {
 
   useEffect(() => {
     setDarkMode(false);
-    document.documentElement.classList.remove("dark");
-    localStorage.removeItem("theme");
+    // document.documentElement.classList.remove("dark");
+    // localStorage.removeItem("theme");
     const theme = localStorage.getItem("theme");
     if (theme === "dark") {
       setDarkMode(true);
@@ -17,6 +17,7 @@ const ThemeToggle = () => {
   }, []);
 
   useEffect(() => {
+    console.log(darkMode)
     if (darkMode) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");

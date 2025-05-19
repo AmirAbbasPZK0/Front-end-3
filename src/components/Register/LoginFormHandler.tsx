@@ -87,16 +87,13 @@ const LoginFormHandler = ({onClose} : {onClose : (value : boolean) => void}) => 
   }
 
   return (
-    <div className="px-4 md:px-8 py-10 md:py-9 flex justify-center items-center">
+    <div className=" flex justify-center items-center">
       <div className="flex flex-col gap-2 relative z-10">
         <div className="text-center space-y-4">
           <h6 className="text-4xl font-bold">Login</h6>
-        <p className="text-lg w-full">
-        Logging in allows you to save search preferences, access search history, and enjoy a more tailored browsing experience.
-        </p>
         </div>
-        <form ref={form} onSubmit={onSubmit} className="flex flex-col gap-6">
-          <div className="flex flex-col justify-between gap-6">
+        <form ref={form} onSubmit={onSubmit} className="flex w-full flex-col gap-6">
+          <div className="flex flex-col w-[320px] md:w-[400px] justify-between gap-6">
             <div className="flex flex-col w-full gap-1">
               <label className="self-start text-sm font-semibold">
                 Email
