@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppSelector , useAppDispatch} from '@/services/redux/store';
 import { addRecency , addResource } from '@/services/redux/reducers/resourceSlice';
 import { removeAllFiles } from '@/services/redux/reducers/fileUploadSlice';
@@ -13,6 +13,7 @@ import { logOut } from '@/actions/logOut';
 import { setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
 import { signOut } from 'next-auth/react';
 import HistoryButtons from './HistoryButtons';
+import AuthModal from './AuthModal';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -22,6 +23,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const {setResponse} = useWebSocket()
+
+  const [openAuthModal , setOpenAuthModal] = useState(false)
 
   const router = useRouter()
 
@@ -150,7 +153,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                       <h1 className="text-[14px] font-semibold">Guest</h1>
                     </div>
                     <div className='flex w-full flex-row items-center'>
-                      <Link onClick={()=> onClose()} href={"/login"} className="w-full items-center text-center p-2 font-semibold transition-all bg-slate-950  border-2 border-slate-950  text-white rounded-md">
+                      <Link onClick={()=> {
+                        onClose()
+                        setOpenAuthModal(true)
+                      }} href={"/"} className="w-full items-center text-center p-2 font-semibold transition-all bg-slate-950  border-2 border-slate-950  text-white rounded-md">
                         Login
                       </Link>
                     </div>
@@ -161,6 +167,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </nav>
         </div>
       </div>
+      {openAuthModal && <AuthModal setClose={setOpenAuthModal}/>}
     </>
   );
 };

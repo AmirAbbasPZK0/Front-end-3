@@ -11,7 +11,7 @@ import { signUp } from "@/actions/signUp";
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from "react";
 
-const LoginFormHandler: React.FC = () => {
+const LoginFormHandler = ({onClose} : {onClose : (value : boolean) => void}) => {
 
   const form = useRef<HTMLFormElement | null>(null);
   const [pending , setPending] = useState(false)
@@ -82,7 +82,7 @@ const LoginFormHandler: React.FC = () => {
         // },
       });
       // setLoading(false)
-      router.push("/")
+      onClose(false)
     } 
   }
 
@@ -91,7 +91,7 @@ const LoginFormHandler: React.FC = () => {
       <div className="flex flex-col gap-2 relative z-10">
         <div className="text-center space-y-4">
           <h6 className="text-4xl font-bold">Login</h6>
-        <p className="text-lg md:w-[600px]">
+        <p className="text-lg w-full">
         Logging in allows you to save search preferences, access search history, and enjoy a more tailored browsing experience.
         </p>
         </div>

@@ -39,7 +39,6 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
                 return res.json()
             }
         }).then(() => {
-            // console.log(data)
             
         })
         setRenameForm(false)
