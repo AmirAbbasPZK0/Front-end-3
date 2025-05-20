@@ -7,13 +7,13 @@ import { useRouter } from 'next/navigation';
 import { FaPlus } from 'react-icons/fa';
 import ProfileAvatar from "./ProfileAvatar"
 import Link from 'next/link';
-import useWebSocket from '@/hooks/useWebSocket';
 import Cookies from 'js-cookie';
 import { logOut } from '@/actions/logOut';
 import { setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
 import { signOut } from 'next-auth/react';
 import HistoryButtons from './HistoryButtons';
 import AuthModal from './AuthModal';
+import ProfileToolTip from './ProfileToolTip';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -21,8 +21,6 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-
-  const {setResponse} = useWebSocket()
 
   const [openAuthModal , setOpenAuthModal] = useState(false)
 
@@ -134,9 +132,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <div className='flex flex-row w-full items-center gap-2'>
                 {(user?.isLogin || user?.data !== undefined) ? (<>
                   <div className='flex w-full p-3 flex-col pb-10 gap-2'>
-                      <div className='flex flex-row gap-3 items-center justify-start'>
-                        <ProfileAvatar name={`${user?.data?.first_name} ${user?.data?.last_name}`}/>
-                        <h1 className='text-[14px] font-semibold'>{user?.data?.email}</h1>
+                      <div className='flex flex-row gap-3 items-center justify-between'>
+                        <div className='flex items-center justify-center gap-2'>
+                          <ProfileAvatar fontSize='text-[10px]' size='w-10 h-10' name={`${user?.data?.first_name} ${user?.data?.last_name}`}/>
+                          <h1 className='text-[14px] font-semibold'>{user?.data?.email}</h1>
+                        </div>
+                        {/* <button><TbDotsVertical/></button> */}
+                        <ProfileToolTip onClose={onClose}/>
                       </div>
                       <button onClick={ async()=>{
                         await signOut()

@@ -60,6 +60,7 @@ function DislikeModal({handleClose, setStatus} : {handleClose : () => void  , se
 
     const user = useAppSelector(state => state.userSlice)
     const uploadedFiles = useAppSelector(state => state.commentFileUploaderSlice.uploadedFiles)
+    const urlOfUploadedFiles = useAppSelector(state => state.commentFileUploaderSlice.fileUrls)
     const [file , setFile] = useState<File>()
     const [uploadPending , setUploadPending] = useState(false)
     const {edgestore} = useEdgeStore()
@@ -71,7 +72,8 @@ function DislikeModal({handleClose, setStatus} : {handleClose : () => void  , se
             email : user?.isLogin ? user?.data?.email : e?.target?.email?.value,
             comment : e?.target?.comment?.value,
             rating : "negative",
-            thread_code : window.location.href.split("/c/")[1]
+            thread_code : window.location.href.split("/c/")[1],
+            file_url : urlOfUploadedFiles
         }
         const restData = await restApi(endpoints.feedback , false , false).post(body)
         if(restData.code === 201){

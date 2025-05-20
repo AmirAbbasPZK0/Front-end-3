@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProfileAvatar = ({ name = "John Doe", bgColor = "bg-teal-500", size = "w-10 h-10" }) => {
+const ProfileAvatar = ({ name , size , fontSize} : {name : string , size : string , fontSize : string}) => {
   const getInitials = (fullName : string) => {
     return fullName
       .split(" ")
@@ -39,8 +39,8 @@ const ProfileAvatar = ({ name = "John Doe", bgColor = "bg-teal-500", size = "w-1
   };
 
   return (
-    <div className={`${size} rounded-full ${letterColors[name[0].toUpperCase()]} flex items-center justify-center text-white text-[15px]  shadow-inner`}>
-      {getInitials(name)}
+    <div className={`${size} ${fontSize} rounded-full ${letterColors[name[0].toUpperCase()]} flex items-center justify-center text-white text-[15px]  shadow-inner`}>
+      {getInitials(name ?? "")}
     </div>
   );
 };
