@@ -1,15 +1,15 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiDislike , BiSolidLike , BiLike , BiSolidDislike } from "react-icons/bi";
 import { AnimatePresence , motion } from "framer-motion"
-import { useDropzone } from "react-dropzone";
 import { useEdgeStore } from '@/lib/edgestore';
 import toast from "react-hot-toast";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
 import endpoints from "@/configs/endpoints";
 import restApi from "@/services/restApi";
-
+import { addUrl , removeFile } from "@/services/redux/reducers/commentFileUploaderSlice";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const CommentSection = ({message_id} : {message_id : number}) => {
 
@@ -52,20 +52,18 @@ const CommentSection = ({message_id} : {message_id : number}) => {
                 {status == "Dislike" ? <BiSolidDislike/> : <BiDislike/>}
             </button>
         </div>
-        {open && <DislikeModal setStatus={setStatus} message_id={message_id} handleClose={handleClose}/>}
+        {open && <DislikeModal setStatus={setStatus} handleClose={handleClose}/>}
     </>);
 }
 
-function DislikeModal({handleClose , message_id , setStatus} : {handleClose : () => void , message_id : number , setStatus : (e : any) => void}){
+function DislikeModal({handleClose, setStatus} : {handleClose : () => void  , setStatus : (e : any) => void}){
 
-    const [files, setFiles] = useState<File[]>([]);
-    const [uploadedFiles , setUploadedFiles] = useState<File[]>([])
-    const [uploadStatus, setUploadStatus] = useState(false);
-    const {getInputProps, open} = useDropzone({noClick : true})
+    const user = useAppSelector(state => state.userSlice)
+    const uploadedFiles = useAppSelector(state => state.commentFileUploaderSlice.uploadedFiles)
+    const [file , setFile] = useState<File>()
+    const [uploadPending , setUploadPending] = useState(false)
     const {edgestore} = useEdgeStore()
     const dispatch = useAppDispatch()
-    const filesD = useAppSelector(state => state.commentFileUploaderSlice.uploadedFile)
-    const user = useAppSelector(state => state.userSlice)
 
     const onSubmit = async (e : any) => {
         e.preventDefault()
@@ -85,6 +83,21 @@ function DislikeModal({handleClose , message_id , setStatus} : {handleClose : ()
         }
     }
 
+    const uploadHandler = async () => {
+        setUploadPending(true)
+        if(file){
+            const res = await edgestore.myFiles.upload({file})
+            dispatch(addUrl({name : file.name , url : res.url}))
+            console.log(uploadedFiles)
+            setUploadPending(false)
+        }
+    } 
+
+    useEffect(()=>{
+        if(file){
+            uploadHandler()
+        }
+    },[file])
 
     return(<>
         <AnimatePresence>
@@ -110,11 +123,19 @@ function DislikeModal({handleClose , message_id , setStatus} : {handleClose : ()
                     <h1 className="text-[16px]">We would like to know about your opinion</h1>
                     {!user.isLogin && <input name="email" type="email" className="p-2 rounded-md border-2 border-slate-500 bg-transparent dark:border-slate-100" placeholder="Email"/>}
                     <textarea name="comment" className="p-2 rounded-md border-2 h-40 outline-none border-slate-500 bg-transparent dark:border-slate-100"></textarea>
-                    {/* <input {...getInputProps()} /> */}
-                    {/* {filesD?.map((item , index) => (
-                        <div key={index}>{item.name}</div>
-                    ))} */}
-                    {/* <button onClick={open} type="button" className="flex flex-row gap-1 items-center justify-start border-1 dark:border-slate-100 border-slate-900 p-2 rounded-md"><IoAttachOutline/><span>Attach File</span></button> */}
+                    
+                    <div className="w-full items-center">
+                        <input onChange={e => setFile(e.target.files?.[0])} id="picture" type="file" className="flex h-10 w-full rounded-md border border-input dark:bg-slate-900 bg-white px-3 py-2 text-sm dark:text-slate-50 text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"/>
+                    </div>
+                    <div className="flex flex-col items-start text-start gap-3">
+                        {uploadPending && <div>Pending...</div>}
+                        {uploadedFiles?.map((item , key) => (
+                            <div className="flex flex-row justify-between p-2 rounded-md border-2 w-full" key={key}>
+                                {item.name.slice(0,10) + "..." + item.name.split(".")[item.name.split(".").length - 1]}
+                                <button onClick={()=> dispatch(removeFile({name : item.name , url : item.url}))}><FaRegTrashCan/></button>
+                            </div>
+                        ))}
+                    </div>
                     <button className="p-2 rounded-md bg-blue-600 text-white" type="submit">Submit</button>
                 </motion.form>
             </div>

@@ -6,12 +6,12 @@ interface FileType {
 }
 
 interface CommentFileUploaderSlice {
-    uploadedFile : FileType[]
+    uploadedFiles : FileType[]
     fileUrls : string[]
 }
 
 const initialState : CommentFileUploaderSlice = {
-    uploadedFile : [],
+    uploadedFiles : [],
     fileUrls : []
 }
 
@@ -20,15 +20,15 @@ const commentFileUploaderSlice = createSlice({
     initialState,
     reducers : {
         addUrl : (state : CommentFileUploaderSlice , action : PayloadAction<FileType>) => {
-            state.uploadedFile = [...state.uploadedFile , {name : action.payload.name , url : action.payload.url}]
+            state.uploadedFiles = [...state.uploadedFiles , {name : action.payload.name , url : action.payload.url}]
             state.fileUrls = [...state.fileUrls , action.payload.url]
         },
         removeFile : (state : CommentFileUploaderSlice , action : PayloadAction<FileType>) => {
-            state.uploadedFile = state.uploadedFile.filter(item => item.name !== action.payload.name)
+            state.uploadedFiles = state.uploadedFiles.filter(item => item.name !== action.payload.name)
             state.fileUrls = state.fileUrls.filter(item => item !== action.payload.url)
         },
         removeAllFiles : (state : CommentFileUploaderSlice) => {
-            state.uploadedFile = []
+            state.uploadedFiles = []
             state.fileUrls = []
         }
     }
