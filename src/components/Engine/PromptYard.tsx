@@ -258,10 +258,10 @@ const PropmptYard = () => {
       if(url.pathname.includes('/c/')){
         const code = url.pathname.split('/c/')[1]
         const history = JSON.parse(localStorage.getItem("history") as any)
-        console.log(history)
         const selectedHistory = history.find((item : any) => item.code === code)
-        console.log(code)
         console.log(selectedHistory)
+        dispatch(setCounterToZero(selectedHistory?.conversation?.[selectedHistory?.conversation?.length - 1]?.id + 1))
+        localStorage.setItem("counter" , `${counter}`)
         selectedHistory?.conversation?.map((d : any) => {
           setResponse((prev : any) => {
             const cp = {...prev}
@@ -279,11 +279,12 @@ const PropmptYard = () => {
             }
             return cp
           })
+          dispatch(addResource(d?.module ? d?.module : "web"));
         })
       }
 
       dispatch(checkHistory(false))
-    },[window.location.href]);
+    },[]);
 
     if(historyChecker){
       return <div className='flex w-[90%] items-end justify-end h-screen '>
