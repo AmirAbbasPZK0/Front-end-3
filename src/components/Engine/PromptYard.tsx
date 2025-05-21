@@ -159,9 +159,7 @@ const PropmptYard = () => {
       socket?.on("suggested videos" , (data : any) => {
         setResponse((prev : any) => {
           const cp = {...prev};
-          if(data?.data){
-            cp[localStorage.getItem("counter") as string].videos = data?.data;
-          }
+          cp[localStorage.getItem("counter") as string].videos = data.data;
           return cp;
         });
       });
@@ -253,18 +251,20 @@ const PropmptYard = () => {
 
     // Batched history restoration for performance
     useEffect(()=>{
-      const url = new URL(window.location.href)
-      // console.log(url)
-      if(url.pathname.includes('/c/')){
-        const code = url.pathname.split('/c/')[1]
-        const history = JSON.parse(localStorage.getItem("history") as any)
-        const selectedHistory = history?.find((item : any) => item.code === code)
-        dispatch(setCounterToZero(selectedHistory?.conversation?.[selectedHistory?.conversation?.length - 1]?.id + 1))
-        localStorage.setItem("counter" , `${counter}`)
-        selectedHistory?.conversation?.map((d : any) => {
-          setResponse((prev : any) => {
-            const cp = {...prev}
-            cp[d?.id] = {
+      const url = new URL(window.location.href);
+      let history;
+      if(localStorage.getItem("history") !== null && localStorage.getItem("history") !== undefined){
+        history = JSON.parse(localStorage.getItem("history") as any);
+      }
+      if(url.pathname.includes("/c/")){
+        const found = history?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
+        if (found) {
+          dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
+          localStorage.setItem('counter' , `${counter}`);
+          const newResponses: any = {};
+          found?.conversation?.forEach((d : any) => {
+            console.log(d)
+            newResponses[d?.id] = {
               text: d?.answer,
               question : d?.question,
               isLoading: false,
@@ -275,13 +275,13 @@ const PropmptYard = () => {
               findoraMessage : d?.findora_message,
               relatedQuestions: [],
               sources : Object?.values(d?.citations)
-            }
-            return cp
-          })
-        })
+            };
+            dispatch(addResource(d?.module ? d?.module : "web"));
+          });
+          setResponse((prev: any) => ({ ...prev, ...newResponses }));
+        }
+        dispatch(checkHistory(false));
       }
-
-      dispatch(checkHistory(false))
     },[window.location.href]);
 
     if(historyChecker){
