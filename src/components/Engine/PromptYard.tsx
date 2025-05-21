@@ -260,8 +260,7 @@ const PropmptYard = () => {
       if(url.pathname.includes("/c/")){
         const found = history?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
         console.log("Check PathName")
-        if (found) {
-          dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
+        dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
           localStorage.setItem('counter' , `${counter}`);
           const newResponses: any = {};
           found?.conversation?.forEach((d : any) => {
@@ -281,7 +280,6 @@ const PropmptYard = () => {
             dispatch(addResource(d?.module ? d?.module : "web"));
           });
           setResponse((prev: any) => ({ ...prev, ...newResponses }));
-        }
         dispatch(checkHistory(false));
       }
     },[]);
