@@ -288,7 +288,7 @@ const PropmptYard = () => {
         }
         dispatch(checkHistory(false));
       }
-    },[]);
+    },[localStorage.getItem("history")]);
 
     if(historyChecker){
       return <div className='flex w-[90%] items-end justify-end h-screen '>
