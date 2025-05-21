@@ -264,6 +264,7 @@ const PropmptYard = () => {
       if(url.pathname.includes("/c/")){
         const found = history?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
         if (found) {
+          console.log(found``)
           dispatch(checkHistory(true));
           dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
           localStorage.setItem('counter' , `${found?.conversation?.[found?.conversation?.length - 1]?.id + 1}`);
