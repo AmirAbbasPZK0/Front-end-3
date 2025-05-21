@@ -48,7 +48,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     }
   }, [dispatch])
 
-  const fetchUserHistory = useCallback(async () => {
+  const fetchUserHistory = async () => {
     const token = Cookies.get("access_token")
     if (!token) return
 
@@ -59,8 +59,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       console.log(`History fetch took ${Math.round(time)}ms`)
 
       if (res.code === 200) {
-        const history = res.data.slice(0, MAX_HISTORY_ITEMS)
-        dispatch(historyHandler(history))
+        dispatch(historyHandler(res.data))
         localStorage.setItem("history" , JSON.stringify(res.data))
       }else{
         return false
@@ -69,7 +68,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     } catch (err) {
       console.error("History fetch failed", err)
     }
-  }, [dispatch , isLoading , isLogin])
+  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -99,7 +98,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     fetchUserHistory()
-  }, [fetchUserHistory , isLoading , isLogin])
+  }, [isLoading , isLogin])
 
   if (isLoading) {
     return (

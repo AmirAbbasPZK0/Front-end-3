@@ -26,6 +26,7 @@ const PropmptYard = () => {
 
     // Redux selectors (no shallowEqual)
     const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource);
+    const historyRedux = useAppSelector(state => state.userSlice.history)
     const isNew = useAppSelector(state => state.resourceSlice.isNew);
     const uploadedFiles = useAppSelector(state => state.fileUploadsSlice);
     const urlInputs = useAppSelector(state => state.urlInputSlice);
@@ -251,6 +252,7 @@ const PropmptYard = () => {
 
     // Batched history restoration for performance
     useEffect(()=>{
+      // console.log(JSON.parse(localStorage.getItem("history") as any))
       const url = new URL(window.location.href);
       let history;
       if(localStorage.getItem("history") !== null && localStorage.getItem("history") !== undefined){
@@ -263,7 +265,6 @@ const PropmptYard = () => {
           localStorage.setItem('counter' , `${counter}`);
           const newResponses: any = {};
           found?.conversation?.forEach((d : any) => {
-            console.log(d)
             newResponses[d?.id] = {
               text: d?.answer,
               question : d?.question,
@@ -279,10 +280,15 @@ const PropmptYard = () => {
             dispatch(addResource(d?.module ? d?.module : "web"));
           });
           setResponse((prev: any) => ({ ...prev, ...newResponses }));
+        }else{
+          console.log("Failed")
+          console.log(JSON.parse(localStorage.getItem("history") as any))
+          // let demo = JSON.parse("history")?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
+          // console.log(demo)
         }
         dispatch(checkHistory(false));
       }
-    },[window.location.href]);
+    },[]);
 
     if(historyChecker){
       return <div className='flex w-[90%] items-end justify-end h-screen '>
