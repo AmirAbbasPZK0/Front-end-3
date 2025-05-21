@@ -252,18 +252,20 @@ const PropmptYard = () => {
     // Batched history restoration for performance
     useEffect(()=>{
       const url = new URL(window.location.href);
+      console.log("Url" , url)
       let history;
       if(localStorage.getItem("history") !== null && localStorage.getItem("history") !== undefined){
         history = JSON.parse(localStorage.getItem("history") as any);
       }
       if(url.pathname.includes("/c/")){
         const found = history?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
+        console.log("Check PathName")
         if (found) {
           dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
           localStorage.setItem('counter' , `${counter}`);
           const newResponses: any = {};
           found?.conversation?.forEach((d : any) => {
-            console.log(d)
+            console.log("Answer",d)
             newResponses[d?.id] = {
               text: d?.answer,
               question : d?.question,
@@ -282,7 +284,7 @@ const PropmptYard = () => {
         }
         dispatch(checkHistory(false));
       }
-    },[window.location.href]);
+    },[]);
 
     if(historyChecker){
       return <div className='flex w-[90%] items-end justify-end h-screen '>
