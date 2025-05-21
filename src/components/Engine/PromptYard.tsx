@@ -259,6 +259,7 @@ const PropmptYard = () => {
         const code = url.pathname.split('/c/')[1]
         const history = JSON.parse(localStorage.getItem("history") as any)
         const selectedHistory = history.find((item : any) => item?.code == code)
+        console.log(code)
         console.log(selectedHistory)
         selectedHistory?.conversation?.map((d : any) => {
           setResponse((prev : any) => {
