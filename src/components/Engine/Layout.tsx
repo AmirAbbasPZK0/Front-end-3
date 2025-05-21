@@ -19,6 +19,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   const isLogin = useAppSelector(state => state.userSlice.isLogin)
 
+  const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
+
   const router = useRouter()
 
   const {data} = useSession()
@@ -61,15 +63,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       if (res.code === 200) {
         const history = res.data.slice(0, MAX_HISTORY_ITEMS)
         dispatch(historyHandler(history))
-
-        // Defer localStorage write
-        setTimeout(() => {
-          try {
-            localStorage.setItem("history", JSON.stringify(history))
-          } catch (e) {
-            console.warn("localStorage write failed", e)
-          }
-        }, 0)
+        localStorage.setItem("history", JSON.stringify(history))
       }else{
         return false
       }
@@ -77,7 +71,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     } catch (err) {
       console.error("History fetch failed", err)
     }
-  }, [dispatch , isLoading , isLogin])
+  }, [dispatch , isLoading , isLogin , isGenerating])
 
   useEffect(() => {
     setIsLoading(true)
