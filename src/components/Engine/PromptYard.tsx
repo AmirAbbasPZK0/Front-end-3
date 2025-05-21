@@ -159,7 +159,9 @@ const PropmptYard = () => {
       socket?.on("suggested videos" , (data : any) => {
         setResponse((prev : any) => {
           const cp = {...prev};
-          cp[localStorage.getItem("counter") as string].videos = data.data;
+          if(data?.data){
+            cp[localStorage.getItem("counter") as string].videos = data?.data;
+          }
           return cp;
         });
       });
@@ -251,21 +253,17 @@ const PropmptYard = () => {
 
     // Batched history restoration for performance
     useEffect(()=>{
-      const url = new URL(window.location.href);
-      console.log("Url" , url)
-      let history;
-      if(localStorage.getItem("history") !== null && localStorage.getItem("history") !== undefined){
-        history = JSON.parse(localStorage.getItem("history") as any);
-      }
-      if(url.pathname.includes("/c/")){
-        const found = history?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
-        console.log("Check PathName")
-        dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
-          localStorage.setItem('counter' , `${counter}`);
-          const newResponses: any = {};
-          found?.conversation?.forEach((d : any) => {
-            console.log("Answer",d)
-            newResponses[d?.id] = {
+      const url = new URL(window.location.href)
+      // console.log(url)
+      if(url.pathname.includes('/c/')){
+        const code = url.pathname.split('/c/')[1]
+        const history = JSON.parse(localStorage.getItem("history") as any)
+        const selectedHistory = history.find((item : any) => item?.code == code)
+        console.log(selectedHistory)
+        selectedHistory?.conversation?.map((d : any) => {
+          setResponse((prev : any) => {
+            const cp = {...prev}
+            cp[d?.id] = {
               text: d?.answer,
               question : d?.question,
               isLoading: false,
@@ -276,13 +274,14 @@ const PropmptYard = () => {
               findoraMessage : d?.findora_message,
               relatedQuestions: [],
               sources : Object?.values(d?.citations)
-            };
-            dispatch(addResource(d?.module ? d?.module : "web"));
-          });
-          setResponse((prev: any) => ({ ...prev, ...newResponses }));
-        dispatch(checkHistory(false));
+            }
+            return cp
+          })
+        })
       }
-    },[]);
+
+      dispatch(checkHistory(false))
+    },[window.location.href]);
 
     if(historyChecker){
       return <div className='flex w-[90%] items-end justify-end h-screen '>
