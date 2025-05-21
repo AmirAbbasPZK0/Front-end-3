@@ -1,6 +1,4 @@
 "use client"
-
-
 import ResponseDisplay from '@/components/Engine/ResponseDisplay';
 import useWebSocket from '@/hooks/useWebSocket';
 import { useRouter } from 'next/navigation';
@@ -28,7 +26,6 @@ const PropmptYard = () => {
 
     // Redux selectors (no shallowEqual)
     const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource);
-    const historyR = useAppSelector(state => state.userSlice.history)
     const isNew = useAppSelector(state => state.resourceSlice.isNew);
     const uploadedFiles = useAppSelector(state => state.fileUploadsSlice);
     const urlInputs = useAppSelector(state => state.urlInputSlice);
@@ -258,34 +255,30 @@ const PropmptYard = () => {
       let history;
       if(localStorage.getItem("history") !== null && localStorage.getItem("history") !== undefined){
         history = JSON.parse(localStorage.getItem("history") as any);
-      }else{
-        history = historyR
       }
       if(url.pathname.includes("/c/")){
         const found = history?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
         if (found) {
-          console.log(found``)
-          dispatch(checkHistory(true));
           dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
-          localStorage.setItem('counter' , `${found?.conversation?.[found?.conversation?.length - 1]?.id + 1}`);
-          found?.conversation?.map((item : any) => {
-            setResponse((prev : any) => {
-                const cp = {...prev}
-                cp[item?.id] = {
-                  text: item?.answer,
-                  question : item?.question,
-                  isLoading: false,
-                  isDone : true,
-                  images: item?.images,
-                  data: Object.values(item?.fact_check_data)?.length > 0 ? {message : item?.fact_check_data} : null,
-                  videos : item?.videos,
-                  findoraMessage : item?.findora_message,
-                  relatedQuestions: [],
-                  sources : Object?.values(item?.citations)
-                }
-                return cp
-            })
-          })
+          localStorage.setItem('counter' , `${counter}`);
+          // Batch restore
+          const newResponses: any = {};
+          found?.conversation?.forEach((d : any) => {
+            newResponses[d?.id] = {
+              text: d?.answer,
+              question : d?.question,
+              isLoading: false,
+              isDone : true,
+              images: d?.images,
+              data: Object.values(d?.fact_check_data)?.length > 0 ? {message : d?.fact_check_data} : null,
+              videos : d?.videos,
+              findoraMessage : d?.findora_message,
+              relatedQuestions: [],
+              sources : Object?.values(d?.citations)
+            };
+            dispatch(addResource(d?.module ? d?.module : "web"));
+          });
+          setResponse((prev: any) => ({ ...prev, ...newResponses }));
         }
         dispatch(checkHistory(false));
       }
