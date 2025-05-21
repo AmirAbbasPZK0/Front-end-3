@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-interface IUserSlice {
+interface LoadingSlice {
   loading: boolean;
 }
 
-const initialState: IUserSlice = {
+const initialState: LoadingSlice = {
   loading: false,
 };
 
