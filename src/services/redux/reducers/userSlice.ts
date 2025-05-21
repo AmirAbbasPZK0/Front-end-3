@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Conversation {
     answer : string
@@ -42,9 +42,6 @@ const userSlice = createSlice({
         historyHandler : (state , action) => {
             state.history = action.payload
         },
-        // addHistory : (state , action) => {
-        //     let target_history = action.payload   
-        // },
         removeHistory : (state , action) => {
             state.history = state.history?.filter(item => item.code !== action.payload)
         },
@@ -55,9 +52,12 @@ const userSlice = createSlice({
                 target.title = action.payload.title
                 state.history = [...(state.history ?? []), target]
             }
+        },
+        editUser : (state , action : PayloadAction<{first_name : string , last_name : string , email : string}>) => {
+            state.data = action.payload
         }
     }
 })
 
-export const {loginHandler , historyHandler , removeHistory , editHistory} = userSlice.actions
+export const {loginHandler , historyHandler , removeHistory , editHistory , editUser} = userSlice.actions
 export default userSlice.reducer

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
 import endpoints from "@/configs/endpoints";
 import restApi from "@/services/restApi";
-import { addUrl , removeFile } from "@/services/redux/reducers/commentFileUploaderSlice";
+import { addUrl , removeAllFiles, removeFile } from "@/services/redux/reducers/commentFileUploaderSlice";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 const CommentSection = ({message_id} : {message_id : number}) => {
@@ -83,6 +83,7 @@ function DislikeModal({handleClose, setStatus} : {handleClose : () => void  , se
             handleClose()
             setStatus("Dislike")
         }
+        dispatch(removeAllFiles())
     }
 
     const uploadHandler = async () => {

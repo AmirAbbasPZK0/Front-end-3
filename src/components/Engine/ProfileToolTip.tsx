@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  FiMoreVertical,
-  FiEdit2,
-} from "react-icons/fi";
 import { FaUser } from "react-icons/fa6";
 import { useAppDispatch } from "@/services/redux/store";
+import { CiSettings } from "react-icons/ci";
 import Link from "next/link";
 
 
@@ -33,7 +30,7 @@ const TooltipMenu = ({onClose} : {onClose : () => void}) => {
         onClick={() => setOpen((prev) => !prev)}
         className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition"
       >
-        <FiMoreVertical className="w-5 h-5" />
+        <CiSettings className="w-5 h-5" />
       </button>
 
       {open && (

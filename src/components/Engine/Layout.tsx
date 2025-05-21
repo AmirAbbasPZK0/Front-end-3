@@ -77,7 +77,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     } catch (err) {
       console.error("History fetch failed", err)
     }
-  }, [dispatch])
+  }, [dispatch , isLoading , isLogin])
 
   useEffect(() => {
     setIsLoading(true)
