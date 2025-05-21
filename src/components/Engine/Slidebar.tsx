@@ -144,9 +144,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         await signOut()
                         Cookies.set("access_token" , "" , {expires : 0})
                         logout()
-                        router.push("/")
-                        localStorage.removeItem("history")
                         window.location.reload()
+                        router.push("/")
                       }} className="w-full items-center text-center p-2 font-semibold transition-all bg-red-500  text-white rounded-md">
                         Logout
                       </button>
