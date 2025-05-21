@@ -261,9 +261,9 @@ const PropmptYard = () => {
         if (found) {
           dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
           localStorage.setItem('counter' , `${counter}`);
-          // Batch restore
           const newResponses: any = {};
           found?.conversation?.forEach((d : any) => {
+            console.log(d)
             newResponses[d?.id] = {
               text: d?.answer,
               question : d?.question,
