@@ -44,6 +44,7 @@ const userSlice = createSlice({
         },
         removeHistory : (state , action) => {
             state.history = state.history?.filter(item => item.code !== action.payload)
+            localStorage.setItem("history" , JSON.parse("history"))
         },
         editHistory : (state , action) => {
             let target = state.history?.find(item => item.code === action.payload.code)

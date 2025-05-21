@@ -268,7 +268,6 @@ const PropmptYard = () => {
           dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
           localStorage.setItem('counter' , `${found?.conversation?.[found?.conversation?.length - 1]?.id + 1}`);
           found?.conversation?.map((item : any) => {
-            console.log(found)
             setResponse((prev : any) => {
                 const cp = {...prev}
                 cp[item?.id] = {

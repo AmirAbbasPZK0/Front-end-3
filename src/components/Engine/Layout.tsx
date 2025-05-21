@@ -18,8 +18,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true)
 
   const isLogin = useAppSelector(state => state.userSlice.isLogin)
-  
-  const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
   const router = useRouter()
 
@@ -79,7 +77,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     } catch (err) {
       console.error("History fetch failed", err)
     }
-  }, [dispatch , isLoading , isLogin , isGenerating])
+  }, [dispatch , isLoading , isLogin])
 
   useEffect(() => {
     setIsLoading(true)
@@ -109,7 +107,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     fetchUserHistory()
-  }, [fetchUserHistory , isLoading , isLogin , isGenerating])
+  }, [fetchUserHistory , isLoading , isLogin])
 
   if (isLoading) {
     return (
