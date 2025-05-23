@@ -9,7 +9,7 @@ const FactCheckSourceList = ({sources} : {sources : Array<string[]>}) => {
     const [openSources , setOpenSources] = useState(false)
 
     return (<>
-        {sources && <SourceButton sources={sources} onClick={()=> setOpenSources(true)} factCheckSources={sources}/>}
+        {sources && <SourceButton sources={sources} onClick={()=> setOpenSources(true)} />}
         {openSources && <>
                             <div onClick={()=>{
                                 setOpenSources(false)

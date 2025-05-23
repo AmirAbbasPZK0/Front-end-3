@@ -10,6 +10,7 @@ import endpoints from "@/configs/endpoints";
 import restApi from "@/services/restApi";
 import { addUrl , removeAllFiles, removeFile } from "@/services/redux/reducers/commentFileUploaderSlice";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { LiaTimesSolid } from "react-icons/lia";
 
 const CommentSection = ({message_id} : {message_id : number}) => {
 
@@ -69,7 +70,7 @@ function DislikeModal({handleClose, setStatus} : {handleClose : () => void  , se
     const onSubmit = async (e : any) => {
         e.preventDefault()
         let body = {
-            email : user?.isLogin ? user?.data?.email : e?.target?.email?.value,
+            email :  e?.target?.email?.value,
             comment : e?.target?.comment?.value,
             rating : "negative",
             thread_code : window.location.href.split("/c/")[1],
@@ -122,13 +123,16 @@ function DislikeModal({handleClose, setStatus} : {handleClose : () => void  , se
                     exit={{ scale: 0.95, opacity: 0 }}
                     className="relative w-full max-w-md dark:bg-slate-900 gap-2 text-center flex flex-col rounded-2xl bg-white p-8 shadow-xl"
                 >
+                    <div className="flex flex-row w-full justify-end items-end">
+                        <button onClick={handleClose}><LiaTimesSolid/></button>
+                    </div>
                     <h1 className="text-[30px]">Leave a Comment</h1>
                     <h1 className="text-[16px]">We would like to know about your opinion</h1>
-                    {!user.isLogin && <input name="email" type="email" className="p-2 rounded-md border-2 border-slate-500 bg-transparent dark:border-slate-100" placeholder="Email"/>}
-                    <textarea name="comment" className="p-2 rounded-md border-2 h-40 outline-none border-slate-500 bg-transparent dark:border-slate-100"></textarea>
+                    <input name="email" type="email" className="p-2 rounded-md border-2 border-slate-500 bg-transparent dark:border-slate-100" placeholder="Email (Optional)"/>
+                    <textarea name="comment" placeholder="Comment" className="p-2 rounded-md border-2 h-40 outline-none border-slate-500 bg-transparent dark:border-slate-100"></textarea>
                     
                     <div className="w-full items-center">
-                        <input onChange={e => setFile(e.target.files?.[0])} id="picture" type="file" className="flex h-10 w-full rounded-md border border-input dark:bg-slate-900 bg-white px-3 py-2 text-sm dark:text-slate-50 text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"/>
+                        <input onChange={e => setFile(e.target.files?.[0])} id="picture" type="file" className="flex h-10 w-full dark:border-slate-100 border-slate-500 border-2 rounded-md border-input dark:bg-slate-900 bg-white px-3 py-2 text-sm dark:text-slate-50 text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"/>
                     </div>
                     <div className="flex flex-col items-start text-start gap-3">
                         {uploadPending && <div>Pending...</div>}
