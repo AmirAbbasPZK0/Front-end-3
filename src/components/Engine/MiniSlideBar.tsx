@@ -15,6 +15,7 @@ import useWebSocket from "@/hooks/useWebSocket";
 import Slidebar from "./Slidebar";
 import ThemeToggle from "../Global/ThemeToggle/ThemeToggle";
 import { setCounterToZero } from "@/services/redux/reducers/newThreadSlice";
+import ProfileAvatar from "./ProfileAvatar";
 
 
 
@@ -23,8 +24,8 @@ const MiniSlideBar : React.FC = () => {
     const {setResponse} = useWebSocket()
 
     const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
-    
-    const counter = useAppSelector(state => state.newThreadSlice.counter)
+
+    const user = useAppSelector(state => state.userSlice.data)
 
     const [isOpen , setIsOpen] = useState(false)
     
@@ -88,6 +89,7 @@ const MiniSlideBar : React.FC = () => {
                 <button onClick={()=>{
                     setIsOpen(item => !item)
                 }}>
+                    {/* <ProfileAvatar size="w-8 h-8" fontSize="" name={`${user?.first_name} ${user?.last_name}`}/> */}
                     <IoIosArrowDropright className="text-[35px]"/>
                 </button>
             </div>

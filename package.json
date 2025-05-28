@@ -37,6 +37,7 @@
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.8.1",
     "swiper": "^11.2.5",
+    "wavesurfer.js": "^7.9.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {

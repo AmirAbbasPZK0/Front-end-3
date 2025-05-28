@@ -113,9 +113,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
               {user?.history?.map((item : any) => (
                 <div key={item?.code}>
-                  {true &&
                     <HistoryButtons item={item} onClose={onClose}/>
-                  }
                 </div>
               ))}
             </nav>

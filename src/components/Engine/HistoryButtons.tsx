@@ -65,7 +65,7 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
                         localStorage.setItem("counter" , `${counter}`)
                         onClose()
                     }
-                }} className="text-[12px] cursor-pointer font-semibold">{item?.title}</p>
+                }} className="text-[12px] w-full cursor-pointer font-semibold">{item?.title}</p>
                 </>)}
             
             <TooltipMenu handleRenameForm={()=> setRenameForm(item => !item)} id={item?.code}/>

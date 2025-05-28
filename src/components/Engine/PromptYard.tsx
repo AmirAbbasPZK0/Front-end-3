@@ -2,7 +2,7 @@
 import ResponseDisplay from '@/components/Engine/ResponseDisplay';
 import useWebSocket from '@/hooks/useWebSocket';
 import { useRouter } from 'next/navigation';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { Key, RefObject, useEffect, useRef, useState } from 'react';
 import { useAppSelector , useAppDispatch } from '@/services/redux/store';
 import { addRecency, removeRecency } from '@/services/redux/reducers/resourceSlice';
 import { IoIosAttach } from "react-icons/io";
@@ -16,7 +16,8 @@ import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { checkHistory, increaseCounter, makeItFalse , setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
 import { addResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
-import Switch from './Switch';
+import dynamic from 'next/dynamic';
+
 
 const PropmptYard = () => {
 
@@ -25,10 +26,10 @@ const PropmptYard = () => {
     const [isAttachOpen , setIsAttachOpen] = useState(false);
     const [selectedDepth , setSelectedDepth] = useState(false)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null);
+    const SpeechToText = dynamic(() => import('./SpeechToText'), { ssr: false });
 
     // Redux selectors (no shallowEqual)
     const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource);
-    const historyRedux = useAppSelector(state => state.userSlice.history)
     const isNew = useAppSelector(state => state.resourceSlice.isNew);
     const uploadedFiles = useAppSelector(state => state.fileUploadsSlice);
     const urlInputs = useAppSelector(state => state.urlInputSlice);
@@ -313,8 +314,9 @@ const PropmptYard = () => {
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
                   <div>
-                    <Switch isDepth={selectedDepth} setCheck={()=> setSelectedDepth(item => !item)}/>
+                    {/* <Switch isDepth={selectedDepth} setCheck={()=> setSelectedDepth(item => !item)}/> */}
                   </div>
+                  {/* <SpeechToText sendMessage={sendMessage}/> */}
                   <button onClick={()=>{
                     if(checkIsEmpty(prompt)){
                       sendMessage(prompt);
@@ -337,7 +339,7 @@ const PropmptYard = () => {
                     </button>
                   </div>
             )}
-            {uploadedFiles.uploadedFilesUrl.length > 0 && uploadedFiles.uploadedFilesUrl.map((item , index) => (
+            {uploadedFiles.uploadedFilesUrl.length > 0 && uploadedFiles.uploadedFilesUrl.map((item: { name: string; url: string; } , index: Key | null | undefined) => (
               <UploadedFileBox key={index} data={item}/>
             ))}
             </div>

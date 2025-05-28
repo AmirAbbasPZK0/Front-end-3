@@ -2,8 +2,6 @@
 
 const Switch = ({isDepth , setCheck} : {isDepth : boolean , setCheck : () => void}) => {
 
-    console.log(isDepth)
-
     return (
         <div className="flex items-center space-x-3">
         <label className="group gap-3 flex items-center cursor-pointer">

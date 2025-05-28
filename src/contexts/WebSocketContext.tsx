@@ -1,6 +1,5 @@
 'use client';
 
-import Cookies from 'js-cookie';
 import { usePathname } from 'next/navigation';
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
