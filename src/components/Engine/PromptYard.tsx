@@ -16,12 +16,14 @@ import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { checkHistory, increaseCounter, makeItFalse , setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
 import { addResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
+import Switch from './Switch';
 
 const PropmptYard = () => {
 
     const [prompt , setPrompt] = useState("");
     const [newResponse, setNewResponse] = useState('');
     const [isAttachOpen , setIsAttachOpen] = useState(false);
+    const [selectedDepth , setSelectedDepth] = useState(false)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null);
 
     // Redux selectors (no shallowEqual)
@@ -37,8 +39,6 @@ const PropmptYard = () => {
     const dispatch = useAppDispatch();
     const { socket, response, setResponse, responseRef , findoraMessageRef} = useWebSocket();
     const router = useRouter();
-
-    const selectedDepth = false;
     const selectedAnswerStyle = "";
 
     const isRTL = (text : string) => /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
@@ -282,9 +282,6 @@ const PropmptYard = () => {
           setResponse((prev: any) => ({ ...prev, ...newResponses }));
         }else{
           console.log("Failed")
-          console.log(JSON.parse(localStorage.getItem("history") as any))
-          // let demo = JSON.parse("history")?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
-          // console.log(demo)
         }
         dispatch(checkHistory(false));
       }
@@ -315,6 +312,9 @@ const PropmptYard = () => {
                   <NewDropdown/>
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
+                  <div>
+                    <Switch isDepth={selectedDepth} setCheck={()=> setSelectedDepth(item => !item)}/>
+                  </div>
                   <button onClick={()=>{
                     if(checkIsEmpty(prompt)){
                       sendMessage(prompt);

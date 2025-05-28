@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { LiaTimesSolid } from "react-icons/lia";
 import { removeHistory } from "@/services/redux/reducers/userSlice";
 import Cookies from "js-cookie";
 import {
@@ -33,13 +32,13 @@ const TooltipMenu = ({handleRenameForm ,id} : {handleRenameForm : ()=> void , id
     <div className="relative inline-block text-left" ref={menuRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+        className="p-2 rounded"
       >
         <FiMoreVertical className="w-5 h-5" />
       </button>
 
       {open && (
-        <div className="fixed right-2 mb-6 w-48 origin-top-right dark:bg-slate-800 bg-slate-200 dark:text-white text-black rounded-xl shadow-lg ring-black z-[2147483647]">
+        <div className="fixed right-2 mb-6 w-48 origin-top-right dark:bg-slate-800 bg-slate-100 dark:text-white text-black rounded-xl shadow-lg ring-black z-[2147483647]">
           <button onClick={()=>{
             handleRenameForm()
             setOpen(false)
@@ -54,10 +53,6 @@ const TooltipMenu = ({handleRenameForm ,id} : {handleRenameForm : ()=> void , id
               headers : {
                 "Authorization" : `Bearer ${Cookies.get("access_token")}`
               }
-            }).then(res => {
-              return res.json()
-            }).then(data => {
-              console.log(data)
             })
             setOpen(false)
           }} className="group flex w-full items-center rounded-b-xl dark:hover:bg-slate-700 hover:bg-slate-300 px-4 py-2 text-sm text-red-500 transition">
