@@ -17,6 +17,7 @@ import { checkHistory, increaseCounter, makeItFalse , setCounterToZero } from '@
 import { addResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 import dynamic from 'next/dynamic';
+import useAgent from '@/hooks/useAgent';
 
 
 const PropmptYard = () => {
@@ -26,7 +27,7 @@ const PropmptYard = () => {
     const [isAttachOpen , setIsAttachOpen] = useState(false);
     const [selectedDepth , setSelectedDepth] = useState(false)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null);
-    const SpeechToText = dynamic(() => import('./SpeechToText'), { ssr: false });
+    const {isMobile} = useAgent()
 
     // Redux selectors (no shallowEqual)
     const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource);
@@ -233,8 +234,10 @@ const PropmptYard = () => {
     useEffect(() => {
       const handleKeyDown = (event: { key: string; }) => {
         if (event.key === "Enter") {
-          if(checkIsEmpty(prompt)){
-            sendMessage(prompt);
+          if(!isMobile){
+            if(checkIsEmpty(prompt)){
+              sendMessage(prompt);
+            }
           }
         }
       };
