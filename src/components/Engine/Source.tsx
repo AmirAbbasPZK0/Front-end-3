@@ -14,7 +14,7 @@ const Source = ({title , data} : SourceProps) => {
     const icon = `https://www.google.com/s2/favicons?domain_url=https://${data.link?.split("/")[2]}`
 
     return (<>
-        <a href={data.link} target="_blank" rel="noopener noreferrer" className="w-full rounded-md dark:border-slate-200 border-slate-800 border-2 p-3">
+        <a href={data.link} target="_blank" rel="noopener noreferrer" className="w-full rounded-md shadow-md dark:bg-slate-800 bg-slate-50  p-3">
             <div className="text-black gap-3 w-full flex flex-row dark:text-white">
                 <img className="rounded-full p-1" src={icon} alt={""} /><span className="text-black dark:text-white">{title}</span>
             </div>
@@ -22,9 +22,9 @@ const Source = ({title , data} : SourceProps) => {
             <p className="text-gray-500">{data.snippet?.length > 50 ? `${data.snippet?.slice(0,50)}...` : data.snippet} </p>
             <div className="flex w-full items-end justify-end">
                {data.verify ? (<>
-                <BiSolidBadgeCheck className="text-green-500 text-[20px]"/>
+                <BiSolidBadgeCheck className="text-green-500 text-[25px]"/>
                </>) : (<>
-                <PiSealWarningFill className="text-red-500 text-[20px]"/>
+                <PiSealWarningFill className="text-red-500 text-[25px]"/>
                </>)}
             </div>
         </a>

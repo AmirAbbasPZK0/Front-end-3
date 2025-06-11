@@ -1,7 +1,6 @@
 "use client"
 import { useState } from "react";
-import { useAppDispatch , useAppSelector } from "@/services/redux/store";
-import { addResource } from "@/services/redux/reducers/resourceSlice";
+import { useAppSelector } from "@/services/redux/store";
 import { IoEarth } from "react-icons/io5";
 import { FaLink } from "react-icons/fa6";
 import { FaRegLightbulb } from "react-icons/fa";
@@ -9,6 +8,7 @@ import { MdOutlineOndemandVideo } from "react-icons/md";
 import { FaGraduationCap } from "react-icons/fa6";
 import { CiMedicalCase } from "react-icons/ci";
 import ModulesModal from "./ModulesModal";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 
 const NewDropdown = () => {
@@ -18,9 +18,10 @@ const NewDropdown = () => {
     const selectedResources = useAppSelector(state => state.resourceSlice.selectedResource)
 
     return (<>
-        <button type="button" className="flex gap-2 items-center" onClick={()=> setIsOpen(item => !item)}>
+        <button type="button" className="flex p-2 rounded-xl gap-2 items-center" onClick={()=> setIsOpen(item => !item)}>
             <ModuleIcon className={`text-[18px]`} moduleName={selectedResources}/>
             <p className="flex items-start text-[14px] md:text-[18px]">{selectedResources.charAt(0).toUpperCase() + selectedResources.slice(1)}</p>
+            <IoMdArrowDropdown/>
         </button>
         {/* {isOpen && <Bar setIsOpen={setIsOpen}/>} */}
         {isOpen && <ModulesModal setClose={()=> setIsOpen(false)}/>}
