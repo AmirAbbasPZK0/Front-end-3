@@ -31,6 +31,7 @@ import useWebSocket from "@/hooks/useWebSocket";
 import ModuleIcon from "./ModuleIcons";
 import PromptEditSection from "./PromptEditSection";
 import useScrollbarClick from "@/hooks/useScrollbarClick";
+import useAgent from "@/hooks/useAgent";
 
 
 interface CodeComponentProps {
@@ -124,6 +125,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed);
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const [autoScroll , setAutoScrol] = useState(true)
+    const {isMobile} = useAgent()
 
     const removeMarkdown = (markdown: string) =>
     markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
@@ -154,14 +156,17 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     }, [isDone]);
 
     const handleKeyDown = useCallback((event: KeyboardEvent) => {
-        if (!isSubmited && event.key === "Enter" && checkIsEmpty(followUp)) {
-            sendMessage(followUp);
-            setIsSubmited(true);
-            setFollowUp("");
+        if (!isSubmited && event.key === "Enter" && checkIsEmpty(followUp) && !event.shiftKey) {
+            if(!isMobile){
+                sendMessage(followUp);
+                setIsSubmited(true);
+                setFollowUp("");
+            }
         }
     }, [isSubmited, followUp, sendMessage]);
 
     useEffect(() => {
+        
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [handleKeyDown]);
