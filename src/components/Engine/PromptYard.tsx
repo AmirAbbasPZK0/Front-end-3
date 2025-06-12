@@ -16,7 +16,6 @@ import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { checkHistory, increaseCounter, makeItFalse , setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
 import { addResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
-import dynamic from 'next/dynamic';
 import useAgent from '@/hooks/useAgent';
 
 
@@ -232,8 +231,8 @@ const PropmptYard = () => {
     }, [newResponse]);
 
     useEffect(() => {
-      const handleKeyDown = (event: { key: string; }) => {
-        if (event.key === "Enter") {
+      const handleKeyDown = (event:any) => {
+        if (event.key === "Enter" && !event.shiftKey) {
           if(!isMobile){
             if(checkIsEmpty(prompt)){
               sendMessage(prompt);

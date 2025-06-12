@@ -20,7 +20,7 @@ const NewDropdown = () => {
     return (<>
         <button type="button" className="flex p-2 rounded-xl gap-2 items-center" onClick={()=> setIsOpen(item => !item)}>
             <ModuleIcon className={`text-[18px]`} moduleName={selectedResources}/>
-            <p className="flex items-start text-[14px] md:text-[18px]">{selectedResources.charAt(0).toUpperCase() + selectedResources.slice(1)}</p>
+            <p className="flex items-start text-[14px] font-semibold md:text-[18px]">{selectedResources.charAt(0).toUpperCase() + selectedResources.slice(1)}</p>
             <IoMdArrowDropdown/>
         </button>
         {/* {isOpen && <Bar setIsOpen={setIsOpen}/>} */}
