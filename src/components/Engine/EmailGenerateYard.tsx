@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 import { RiAiGenerate } from "react-icons/ri";
 import { FiSend } from "react-icons/fi";
 import Loading from "./Loading";
+import ReactMarkdown from "react-markdown"
 
 const EmailGeneratorYard = () => {
 
@@ -85,7 +86,7 @@ const EmailGeneratorYard = () => {
                         <h3 className="font-semibold text-[20px] md:text-[26px]">Generated Email</h3>
                         <button onClick={()=> setResult(false)} className="p-1 rounded-md border-2">Generate New Email</button>
                     </div>
-                    <p>{result}</p>
+                    <ReactMarkdown>{result}</ReactMarkdown>
                 </div>
                 {/* <div className="flex p-3 shadow-md rounded-md bg-white dark:bg-slate-800 items-center justify-between w-full md:w-1/2 gap-2">
                     <input type="text" placeholder="Comment" className="outline-none w-full" />
