@@ -15,7 +15,6 @@ import useWebSocket from "@/hooks/useWebSocket";
 import Slidebar from "./Slidebar";
 import ThemeToggle from "../Global/ThemeToggle/ThemeToggle";
 import { setCounterToZero } from "@/services/redux/reducers/newThreadSlice";
-import ProfileAvatar from "./ProfileAvatar";
 
 
 
@@ -24,8 +23,6 @@ const MiniSlideBar : React.FC = () => {
     const {setResponse} = useWebSocket()
 
     const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
-
-    const user = useAppSelector(state => state.userSlice.data)
 
     const [isOpen , setIsOpen] = useState(false)
     

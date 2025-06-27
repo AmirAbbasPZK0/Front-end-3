@@ -38,7 +38,7 @@ const TooltipMenu = ({handleRenameForm ,id} : {handleRenameForm : ()=> void , id
       </button>
 
       {open && (
-        <div className="fixed right-2 mb-6 w-48 origin-top-right dark:bg-slate-800 bg-slate-100 dark:text-white text-black rounded-xl shadow-lg ring-black z-[2147483647]">
+        <div className="absolute right-2 mb-6 w-48 origin-top-right dark:bg-slate-800 bg-slate-100 dark:text-white text-black rounded-xl shadow-lg ring-black z-50">
           <button onClick={()=>{
             handleRenameForm()
             setOpen(false)

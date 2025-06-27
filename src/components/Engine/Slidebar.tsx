@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useAppSelector , useAppDispatch} from '@/services/redux/store';
+import { useAppSelector , useAppDispatch } from '@/services/redux/store';
 import { addRecency , addResource } from '@/services/redux/reducers/resourceSlice';
 import { removeAllFiles } from '@/services/redux/reducers/fileUploadSlice';
 import { removeAllUrls } from '@/services/redux/reducers/urlInputSlice';
 import { useRouter } from 'next/navigation';
 import { FaPlus } from 'react-icons/fa';
+import EmailGenratorLogo from "@/../public/images/email.webp"
 import ProfileAvatar from "./ProfileAvatar"
 import Link from 'next/link';
 import Cookies from 'js-cookie';
@@ -14,6 +15,8 @@ import { signOut } from 'next-auth/react';
 import HistoryButtons from './HistoryButtons';
 import AuthModal from './AuthModal';
 import ProfileToolTip from './ProfileToolTip';
+import Image from 'next/image';
+
 
 interface SidebarProps {
   isOpen: boolean;
@@ -69,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               </svg>
             </button>
           </div>
-          <nav className='w-full flex items-center justify-center'>
+          <nav className='w-full flex flex-col gap-3 items-center justify-center'>
             {isGenerating ? (<>
               <button onClick={()=>{
                   dispatch(addRecency())
@@ -81,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   // socket.removeAllListeners();
                   router.push("/")
                   onClose()
-            }} className='flex items-center flex-row gap-2 border-2 rounded-[30px] px-2 py-1 border-slate-950 dark:border-slate-100 bg-none dark:text-white'><FaPlus/><span>New Thread</span></button>
+              }} className='flex items-center flex-row gap-2 border-2 rounded-[30px] px-2 py-1 border-slate-950 dark:border-slate-100 bg-none dark:text-white'><FaPlus/><span>New Thread</span></button>
             </>) : (<>
               <button
                 type="button"
@@ -108,16 +111,31 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               </button>
             </>)}
           </nav>
+          <div className='flex items-center justify-center'>
+            <button onClick={()=>{
+              router.push("/email-generator")
+              onClose()
+            }} className='p-2.5 gap-2 items-center justify-center flex rounded-2xl bg-blue-500 text-white'>
+              <Image
+                src={EmailGenratorLogo}
+                alt="logo"
+                width={20}
+                height={10}
+                className=""
+              />
+              <span>Generate Email</span>
+            </button>
+          </div>
           {(user?.isLogin && user?.data !== undefined) && <div className='flex p-3 flex-col gap-2 pt-3'>
-            <h3 className='text-[20px] p-1 font-semibold'>Recent Searches</h3>
-            <nav className='flex flex-col gap-2 h-[300px] overflow-y-auto'>
+            <h3 className='text-[20px] p-1 font-semibold'>Recent Searches</h3>           
+            <nav className='flex flex-col gap-2 h-[200px] overflow-y-auto'>
               {user?.history?.map((item : any) => (
                 <div key={item?.code}>
                     <HistoryButtons item={item} onClose={onClose}/>
                 </div>
               ))}
             </nav>
-          </div>}
+          </div>}          
           <nav className='w-full flex flex-col items-center gap-3 h-[20vh] justify-center fixed bottom-0'>
             <div className='flex items-center justify-between gap-6'>
             {/* <button className='flex items-center flex-row gap-2 border-2 px-4 rounded-[30px] p-3 border-slate-950 dark:border-slate-100 bg-none dark:text-white'>

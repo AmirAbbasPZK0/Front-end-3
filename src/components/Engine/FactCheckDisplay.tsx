@@ -5,7 +5,6 @@ import HyperLink from "./HyperLink";
 import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import { FaMinusCircle, FaRegCheckCircle , FaRegTimesCircle } from "react-icons/fa";
 import Source from "./Source";
-import SourceButton from "./SourceButton";
 import { TbSend2 } from "react-icons/tb";
 import { isRTL } from "@/functions/isRTL";
 import { LiaTimesSolid } from "react-icons/lia";

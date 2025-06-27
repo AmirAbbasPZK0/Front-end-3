@@ -11,8 +11,6 @@ import Loading from "./Loading"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 
-const MAX_HISTORY_ITEMS = 50
-
 const Layout = ({ children }: { children: ReactNode }) => {
 
   const [isLoading, setIsLoading] = useState(true)
