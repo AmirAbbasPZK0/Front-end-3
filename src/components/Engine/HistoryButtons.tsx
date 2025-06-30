@@ -39,7 +39,7 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
                 return res.json()
             }
         }).then(() => {
-            
+            console.log("Deleted Successfully")
         })
         setRenameForm(false)
         dispatch(editHistory({code : item?.code , title : data.title}))

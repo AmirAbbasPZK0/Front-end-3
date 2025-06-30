@@ -3,51 +3,79 @@
 import { LuText } from "react-icons/lu";
 import { RxTextAlignJustify } from "react-icons/rx";
 import { MdShortText } from "react-icons/md";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { RiAiGenerate } from "react-icons/ri";
 import { FiSend } from "react-icons/fi";
+import toast from "react-hot-toast";
 import Loading from "./Loading";
-import ReactMarkdown from "react-markdown"
+import { IoCopyOutline } from "react-icons/io5";
+
+interface InputPartsProps {
+    name : string ,
+    title : string , 
+    height ?: string , 
+    inputType : "textarea" | "default" | "select-option" | "checkbox" , 
+    options ?: string[] , 
+    placeholder : string , 
+    error ?: boolean
+    width ?: string
+    value ?: string
+    defaultValue ?: string
+    onChange ?: (e : ChangeEvent<HTMLTextAreaElement>) => void
+}
 
 const EmailGeneratorYard = () => {
 
-    const [length , setLength] = useState("long")
-
     const [pending , setPending] = useState(false)
 
-    const [personalize , setPersonalize] = useState(false)
+    const resultRef = useRef<any>(null)
 
-    const [result , setResult] = useState<any>(false)
+    const [mode , setMode] = useState(true)
+
+    const [result , setResult] = useState<string>("")
 
     const [error , setError] = useState(false)
 
-    const [advanced , setAdvanced] = useState(true)
-
     const handleSubmit = (e : ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // setPending(true)
-        if(e?.target?.purpose?.value === "" || e.target?.recipient?.value === "" || e.target?.sender?.value === ""){
-            console.log(e?.target?.purpose?.value , e.target?.recipient?.value , e.target?.sender?.value)
-            setError(true)
-            
+        
+        if(mode){
+            if(e?.target?.email_content?.value === ""){
+                setError(true)
+                return false
+            }
         }else{
-            setPending(true)
-            let data = personalize ? {
-                personalize : e.target?.personalize?.value,
-            } : {
-                purpose : e.target?.purpose?.value,
-                subject : e.target?.subject_line?.value,
-                email_type : e.target?.email_type?.value,
-                recipient_role : e.target?.recipient_role?.value,
-                receiver_name : e.target?.recipient?.value,
-                sender_name : e.target?.sender?.value,
-                language : e.target?.language?.value,
-                add_greeting : e.target?.add_greeting?.checked,
-                length,
-                tone : e.target?.tone?.value,
-                other_options : e?.target?.other_options?.value
+            if(e?.target?.email_content?.value === "" || e?.target?.received_email?.value === ""){
+                setError(true)
+                return false
+            }
+        }
+
+        setPending(true)
+            let data
+            if(mode){
+                data = {
+                    email_content : e.target?.email_content?.value,
+                    language : e.target?.language?.value,
+                    length : e.target?.length_d?.value,
+                    tone : e.target?.tone?.value,
+                    other_options : e?.target?.other_options?.value,
+                    signature : e?.target?.signature?.value
+                }
+            }else{
+                data = {
+                    email_content : e.target?.email_content?.value,
+                    language : e.target?.language?.value,
+                    length : e.target?.length_d?.value,
+                    tone : e.target?.tone?.value,
+                    received_email : e.target?.received_email?.value,
+                    other_options : e?.target?.other_options?.value,
+                    signature : e?.target?.signature?.value
+                }
             }
             
+            // console.log(data)
+
             fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/generate-email` , {
                 method : "POST",
                 headers : {
@@ -61,7 +89,6 @@ const EmailGeneratorYard = () => {
                     throw new Error("Error")
                 }
             }).then(data => {
-                console.log(data)
                 setResult(data?.generated_text)
                 // setResult()
             }).catch(err => {
@@ -69,8 +96,18 @@ const EmailGeneratorYard = () => {
             }).finally(()=>{
                 setPending(false)
             })
-        }
     }
+
+    const copyTheResult = () => {
+        navigator.clipboard.writeText(result as string)
+        toast.success("Copied Successfully")
+    }
+
+    useEffect(()=>{
+        if(result !== ""){
+            resultRef.current.scrollTo(0, 0)
+        }
+    },[result])
 
     if(pending)
         return(<div className="flex flex-col gap-3 items-center justify-center h-screen w-full">
@@ -78,40 +115,23 @@ const EmailGeneratorYard = () => {
             <Loading/>
         </div>)
 
-    if(result){
-        return(<>
-            <div className="flex gap-2 dark:bg-[#111828] flex-col w-full items-center min-h-screen justify-center">
-                <div className="flex p-3 shadow-md rounded-md bg-white dark:bg-slate-800 flex-col w-full md:w-1/2 gap-2">
-                    <div className="flex w-full justify-between">
-                        <h3 className="font-semibold text-[20px] md:text-[26px]">Generated Email</h3>
-                        <button onClick={()=> setResult(false)} className="p-1 rounded-md border-2">Generate New Email</button>
-                    </div>
-                    <ReactMarkdown>{result}</ReactMarkdown>
-                </div>
-                {/* <div className="flex p-3 shadow-md rounded-md bg-white dark:bg-slate-800 items-center justify-between w-full md:w-1/2 gap-2">
-                    <input type="text" placeholder="Comment" className="outline-none w-full" />
-                    <button className="text-[20px]"><FiSend/></button>
-                </div> */}
-            </div>
-        </>)
-    }
 
     return (<>
-        <div className="w-full dark:bg-[#111828] p-3 md:w-full flex flex-col gap-4 items-center justify-evenly min-h-screen">
-            <h1 className="text-[40px] font-semibold dark:text-white text-slate-700">Email Generator</h1>
+        <div className="w-full dark:bg-[#111828] p-3 md:w-full flex flex-col-reverse gap-4 items-center justify-evenly min-h-screen">
+            {/* <h1 className="text-[40px] font-semibold dark:text-white text-slate-700">Email Generator</h1> */}
             <form onSubmit={handleSubmit} className="flex p-3 shadow-md rounded-md bg-white dark:bg-slate-800 flex-col w-full md:w-1/2 gap-2">
-                {/* <label className="flex flex-col gap-2">
+                <label className="flex flex-col gap-2">
                     <h2 className="font-semibold">Type</h2>
                     <div className="flex gap-2">
-                        <button onClick={()=> setPersonalize(true)} type="button" className={`py-2 px-3 rounded-3xl font-semibold ${!personalize ? "bg-transparent text-blue-600" : "bg-blue-600 text-white"} border-2 border-blue-600`}>Personalize</button>
-                        <button onClick={()=> setPersonalize(false)} type="button" className={`py-2 px-3 rounded-3xl font-semibold ${personalize ? "bg-transparent text-blue-600" : "bg-blue-600 text-white"} border-2 border-blue-600`}>Default</button>
+                        <button onClick={()=> setMode(true)} type="button" className={`py-2 px-3 rounded-3xl font-semibold ${!mode ? "bg-transparent text-blue-600" : "bg-blue-600 text-white"} border-2 border-blue-600`}>Compose New Email</button>
+                        <button onClick={()=> setMode(false)} type="button" className={`py-2 px-3 rounded-3xl font-semibold ${mode ? "bg-transparent text-blue-600" : "bg-blue-600 text-white"} border-2 border-blue-600`}>Reply to Email</button>
                     </div>
-                </label> */}
-                
-                
-                    <InputParts placeholder="Example: Introduction to New Client, Proposal for Marketing Campaign, Follow-up on Job Application." inputType="default" name="subject_line" title="Subject Line"/>
-                    <InputParts error={error} placeholder="I am writing to purpose a new marketing campain that i believe will be effective for your business" inputType="textarea" name="purpose" title="Purpose"/>
-                    <div className="flex flex-col md:flex-row gap-3 md:items-end">
+                </label>
+
+                    {!mode && <InputParts error={error} placeholder="Received Email" name="received_email" title="Received Email" inputType="textarea"/>}
+
+                    <InputParts error={error} placeholder="I am writing to email_content a new marketing campain that i believe will be effective for your business" height="h-[200px]" inputType="textarea" name="email_content" title="Email Content"/>
+                    {/* <div className="flex flex-col md:flex-row gap-3 md:items-end">
                         <label className="flex flex-col gap-2">
                             <h3 className="font-semibold">Length</h3>
                             <div className="flex flex-row gap-2 justify-start">
@@ -120,57 +140,49 @@ const EmailGeneratorYard = () => {
                                 <button type="button" className={`px-2 py-1 text-[25px] ${length === "short" ? "bg-slate-300 dark:bg-slate-900" : "bg-slate-100 dark:bg-slate-800"} cursor-pointer rounded-md`} onClick={()=>setLength("short")} ><MdShortText/></button>
                             </div>
                         </label>
-                        {/* <InputParts placeholder="" title="Avoid Dashed" name="avoid_dashes" inputType={"checkbox"} /> */}
-                        <InputParts placeholder="" title="Add Greeting" name="add_greeting" inputType={"checkbox"} />
-                    </div>
-                    <InputParts placeholder="" inputType="select-option" name="language" title="Language" options={["english" , "french" , "german" , "spanish" , "italian" , "portuguese" , "hindi" , "thai"]}/>
-                    <InputParts placeholder="Forexample : Friendly" title="Choose a Tone" options={['friendly','professional','casual','formal','persuasive','humorous','inspirational','neutral']} inputType="select-option" name="tone"/>
-                    
-                    {/* Advanced Options */}
-
-                    {/* <div>
-                        <label className="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" onClick={(e)=> setAdvanced(item => !item)} className="sr-only peer" value="" />
-                            <div
-                                className="group peer bg-white rounded-full duration-300 w-16 h-8 ring-2 ring-slate-500 after:duration-300 after:bg-slate-500 peer-checked:after:bg-slate-500 peer-checked:ring-slate-500 after:rounded-full after:absolute after:h-6 after:w-6 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-checked:after:translate-x-8 peer-hover:after:scale-95"
-                            ></div>
-                        </label>
                     </div> */}
+                    <div className="w-full md:flex-row flex-col flex gap-2">
+                        <InputParts width="w-full md:w-1/2" placeholder="" title="Length" inputType="select-option" name="length_d" options={["long" , "medium" , "short"]}/>
+                        <InputParts width="w-full md:w-1/2" placeholder="" inputType="select-option" name="language" title="Language" options={["english" , "french" , "german" , "spanish" , "italian" , "portuguese" , "hindi" , "thai"]}/>
+                        <InputParts width="w-full md:w-1/2" placeholder="Forexample : Friendly" title="Choose a Tone" options={['friendly','professional','casual','formal','persuasive','humorous','inspirational','neutral']} inputType="select-option" name="tone"/>
+                    </div>
 
-                    {advanced && (<>
-                        <InputParts error={error} placeholder="Example: potential client, colleague, or supervisor." inputType="default" name="recipient" title="Recipient"/>
-                        <InputParts error={error} placeholder="Example: John Smith, Marketing Department, Product Team A, Acme Corporation." inputType="default" name="sender" title="Sender"/>
-                        <InputParts error={error} placeholder="Forexample : Follow-Up" title="Email Type" inputType="select-option" options={["introduction" , "follow-Up" , "request" , "thank You" , "meeting Schedule"]} name="email_type"/>
-                        <InputParts placeholder="" inputType="select-option" name="recipient_role" title="Recipient Role" options={["peer" , "manager" , "client"]}/>
-                        <InputParts placeholder="Describe what features do you want to have in your Email" name="other_options" height={"h-[200px]"} title={"Other Options"} inputType={"textarea"}/>
-                    </>)}
-
+                    {/* <InputParts placeholder="" inputType="select-option" name="recipient_role" title="Recipient Role" options={["peer" , "manager" , "client"]}/> */}
+                    <InputParts placeholder="Describe what features do you want to have in your Email" name="other_options"  title={"Other Options"} inputType={"textarea"}/>
+                    <InputParts placeholder="Signature" name="signature" title="Signature" inputType="default"/>
                 <button type="submit" className="w-full shadow-md bg-blue-500 flex items-center gap-2 justify-center p-2 rounded-md bg-linear-to-r from-cyan-500 to-blue-500 text-white cursor-pointer"><span className="text-[20px]">Generate</span> <RiAiGenerate className="text-[20px]"/></button>
             </form>
+            {result && <div ref={resultRef} className="flex p-3  shadow-md rounded-md bg-white dark:bg-slate-800 flex-col w-full md:w-1/2 gap-2">
+                <div className="flex justify-between">
+                    <h3 className="p-2 font-semibold text-[20px]">Generated Email</h3>
+                    <button className="mt-2" onClick={copyTheResult}><IoCopyOutline/></button>
+                </div>    
+                <InputParts height="h-[400px]" onChange={(e)=> setResult(e.target.value)} defaultValue={result as string} title="" name="generated_email" placeholder="" inputType={"textarea"}/>
+            </div>}
         </div>
     </>);
 }
 
-const InputParts = ({name , title , inputType , options , placeholder , height , error} : {name : string , title : string , height ?: string , inputType : "textarea" | "default" | "select-option" | "checkbox" , options ?: string[] , placeholder : string , error ?: boolean}) => {
+const InputParts = ({name , title , defaultValue , inputType , options , placeholder , height , error , width , onChange} : InputPartsProps) => {
     switch(inputType){
         case "textarea":
-            return <label className="flex flex-col gap-1">
+            return <label className={`flex ${width ? width : "w-full"} flex-col gap-1`}>
                 <h3 className="font-semibold">{title}</h3>
-                <textarea placeholder={placeholder} className={`rounded-md border-2 p-3 dark:bg-slate-700 ${error ? "border-red-500" : "border-slate-100"} dark:border-none outline-none ${height ? height : "h-[100px]"}`} name={name} id=""></textarea>
+                <textarea onChange={onChange} defaultValue={defaultValue} placeholder={placeholder} className={`rounded-md w-full border-2 p-3 dark:bg-slate-700 ${error ? "border-red-500" : "border-slate-100 dark:border-none"} outline-none ${height ? height : "h-[100px]"}`} name={name} id=""></textarea>
                 {error && <span className="text-red-600">Required</span>}
             </label>
         case "default":
-            return <label className="flex flex-col gap-1">
+            return <label className={`flex ${width ? width : "w-full"} flex-col gap-1`}>
                 <h3 className="font-semibold">{title}</h3>
-                <input name={name} type="text" placeholder={placeholder} className={`p-3 border-2 dark:bg-slate-700 ${error ? "border-red-500" : "border-slate-100"} dark:border-none rounded-md border-1 w-full outline-none`} />
+                <input name={name} type="text" placeholder={placeholder} className={`p-3 w-full border-2 dark:bg-slate-700 ${error ? "border-red-500" : "border-slate-100 dark:border-none"} rounded-md border-1 w-full outline-none`} />
                 {error && <span className="text-red-600">Required</span>}
             </label>
         case "select-option":
-            return <label className="flex flex-col gap-2">
+            return <label className={`flex ${width ? width : "w-full"} flex-col gap-2`}>
                 <h3 className="font-semibold">{title}</h3>
-                <select className="p-2 cursor-pointer rounded-md border-1 dark:bg-slate-700 dark:border-none border-2  outline-none" name={name} id="">
+                <select className={`p-2 cursor-pointer w-full rounded-md border-1 dark:bg-slate-700 dark:border-none border-2 outline-none`} name={name} id="">
                     {options?.map((item : any , index : number) => (
-                        <option key={index} value={item}>{item}</option>
+                        <option key={index} value={item}>{item[0].toUpperCase() + item.substring(1)}</option>
                     ))}
                 </select>
             </label>
