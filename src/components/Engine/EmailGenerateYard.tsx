@@ -29,13 +29,12 @@ const EmailGeneratorYard = () => {
 
     const resultRef = useRef<any>(null)
 
-    const [result , setResult] = useState<string>("sdfsdf")
+    const [result , setResult] = useState<string>("")
 
     const [error , setError] = useState(false)
 
     const handleSubmit = (e : ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
-
         setPending(true)
             let data
             if(mode){
@@ -137,10 +136,10 @@ const EmailGeneratorYard = () => {
                     <button className="mt-2" onClick={copyTheResult}><IoCopyOutline/></button>
                 </div>    
                 <InputParts height="h-[400px]" onChange={(e)=> setResult(e.target.value)} defaultValue={result as string} title="" name="generated_email" placeholder="" inputType={"textarea"}/>
-                <div className="flex items-center gap-2 justify-between">
+                {/* <div className="flex items-center gap-2 justify-between">
                     <InputParts onChange={e => console.log(e.target?.value)} name="follow_up" title="" placeholder="Send Demo" inputType="default"/>
                     <button className="text-[25px] p-2"><FiSend /></button>
-                </div>
+                </div> */}
             </div>}
         </div>
     </>);
