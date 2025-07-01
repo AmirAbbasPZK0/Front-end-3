@@ -8,12 +8,12 @@ import Loading from "./Loading";
 import { IoCopyOutline } from "react-icons/io5";
 
 interface InputPartsProps {
-    name : string ,
-    title : string , 
-    height ?: string , 
-    inputType : "textarea" | "default" | "select-option" | "checkbox" , 
-    options ?: string[] , 
-    placeholder : string , 
+    name : string
+    title : string
+    height ?: string
+    inputType : "textarea" | "default" | "select-option" | "checkbox"
+    options ?: string[]
+    placeholder : string 
     error ?: boolean
     width ?: string
     value ?: string
@@ -29,24 +29,12 @@ const EmailGeneratorYard = () => {
 
     const resultRef = useRef<any>(null)
 
-    const [result , setResult] = useState<string>("")
+    const [result , setResult] = useState<string>("sdfsdf")
 
     const [error , setError] = useState(false)
 
     const handleSubmit = (e : ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
-        
-        if(mode){
-            if(e?.target?.email_content?.value === ""){
-                setError(true)
-                return false
-            }
-        }else{
-            if(e?.target?.email_content?.value === "" || e?.target?.received_email?.value === ""){
-                setError(true)
-                return false
-            }
-        }
 
         setPending(true)
             let data
@@ -149,10 +137,10 @@ const EmailGeneratorYard = () => {
                     <button className="mt-2" onClick={copyTheResult}><IoCopyOutline/></button>
                 </div>    
                 <InputParts height="h-[400px]" onChange={(e)=> setResult(e.target.value)} defaultValue={result as string} title="" name="generated_email" placeholder="" inputType={"textarea"}/>
-                {/* <div className="flex items-center gap-2 justify-between">
+                <div className="flex items-center gap-2 justify-between">
                     <InputParts onChange={e => console.log(e.target?.value)} name="follow_up" title="" placeholder="Send Demo" inputType="default"/>
                     <button className="text-[25px] p-2"><FiSend /></button>
-                </div> */}
+                </div>
             </div>}
         </div>
     </>);
@@ -177,7 +165,7 @@ const InputParts = ({name , title , defaultValue , inputType , options , placeho
                 <h3 className="font-semibold">{title}</h3>
                 <select className={`p-2 cursor-pointer w-full rounded-md border-1 dark:bg-slate-700 dark:border-none border-2 outline-none`} name={name} id="">
                     {options?.map((item : any , index : number) => (
-                        <option key={index} value={item}> {name === "language" && countries_flag(item)} {item[0].toUpperCase() + item.substring(1)}</option>
+                        <option key={index} value={item}> {name === "language" && countries_flag(item)} {name === "tone" && tone_emojies(item)} {item[0].toUpperCase() + item.substring(1)}</option>
                     ))}
                 </select>
             </label>
@@ -206,6 +194,27 @@ const countries_flag = (countryName : string) => {
             return "🇵🇹"
         case "hindi":
             return "🇮🇳"
+    }
+}
+
+const tone_emojies = (name : string) => {
+    switch(name){
+        case "friendly":
+            return "😀"
+        case "professional":
+            return "👨‍💼"
+        case "casual":
+            return "😎"
+        case "formal":
+            return "🤵"
+        case "persuasive":
+            return "🗿"
+        case "humorous":
+            return "💖"
+        case "inspirational":
+            return "🚀"
+        case "neutral":
+            return "🙂"
     }
 }
 
