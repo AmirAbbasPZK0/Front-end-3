@@ -31,6 +31,8 @@ const EmailGeneratorYard = () => {
 
     const [result , setResult] = useState<string>("")
 
+    const idRef = useRef<any>(null)
+
     const [error , setError] = useState(false)
 
     const handleSubmit = (e : ChangeEvent<HTMLFormElement>) => {
@@ -73,7 +75,9 @@ const EmailGeneratorYard = () => {
                     throw new Error("Error")
                 }
             }).then(data => {
+                // console.log(data)
                 setResult(data?.generated_text)
+                idRef.current = data?.id
                 // setResult()
             }).catch(err => {
                 console.log(err)
@@ -118,7 +122,7 @@ const EmailGeneratorYard = () => {
 
                     <div className="w-full md:flex-row flex-col flex gap-2">
                     <InputParts width="w-full md:w-1/2" placeholder="" inputType="select-option" name="language" title="Language" options={["english" , "french" , "german" , "spanish" , "italian" , "portuguese" , "hindi"]}/>
-                        <InputParts width="w-full md:w-1/2" placeholder="" title="Length" inputType="select-option" name="length_d" options={["long" , "medium" , "short"]}/>
+                        <InputParts width="w-full md:w-1/2" placeholder="" title="Length" inputType="select-option" name="length_d" options={["long" , "medium" , "short" , "very short"]}/>
                     </div>
 
                     <div className="w-full md:flex-row flex-col flex gap-2">
@@ -136,10 +140,36 @@ const EmailGeneratorYard = () => {
                     <button className="mt-2" onClick={copyTheResult}><IoCopyOutline/></button>
                 </div>    
                 <InputParts height="h-[400px]" onChange={(e)=> setResult(e.target.value)} defaultValue={result as string} title="" name="generated_email" placeholder="" inputType={"textarea"}/>
-                {/* <div className="flex items-center gap-2 justify-between">
-                    <InputParts onChange={e => console.log(e.target?.value)} name="follow_up" title="" placeholder="Send Demo" inputType="default"/>
+                <form onSubmit={(e : any) => {
+                    e.preventDefault()
+                    let data = {
+                        id : idRef.current,
+                        edits : e.target?.edit?.value
+                    }
+
+                    setPending(true)
+                    
+                    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/new-generated-text` , {
+                        method : "POST",
+                        headers : {
+                            "Content-Type" : "application/json"
+                        },
+                        body : JSON.stringify(data)
+                    }).then(res => {
+                        if(res.ok){
+                            return res.json()
+                        }
+                    }).then(data => {
+                        setResult(data?.generated_text)
+                        idRef.current = data?.id
+                    })
+                    .catch(err => console.log(err))
+                    .finally(()=> setPending(false))
+
+                }} className="flex items-center gap-2 justify-between">
+                    <InputParts name="edit" title="" placeholder="Comment to edit the generated email" inputType="default"/>
                     <button className="text-[25px] p-2"><FiSend /></button>
-                </div> */}
+                </form>
             </div>}
         </div>
     </>);
