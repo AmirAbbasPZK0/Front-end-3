@@ -84,7 +84,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         }
       }).then(data => {
         Cookies.set("access_token" , data?.data?.jwt , {expires : 1})
-        router.push("/")
+        // router.push("/")
         setIsLoading(false)
       })
     }

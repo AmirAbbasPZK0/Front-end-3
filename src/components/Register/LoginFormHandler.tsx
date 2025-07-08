@@ -14,7 +14,6 @@ import { FaRegEye , FaRegEyeSlash } from "react-icons/fa6";
 const LoginFormHandler = ({onClose} : {onClose : (value : boolean) => void}) => {
 
   const form = useRef<HTMLFormElement | null>(null);
-  const [pending , setPending] = useState(false)
   const [loading , setLoading] = useState(false)
   const [showPass , setShowPass] = useState(false)
   const [error , setError] = useState("")
@@ -121,7 +120,7 @@ const LoginFormHandler = ({onClose} : {onClose : (value : boolean) => void}) => 
               </div>
               <div className="flex flex-row w-full justify-between">
                 <span>Forget Password?</span>
-                <Link className="text-blue-500" href={"/reset-password"}>Reset Password</Link>
+                <Link onClick={() => onClose(false)} className="text-blue-500" href={"/reset-password"}>Reset Password</Link>
               </div>
             </div>
             <div className="text-center flex items-center justify-center">
