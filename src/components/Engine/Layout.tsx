@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/services/redux/store"
 import { historyHandler, loginHandler } from "@/services/redux/reducers/userSlice"
 import Loading from "./Loading"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import PrivacyPolicy from "../Home/PrivacyPolicy"
 
 const Layout = ({ children }: { children: ReactNode }) => {
 
@@ -17,7 +17,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   const isLogin = useAppSelector(state => state.userSlice.isLogin)
 
-  const router = useRouter()
+  const [privacyClose , setPrivacyClose] = useState(false)
 
   const {data} = useSession()
 
@@ -108,6 +108,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <WebSocketProvider>
+      
       {children}
     </WebSocketProvider>
   )

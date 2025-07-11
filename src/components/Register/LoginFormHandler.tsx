@@ -137,7 +137,7 @@ const LoginFormHandler = ({onClose} : {onClose : (value : boolean) => void}) => 
             <ShinySkeuButton isPending={loading}/>
           </div>
           <div className="flex flex-row items-center justify-center gap-2">
-            <p>Don't have an account?</p> <Link className="text-blue-500 font-semibold" href={"/signup"}>Sign Up</Link>
+            <p>Don't have an account?</p> <Link onClick={()=> onClose(false)} className="text-blue-500 font-semibold" href={"/signup"}>Sign Up</Link>
           </div>
         </form>
       </div>
