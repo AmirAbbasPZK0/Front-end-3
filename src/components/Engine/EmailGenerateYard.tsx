@@ -116,7 +116,7 @@ const EmailGeneratorYard = () => {
                     </div>
                 </label>
 
-                    <InputParts error={error} placeholder="I am writing to email_content a new marketing campain that i believe will be effective for your business" height="h-[200px]" inputType="textarea" name="email_content" title="Email Content"/>
+                    <InputParts error={error} placeholder="" height="h-[200px]" inputType="textarea" name="email_content" title="Email Content"/>
                     
                     {!mode && <InputParts error={error} placeholder="Received Email" name="received_email" title="Received Email" inputType="textarea"/>}
 
