@@ -1,10 +1,7 @@
 "use client";
 import React, { ChangeEvent, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { useAppDispatch } from "@/services/redux/store";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { loginHandler } from "@/services/redux/reducers/userSlice";
 import restApi from "@/services/restApi";
 import endpoints from "@/configs/endpoints";
 import toast from "react-hot-toast";
@@ -21,8 +18,6 @@ interface SignUpFormProps {
 const SignUpFormHandler: React.FC = () => {
 
   const form = useRef<HTMLFormElement | null>(null);
-
-  const dispatch = useAppDispatch()
   
   const router = useRouter()
   
@@ -50,7 +45,7 @@ const SignUpFormHandler: React.FC = () => {
           color: "white",
         },
       });
-      router.push("/login")
+      router.push("/")
     }
       
   }

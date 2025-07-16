@@ -36,29 +36,32 @@ const EmailGeneratorYard = () => {
     const [error , setError] = useState(false)
 
     const handleSubmit = (e : ChangeEvent<HTMLFormElement>) => {
+        
         e.preventDefault()
         setPending(true)
-            let data
-            if(mode){
-                data = {
-                    email_content : e.target?.email_content?.value,
-                    language : e.target?.language?.value,
-                    length : e.target?.length_d?.value,
-                    tone : e.target?.tone?.value,
-                    other_options : e?.target?.other_options?.value,
-                    signature : e?.target?.signature?.value
-                }
-            }else{
-                data = {
-                    email_content : e.target?.email_content?.value,
-                    language : e.target?.language?.value,
-                    length : e.target?.length_d?.value,
-                    tone : e.target?.tone?.value,
-                    received_email : e.target?.received_email?.value,
-                    other_options : e?.target?.other_options?.value,
-                    signature : e?.target?.signature?.value
-                }
+        
+        let data
+
+        if(mode){
+            data = {
+                email_content : e.target?.email_content?.value,
+                language : e.target?.language?.value,
+                length : e.target?.length_d?.value,
+                tone : e.target?.tone?.value,
+                other_options : e?.target?.other_options?.value,
+                signature : e?.target?.signature?.value
             }
+        }else{
+            data = {
+                email_content : e.target?.email_content?.value,
+                language : e.target?.language?.value,
+                length : e.target?.length_d?.value,
+                tone : e.target?.tone?.value,
+                received_email : e.target?.received_email?.value,
+                other_options : e?.target?.other_options?.value,
+                signature : e?.target?.signature?.value
+            }
+        }
             
             // console.log(data)
 
