@@ -254,7 +254,7 @@ const SaveEmailModal : React.FC<SaveEmailModalProps> = ({onClose , open , curren
                     <button onClick={()=> onClose(false)}><LiaTimesSolid/></button>
                     <h1 className="text-[20px] font-semibold">Save Template</h1>
                     <InputParts name={"nameD"} title={""} inputType={"default"} placeholder={"Enter the name"} />
-                    <button disabled={pending} className={`w-full p-2 ${pending ? "bg-green-500" : "bg-green-300"}rounded-md`}>{pending ? "Pending..." : "Save"}</button>
+                    <button disabled={pending} className={`w-full p-2 bg-green-300 rounded-md`}>{pending ? "Pending..." : "Save"}</button>
                 </motion.div>}
                 
             </form>
