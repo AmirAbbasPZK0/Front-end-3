@@ -9,6 +9,7 @@ import urlInputSlice from "./reducers/urlInputSlice"
 import userSlice from "./reducers/userSlice"
 import newThreadSlice from "./reducers/newThreadSlice"
 import commentFileUploaderSlice from "./reducers/commentFileUploaderSlice"
+import templateSlice from "./reducers/templateSlice"
 
 const rootReducer = combineReducers({
   loadingReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   urlInputSlice,
   userSlice,
   newThreadSlice,
-  commentFileUploaderSlice
+  commentFileUploaderSlice,
+  templateSlice
 });
 
 const store = configureStore({
