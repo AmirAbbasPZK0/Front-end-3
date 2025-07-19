@@ -4,28 +4,31 @@ import { AnimatePresence, motion } from "framer-motion"
 import { FaRegTrashAlt } from "react-icons/fa";
 import Cookies from "js-cookie";
 import { FaTimes } from "react-icons/fa"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
+import { IoReturnDownBackOutline } from "react-icons/io5";
 import { updateData , insertToForm, removeFromCart } from "@/services/redux/reducers/templateSlice";
 
 const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean) => void, isOpen: boolean }) => {
 
-  // const [loading , setLoading]
+  const [loading , setLoading] = useState(false)
 
   const dispatch = useAppDispatch()
 
   const data = useAppSelector(state => state.templateSlice.data)
 
   useEffect(()=>{
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-all-emails` , {
-            method : "GET",
-            headers : {
-                "Authorization" : `Bearer ${Cookies.get("access_token")}`
-            }
-        }).then(res => res.json())
-        .then(data => {
-            dispatch(updateData(data?.data))
-        })
+    setLoading(true)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-all-emails` , {
+        method : "GET",
+        headers : {
+            "Authorization" : `Bearer ${Cookies.get("access_token")}`
+        }
+    }).then(res => res.json())
+    .then(data => {
+        setLoading(false)
+        dispatch(updateData(data?.data))
+    })
   },[])
   
     return (
@@ -65,10 +68,19 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
             </div>
             <hr className="w-full border-1 border-slate-900 dark:border-slate-100"/>
             <div className='flex flex-col h-[100vh] bg-white dark:bg-slate-900 w-full gap-4 overflow-auto'>
+              <button onClick={()=> {
+                dispatch(insertToForm({}))
+                setClose(false)
+              }} className="text-black flex items-center justify-between font-semibold dark:text-white dark:bg-slate-800 bg-slate-200 rounded-md p-3 w-full items-left text-left">
+                <span>Default</span>
+                <span className="p-2">
+                  <IoReturnDownBackOutline className="text-[20px]"/>
+                </span>
+              </button>
               {data?.map((item : any , key : number) => (
                 item?.name !== null && 
-                <div className="text-black flex items-center justify-between font-semibold dark:text-white dark:bg-slate-800 bg-slate-200 rounded-md p-3 w-full items-left text-left" key={key}>
-                  <button onClick={()=>{
+                <div className={`text-black flex items-center justify-between font-semibold dark:text-white ${template_background(key)} rounded-md p-3 w-full items-left text-left`} key={key}>
+                  <button className="w-full text-left h-full" onClick={()=>{
                     setClose(false)
                     dispatch(insertToForm(item))
                   }}>
@@ -97,5 +109,23 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
     </>
   );
 };
+
+const template_background = (id : number) => {
+  
+  let key = id % 4
+  
+  switch(key){
+    case 0:
+      return "dark:bg-red-950 bg-red-300"
+    case 1:
+      return "dark:bg-blue-950 bg-blue-300"
+    case 2:
+      return "dark:bg-green-950 bg-green-300"
+    case 3:
+      return "dark:bg-yellow-950 bg-yello-300"
+    default:
+      return "dark:bg-slate-800 bg-slate-200"
+  }
+} 
 
 export default EmailTemplateSlideBar;

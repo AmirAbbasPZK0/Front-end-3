@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import { LuLayoutTemplate } from "react-icons/lu";
 import { useAppDispatch, useAppSelector } from "@/services/redux/store";
 import { addToData } from "@/services/redux/reducers/templateSlice";
+import { insertToForm } from "@/services/redux/reducers/templateSlice";
 
 interface InputPartsProps {
     name : string
@@ -36,7 +37,7 @@ const EmailGeneratorYard = () => {
 
     const [mode , setMode] = useState(true)
 
-    const [saveEmailModal , setSaveEmailModal] = useState(false)
+    const [saveTemplateModal , setSaveTemplateModal] = useState(false)
 
     const resultRef = useRef<any>(null)
 
@@ -47,6 +48,8 @@ const EmailGeneratorYard = () => {
     const idRef = useRef<any>(null)
 
     const [error , setError] = useState(false)
+
+    const dispatch = useAppDispatch()
 
     const [body , setBody] = useState<any>({})
 
@@ -101,6 +104,8 @@ const EmailGeneratorYard = () => {
         }).finally(()=>{
             setPending(false)
         })
+
+        dispatch(insertToForm({}))
     }
 
     const copyTheResult = () => {
@@ -130,7 +135,7 @@ const EmailGeneratorYard = () => {
                         <button onClick={()=> setMode(true)} type="button" className={`py-2 px-3 rounded-3xl font-semibold ${!mode ? "bg-transparent text-blue-600" : "bg-blue-600 text-white"} border-2 border-blue-600`}>Compose New Email</button>
                         <button onClick={()=> setMode(false)} type="button" className={`py-2 px-3 rounded-3xl font-semibold ${mode ? "bg-transparent text-blue-600" : "bg-blue-600 text-white"} border-2 border-blue-600`}>Reply to Email</button>
                     </div>
-                    <button className="p-2 font-semibold flex items-center justify-center gap-3 border-2 text-yellow-500 border-yellow-500 dark:text-yellow-400 dark:border-yellow-400 rounded-full" type="button" onClick={()=> setOpen(true)}><LuLayoutTemplate className="text-[24px]"/> <span className="text-[16px]">Templates</span></button>
+                    <button className="p-2 font-semibold flex items-center justify-center gap-2 px-3 border-2 text-yellow-500 border-yellow-500 dark:text-yellow-400 dark:border-yellow-400 rounded-full" type="button" onClick={()=> setOpen(true)}><LuLayoutTemplate className="text-[24px]"/> <span className="text-[16px]">Templates</span></button>
                 </label>
 
                     <InputParts error={error} placeholder="" height="h-[200px]" inputType="textarea" name="email_content" title="Email Content"/>
@@ -187,8 +192,8 @@ const EmailGeneratorYard = () => {
                     <InputParts name="edit" title="" placeholder="Comment to edit the generated email" inputType="default"/>
                     <button className="text-[25px] p-2"><FiSend /></button>
                 </form>
-                <button type="button" onClick={()=> setSaveEmailModal(true)} className="text-[20px] cursor-pointer font-semibold dark:bg-green-800 rounded-md bg-green-300 p-2">Save Template</button>
-                {saveEmailModal && <SaveEmailModal body={body} currentId={idRef.current} onClose={setSaveEmailModal} open={saveEmailModal}/>}
+                <button type="button" onClick={()=> setSaveTemplateModal(true)} className="text-[20px] cursor-pointer font-semibold dark:bg-green-800 rounded-md bg-green-300 p-2">Save Template</button>
+                {saveTemplateModal && <SaveTemplateModal body={body} currentId={idRef.current} onClose={setSaveTemplateModal} open={saveTemplateModal}/>}
             </div>}
         </div>
         <EmailTemplateYard isOpen={open} setClose={()=> setOpen(false)}/>
@@ -196,14 +201,14 @@ const EmailGeneratorYard = () => {
     );
 }
 
-interface SaveEmailModalProps {
+interface SaveTemplateModal {
     onClose : (value : boolean) => void
     body : any,
     open : boolean
     currentId : number | string
 }
 
-const SaveEmailModal : React.FC<SaveEmailModalProps> = ({onClose , open , currentId , body}) => {
+const SaveTemplateModal : React.FC<SaveTemplateModal> = ({onClose , open , currentId , body}) => {
 
     const dispatch = useAppDispatch()
 
@@ -254,7 +259,7 @@ const SaveEmailModal : React.FC<SaveEmailModalProps> = ({onClose , open , curren
                     <button onClick={()=> onClose(false)}><LiaTimesSolid/></button>
                     <h1 className="text-[20px] font-semibold">Save Template</h1>
                     <InputParts name={"nameD"} title={""} inputType={"default"} placeholder={"Enter the name"} />
-                    <button disabled={pending} className={`w-full p-2 bg-green-300 rounded-md`}>{pending ? "Pending..." : "Save"}</button>
+                    <button disabled={pending} className={`w-full p-2 bg-green-300 dark:bg-green-600 rounded-md`}>{pending ? "Pending..." : "Save"}</button>
                 </motion.div>}
                 
             </form>
