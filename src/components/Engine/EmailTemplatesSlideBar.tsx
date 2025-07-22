@@ -14,6 +14,7 @@ const defualtTemplates = [
         name : "Don't use big comma",
         language : "english",
         tone : "professional",
+        other_options : "Don't use big comma",
         signature : "",
         length : "medium"
     }
