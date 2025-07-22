@@ -15,7 +15,7 @@ import useWebSocket from "@/hooks/useWebSocket";
 import Slidebar from "./Slidebar";
 import ThemeToggle from "../Global/ThemeToggle/ThemeToggle";
 import { setCounterToZero } from "@/services/redux/reducers/newThreadSlice";
-
+import EmailGenratorLogo from "@/../public/images/email.webp"
 
 
 const MiniSlideBar : React.FC = () => {
@@ -79,6 +79,18 @@ const MiniSlideBar : React.FC = () => {
                   ></path>
                 </svg>)}
                 
+                <button onClick={()=>{
+                    router.push("/email-generator")
+                }} className='p-2 gap-2 items-center justify-center flex rounded-2xl bg-blue-500 text-white'>
+                              <Image
+                                src={EmailGenratorLogo}
+                                alt="logo"
+                                width={30}
+                                height={20}
+                                className=""
+                              />
+                
+                            </button>
                 
             </div>
             <div className="flex flex-col gap-4 p-4 items-center justify-center">

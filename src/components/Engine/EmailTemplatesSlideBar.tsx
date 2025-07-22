@@ -9,6 +9,16 @@ import { useAppDispatch , useAppSelector } from "@/services/redux/store";
 import { IoReturnDownBackOutline } from "react-icons/io5";
 import { updateData , insertToForm, removeFromCart } from "@/services/redux/reducers/templateSlice";
 
+const defualtTemplates = [
+    {
+        name : "Don't use big comma",
+        language : "english",
+        tone : "professional",
+        signature : "",
+        length : "medium"
+    }
+]
+
 const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean) => void, isOpen: boolean }) => {
 
   const [loading , setLoading] = useState(false)
@@ -30,6 +40,8 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
         dispatch(updateData(data?.data))
     })
   },[])
+
+  console.log(data)
   
     return (
     <>
@@ -77,6 +89,17 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
                   <IoReturnDownBackOutline className="text-[20px]"/>
                 </span>
               </button>
+              {defualtTemplates?.map((item , key) => (
+                <button key={key} onClick={()=> {
+                  dispatch(insertToForm(item))
+                  setClose(false)
+                }} className="text-black flex items-center justify-between font-semibold dark:text-white dark:bg-slate-800 bg-slate-200 rounded-md p-3 w-full items-left text-left">
+                  <span>{item.name}</span>
+                  <span className="p-2">
+                    <IoReturnDownBackOutline className="text-[20px]"/>
+                  </span>
+                </button>
+              ))}
               {data?.map((item : any , key : number) => (
                 item?.name !== null && 
                 <div className={`text-black flex items-center justify-between font-semibold dark:text-white ${template_background()} rounded-md p-3 w-full items-left text-left`} key={key}>

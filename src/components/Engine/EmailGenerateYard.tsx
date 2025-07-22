@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/services/redux/store";
 import { addToData } from "@/services/redux/reducers/templateSlice";
 import { insertToForm } from "@/services/redux/reducers/templateSlice";
 
+
 interface InputPartsProps {
     name : string
     title : string
@@ -231,7 +232,7 @@ const SaveTemplateModal : React.FC<SaveTemplateModal> = ({onClose , open , curre
                 return res.json()
             }
         }).then(data => {
-            toast.success(data?.msg)
+            toast.success("Template Saved Successfully!")
             let email = {...body , name : e?.target?.nameD?.value}
             dispatch(addToData(email))
             onClose(false)
