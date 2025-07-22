@@ -79,7 +79,7 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
               </button>
               {data?.map((item : any , key : number) => (
                 item?.name !== null && 
-                <div className={`text-black flex items-center justify-between font-semibold dark:text-white ${template_background(key)} rounded-md p-3 w-full items-left text-left`} key={key}>
+                <div className={`text-black flex items-center justify-between font-semibold dark:text-white ${template_background()} rounded-md p-3 w-full items-left text-left`} key={key}>
                   <button className="w-full text-left h-full" onClick={()=>{
                     setClose(false)
                     dispatch(insertToForm(item))
@@ -110,19 +110,28 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
   );
 };
 
-const template_background = (id : number) => {
+const template_background = () => {
   
-  let key = id % 4
-  
+  // let key = id % 6
+
+  let key = Math.ceil(Math.random() * 5)
+
   switch(key){
-    case 0:
-      return "dark:bg-red-950 bg-red-300"
     case 1:
-      return "dark:bg-blue-950 bg-blue-300"
+      console.log(key)
+      return "dark:bg-red-950 bg-red-300"
     case 2:
-      return "dark:bg-green-950 bg-green-300"
+      console.log(key)
+      return "dark:bg-blue-950 bg-blue-300"
     case 3:
-      return "dark:bg-yellow-950 bg-yello-300"
+      console.log(key)
+      return "dark:bg-green-950 bg-green-300"
+    case 4:
+      console.log(key)
+      return "dark:bg-yellow-950 bg-yellow-300"
+    case 5:
+      console.log(key)
+      return "dark:bg-purple-950 bg-purple-300"
     default:
       return "dark:bg-slate-800 bg-slate-200"
   }
