@@ -11,7 +11,23 @@ import { updateData , insertToForm, removeFromCart } from "@/services/redux/redu
 
 const defualtTemplates = [
     {
-        name : "Don't use Em Dashes ( — ) ",
+        name : "Professional",
+        language : "english",
+        tone : "professional",
+        other_options : "Don't use Em Dashes ( — ) ", 
+        signature : "",
+        length : "medium"
+    },
+    {
+        name : "Friendly",
+        language : "english",
+        tone : "friendly",
+        other_options : "Don't use Em Dashes ( — ) ", 
+        signature : "",
+        length : "short"
+    },
+    {
+        name : "Cassual",
         language : "english",
         tone : "professional",
         other_options : "Don't use Em Dashes ( — ) ", 
