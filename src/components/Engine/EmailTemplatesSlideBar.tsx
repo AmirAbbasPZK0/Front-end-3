@@ -11,10 +11,10 @@ import { updateData , insertToForm, removeFromCart } from "@/services/redux/redu
 
 const defualtTemplates = [
     {
-        name : "Don't use big comma",
+        name : "Don't use Em Dashes ( — ) ",
         language : "english",
         tone : "professional",
-        other_options : "Don't use big comma",
+        other_options : "Don't use Em Dashes ( — ) ", 
         signature : "",
         length : "medium"
     }
@@ -23,6 +23,7 @@ const defualtTemplates = [
 const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean) => void, isOpen: boolean }) => {
 
   const [loading , setLoading] = useState(false)
+  
 
   const dispatch = useAppDispatch()
 

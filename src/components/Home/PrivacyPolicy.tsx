@@ -47,7 +47,7 @@ const PrivacyPolicy = ({setClose} : {setClose : (value : boolean) => void}) => {
                             <ul className="list-disc list-inside space-y-2 text-gray-700">
                             <li>
                                 <strong>Personal Identification Information:</strong> Name, email
-                                address, phone number, postal address, etc.
+                                address, phone number, etc.
                             </li>
                             <li>
                                 <strong>Usage Data:</strong> Information about how you use our
@@ -105,10 +105,10 @@ const PrivacyPolicy = ({setClose} : {setClose : (value : boolean) => void}) => {
                             <p>
                             To exercise these rights, please contact us at{" "}
                             <a
-                                href="mailto:youremail@example.com"
+                                href="findroa@gmail.com"
                                 className="text-blue-600 underline hover:text-blue-800"
                             >
-                                youremail@example.com
+                                findora@gmail.com
                             </a>
                             .
                             </p>
@@ -155,10 +155,10 @@ const PrivacyPolicy = ({setClose} : {setClose : (value : boolean) => void}) => {
                             <br />
                             Email:{" "}
                             <a
-                                href="mailto:youremail@example.com"
+                                href="findora@gmail.com"
                                 className="text-blue-600 underline hover:text-blue-800"
                             >
-                                youremail@example.com
+                                findora@gmail.com
                             </a>
                             <br />
                             Address: 123 Your Street, Your City, Your Country

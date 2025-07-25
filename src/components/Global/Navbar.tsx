@@ -11,9 +11,6 @@ import { RiHome2Line } from "react-icons/ri";
 import { GoPeople } from "react-icons/go";
 import { AnimatePresence } from "framer-motion";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
-import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
-import { addResource } from "@/services/redux/reducers/resourceSlice";
-import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
 import { useRouter } from "next/navigation";
 import { BsSearch } from "react-icons/bs";
 import Slidebar from "../Engine/Slidebar";
@@ -30,12 +27,9 @@ const Links = [
 ];
 
 const Navbar = () => {
-  const [showDropDown, setShowDropDown] = useState(false);
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showLeftMenu, setShowLeftMenu] = useState(false);
-  const dispatch = useAppDispatch()
-  const router = useRouter()
   const {isMobile} = useAgent()
 
 
@@ -50,10 +44,6 @@ const Navbar = () => {
   };
 
   // Toggle dropdown
-  const toggleDropDown = () => {
-    setShowDropDown((prev) => !prev);
-  };
-
   const leftMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -90,7 +80,6 @@ const Navbar = () => {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setShowDropDown(false);
       }
     };
 

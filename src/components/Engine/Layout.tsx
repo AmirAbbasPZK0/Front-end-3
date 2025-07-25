@@ -108,6 +108,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <WebSocketProvider>
+      {privacyClose && <PrivacyPolicy setClose={setPrivacyClose} />}
       {children}
     </WebSocketProvider>
   )
