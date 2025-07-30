@@ -231,10 +231,10 @@ const SaveTemplateModal : React.FC<SaveTemplateModal> = ({onClose , open , curre
             if(res.ok){
                 return res.json()
             }
-        }).then(data => {
+        }).then(() => {
             toast.success("Template Saved Successfully!")
-            let email = {...body , name : e?.target?.nameD?.value}
-            dispatch(addToData(email))
+            let template = {...body , name : e?.target?.nameD?.value}
+            dispatch(addToData(template))
             onClose(false)
         }).finally(()=>{
             setPending(false)
@@ -242,7 +242,7 @@ const SaveTemplateModal : React.FC<SaveTemplateModal> = ({onClose , open , curre
     }
 
     return(<>
-        <AnimatePresence >
+        <AnimatePresence>
             <form onSubmit={onSubmit} className="fixed flex-col inset-0 z-50 flex items-center justify-center">
                 {open && <motion.div
                     initial={{ opacity: 0 }}
