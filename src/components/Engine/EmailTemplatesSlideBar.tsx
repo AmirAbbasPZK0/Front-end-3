@@ -67,7 +67,7 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-10 z-50"
+            className="fixed inset-0 bg-black bg-opacity-10 z-40"
             onClick={() => setClose(false)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -85,7 +85,7 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
             animate={{ x: 0 }}
             exit={{ x: 400 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="flex flex-col gap-4 p-3 pb-3 bg-white dark:bg-slate-900 fixed right-0 top-0 z-[2147483647] text-white w-[360px] h-[100vh]"
+            className="flex flex-col gap-4 p-3 pb-3 bg-white dark:bg-slate-900 fixed right-0 top-0 z-[2147483246] text-white w-[360px] h-[100vh]"
           >
             <div className='flex flex-row w-full justify-between'>
               <div className='flex flex-col'>

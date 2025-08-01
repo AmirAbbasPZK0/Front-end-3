@@ -4,7 +4,7 @@ import { addRecency , addResource } from '@/services/redux/reducers/resourceSlic
 import { removeAllFiles } from '@/services/redux/reducers/fileUploadSlice';
 import { removeAllUrls } from '@/services/redux/reducers/urlInputSlice';
 import { useRouter } from 'next/navigation';
-import { FaPlus } from 'react-icons/fa';
+import { CiCirclePlus } from "react-icons/ci";
 import EmailGenratorLogo from "@/../public/images/email.webp"
 import ProfileAvatar from "./ProfileAvatar"
 import Link from 'next/link';
@@ -59,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 ease-in-out z-50`}
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col">
           <div className="p-6 flex justify-between items-center mb-6">
             <h2 className="text-2xl flex items-center bottom-0 font-semibold dark:text-white">
               find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra
@@ -72,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               </svg>
             </button>
           </div>
-          <nav className='w-full flex flex-col gap-3 items-center justify-center'>
+          <nav className='w-full flex flex-col items-center justify-center'>
             {isGenerating ? (<>
               <button onClick={()=>{
                   dispatch(addRecency())
@@ -84,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   // socket.removeAllListeners();
                   router.push("/")
                   onClose()
-              }} className='flex items-center flex-row gap-2 border-2 rounded-[30px] px-2 py-1 border-slate-950 dark:border-slate-100 bg-none dark:text-white'><FaPlus/><span>New Thread</span></button>
+              }} className='flex w-full p-2.5 items-center flex-row gap-2 dark:bg-slate-800 transition dark:hover:bg-slate-700 hover:bg-slate-200 border-slate-950 bg-none dark:text-white'><CiCirclePlus className='text-[30px]'/><span className='font-semibold'>New Thread</span></button>
             </>) : (<>
               <button
                 type="button"
@@ -115,15 +115,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <button onClick={()=>{
               router.push("/email-generator")
               onClose()
-            }} className='p-2.5 gap-2 items-center justify-center flex rounded-2xl bg-blue-500 text-white'>
+            }} className='p-2.5 w-full gap-2 items-center flex bg-blue-500 text-white'>
               <Image
                 src={EmailGenratorLogo}
                 alt="logo"
-                width={20}
+                width={30}
                 height={10}
                 className=""
               />
-              <span>Generate Email</span>
+              <span className='font-semibold'>Generate Email</span>
             </button>
           </div>
           {(user?.isLogin && user?.data !== undefined) && <div className='flex p-3 flex-col gap-2 pt-3'>

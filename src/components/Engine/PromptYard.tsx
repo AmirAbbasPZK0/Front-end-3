@@ -313,6 +313,7 @@ const PropmptYard = () => {
                   {isAttachOpen && <AttachFileModal setClose={setIsAttachOpen}/>}
                   {/* Modules */}
                   <NewDropdown/>
+                  <button className='p-2 rounded-full border-2 border-slate-200 dark:border-slate-600' type='button'>Deep Search</button>
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
                   <div>
