@@ -304,7 +304,7 @@ const PropmptYard = () => {
                 <div className='flex flex-row gap-2 items-center justify-center'>
                   {/* <SpeechToText sendMessage={sendMessage}/> */}
                   <div className='flex gap-2 items-center justify-center'>
-                    <span className='font-semibold'>Deep Search</span>
+                    <span className='font-semibold md:text-[15px] text-[13px]'>Deep Search</span>
                     {user.isLogin ? (
                       <button
                       onClick={() => {
@@ -332,11 +332,11 @@ const PropmptYard = () => {
                         >
                           
                           <div className="bg-white flex items-center justify-center w-6 h-6 rounded-full shadow-md">
-                            <IoLockClosedSharp/>
+                            <IoLockClosedSharp className='text-slate-900'/>
                           </div>
 
                           {showTooltip && (
-                            <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-sm px-3 py-1 rounded-md shadow-lg z-10 whitespace-nowrap">
+                            <div className="absolute top-full bg-slate-950 dark:bg-slate-50 dark:text-black text-white py-1 px-2 mt-2 w-[180px] rounded-md left-1/2 -translate-x-1/2">
                               Please log in to use Deep Search
                             </div>
                           )}
