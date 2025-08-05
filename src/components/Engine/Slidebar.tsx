@@ -62,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="flex flex-col">
           <div className="p-6 flex justify-between items-center mb-6">
             <h2 className="text-2xl flex items-center bottom-0 font-semibold dark:text-white">
-              find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra
+              find<img className='w-[14px] h-[14px] mt-1.8' src='/images/o.png' alt="/logo.png" />ra
             </h2>
             <button onClick={()=>{
               onClose()
@@ -128,7 +128,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </div>
           {(user?.isLogin && user?.data !== undefined) && <div className='flex p-3 flex-col gap-2 pt-3'>
             <h3 className='text-[20px] p-1 font-semibold'>Recent Searches</h3>           
-            <nav className='flex flex-col gap-2 h-[200px] overflow-y-auto'>
+            <nav className='flex flex-col gap-2 h-[400px] overflow-y-auto'>
               {user?.history?.map((item : any) => (
                 <div key={item?.code}>
                     <HistoryButtons item={item} onClose={onClose}/>

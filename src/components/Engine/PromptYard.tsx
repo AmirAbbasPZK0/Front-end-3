@@ -17,6 +17,7 @@ import { checkHistory, increaseCounter, makeItFalse , setCounterToZero } from '@
 import { addResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 import useAgent from '@/hooks/useAgent';
+import { IoLockClosedSharp } from "react-icons/io5";
 
 
 const PropmptYard = () => {
@@ -36,7 +37,7 @@ const PropmptYard = () => {
     const user = useAppSelector(state => state?.userSlice);
     const historyChecker = useAppSelector(state => state?.newThreadSlice.history);
     const counter = useAppSelector(state => state.newThreadSlice.counter);
-
+    const [showTooltip, setShowTooltip] = useState(false);
     const dispatch = useAppDispatch();
     const { socket, response, setResponse, responseRef , findoraMessageRef} = useWebSocket();
     const router = useRouter();
@@ -63,31 +64,17 @@ const PropmptYard = () => {
       const url = new URL(window.location.href);
       const codde = url.pathname.split('/c/')[1];
       responseRef.current = ''; // Reset the ref for the next response
-      if(uploadedFiles.uploadedFilesUrl.length > 0){
-        socket?.emit('send_message', {
-          query: prompt,
-          source: "file",
-          answerType: selectedAnswerStyle,
-          llmType: "Preferred LLM",
-          depth: selectedDepth,
-          urls: uploadedFiles.urlsOfFiles,
-          sessionId: localStorage.getItem('sessionId'),
-          email : user?.data?.email,
-          code: codde
-        });
-      } else {
-        socket?.emit('send_message', {
-          query: prompt,
-          source: selectedResources,
-          answerType: selectedAnswerStyle,
-          llmType: "Preferred LLM",
-          depth: selectedDepth,
-          urls: urlInputs.urlInputs,
-          sessionId: localStorage.getItem('sessionId'),
-          email : user?.data?.email,
-          code: codde
-        });
-      }
+      socket?.emit('send_message', {
+        query: prompt,
+        source: uploadedFiles.uploadedFilesUrl.length > 0 ? "file" : selectedResources,
+        answerType: selectedAnswerStyle,
+        llmType: "Preferred LLM",
+        depth: selectedDepth,
+        urls: uploadedFiles.uploadedFilesUrl.length > 0 ? uploadedFiles.urlsOfFiles : urlInputs.urlInputs,
+        sessionId: localStorage.getItem('sessionId'),
+        email : user?.data?.email,
+        code: codde
+      });
       setResponse((prev : any) => {
         const cp: any = { ...prev };
         cp[localStorage.getItem("counter") as string] = {
@@ -313,13 +300,51 @@ const PropmptYard = () => {
                   {isAttachOpen && <AttachFileModal setClose={setIsAttachOpen}/>}
                   {/* Modules */}
                   <NewDropdown/>
-                  {/* <button className='p-2 rounded-full border-2 border-slate-200 dark:border-slate-600' type='button'>Deep Search</button> */}
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
-                  <div>
-                    {/* <Switch isDepth={selectedDepth} setCheck={()=> setSelectedDepth(item => !item)}/> */}
-                  </div>
                   {/* <SpeechToText sendMessage={sendMessage}/> */}
+                  <div className='flex gap-2 items-center justify-center'>
+                    <span className='font-semibold'>Deep Search</span>
+                    {user.isLogin ? (
+                      <button
+                      onClick={() => {
+                        if(user.isLogin){
+                          setSelectedDepth(item => !item)
+                        }
+                      }}
+                      className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
+                        selectedDepth ? 'bg-green-500' : 'bg-gray-300'
+                      }`}
+                    >
+                      <div
+                        className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
+                          selectedDepth ? 'translate-x-6' : ''
+                        }`}
+                      ></div>
+                    </button>
+                    ) : 
+                      <div className="relative inline-flex items-center opacity-50 cursor-not-allowed">
+                        <button
+                          onMouseEnter={() => setShowTooltip(true)}
+                          onMouseLeave={() => setShowTooltip(false)}
+                          // disabled
+                          className="w-14 h-8 flex items-center bg-gray-300 rounded-full p-1"
+                        >
+                          
+                          <div className="bg-white flex items-center justify-center w-6 h-6 rounded-full shadow-md">
+                            <IoLockClosedSharp/>
+                          </div>
+
+                          {showTooltip && (
+                            <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-sm px-3 py-1 rounded-md shadow-lg z-10 whitespace-nowrap">
+                              Please log in to use Deep Search
+                            </div>
+                          )}
+                        </button>
+                        
+                      </div>
+                    }
+                  </div>
                   <button onClick={()=>{
                     if(checkIsEmpty(prompt)){
                       sendMessage(prompt);
