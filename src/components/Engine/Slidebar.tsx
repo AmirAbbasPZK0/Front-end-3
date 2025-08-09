@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppSelector , useAppDispatch } from '@/services/redux/store';
-import { addRecency , addResource } from '@/services/redux/reducers/resourceSlice';
+import { addRecency , selectResource } from '@/services/redux/reducers/resourceSlice';
 import { removeAllFiles } from '@/services/redux/reducers/fileUploadSlice';
 import { removeAllUrls } from '@/services/redux/reducers/urlInputSlice';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,7 @@ import { signOut } from 'next-auth/react';
 import HistoryButtons from './HistoryButtons';
 import AuthModal from './AuthModal';
 import ProfileToolTip from './ProfileToolTip';
+import { RiLogoutBoxRLine , RiLoginBoxLine } from "react-icons/ri";
 import Image from 'next/image';
 
 
@@ -78,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   dispatch(addRecency())
                   dispatch(removeAllFiles())
                   dispatch(removeAllUrls())
-                  dispatch(addResource("web"))
+                  dispatch(selectResource("web"))
                   dispatch(setCounterToZero(0))
                   localStorage.setItem("counter" , `${counter}`)
                   // socket.removeAllListeners();
@@ -136,48 +137,37 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               ))}
             </nav>
           </div>}          
-          <nav className='w-full flex flex-col items-center gap-3 h-[20vh] justify-center fixed bottom-0'>
-            <div className='flex items-center justify-between gap-6'>
-            {/* <button className='flex items-center flex-row gap-2 border-2 px-4 rounded-[30px] p-3 border-slate-950 dark:border-slate-100 bg-none dark:text-white'>
-              <GrUpgrade/>
-              <span>Upgrade plan</span>
-            </button> */}
-            </div>
+          <nav className='w-full flex flex-col items-center gap-3 h-[20vh] justify-end fixed bottom-0'>
+            
             
             <div className='flex flex-row justify-between items-center w-full'>
               <div className='flex flex-row w-full items-center gap-2'>
                 {(user?.isLogin || user?.data !== undefined) ? (<>
-                  <div className='flex w-full p-3 flex-col pb-10 gap-2'>
-                      <div className='flex flex-row gap-3 items-center justify-between'>
-                        <div className='flex items-center justify-center gap-2'>
-                          <ProfileAvatar fontSize='text-[10px]' size='w-10 h-10' name={`${user?.data?.first_name} ${user?.data?.last_name}`}/>
-                          <h1 className='text-[14px] font-semibold'>{user?.data?.email}</h1>
-                        </div>
-                        {/* <button><TbDotsVertical/></button> */}
-                        <ProfileToolTip onClose={onClose}/>
-                      </div>
-                      <button onClick={ async()=>{
-                        await signOut()
-                        Cookies.set("access_token" , "" , {expires : 0})
-                        logout()
-                        window.location.reload()
-                        router.push("/")
-                      }} className="w-full items-center text-center p-2 font-semibold transition-all bg-red-500  text-white rounded-md">
-                        Logout
-                      </button>
+                  <div className='justify-end gap-2 flex-col flex w-full'>
+                    <div className='flex p-2 flex-row justify-start gap-2 items-center'>
+                      <ProfileAvatar name={user.data?.first_name || ""} size={'w-8 h-8'} fontSize={''}/>
+                      <h1 className='font-semibold'>{user.data?.email}</h1>
+                    </div>
+                    <button onClick={async ()=> {
+                      await signOut()
+                      Cookies.set("access_token" , "" , {expires : 0})
+                      logout()
+                      window.location.reload()
+                      router.push("/")
+                    }} className='p-4 w-full flex bg-red-500 text-white items-center justify-between'>
+                      <span className='font-semibold'>Logout</span>
+                      <RiLogoutBoxRLine className='text-[20px]'/>
+                    </button>
                   </div>
                 </>) : (<>
-                  <div className='flex pb-10 p-3 flex-col w-full gap-2'>
-                    <div>
-                      <h1 className="text-[14px] font-semibold">Guest</h1>
-                    </div>
+                  <div className='flex flex-col w-full gap-2'>
                     <div className='flex w-full flex-row items-center'>
-                      <Link onClick={()=> {
+                      <button onClick={()=> {
                         onClose()
                         setOpenAuthModal(true)
-                      }} href={"/"} className="w-full items-center text-center p-2 font-semibold transition-all bg-slate-950  border-2 border-slate-950  text-white rounded-md">
-                        Login
-                      </Link>
+                      }} className="w-full flex flex-row justify-between items-center text-center p-4 font-semibold transition-all bg-slate-950 border-2 border-slate-950 text-white">
+                        Login <RiLoginBoxLine className='text-[20px]'/>
+                      </button>
                     </div>
                   </div>
                 </>)}

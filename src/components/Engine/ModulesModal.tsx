@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { RxCross1 } from "react-icons/rx";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
-import { addResource } from "@/services/redux/reducers/resourceSlice";
+import { selectResource } from "@/services/redux/reducers/resourceSlice";
 import { FaCheck } from "react-icons/fa6";
 import ModuleIcon from "./ModuleIcons";
 
@@ -74,7 +74,7 @@ const ModulesModal = ({setClose} : ModulesModalProps) => {
                         {moduleList?.map(item => (
                             <button key={item.title} className={`transition-all flex flex-col md:flex-row items-center justify-between hover:scale-[1.05] md:border-2  rounded-md ${selectedModule === item.title ? "border-2 border-green-500" : "dark:border-slate-500"}`} type="button" onClick={()=>{
                                 setClose(false)
-                                dispatch(addResource(item.title))
+                                dispatch(selectResource(item.title))
                             }}>
                                 <div className="flex gap-2 md:flex-row flex-col items-center cursor-pointer justify-center text-center md:justify-start md:text-start p-3 ">
                                     <ModuleIcon  moduleName={item.title}/> 

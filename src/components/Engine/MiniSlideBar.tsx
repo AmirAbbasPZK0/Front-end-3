@@ -8,7 +8,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
 import { IoIosArrowDropright } from "react-icons/io";
 import { removeAllFiles } from "@/services/redux/reducers/fileUploadSlice";
-import { addRecency, addResource } from "@/services/redux/reducers/resourceSlice";
+import { addRecency, selectResource } from "@/services/redux/reducers/resourceSlice";
 import { removeAllUrls } from "@/services/redux/reducers/urlInputSlice";
 import { useRouter } from "next/navigation";
 import useWebSocket from "@/hooks/useWebSocket";
@@ -53,7 +53,7 @@ const MiniSlideBar : React.FC = () => {
                 {isGenerating ? (<button className="p-3" onClick={()=>{
                     localStorage.setItem("counter" , `${0}`)
                     dispatch(addRecency())
-                    dispatch(addResource("web"))
+                    dispatch(selectResource("web"))
                     dispatch(removeAllFiles())
                     dispatch(removeAllUrls())
                     dispatch(setCounterToZero(0))

@@ -14,7 +14,7 @@ import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
 import { checkHistory, increaseCounter, makeItFalse , setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
-import { addResource } from '@/services/redux/reducers/resourceSlice';
+import { selectResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 import useAgent from '@/hooks/useAgent';
 import { IoLockClosedSharp } from "react-icons/io5";
@@ -69,7 +69,6 @@ const PropmptYard = () => {
         source: uploadedFiles.uploadedFilesUrl.length > 0 ? "file" : selectedResources,
         answerType: selectedAnswerStyle,
         llmType: "Preferred LLM",
-        depth: selectedDepth,
         urls: uploadedFiles.uploadedFilesUrl.length > 0 ? uploadedFiles.urlsOfFiles : urlInputs.urlInputs,
         sessionId: localStorage.getItem('sessionId'),
         email : user?.data?.email,
@@ -267,7 +266,7 @@ const PropmptYard = () => {
               relatedQuestions: [],
               sources : Object?.values(d?.citations)
             };
-            dispatch(addResource(d?.module ? d?.module : "web"));
+            dispatch(selectResource(d?.module ? d?.module : "web"));
           });
           setResponse((prev: any) => ({ ...prev, ...newResponses }));
         }else{

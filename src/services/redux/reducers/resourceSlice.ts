@@ -9,7 +9,7 @@ const resourceSlice = createSlice({
     name : "resource",
     initialState : initialState,
     reducers : {
-        addResource : (state , action) => {
+        selectResource : (state , action) => {
             state.selectedResource = action.payload
             // localStorage.setItem('resources' , action.payload)
         },
@@ -23,5 +23,5 @@ const resourceSlice = createSlice({
 })
 
 
-export const {addResource , removeRecency , addRecency} = resourceSlice.actions
+export const {selectResource , removeRecency , addRecency} = resourceSlice.actions
 export default resourceSlice.reducer

@@ -1,7 +1,7 @@
 import { FaMinus } from "react-icons/fa";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
 import { editUrl , filterTheUrls} from "@/services/redux/reducers/urlInputSlice";
-import { addResource } from "@/services/redux/reducers/resourceSlice";
+import { selectResource } from "@/services/redux/reducers/resourceSlice";
 
 
 interface UrlInputProps {
@@ -32,7 +32,7 @@ const UrlInput = ({...props} : UrlInputProps) => {
                     if(urls.length - 1 > 0){
                         dispatch(filterTheUrls({index : props.index}))
                     }else{
-                        dispatch(addResource("web"))
+                        dispatch(selectResource("web"))
                     }
                 }}
                 className="bg-slate-50 shadow-md dark:bg-[#202938] p-[16px] rounded-2xl"

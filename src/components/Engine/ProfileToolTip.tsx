@@ -28,7 +28,7 @@ const TooltipMenu = ({onClose} : {onClose : () => void}) => {
     <div className="relative inline-block text-left" ref={menuRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+        className="p-2 rounded dark:hover:bg-gray-800 transition"
       >
         <CiSettings className="w-5 h-5" />
       </button>
