@@ -66,6 +66,7 @@ const PropmptYard = () => {
       responseRef.current = ''; // Reset the ref for the next response
       socket?.emit('send_message', {
         query: prompt,
+        isDepth : false,
         source: uploadedFiles.uploadedFilesUrl.length > 0 ? "file" : selectedResources,
         answerType: selectedAnswerStyle,
         llmType: "Preferred LLM",
