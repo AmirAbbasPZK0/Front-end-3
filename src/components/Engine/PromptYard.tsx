@@ -302,7 +302,7 @@ const PropmptYard = () => {
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
                   {/* <SpeechToText sendMessage={sendMessage}/> */}
-                  <div className='flex gap-2 items-center justify-center'>
+                  {/* <div className='flex gap-2 items-center justify-center'>
                     <span className='font-semibold md:text-[15px] text-[13px]'>Deep Search</span>
                     {user.isLogin ? (
                       <button
@@ -343,7 +343,7 @@ const PropmptYard = () => {
                         
                       </div>
                     }
-                  </div>
+                  </div> */}
                   <button onClick={()=>{
                     if(checkIsEmpty(prompt)){
                       sendMessage(prompt);

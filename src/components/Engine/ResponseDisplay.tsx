@@ -243,7 +243,11 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             h3 : (props) => <h3 className=' text-[20px] font-semibold pt-3' {...props}/>,
                             a : (props) => <HyperLink data={hyperLinkTooltip?.[props?.href as string]} href={props.href as string}>{props.children}</HyperLink>,
                             ul : (props) => <ul {...props}/>,
-                            li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>
+                            li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>,
+                            table : (props) => <div className="overflow-x-auto"><table className="min-w-full border border-gray-300">{props.children}</table></div>,
+                            thead : (props) =>  <thead className="bg-gray-100">{props.children}</thead>,
+                            th : (props) => <th className="px-4 py-2 border">{props.children}</th>,
+                            td : (props) => <td className="px-4 py-2 border">{props.children}</td>
                         }}>
                             {/*{response}*/}
                             {(sources?.length > 0) ? (uploadedFiles.length > 0 || selectedModule === "url") ? removeHyperText(response , sources) : hyperTextForMarkDown(response , sources) : response}
