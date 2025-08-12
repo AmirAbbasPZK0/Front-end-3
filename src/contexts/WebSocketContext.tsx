@@ -49,19 +49,42 @@ const WebSocketProvider: React.FC<{
       // },
     });
 
+    const sendErrorToTelegram = async (message : any) => {
+      try{
+        const res = await fetch("/api/notify-telegram" , {
+          method : "POST",
+          headers : {
+            "Content-Type" : "application/json"
+          },
+          body : JSON.stringify({message})
+        })
+        const result = await res.json()
+        console.log(result)
+      }catch(err){
+        console.log(err)
+      }
+    };
+
     socket.on('connected', () => {
       setIsConnected(true);
     });
 
-    socket.on('connect_error', () => {
+    socket.on('connect_error', (err) => {
+      console.log("Connect Error" , err.message)
       setIsConnected(false);
+      sendErrorToTelegram(err.message)
     });
+
+    socket.on("error" , (err)=>{
+      console.log("Error" , JSON.stringify(err))
+    })
 
     socketRef.current = socket;
 
     socket.on('disconnect', () => {
       console.log('Disconnected from server');
     });
+
     return () => {
       socket.close();
     };
