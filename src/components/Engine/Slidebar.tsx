@@ -78,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <button onClick={()=>{
                   dispatch(addRecency())
                   dispatch(removeAllFiles())
-                  dispatch(removeAllUrls())
+                  dispatch(removeAllUrls()) 
                   dispatch(selectResource("web"))
                   dispatch(setCounterToZero(0))
                   localStorage.setItem("counter" , `${counter}`)
