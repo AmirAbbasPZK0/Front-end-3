@@ -77,6 +77,7 @@ const WebSocketProvider: React.FC<{
 
     socket.on("error" , (err)=>{
       console.log("Error" , JSON.stringify(err))
+      console.log("This is error" , err)
     })
 
     socketRef.current = socket;

@@ -62,8 +62,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       >
         <div className="flex flex-col">
           <div className="p-6 flex justify-between items-center mb-6">
-            <h2 className="text-2xl flex items-center bottom-0 font-semibold dark:text-white">
-              find<img className='w-[14px] h-[14px] mt-1.8' src='/images/o.png' alt="/logo.png" />ra
+            <h2 className="text-3xl flex items-center bottom-0 font-semibold dark:text-white">
+              find<img className='w-[20px] h-[20px] mt-[1.5px]' src='/images/o.png' alt="/logo.png" />ra
             </h2>
             <button onClick={()=>{
               onClose()
@@ -73,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               </svg>
             </button>
           </div>
-          <nav className='w-full flex flex-col items-center justify-center'>
+          <nav className='w-full flex flex-col p-1 items-center justify-center'>
             {isGenerating ? (<>
               <button onClick={()=>{
                   dispatch(addRecency())
@@ -85,7 +85,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   // socket.removeAllListeners();
                   router.push("/")
                   onClose()
-              }} className='flex w-full p-2.5 items-center flex-row gap-2 dark:bg-slate-800 transition dark:hover:bg-slate-700 hover:bg-slate-200 border-slate-950 bg-none dark:text-white'><CiCirclePlus className='text-[30px]'/><span className='font-semibold'>New Thread</span></button>
+              }} className='p-2.5 w-full m-1 rounded-md gap-2 items-center flex border-slate-100 bg-slate-100 dark:border-slate-700 dark:bg-slate-700 border-2'><CiCirclePlus className='text-[30px]'/><span className='font-semibold'>New Thread</span></button>
             </>) : (<>
               <button
                 type="button"
@@ -116,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <button onClick={()=>{
               router.push("/email-generator")
               onClose()
-            }} className='p-2.5 w-full gap-2 items-center flex bg-blue-500 text-white'>
+            }} className='p-2.5 w-full m-1 rounded-md gap-2 items-center flex bg-blue-500 text-white'>
               <Image
                 src={EmailGenratorLogo}
                 alt="logo"
@@ -129,7 +129,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </div>
           {(user?.isLogin && user?.data !== undefined) && <div className='flex p-3 flex-col gap-2 pt-3'>
             <h3 className='text-[20px] p-1 font-semibold'>Recent Searches</h3>           
-            <nav className='flex flex-col gap-2 h-[400px] overflow-y-auto'>
+            <nav className='flex flex-col gap-2 md:h-[400px] h-[300px] overflow-y-auto'>
               {user?.history?.map((item : any) => (
                 <div key={item?.code}>
                     <HistoryButtons item={item} onClose={onClose}/>
