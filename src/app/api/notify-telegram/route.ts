@@ -7,6 +7,7 @@ export async function POST(req: Request) {
 
   const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
   const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+  const BACKEND_ADDRESS = process.env.NEXT_PUBLIC_BASE_URL;
 
   if (!BOT_TOKEN || !CHAT_ID) {
     return NextResponse.json(
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: CHAT_ID,
-        text: message,
+        text: `Error Message : ${message} \n Port : ${BACKEND_ADDRESS}`,
         parse_mode: "Markdown",
       }),
     });
