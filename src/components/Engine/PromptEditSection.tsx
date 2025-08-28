@@ -10,7 +10,7 @@ import { BsCheckLg } from "react-icons/bs";
 
 const PromptEditSection = ({query , id , coreId} : {query : string, id : number | string , coreId : number}) => {
 
-    const {setResponse , socket} = useWebSocket()
+    const {setResponse ,  socket , responseRef} = useWebSocket()
     const [showEdit , setShowEdit] = useState(false)
     const [ableForm , setAbleForm] = useState(false)
     const [editMessage , setEditMessage] = useState(query)
@@ -25,6 +25,8 @@ const PromptEditSection = ({query , id , coreId} : {query : string, id : number 
         localStorage.setItem('counter' , `${coreId}`);
 
         const newResponses: any = {};
+
+        responseRef.current = ""
 
         newResponses[coreId] = {
             text: "",

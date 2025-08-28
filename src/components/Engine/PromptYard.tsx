@@ -282,6 +282,8 @@ const PropmptYard = () => {
       </div>;
     }
 
+    console.log(response)
+
     return (<>
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 pb-20 justify-center gap-4 flex-col">
           {isNew && (<>
