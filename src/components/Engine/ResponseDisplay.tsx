@@ -78,6 +78,7 @@ interface DataProps {
 }
 
 interface ResponseDisplayProps {
+    coreId : number
     response: string;
     sources: Array<Array<string>>;
     isLoading: boolean;
@@ -109,7 +110,8 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     findoraMessage,
     query ,
     isDone,
-    videos
+    videos,
+    coreId
 }) => {
 
 
@@ -198,7 +200,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 
     return(<>
         <div className={`p-4 ${openSources && "overflow-hidden"} pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
-            <PromptEditSection id={id} query={query}/>
+            <PromptEditSection coreId={coreId} id={id} query={query}/>
             {(findoraMessage !== "" && selectedModule === "medical") && 
             <div className="flex flex-col gap-2 w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
                 <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
@@ -279,7 +281,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 ))}
                                 </div>
                             </div>
-                            <CommentSection message_id={id}/>
+                            <CommentSection message_id={coreId}/>
                             <button className="text-[20px]" type="button" onClick={()=>{
                                 navigator.clipboard.writeText(CopyText as string);
                                 toast.success("Copied!")

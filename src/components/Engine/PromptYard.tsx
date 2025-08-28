@@ -25,7 +25,6 @@ const PropmptYard = () => {
     const [prompt , setPrompt] = useState("");
     const [newResponse, setNewResponse] = useState('');
     const [isAttachOpen , setIsAttachOpen] = useState(false);
-    const [selectedDepth , setSelectedDepth] = useState(false)
     const textareaRef : RefObject<HTMLTextAreaElement | null> = useRef(null);
     const {isMobile} = useAgent()
 
@@ -37,7 +36,6 @@ const PropmptYard = () => {
     const user = useAppSelector(state => state?.userSlice);
     const historyChecker = useAppSelector(state => state?.newThreadSlice.history);
     const counter = useAppSelector(state => state.newThreadSlice.counter);
-    const [showTooltip, setShowTooltip] = useState(false);
     const dispatch = useAppDispatch();
     const { socket, response, setResponse, responseRef , findoraMessageRef} = useWebSocket();
     const router = useRouter();
@@ -267,6 +265,7 @@ const PropmptYard = () => {
               relatedQuestions: [],
               sources : Object?.values(d?.citations)
             };
+            console.log(found)
             dispatch(selectResource(d?.module ? d?.module : "web"));
           });
           setResponse((prev: any) => ({ ...prev, ...newResponses }));
@@ -374,8 +373,9 @@ const PropmptYard = () => {
           </>)}
           {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
               <ResponseDisplay
+                coreId={key}
                 key={key}
-                id={key}
+                id={index}
                 findoraMessage={value.findoraMessage}
                 isDone={value.isDone}
                 videos={value.videos}
