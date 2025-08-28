@@ -206,7 +206,18 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
                     Find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra's Answer
                 </h2>
-                {findoraMessage}
+                <ReactMarkdown components={{
+                    h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
+                    h2 : (props) => <h2 className='text-[23px] font-semibold pt-2 pb-2' {...props}/>,
+                    h3 : (props) => <h3 className=' text-[20px] font-semibold pt-3' {...props}/>,
+                    a : (props) => <HyperLink data={hyperLinkTooltip?.[props?.href as string]} href={props.href as string}>{props.children}</HyperLink>,
+                    ul : (props) => <ul {...props}/>,
+                    li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>,
+                    table : (props) => <div className="overflow-x-auto"><table className="min-w-full border border-gray-300">{props.children}</table></div>,
+                    thead : (props) =>  <thead className="bg-gray-100 bg-slate">{props.children}</thead>,
+                    th : (props) => <th className="px-4 py-2 border">{props.children}</th>,
+                    td : (props) => <td className="px-4 py-2 border">{props.children}</td>
+                }} remarkPlugins={[remarkGfm]}>{findoraMessage}</ReactMarkdown>
             </div>}
             {response !== "" && 
             <div dir="auto" className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
