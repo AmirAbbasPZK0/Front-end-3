@@ -13,12 +13,10 @@ import UrlInput from '../Engine/UrlInput';
 import UploadedFileBox from '../Engine/UploadedFileBox';
 import AttachFileModal from '../Engine/AttachFileModal';
 import { checkIsEmpty } from '@/functions/checkIsEmpty';
-import { checkHistory, increaseCounter, makeItFalse , setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
+import { checkHistory, increaseCounter, makeItFalse , setCounterToPayload } from '@/services/redux/reducers/newThreadSlice';
 import { selectResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 import useAgent from '@/hooks/useAgent';
-import { IoLockClosedSharp } from "react-icons/io5";
-
 
 const PropmptYard = () => {
 
@@ -34,6 +32,7 @@ const PropmptYard = () => {
     const uploadedFiles = useAppSelector(state => state.fileUploadsSlice);
     const urlInputs = useAppSelector(state => state.urlInputSlice);
     const user = useAppSelector(state => state?.userSlice);
+    
     const historyChecker = useAppSelector(state => state?.newThreadSlice.history);
     const counter = useAppSelector(state => state.newThreadSlice.counter);
     const dispatch = useAppDispatch();
@@ -238,9 +237,7 @@ const PropmptYard = () => {
       }
     }, [prompt]);
 
-    // Batched history restoration for performance
     useEffect(()=>{
-      // console.log(JSON.parse(localStorage.getItem("history") as any))
       const url = new URL(window.location.href);
       let history;
       if(localStorage.getItem("history") !== null && localStorage.getItem("history") !== undefined){
@@ -249,7 +246,7 @@ const PropmptYard = () => {
       if(url.pathname.includes("/c/")){
         const found = history?.find((item : any) => item?.code === window.location.href.split("/c/")[1]);
         if (found) {
-          dispatch(setCounterToZero(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
+          dispatch(setCounterToPayload(found?.conversation?.[found?.conversation?.length - 1]?.id + 1));
           localStorage.setItem('counter' , `${counter}`);
           const newResponses: any = {};
           found?.conversation?.forEach((d : any) => {
@@ -265,7 +262,6 @@ const PropmptYard = () => {
               relatedQuestions: [],
               sources : Object?.values(d?.citations)
             };
-            console.log(found)
             dispatch(selectResource(d?.module ? d?.module : "web"));
           });
           setResponse((prev: any) => ({ ...prev, ...newResponses }));
@@ -282,13 +278,19 @@ const PropmptYard = () => {
       </div>;
     }
 
-    console.log(response)
-
     return (<>
         <div className="flex w-[100%] items-center min-h-[20vh] pt-4 pb-20 justify-center gap-4 flex-col">
           {isNew && (<>
-            <div className="md:w-[40%] w-[90%]">
-            <div className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
+            <div className="md:w-[40%] flex flex-col gap-4 items-center justify-center h-[80vh] w-[90%]">
+              {user.isLogin ? 
+                <h3 className="text-[24px] md:text-[30px] md:font-light font-normal text-zinc-900 dark:text-slate-200 antialiased text-center">
+                    Welcome back <span className="font-normal">{user.data?.first_name}</span> <br/>
+                </h3> 
+                : 
+                <h3 className="text-[24px] md:text-[36px] md:font-light font-normal text-zinc-900 dark:text-slate-200 antialiased text-center">
+                    Ask Me Anything
+                </h3>}
+              <div className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
               <textarea ref={textareaRef} onChange={e => {
                 setPrompt(e.target.value);
               }} value={prompt} placeholder='Write your text...' dir="auto" rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>

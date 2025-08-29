@@ -2,7 +2,7 @@
 
 import useWebSocket from "@/hooks/useWebSocket";
 import { useAppDispatch , useAppSelector } from "@/services/redux/store";
-import { setCounterToZero , checkHistory} from "@/services/redux/reducers/newThreadSlice";
+import { setCounterToPayload , checkHistory} from "@/services/redux/reducers/newThreadSlice";
 import { removeRecency } from "@/services/redux/reducers/resourceSlice";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -61,7 +61,7 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
                         router.push(`/c/${item?.code}`)
                         dispatch(checkHistory(true))
                         dispatch(removeRecency())
-                        dispatch(setCounterToZero(item?.conversation?.[item?.conversation?.length - 1]?.id + 1))
+                        dispatch(setCounterToPayload(item?.conversation?.[item?.conversation?.length - 1]?.id + 1))
                         localStorage.setItem("counter" , `${counter}`)
                         onClose()
                     }

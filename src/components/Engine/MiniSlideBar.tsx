@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import useWebSocket from "@/hooks/useWebSocket";
 import Slidebar from "./Slidebar";
 import ThemeToggle from "../Global/ThemeToggle/ThemeToggle";
-import { setCounterToZero } from "@/services/redux/reducers/newThreadSlice";
+import { setCounterToPayload } from "@/services/redux/reducers/newThreadSlice";
 import EmailGenratorLogo from "@/../public/images/email.webp"
 
 
@@ -56,7 +56,7 @@ const MiniSlideBar : React.FC = () => {
                     dispatch(selectResource("web"))
                     dispatch(removeAllFiles())
                     dispatch(removeAllUrls())
-                    dispatch(setCounterToZero(0))
+                    dispatch(setCounterToPayload(0))
                     setResponse({})
                     router.push("/")
                 }}>

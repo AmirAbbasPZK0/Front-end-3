@@ -80,7 +80,7 @@ const NewSlider = ({images} : {images : Image[]}) => {
               }}
               modules={[Navigation]}
               
-              className="w-full flex bg-slate-200 dark:bg-slate-900 rounded-md h-auto"
+              className="w-full flex bg-slate-200 dark:bg-slate-800 rounded-md h-auto"
             >
                 {newImages?.map((item , index) => (
                     <SwiperSlide onClick={()=>{

@@ -33,12 +33,12 @@ const newThreadSlice = createSlice({
             state.counter += 1
         },
 
-        setCounterToZero : (state , action : PayloadAction<number>) => {
+        setCounterToPayload : (state , action : PayloadAction<number>) => {
             state.counter = action.payload
         }
         
     }
 })
 
-export const {makeItFalse , makeItTrue , checkHistory , increaseCounter , setCounterToZero} = newThreadSlice.actions
+export const {makeItFalse , makeItTrue , checkHistory , increaseCounter , setCounterToPayload} = newThreadSlice.actions
 export default newThreadSlice.reducer

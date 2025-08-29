@@ -10,7 +10,7 @@ import ProfileAvatar from "./ProfileAvatar"
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { logOut } from '@/actions/logOut';
-import { setCounterToZero } from '@/services/redux/reducers/newThreadSlice';
+import { setCounterToPayload } from '@/services/redux/reducers/newThreadSlice';
 import { signOut } from 'next-auth/react';
 import HistoryButtons from './HistoryButtons';
 import AuthModal from './AuthModal';
@@ -80,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   dispatch(removeAllFiles())
                   dispatch(removeAllUrls()) 
                   dispatch(selectResource("web"))
-                  dispatch(setCounterToZero(0))
+                  dispatch(setCounterToPayload(0))
                   localStorage.setItem("counter" , `${counter}`)
                   // socket.removeAllListeners();
                   router.push("/")

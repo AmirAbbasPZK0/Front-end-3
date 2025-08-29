@@ -1,6 +1,6 @@
 "use client"
 
-import React , {RefObject, useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React , {RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
 import ReactMarkdown from 'react-markdown';
 import HyperLink from "./HyperLink";
 import { hyperTextForMarkDown } from "@/functions/hypertext";
@@ -21,17 +21,12 @@ import remarkGfm from 'remark-gfm'
 import NewSlider from "./NewSlider";
 import { isRTL } from "@/functions/isRTL";
 import { FiClipboard } from "react-icons/fi";
-import { checkIsEmpty } from "@/functions/checkIsEmpty";
 import toast from "react-hot-toast";
 import CommentSection from "./CommentSesction";
 import { removeHyperText } from "@/functions/removeSources";
 import { makeItTrue } from "@/services/redux/reducers/newThreadSlice";
-import { FaRegCircleStop } from "react-icons/fa6";
-import useWebSocket from "@/hooks/useWebSocket";
-import ModuleIcon from "./ModuleIcons";
 import PromptEditSection from "./PromptEditSection";
-import useScrollbarClick from "@/hooks/useScrollbarClick";
-import useAgent from "@/hooks/useAgent";
+import ChatInput from "./ChatInput";
 
 
 interface CodeComponentProps {
@@ -115,7 +110,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
 }) => {
 
 
-    const { socket } = useWebSocket();
     const dispatch = useAppDispatch();
     const [hyperLinkTooltip, setHyperLinkTooltip] = useState<HyperLink | null>(null);
     const [followUp, setFollowUp] = useState("");
@@ -124,10 +118,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     const uploadedFiles = useAppSelector(state => state.fileUploadsSlice.uploadedFilesUrl);
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource);
     const textareaRef: RefObject<HTMLTextAreaElement | null> = useRef(null);
-    const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed);
     const chatContainerRef = useRef<HTMLDivElement>(null);
-    const [autoScroll , setAutoScrol] = useState(true)
-    const {isMobile} = useAgent()
 
     const removeMarkdown = (markdown: string) =>
     markdown.replace(/[*_`~#>]/g, "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
@@ -157,35 +148,17 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
         if (isDone) dispatch(makeItTrue());
     }, [isDone]);
 
-    const handleKeyDown = useCallback((event: KeyboardEvent) => {
-        if (!isSubmited && event.key === "Enter" && checkIsEmpty(followUp) && !event.shiftKey) {
-            if(!isMobile){
-                sendMessage(followUp);
-                setIsSubmited(true);
-                setFollowUp("");
-            }
-        }
-    }, [isSubmited, followUp, sendMessage]);
-
     useEffect(() => {
-        
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [handleKeyDown]);
-
-    useScrollbarClick(() => {
-       setAutoScrol(false)
-    });
-
-    useEffect(() => {
-        if(autoScroll){
-            chatContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }
+    // Scroll to bottom when component mounts
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth", // optional, for smooth scrolling
+        });
     }, [response]);
 
     if (isLoading) {
         return (
-        <div className="h-[70vh] pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
+        <div className="p-4 pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col">
             <div className="dark:bg-[#202938] flex flex-row justify-start items-start text-start shadow-md bg-white rounded-b-3xl rounded-tl-3xl p-2">
             <h2 className="text-[15px] flex items-end justify-end text-start p-2 font-semibold">{query}</h2>
             </div>
@@ -199,12 +172,12 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     }
 
     return(<>
-        <div className={`p-4 ${openSources && "overflow-hidden"} pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
+        <div ref={chatContainerRef}  className={`p-4 ${openSources && "overflow-hidden"} overflow-y-auto pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
             <PromptEditSection coreId={coreId} id={id} query={query}/>
             {(findoraMessage !== "" && selectedModule === "medical") && 
-            <div className="flex flex-col gap-2 w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
+            <div className="flex flex-col gap-2 w-full p-4">
                 <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
-                    Find<img className='w-[14px] h-[14px] mt-1.5' src='/images/o.png' alt="/logo.png" />ra's Answer
+                    Find<img className='w-[14px] h-[14px] mt-1' src='/images/o.png' alt="/logo.png" />ra's Answer
                 </h2>
                 <ReactMarkdown components={{
                     h1 : (props) => <h1 className='text-[26px] font-bold pt-4 pb-4' {...props}/>,
@@ -220,13 +193,13 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 }} remarkPlugins={[remarkGfm]}>{findoraMessage}</ReactMarkdown>
             </div>}
             {response !== "" && 
-            <div dir="auto" className="dark:bg-[#202938] bg-white w-full shadow-md rounded-3xl p-4">
+            <div dir="auto" className="w-full p-4">
                 {(findoraMessage !== "" && selectedModule === "medical") && 
                     <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
                         Search Engine Answer
                     </h2>}
                 <div className="flex gap-3 md:flex-row flex-col-reverse w-full justify-between p-3 rounded-3xl">
-                    <div ref={chatContainerRef} className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
+                    <div className={`flex flex-col w-[100%] ${images?.length > 0 ? "md:w-[70%]" : "md:w-full"} gap-4`}>
                         <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
                             code({ node, inline, className, children, ...props } : CodeComponentProps) {
                                 const match = /language-(\w+)/.exec(className || '');
@@ -310,7 +283,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 <CarouselYard videos={videos}/>
             </>)}
             {(relatedQuestions?.length > 0 && isDone) && (<>
-                <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
+                <div className="flex flex-col w-full p-4">
                     <h1 className="text-[20px] p-2 font-semibold">Related Questions</h1>
                     <div className="flex flex-col w-full">
                         {Array.isArray(relatedQuestions) && relatedQuestions?.map((e, index) => (
@@ -339,28 +312,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                 </div>
             </>)}
             {!isSubmited && (<>
-                <div className="rounded-3xl fixed bottom-2 w-[80%] left-[10%] z-30 dark:bg-[#202938] bg-white border-2 border-[#bababa]  shadow-md p-3 flex flex-col">
-                    <form onSubmit={(e)=>{
-                        e.preventDefault()
-                        if(checkIsEmpty(followUp)){
-                            sendMessage(followUp)
-                            setIsSubmited(true)
-                            setFollowUp("")
-                        }
-                    }} className="flex items-center justify-center w-ful flex-row gap-2" action="">
-                        <button type="button">
-                            <ModuleIcon className="text-[10px] p-2" moduleName={selectedModule}/>
-                        </button>
-                        <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>
-                        {isGenerating ? (<>
-                            <button type="submit" className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
-                        </>) : (<>
-                            <button type="button" onClick={()=>{
-                                socket.emit("cancel_generation")
-                            }} className="rounded-full0 p-2"><FaRegCircleStop className="text-[30px]"/></button>
-                        </>)}
-                    </form>
-                </div>
+                <ChatInput setIsSubmited={setIsSubmited} setFollowUp={setFollowUp} selectedModule={selectedModule} followUp={followUp} sendMessage={sendMessage} isSubmited={isSubmited}/>
             </>)}
         </div>
     </>)

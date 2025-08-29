@@ -45,7 +45,7 @@ const CarouselYard = ({videos} : CarouselYardProps) => {
 
     return(<>
           {newVideos?.length > 0 && (<>
-            <div className="flex flex-col w-full dark:bg-[#202938] bg-white shadow-md rounded-3xl p-4">
+            <div className="flex flex-col w-full  p-4">
             <h1 className="text-[20px] p-2 font-semibold">Videos</h1>
             <div className="w-full">
               <div className="flex flex-row gap-2">
@@ -57,12 +57,20 @@ const CarouselYard = ({videos} : CarouselYardProps) => {
                     breakpoints={{
                       1: {
                         slidesPerView: 1,
-                        spaceBetween: 15,
+                        spaceBetween: 15
                       },
                       700: {
-                        slidesPerView: 4,
-                        spaceBetween: 15,
+                        slidesPerView: 3,
+                        spaceBetween: 15
                       },
+                      1300 : {
+                        slidesPerView : 4,
+                        spaceBetween : 15
+                      },
+                      1600 : {
+                        slidesPerView : 5,
+                        spaceBetween : 15,
+                      }
                     }}
                     freeMode={true}
                     pagination={{

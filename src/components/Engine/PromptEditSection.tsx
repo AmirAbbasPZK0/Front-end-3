@@ -53,9 +53,10 @@ const PromptEditSection = ({query , id , coreId} : {query : string, id : number 
 
     return (<>
         <form onSubmit={handleResponse} onMouseLeave={()=> setShowEdit(false)} onMouseOver={()=> setShowEdit(true)} className="dark:bg-[#202938] flex flex-row justify-end text-end shadow-md items-end bg-white rounded-b-3xl rounded-tl-3xl p-2">
-            <h2 className="text-[15px] flex flex-row-reverse items-start gap-2 justify-start text-start p-2 font-semibold">{!ableForm && editMessage}{(showEdit || ableForm) && <button type="button" onClick={()=> {
+            <div className="text-[15px] flex flex-col items-start gap-2 justify-start text-start p-2 font-semibold">{!ableForm && editMessage}{(showEdit || ableForm) && <button type="button" onClick={()=> {
                 setAbleForm(item => !item)
-            }}>{ableForm ? <FaTimes/> : <LuPencil/>}</button>}</h2>
+                setShowEdit(false)
+            }}>{ableForm ? <FaTimes/> : <LuPencil/>}</button>}</div>
             {ableForm && <input name="query" className="border-none p-1 outline-none" defaultValue={editMessage}/>}
             {ableForm && <button type="submit" className="p-2"><BsCheckLg/></button>}
         </form>
