@@ -113,19 +113,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </>)}
           </nav>
           <div className='flex items-center justify-center'>
-            <button onClick={()=>{
-              router.push("/email-generator")
-              onClose()
-            }} className='p-2.5 w-full m-1 rounded-md gap-2 items-center flex bg-blue-500 text-white'>
-              <Image
-                src={EmailGenratorLogo}
-                alt="logo"
-                width={30}
-                height={10}
-                className=""
-              />
-              <span className='font-semibold'>Generate Email</span>
-            </button>
+            {user.isLogin && 
+              <button onClick={()=>{
+                router.push("/email-generator")
+                onClose()
+              }} className='p-2.5 w-full m-1 rounded-md gap-2 items-center flex bg-blue-500 text-white'>
+                <Image
+                  src={EmailGenratorLogo}
+                  alt="logo"
+                  width={30}
+                  height={10}
+                  className=""
+                />
+                <span className='font-semibold'>Generate Email</span>
+              </button>
+            }
           </div>
           {(user?.isLogin && user?.data !== undefined) && <div className='flex p-3 flex-col gap-2 pt-3'>
             <h3 className='text-[20px] p-1 font-semibold'>Recent Searches</h3>           

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useAppDispatch } from "@/services/redux/store";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import LogoBlack from "@/../public/images/findora_logo_black.png";
@@ -11,7 +10,6 @@ import { RiHome2Line } from "react-icons/ri";
 import { GoPeople } from "react-icons/go";
 import { AnimatePresence } from "framer-motion";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
-import { useRouter } from "next/navigation";
 import { BsSearch } from "react-icons/bs";
 import Slidebar from "../Engine/Slidebar";
 import MiniSlideBar from "../Engine/MiniSlideBar";

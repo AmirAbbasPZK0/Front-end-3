@@ -24,6 +24,8 @@ const MiniSlideBar : React.FC = () => {
 
     const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
+    const user = useAppSelector(state => state.userSlice)
+
     const [isOpen , setIsOpen] = useState(false)
     
     const dispatch = useAppDispatch()
@@ -79,18 +81,18 @@ const MiniSlideBar : React.FC = () => {
                   ></path>
                 </svg>)}
                 
+                {user.isLogin && 
                 <button onClick={()=>{
                     router.push("/email-generator")
                 }} className='p-2 gap-2 items-center justify-center flex rounded-2xl bg-blue-500 text-white'>
-                              <Image
-                                src={EmailGenratorLogo}
-                                alt="logo"
-                                width={30}
-                                height={20}
-                                className=""
-                              />
-                
-                            </button>
+                  <Image
+                    src={EmailGenratorLogo}
+                    alt="logo"
+                    width={30}
+                    height={20}
+                    className=""
+                  />
+                </button>}
                 
             </div>
             <div className="flex flex-col gap-4 p-4 items-center justify-center">
