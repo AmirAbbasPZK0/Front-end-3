@@ -15,6 +15,7 @@ import ModuleIcon from "./ModuleIcons";
 import useWebSocket from "@/hooks/useWebSocket";
 import { useAppSelector } from "@/services/redux/store";
 import { FaRegCircleStop } from "react-icons/fa6";
+import ChatInput from "./ChatInput";
 
 interface ClaimAnswerProps { 
     answer : {
@@ -152,29 +153,8 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
                                 </React.Fragment>)
                             }
                         )}
-                
-
                 {!isSubmited && (<>
-                <div className="rounded-3xl fixed bottom-2 w-[80%] left-[10%] z-30 dark:bg-[#202938] bg-white border-2 border-[#bababa]  shadow-md p-3 flex flex-col">
-                    <form onSubmit={(e)=>{
-                        e.preventDefault()
-                        if(checkIsEmpty(followUp)){
-                            sendMessage(followUp)
-                        }
-                    }} className="flex items-center justify-center w-ful flex-row gap-2" action="">
-                        <button type="button">
-                            <ModuleIcon className="text-[10px] p-2" moduleName={selectedModule}/>
-                        </button>
-                        <textarea ref={textareaRef} dir="auto" value={followUp} className={`w-full ${isRTL(followUp) ? "text-right" : "text-left"} resize-none w-full min-h-2 h-full justify-center items-center flex overflow-hidden placeholder-gray-500 bg-transparent outline-none`} onChange={(e)=> setFollowUp(e.target.value)} placeholder="Follow-Up"></textarea>
-                        {isGenerating ? (<>
-                            <button type="submit" className="rounded-full0 p-2"><TbSend2 className="text-[30px]"/></button>
-                        </>) : (<>
-                            <button type="button" onClick={()=>{
-                                socket.emit("cancel_generation")
-                            }} className="rounded-full0 p-2"><FaRegCircleStop className="text-[30px]"/></button>
-                        </>)}
-                    </form>
-                </div>
+                 <ChatInput setIsSubmited={setIsSubmited} setFollowUp={setFollowUp} selectedModule={selectedModule} followUp={followUp} sendMessage={sendMessage} isSubmited={isSubmited}/>
             </>)}
             
         </div>
