@@ -37,7 +37,6 @@ const ChatInput: React.FC<ChatInputProps> = ({ sendMessage , followUp , isSubmit
     const textarea = textareaRef.current;
     const box = boxRef.current;
     if (textarea && box) {
-      console.log("text")
       textarea.style.height = "auto"; // reset
       textarea.style.height = `${textarea.scrollHeight}px`; // adjust
       box.style.height = `${textarea.scrollHeight}px`;

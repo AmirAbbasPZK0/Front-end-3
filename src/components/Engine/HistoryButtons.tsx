@@ -54,9 +54,7 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
                 </form>
             </>) : (<>
                 <p onClick={()=>{
-                    if(window.location.href.split("/c/")[1] === item?.code){
-                        console.log("current")
-                    }else{
+                    if(window.location.href.split("/c/")[1] !== item?.code){
                         setResponse({})
                         router.push(`/c/${item?.code}`)
                         dispatch(checkHistory(true))

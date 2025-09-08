@@ -22,7 +22,6 @@ const templateSlice = createSlice({
             state.data = state.data.sort()
         },
         removeFromCart : (state , action : PayloadAction<any>) => {
-            // console.log(state.data)
             const filteredData = state.data.filter((item : any) => item.name !== action.payload)
             state.data = filteredData
         },

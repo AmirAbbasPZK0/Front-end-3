@@ -56,7 +56,6 @@ const Page = () => {
                         className="bg-red-500 m-2 p-2 text-white rounded-md"
                         onClick={() => {
                             const link = document.createElement("a");
-                            console.log(downloadLink)
                             link.target = "_blank"
                             link.href = `http://141.11.123.21:8003${downloadLink}`;
                             link.download = "audio.mp3"; // suggested filename

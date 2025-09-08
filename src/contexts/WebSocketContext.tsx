@@ -59,7 +59,6 @@ const WebSocketProvider: React.FC<{
           body : JSON.stringify({message})
         })
         const result = await res.json()
-        console.log(result)
       }catch(err){
         console.log(err)
       }

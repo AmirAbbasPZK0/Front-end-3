@@ -59,7 +59,6 @@ const EmailTemplateSlideBar = ({ setClose, isOpen }: { setClose: (value: boolean
     })
   },[])
 
-  console.log(data)
   
     return (
     <>
@@ -159,19 +158,14 @@ const template_background = () => {
 
   switch(key){
     case 1:
-      console.log(key)
       return "dark:bg-red-950 bg-red-300"
     case 2:
-      console.log(key)
       return "dark:bg-blue-950 bg-blue-300"
     case 3:
-      console.log(key)
       return "dark:bg-green-950 bg-green-300"
     case 4:
-      console.log(key)
       return "dark:bg-yellow-950 bg-yellow-300"
     case 5:
-      console.log(key)
       return "dark:bg-purple-950 bg-purple-300"
     default:
       return "dark:bg-slate-800 bg-slate-200"

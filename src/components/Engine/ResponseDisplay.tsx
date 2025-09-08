@@ -188,26 +188,26 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     ul : (props) => <ul {...props}/>,
                     li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>,
                     table: (props) => (
-                    <div className="w-full overflow-x-auto">
-                        <table className="w-full min-w-max border border-gray-300 text-sm">
-                        {props.children}
-                        </table>
-                    </div>
+                        <div className="w-full overflow-x-auto">
+                            <table className="w-full min-w-max border border-gray-300 text-sm">
+                            {props.children}
+                            </table>
+                        </div>
                     ),
                     thead: (props) => (
-                    <thead className="bg-gray-100">
-                        {props.children}
-                    </thead>
+                        <thead className="bg-gray-100">
+                            {props.children}
+                        </thead>
                     ),
                     th: (props) => (
-                    <th className="px-4 py-2 border text-left font-semibold whitespace-nowrap">
-                        {props.children}
-                    </th>
+                        <th className="px-4 py-2 border text-left font-semibold whitespace-nowrap">
+                            {props.children}
+                        </th>
                     ),
                     td: (props) => (
-                    <td className="px-4 py-2 border whitespace-nowrap">
-                        {props.children}
-                    </td>
+                        <td className="px-4 py-2 border whitespace-nowrap">
+                            {props.children}
+                        </td>
                     ),
                 }} remarkPlugins={[remarkGfm]}>{findoraMessage}</ReactMarkdown>
             </div>}
