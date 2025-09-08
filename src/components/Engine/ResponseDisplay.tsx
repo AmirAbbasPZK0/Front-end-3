@@ -174,6 +174,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
     return(<>
         <div ref={chatContainerRef}  className={`p-4 ${openSources && "overflow-hidden"} overflow-y-auto pb-22 rounded-3xl gap-4 md:w-[80%] w-[100%] flex items-end flex-col`}>
             <PromptEditSection coreId={coreId} id={id} query={query}/>
+            {/* This code runs when you select Medical module */}
             {(findoraMessage !== "" && selectedModule === "medical") && 
             <div className="flex flex-col gap-2 w-full p-4">
                 <h2 className="text-2xl flex items-center bottom-0 font-bold dark:text-white">
@@ -186,10 +187,28 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                     a : (props) => <HyperLink data={hyperLinkTooltip?.[props?.href as string]} href={props.href as string}>{props.children}</HyperLink>,
                     ul : (props) => <ul {...props}/>,
                     li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>,
-                    table : (props) => <div className="overflow-x-auto"><table className="min-w-full border border-gray-300">{props.children}</table></div>,
-                    thead : (props) =>  <thead className="bg-gray-100 bg-slate">{props.children}</thead>,
-                    th : (props) => <th className="px-4 py-2 border">{props.children}</th>,
-                    td : (props) => <td className="px-4 py-2 border">{props.children}</td>
+                    table: (props) => (
+                    <div className="w-full overflow-x-auto">
+                        <table className="w-full min-w-max border border-gray-300 text-sm">
+                        {props.children}
+                        </table>
+                    </div>
+                    ),
+                    thead: (props) => (
+                    <thead className="bg-gray-100">
+                        {props.children}
+                    </thead>
+                    ),
+                    th: (props) => (
+                    <th className="px-4 py-2 border text-left font-semibold whitespace-nowrap">
+                        {props.children}
+                    </th>
+                    ),
+                    td: (props) => (
+                    <td className="px-4 py-2 border whitespace-nowrap">
+                        {props.children}
+                    </td>
+                    ),
                 }} remarkPlugins={[remarkGfm]}>{findoraMessage}</ReactMarkdown>
             </div>}
             {response !== "" && 
@@ -230,10 +249,28 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             a : (props) => <HyperLink data={hyperLinkTooltip?.[props?.href as string]} href={props.href as string}>{props.children}</HyperLink>,
                             ul : (props) => <ul {...props}/>,
                             li : (props) => <li {...props} className={`${isRTL(query) ?  "text-right rtl" : "text-left ltr"} p-2 flex gap-2`}><span>.</span><div>{props.children}</div></li>,
-                            table : (props) => <div className="overflow-x-auto"><table className="min-w-full border border-gray-300">{props.children}</table></div>,
-                            thead : (props) =>  <thead className="bg-gray-100 bg-slate">{props.children}</thead>,
-                            th : (props) => <th className="px-4 py-2 border">{props.children}</th>,
-                            td : (props) => <td className="px-4 py-2 border">{props.children}</td>
+                            table: (props) => (
+                                <div className="w-full overflow-x-auto">
+                                    <table className="w-full min-w-max border border-gray-300 text-sm">
+                                    {props.children}
+                                    </table>
+                                </div>
+                            ),
+                            thead: (props) => (
+                                <thead className="bg-gray-100">
+                                    {props.children}
+                                </thead>
+                            ),
+                            th: (props) => (
+                                <th className="px-4 py-2 border text-left font-semibold whitespace-nowrap">
+                                    {props.children}
+                                </th>
+                            ),
+                            td: (props) => (
+                                <td className="px-4 py-2 border whitespace-nowrap">
+                                    {props.children}
+                                </td>
+                            ),
                         }}>
                             {/*{response}*/}
                             {(sources?.length > 0) ? (uploadedFiles.length > 0 || selectedModule === "url") ? removeHyperText(response , sources) : hyperTextForMarkDown(response , sources) : response}
