@@ -1,9 +1,7 @@
 "use client";
-import React, { ChangeEvent, useEffect, useRef } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import restApi from "@/services/restApi";
-import endpoints from "@/configs/endpoints";
 import toast from "react-hot-toast";
 
 interface SignUpFormProps {
@@ -18,11 +16,15 @@ interface SignUpFormProps {
 const SignUpFormHandler: React.FC = () => {
 
   const form = useRef<HTMLFormElement | null>(null);
+
+  const [loading , setLoading] = useState(false)
   
   const router = useRouter()
   
   const onSubmit = async (e :  ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    setLoading(true)
 
     let data = {
       first_name : e.target?.first_name?.value,
@@ -32,31 +34,24 @@ const SignUpFormHandler: React.FC = () => {
       password : e.target?.password?.value
     }
 
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register/` , {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register/` , {
       method : "POST",
+      body : JSON.stringify(data),
       headers : {
         "Content-Type" : "application/json"
-      },
-      body : JSON.stringify(data)
-    }).then(res => {
-      if(res.ok){
-        return res.json()
-      }else{
-        throw Error(`${res.status}`)
       }
-    }).then(()=>{
-      toast.success("your account has been created successfully", {
-        duration: 3000,
-        style: {
-          borderRadius: "10px",
-          background: "#4ABB13",
-          color: "white",
-        },
-      });
-      router.push("/")
-    }).catch(err => {
-      toast.error(`Error Status ${err.message}`)
     })
+
+    const result = res.ok ? await res.json() : res.status
+
+    if(result === 400){
+      toast.error("User Already Exists")
+      setLoading(false)
+    }else{
+      router.push("/")
+      toast.success("User Created Sucessfully")
+      setLoading(false)
+    }
     
   }
 
@@ -128,7 +123,7 @@ const SignUpFormHandler: React.FC = () => {
             </div>
           </div>
           <div>
-            <ShinySkeuButton />
+            <ShinySkeuButton loading={loading}/>
           </div>
         </form>
       </div>
@@ -156,7 +151,7 @@ const SignUpFormHandler: React.FC = () => {
   );
 };
 
-const ShinySkeuButton: React.FC = () => {
+const ShinySkeuButton: React.FC<{loading : boolean}> = ({loading}) => {
   const parentRef = useRef<HTMLDivElement | null>(null);
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
@@ -198,7 +193,7 @@ const ShinySkeuButton: React.FC = () => {
         type="submit"
         className="w-full overflow-hidden font-mono cursor-pointer text-white rounded px-4 py-2 bg-[radial-gradient(100%_100%_at_100%_0%,_#af8bee_0%,_#6903f6_100%)] transition-[box-shadow_0.15s_ease,_transform_0.15s_ease] shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[inset_0px_3px_7px_#6903f6] skeu"
       >
-        Sign Up
+        {loading ? "Pending..." : "Submit"}
       </button>
     </div>
   );
