@@ -72,7 +72,7 @@ function DislikeModal({handleClose, setStatus} : {handleClose : () => void  , se
         setPending(true)
         e.preventDefault()
         let body = {
-            email :  e?.target?.email?.value ? e?.target?.email?.value : "",
+            email :  e?.target?.email?.value,
             comment : e?.target?.comment?.value,
             rating : "negative",
             thread_code : window.location.href.split("/c/")[1],

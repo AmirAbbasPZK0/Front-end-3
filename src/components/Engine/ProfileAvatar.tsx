@@ -39,7 +39,7 @@ const ProfileAvatar = ({ name , size , fontSize} : {name : string , size : strin
   };
 
   return (
-    <div className={`${size} ${fontSize} rounded-full ${letterColors?.[name[0]?.toUpperCase()]} flex items-center justify-center text-white text-[15px] shadow-inner`}>
+    <div className={`${size ?? "w-[150px] h-[150px]"} ${fontSize} rounded-full ${name ? letterColors?.[name[0]?.toUpperCase()] : ""} flex items-center justify-center text-white text-[15px] shadow-inner`}>
       {getInitials(name ?? "")}
     </div>
   );

@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { CiCirclePlus } from "react-icons/ci";
 import EmailGenratorLogo from "@/../public/images/email.webp"
 import ProfileAvatar from "./ProfileAvatar"
-import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { logOut } from '@/actions/logOut';
 import { setCounterToPayload } from '@/services/redux/reducers/newThreadSlice';

@@ -32,11 +32,19 @@ const SignUpFormHandler: React.FC = () => {
       password : e.target?.password?.value
     }
 
-    // run(data)
-
-    const res = await restApi(endpoints.register , false , false).post(data)
-
-    if(res.code === 201){
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register/` , {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(data)
+    }).then(res => {
+      if(res.ok){
+        return res.json()
+      }else{
+        throw Error(`${res.status}`)
+      }
+    }).then(()=>{
       toast.success("your account has been created successfully", {
         duration: 3000,
         style: {
@@ -46,8 +54,10 @@ const SignUpFormHandler: React.FC = () => {
         },
       });
       router.push("/")
-    }
-      
+    }).catch(err => {
+      toast.error(`Error Status ${err.message}`)
+    })
+    
   }
 
   return (
