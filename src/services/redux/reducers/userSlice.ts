@@ -17,12 +17,12 @@ interface History {
     conversation : Conversation[]
 }
 
-interface initialStateType { 
+interface initialStateType {
     isLogin : boolean
     data ?: {
-        first_name : string
-        last_name : string
-        email : string
+        first_name ?: string
+        last_name ?: string
+        email ?: string
     }
     history ?: History[]
 }

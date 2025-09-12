@@ -145,7 +145,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <div className='flex flex-row w-full items-center gap-2'>
                 {(user?.isLogin || user?.data !== undefined) ? (<>
                   <div className='justify-end gap-2 flex-col flex w-full'>
-                    <div className='flex p-2 flex-row justify-start gap-2 items-center'>
+                    <div className='flex p-2 flex-row justify-start gap-2 items-center' onClick={()=>{
+                      onClose()
+                      router.push("/profile")
+                    }}>
                       <ProfileAvatar name={user.data?.first_name || ""} size={'w-8 h-8'} fontSize={''}/>
                       <h1 className='font-semibold'>{user.data?.email}</h1>
                     </div>

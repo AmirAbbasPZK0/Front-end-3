@@ -24,7 +24,7 @@ const MiniSlideBar : React.FC = () => {
 
     const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
 
-    const user = useAppSelector(state => state.userSlice)
+    const user = useAppSelector(state => state?.userSlice)
 
     const [isOpen , setIsOpen] = useState(false)
     
@@ -100,7 +100,6 @@ const MiniSlideBar : React.FC = () => {
                 <button onClick={()=>{
                     setIsOpen(item => !item)
                 }}>
-                    {/* <ProfileAvatar size="w-8 h-8" fontSize="" name={`${user?.first_name} ${user?.last_name}`}/> */}
                     <IoIosArrowDropright className="text-[35px]"/>
                 </button>
             </div>
