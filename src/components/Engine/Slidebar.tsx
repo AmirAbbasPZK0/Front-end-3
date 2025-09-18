@@ -13,9 +13,9 @@ import { setCounterToPayload } from '@/services/redux/reducers/newThreadSlice';
 import { signOut } from 'next-auth/react';
 import HistoryButtons from './HistoryButtons';
 import AuthModal from './AuthModal';
-import ProfileToolTip from './ProfileToolTip';
 import { RiLogoutBoxRLine , RiLoginBoxLine } from "react-icons/ri";
 import Image from 'next/image';
+import useAgent from '@/hooks/useAgent';
 
 
 interface SidebarProps {
@@ -31,7 +31,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const dispatch = useAppDispatch()
 
-  const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
+  const {isMobile} = useAgent()
+
+  const isAllowed = useAppSelector(state => state.newThreadSlice.isAllowed)
 
   const counter = useAppSelector(state => state.newThreadSlice.counter)
 
@@ -73,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </button>
           </div>
           <nav className='w-full flex flex-col p-1 items-center justify-center'>
-            {isGenerating ? (<>
+            {isAllowed ? (<>
               <button onClick={()=>{
                   dispatch(addRecency())
                   dispatch(removeAllFiles())
@@ -81,10 +83,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   dispatch(selectResource("web"))
                   dispatch(setCounterToPayload(0))
                   localStorage.setItem("counter" , `${counter}`)
-                  // socket.removeAllListeners();
                   router.push("/")
                   onClose()
-              }} className='p-2.5 w-full m-1 rounded-md gap-2 items-center flex border-slate-100 bg-slate-100 dark:border-slate-700 dark:bg-slate-700 border-2'><CiCirclePlus className='text-[30px]'/><span className='font-semibold'>New Thread</span></button>
+              }} className='p-2.5 w-full m-1 rounded-md gap-2 items-center justify-between flex border-slate-100 bg-slate-100 dark:border-slate-700 dark:bg-slate-700 border-2'>
+                 <div className='gap-2 items-center flex border-slate-100 bg-slate-100 dark:border-slate-700 dark:bg-slate-700'>
+                   <CiCirclePlus className='text-[30px]'/><span className='font-semibold'>New Thread</span>
+                 </div>
+                 {!isMobile && <span className='font-semibold dark:text-slate-400 text-slate-500'>Shift + D</span>}
+                </button>
             </>) : (<>
               <button
                 type="button"

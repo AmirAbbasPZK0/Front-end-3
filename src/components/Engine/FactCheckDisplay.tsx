@@ -59,7 +59,7 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
 
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
 
-    const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
+    const isAllowed = useAppSelector(state => state.newThreadSlice.isAllowed)
 
     const [followUp , setFollowUp] = useState("")
 

@@ -22,7 +22,7 @@ const MiniSlideBar : React.FC = () => {
 
     const {setResponse} = useWebSocket()
 
-    const isGenerating = useAppSelector(state => state.newThreadSlice.isAllowed)
+    const isAllowed = useAppSelector(state => state.newThreadSlice.isAllowed)
 
     const user = useAppSelector(state => state?.userSlice)
 
@@ -52,7 +52,7 @@ const MiniSlideBar : React.FC = () => {
                     className="hidden dark:block"
                     />
                 </a>
-                {isGenerating ? (<button className="p-3" onClick={()=>{
+                {isAllowed ? (<button className="p-3" onClick={()=>{
                     localStorage.setItem("counter" , `${0}`)
                     dispatch(addRecency())
                     dispatch(selectResource("web"))

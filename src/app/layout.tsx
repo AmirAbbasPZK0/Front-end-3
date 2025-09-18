@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import Layout from "@/components/Engine/Layout";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import { AuthProvider } from "@/components/AuthProvider";
+import KeyBoardHandler from "@/components/Engine/KeyBoardHandler";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -47,11 +48,13 @@ export default function RootLayout({
         >
           <AuthProvider>
           <EdgeStoreProvider>
-            <Layout>
-              <Suspense>
-                <ScrollToTop>{children}</ScrollToTop>
-              </Suspense>
-            </Layout>
+            <KeyBoardHandler>
+              <Layout>
+                <Suspense>
+                  <ScrollToTop>{children}</ScrollToTop>
+                </Suspense>
+              </Layout>
+            </KeyBoardHandler>
           </EdgeStoreProvider>
           </AuthProvider>
         </body>
