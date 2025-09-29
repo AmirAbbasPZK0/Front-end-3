@@ -44,14 +44,15 @@ const userSlice = createSlice({
         },
         removeHistory : (state , action) => {
             state.history = state.history?.filter(item => item.code !== action.payload)
-            // localStorage.setItem("history" , JSON.parse(state.history as any))
         },
-        editHistory : (state , action) => {
-            let target = state.history?.find(item => item.code === action.payload.code)
-            state.history = state.history?.filter(item => item.code !== action.payload.code)
-            if(target){
-                target.title = action.payload.title
-                state.history = [...(state.history ?? []), target]
+        editHistory: (state, action) => {
+            const index = state.history?.findIndex(item => item.code === action.payload.code);
+
+            if (index !== undefined && index !== -1 && state.history) {
+                state.history[index] = {
+                    ...state.history[index],
+                    title: action.payload.title,
+                };
             }
         },
         editUser : (state , action : PayloadAction<{first_name : string , last_name : string , email : string}>) => {

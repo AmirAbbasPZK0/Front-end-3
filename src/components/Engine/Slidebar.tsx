@@ -151,23 +151,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </div>
           )}          
 
-          {/* Bottom user section */}
           <nav className='w-full mt-auto flex flex-col items-center gap-3'>
             <div className='flex flex-row justify-between items-center w-full'>
               <div className='flex flex-row w-full items-center gap-2'>
                 {(user?.isLogin || user?.data !== undefined) ? (
                   <div className='justify-end gap-2 flex-col flex w-full relative' ref={popoverRef}>
-                    {/* Username trigger */}
                     <button 
                       className='flex p-2 py-4 flex-row justify-start gap-2 items-center cursor-pointer'
                       onClick={() => setOpenPopover(prev => !prev)}
                     >
-                      <ProfileAvatar name={user.data?.first_name || ""} size={'w-8 h-8'} fontSize={''}/>
+                      <ProfileAvatar name={user.data?.email || ""} size={'w-8 h-8'} fontSize={''}/>
                       <h1 className='font-semibold'>{user.data?.email}</h1>
                       <MdKeyboardArrowDown/>
                     </button>
 
-                    {/* Popover */}
                     {openPopover && (
                       <div className="absolute bottom-14 left-2 w-[94%] bg-white dark:bg-gray-700 border rounded-lg shadow-lg p-3 z-50">
                         <p className="text-sm font-medium">{user.data?.first_name} {user.data?.last_name}</p>

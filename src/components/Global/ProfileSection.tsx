@@ -106,7 +106,6 @@ const EditProfileModal = ({setClose} : {setClose : () => void}) => {
                     <h1 className="text-[20px] font-semibold">Edit User</h1>
                     <input className="p-2 rounded-md border-2 outline-none" type="text" name="first_name" placeholder="First Name" />
                     <input className="p-2 rounded-md border-2 outline-none" type="text" name="last_name" placeholder="Last Name" />
-                    <input className="p-2 rounded-md border-2 outline-none" type="email" name="email" placeholder="Email"/>
                     {loading ? <button className="p-2 rounded-md bg-blue-400 text-white" disabled={true} type="submit">Pending...</button> 
                         : 
                     <button className="p-2 rounded-md bg-blue-400 text-white" type="submit">Submit</button>}

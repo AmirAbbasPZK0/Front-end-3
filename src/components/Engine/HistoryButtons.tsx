@@ -10,6 +10,7 @@ import TooltipMenu from "./TooltipMenu";
 import { TiTick } from "react-icons/ti";
 import Cookies from "js-cookie";
 import { editHistory } from "@/services/redux/reducers/userSlice";
+import toast from "react-hot-toast";
 
 const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) => {
 
@@ -24,7 +25,8 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
         let data = {
             title : e.target?.titleD?.value
         }
-        if(data.title === ""){
+        if(data.title.length < 3){
+            toast.error("You should enter at least 3 Character")
             return false
         }
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user/history/${item?.code}` , {
@@ -49,7 +51,9 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
         <div className='text-left px-2 flex items-center flex-row justify-between rounded-md dark:bg-slate-600 bg-slate-100 w-full'>
             {renameForm ? (<>
                 <form onSubmit={onEditSubmit} className="flex w-2 gap-2" action="">
-                    <input name="titleD" type="text" defaultValue={item?.title} />
+                    <div className="flex-1 p-2">
+                        <input name="titleD" type="text" defaultValue={item?.title} />
+                    </div>
                     <button><TiTick/></button>
                 </form>
             </>) : (<>
