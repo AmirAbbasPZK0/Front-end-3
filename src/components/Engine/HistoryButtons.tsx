@@ -48,7 +48,7 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
     }
 
     return (<>
-        <div className='text-left px-2 flex items-center flex-row justify-between rounded-md dark:bg-slate-600 bg-slate-100 w-full'>
+        <div className='text-left flex items-center flex-row justify-between rounded-md dark:bg-slate-600 bg-slate-100 w-full'>
             {renameForm ? (<>
                 <form onSubmit={onEditSubmit} className="flex w-2 gap-2" action="">
                     <div className="flex-1 p-2">
@@ -67,7 +67,7 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
                         localStorage.setItem("counter" , `${counter}`)
                         onClose()
                     }
-                }} className="text-[12px] w-full cursor-pointer font-semibold">{item?.title.length > 30 ? `${item?.title.slice(0,30)} ...` : item?.title}</p>
+                }} className="text-[12px] p-2 w-full cursor-pointer font-semibold">{item?.title.length > 30 ? `${item?.title.slice(0,30)} ...` : item?.title}</p>
                 </>)}
             
             <TooltipMenu handleRenameForm={()=> setRenameForm(item => !item)} id={item?.code}/>
