@@ -46,7 +46,7 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
     }
 
     return (<>
-        <div className='text-left p-2 flex items-center flex-row justify-between rounded-md dark:bg-slate-600 bg-slate-100 w-full'>
+        <div className='text-left px-2 flex items-center flex-row justify-between rounded-md dark:bg-slate-600 bg-slate-100 w-full'>
             {renameForm ? (<>
                 <form onSubmit={onEditSubmit} className="flex w-2 gap-2" action="">
                     <input name="titleD" type="text" defaultValue={item?.title} />
