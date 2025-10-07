@@ -22,10 +22,8 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
 
     const onEditSubmit = (e : ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
-        let data = {
-            title : e.target?.titleD?.value
-        }
-        if(data.title.length < 3){
+        
+        if(e.target?.titleD?.value.length < 3){
             toast.error("You should enter at least 3 Character")
             return false
         }
@@ -35,7 +33,7 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
                 "Authorization" : `Bearer ${Cookies.get("access_token")}`,
                 "Content-Type" : "application/json"
             },
-            body : JSON.stringify(data)
+            body : JSON.stringify({title : e.target?.titleD?.value})
         }).then(res => {
             if(res.ok){
                 return res.json()
@@ -44,11 +42,11 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
             console.log("Deleted Successfully")
         })
         setRenameForm(false)
-        dispatch(editHistory({code : item?.code , title : data.title}))
+        dispatch(editHistory({code : item?.code , title : e.target?.titleD?.value}))
     }
 
     return (<>
-        <div className='text-left flex items-center flex-row justify-between rounded-md dark:bg-slate-600 bg-slate-100 w-full'>
+        <div className='text-left flex items-center flex-row justify-between rounded-md dark:bg-slate-600 bg-slate-100 w-full hover:bg-slate-200 dark:hover:bg-slate-500 transition-colors duration-200 group'>
             {renameForm ? (<>
                 <form onSubmit={onEditSubmit} className="flex w-2 gap-2" action="">
                     <div className="flex-1 p-2">
@@ -67,10 +65,12 @@ const HistoryButtons = ({item , onClose} : {item : any , onClose : ()=> void}) =
                         localStorage.setItem("counter" , `${counter}`)
                         onClose()
                     }
-                }} className="text-[12px] p-2 w-full cursor-pointer font-semibold">{item?.title.length > 30 ? `${item?.title.slice(0,30)} ...` : item?.title}</p>
+                }} className="text-[12px] p-2 w-full cursor-pointer font-semibold hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">{item?.title.length > 30 ? `${item?.title.slice(0,30)} ...` : item?.title}</p>
                 </>)}
             
-            <TooltipMenu handleRenameForm={()=> setRenameForm(item => !item)} id={item?.code}/>
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <TooltipMenu handleRenameForm={()=> setRenameForm(item => !item)} id={item?.code}/>
+            </div>
         </div>
     </>);
 }

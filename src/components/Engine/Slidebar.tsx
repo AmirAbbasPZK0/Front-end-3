@@ -97,10 +97,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   router.push("/")
                   onClose()
                 }}
-                className='p-2.5 w-full m-1 rounded-md gap-2 items-center justify-between flex border-slate-100 bg-slate-100 dark:border-slate-700 dark:bg-slate-700 border-2'
+                className='p-2.5 w-full m-1 rounded-md gap-2 items-center justify-between flex border-slate-100 bg-slate-100 dark:border-slate-700 dark:bg-slate-700 border-2 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 group'
               >
                 <div className='gap-2 items-center flex'>
-                  <CiCirclePlus className='text-[30px]'/>
+                  <CiCirclePlus className='text-[30px] group-hover:rotate-90 transition-transform duration-200'/>
                   <span className='font-semibold'>New Thread</span>
                 </div>
                 {!isMobile && <span className='font-semibold dark:text-slate-400 text-slate-500'>Shift + D</span>}
@@ -125,12 +125,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <button onClick={()=>{
                 router.push("/email-generator")
                 onClose()
-              }} className='p-2.5 w-full m-1 rounded-md gap-2 items-center flex bg-blue-500 text-white'>
+              }} className='p-2.5 w-full m-1 rounded-md gap-2 items-center flex bg-blue-500 hover:bg-blue-600 text-white transition-colors duration-200 group'>
                 <Image
                   src={EmailGenratorLogo}
                   alt="logo"
                   width={30}
                   height={10}
+                  className="group-hover:scale-110 transition-transform duration-200"
                 />
                 <span className='font-semibold'>Generate Email</span>
               </button>
@@ -157,7 +158,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 {(user?.isLogin || user?.data !== undefined) ? (
                   <div className='justify-end gap-2 flex-col flex w-full relative' ref={popoverRef}>
                     <button 
-                      className='flex p-2 py-4 flex-row justify-start gap-2 items-center cursor-pointer'
+                      className='flex p-2 py-4 flex-row justify-start gap-2 items-center cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600 rounded-md transition-colors duration-200'
                       onClick={() => setOpenPopover(prev => !prev)}
                     >
                       <ProfileAvatar name={user.data?.email || ""} size={'w-8 h-8'} fontSize={''}/>
@@ -171,6 +172,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         <p className="text-xs text-gray-500 dark:text-gray-300 mb-2">{user.data?.email}</p>
                         <button 
                           onClick={()=> {
+                            onClose()
                             router.push("/profile")
                           }}
                           className='w-full px-3 py-2 flex items-center justify-between dark:text-zinc-100 text-zinc-600 hover:bg-zinc-50 dark:hover:bg-gray-600 rounded-md'
@@ -199,7 +201,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     <button onClick={()=> {
                       onClose()
                       setOpenAuthModal(true)
-                    }} className="w-full flex flex-row justify-between items-center text-center p-4 font-semibold transition-all bg-slate-950 border-2 border-slate-950 text-white">
+                    }} className="w-full flex flex-row justify-between items-center text-center p-4 font-semibold transition-all bg-slate-950 hover:bg-slate-800 border-2 border-slate-950 hover:border-slate-800 text-white rounded-t-md">
                       Login <RiLoginBoxLine className='text-[20px]'/>
                     </button>
                   </div>

@@ -17,6 +17,7 @@ import { checkHistory, increaseCounter, makeItFalse , setCounterToPayload } from
 import { selectResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 import useAgent from '@/hooks/useAgent';
+import VoiceMessage from './VoicMessage';
 
 const PropmptYard = () => {
 
@@ -275,7 +276,7 @@ const PropmptYard = () => {
     if(historyChecker){
       return <div className='flex w-[90%] items-end justify-end h-screen '>
         <SkeletonLoading/>
-      </div>;
+      </div>
     }
 
     return (<>
@@ -296,63 +297,20 @@ const PropmptYard = () => {
               }} value={prompt} placeholder='Write your text...' dir="auto" rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
               <div className='flex flex-row items-center justify-between gap-2 w-full'>
                 <div className='flex flex-row gap-2'>
-                  {/* Attach File Modal */}
                   <button onClick={()=>{
                     setIsAttachOpen(true);
                   }} type='button' className='flex flex-row gap-2 text-[20px] items-center justify-center'><IoIosAttach/></button>
                   {isAttachOpen && <AttachFileModal setClose={setIsAttachOpen}/>}
-                  {/* Modules */}
                   <NewDropdown/>
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
-                  {/* <SpeechToText sendMessage={sendMessage}/> */}
-                  {/* <div className='flex gap-2 items-center justify-center'>
-                    <span className='font-semibold md:text-[15px] text-[13px]'>Deep Search</span>
-                    {user.isLogin ? (
-                      <button
-                      onClick={() => {
-                        if(user.isLogin){
-                          setSelectedDepth(item => !item)
-                        }
-                      }}
-                      className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
-                        selectedDepth ? 'bg-green-500' : 'bg-gray-300'
-                      }`}
-                    >
-                      <div
-                        className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
-                          selectedDepth ? 'translate-x-6' : ''
-                        }`}
-                      ></div>
-                    </button>
-                    ) : 
-                      <div className="relative inline-flex items-center opacity-50 cursor-not-allowed">
-                        <button
-                          onMouseEnter={() => setShowTooltip(true)}
-                          onMouseLeave={() => setShowTooltip(false)}
-                          // disabled
-                          className="w-14 h-8 flex items-center bg-gray-300 rounded-full p-1"
-                        >
-                          
-                          <div className="bg-white flex items-center justify-center w-6 h-6 rounded-full shadow-md">
-                            <IoLockClosedSharp className='text-slate-900'/>
-                          </div>
-
-                          {showTooltip && (
-                            <div className="absolute top-full bg-slate-950 dark:bg-slate-50 dark:text-black text-white py-1 px-2 mt-2 w-[180px] rounded-md left-1/2 -translate-x-1/2">
-                              Please log in to use Deep Search
-                            </div>
-                          )}
-                        </button>
-                        
-                      </div>
-                    }
-                  </div> */}
+                  <VoiceMessage/>
                   <button onClick={()=>{
                     if(checkIsEmpty(prompt)){
                       sendMessage(prompt);
                     }
                   }} className='text-[20px] p-1' type='submit'><TbSend2/></button>
+                  
                 </div>
               </div>
             </div>

@@ -27,6 +27,7 @@ import { removeHyperText } from "@/functions/removeSources";
 import { makeItTrue } from "@/services/redux/reducers/newThreadSlice";
 import PromptEditSection from "./PromptEditSection";
 import ChatInput from "./ChatInput";
+import TextToSpeeh from "./TextToSpeech";
 
 
 interface CodeComponentProps {
@@ -309,6 +310,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                             }}>
                                 <IoCopyOutline/>
                             </button>
+                            <TextToSpeeh text={response}/>
                         </div>
                     </div>
                     {(images && images?.length > 0) && <div className="md:w-[30%] w-full">
