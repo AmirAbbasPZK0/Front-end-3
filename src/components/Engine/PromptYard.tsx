@@ -304,7 +304,7 @@ const PropmptYard = () => {
                   <NewDropdown/>
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
-                  <VoiceMessage/>
+                  {/* <VoiceMessage/> */}
                   <button onClick={()=>{
                     if(checkIsEmpty(prompt)){
                       sendMessage(prompt);
