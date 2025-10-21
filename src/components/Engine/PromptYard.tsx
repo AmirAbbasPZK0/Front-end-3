@@ -17,7 +17,8 @@ import { checkHistory, increaseCounter, makeItFalse , setCounterToPayload } from
 import { selectResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 import useAgent from '@/hooks/useAgent';
-import VoiceMessage from './VoicMessage';
+// import VoiceMessage from './VoicMessage';
+import STTRecorder from './STTRecorder';
 
 const PropmptYard = () => {
 
@@ -304,7 +305,7 @@ const PropmptYard = () => {
                   <NewDropdown/>
                 </div>
                 <div className='flex flex-row gap-2 items-center justify-center'>
-                  {/* <VoiceMessage/> */}
+                  <STTRecorder/>
                   <button onClick={()=>{
                     if(checkIsEmpty(prompt)){
                       sendMessage(prompt);
