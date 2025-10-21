@@ -4,31 +4,32 @@ import { TbSend2 } from "react-icons/tb";
 import ModuleIcon from "./ModuleIcons";
 import { checkIsEmpty } from "@/functions/checkIsEmpty";
 import useAgent from "@/hooks/useAgent";
+import STTRecorder from "./STTRecorder";
 
 
 interface ChatInputProps {
-  sendMessage : (value : string)=> void
-  followUp : string
-  isSubmited : boolean
-  setIsSubmited : (value : boolean) => void
-  setFollowUp : (value : string) => void
-  selectedModule : string
+  sendMessage: (value: string) => void
+  followUp: string
+  isSubmited: boolean
+  setIsSubmited: (value: boolean) => void
+  setFollowUp: (value: string) => void
+  selectedModule: string
 }
 
-const ChatInput: React.FC<ChatInputProps> = ({ sendMessage , followUp , isSubmited , setIsSubmited , setFollowUp , selectedModule}) => {
-  
+const ChatInput: React.FC<ChatInputProps> = ({ sendMessage, followUp, isSubmited, setIsSubmited, setFollowUp, selectedModule }) => {
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const boxRef = useRef<HTMLDivElement>(null)
-  
-  const {isMobile} = useAgent()
+
+  const { isMobile } = useAgent()
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (!isSubmited && event.key === "Enter" && checkIsEmpty(followUp) && !event.shiftKey) {
-        if(!isMobile){
-            sendMessage(followUp);
-            setIsSubmited(true);
-            setFollowUp("");
-        }
+      if (!isMobile) {
+        sendMessage(followUp);
+        setIsSubmited(true);
+        setFollowUp("");
+      }
     }
   }, [isSubmited, followUp, sendMessage]);
 
@@ -43,7 +44,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ sendMessage , followUp , isSubmit
     }
   }, [followUp]);
 
-  useEffect(() => {        
+  useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
@@ -56,13 +57,13 @@ const ChatInput: React.FC<ChatInputProps> = ({ sendMessage , followUp , isSubmit
       className="fixed z-30 bottom-4 min-h-[60px] md:w-[78%] w-[92%]"
     >
       <div className={`flex items-center rounded-lg h-full px-3 py-2 shadow-sm border bg-white dark:bg-slate-800 dark:border-slate-700`}>
-                        
+
         <div className="h-full flex items-end justify-center">
           <button
             type="button"
             className="text-neutral-400 hover:text-white transition"
           >
-            <ModuleIcon className="text-[10px] p-2" moduleName={selectedModule}/>
+            <ModuleIcon className="text-[10px] p-2" moduleName={selectedModule} />
           </button>
         </div>
 
@@ -73,25 +74,38 @@ const ChatInput: React.FC<ChatInputProps> = ({ sendMessage , followUp , isSubmit
           placeholder="Ask anything"
           rows={1} // auto-expandable if you want
           className="w-full resize-none  bg-transparent placeholder-gray-400 border-none outline-none"
-          />
-        <div className="h-full flex items-end justify-end">
+        />
+
+        <div className='flex flex-row gap-2 items-center justify-center'>
+          <STTRecorder sendMessage={sendMessage} />
+          <button onClick={() => {
+            if (checkIsEmpty(followUp)) {
+              setFollowUp("")
+              sendMessage(followUp);
+              setIsSubmited(true)
+            }
+          }} className='text-[20px] p-1' type='submit'><TbSend2 /></button>
+
+        </div>
+
+        {/* <div className="h-full flex items-end justify-end">
+          <STTRecorder sendMessage={sendMessage} />
           <button
-            onClick={()=>{
-              if(checkIsEmpty(followUp)){
+            onClick={() => {
+              if (checkIsEmpty(followUp)) {
                 sendMessage(followUp)
-                setIsSubmited(true)
-                setFollowUp("")
+
               }
             }}
             type="button"
             className="p-2 text-neutral-400 hover:text-black dark:hover:text-white transition"
           >
-            <TbSend2 className="text-[25px]"/>
+            <TbSend2 className="text-[25px]" />
           </button>
-        </div>
+        </div> */}
       </div>
 
-      </motion.div>
+    </motion.div>
   );
 };
 

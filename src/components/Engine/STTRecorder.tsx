@@ -63,6 +63,7 @@ const SlidePageSTT: React.FC<{ sendMessage: (prompt: string) => void }> = ({ sen
     setIsRecording(false);
     if (transcript.trim() !== "")
       sendMessage(transcript.trim());
+    setOpen(false);
   };
 
   return (
