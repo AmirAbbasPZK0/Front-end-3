@@ -4,6 +4,8 @@ import { RiVoiceprintLine } from "react-icons/ri";
 import { FaMicrophone } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStop , FaTimes } from "react-icons/fa";
+
+
 interface SpeechRecognitionCustom extends EventTarget {
   continuous: boolean;
   interimResults: boolean;
@@ -20,11 +22,10 @@ interface SpeechRecognitionEventCustom extends Event {
   results: SpeechRecognitionResultList;
 }
 
-interface Window {
-  webkitSpeechRecognition: new () => SpeechRecognitionCustom;
-}
 
-const SlidePageSTT: React.FC = () => {
+const SlidePageSTT: React.FC<{sendMessage : (prompt :string)=> void}> = ({sendMessage}) => {
+
+  
   const [open, setOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState("");

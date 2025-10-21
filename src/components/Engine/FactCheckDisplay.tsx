@@ -5,16 +5,11 @@ import HyperLink from "./HyperLink";
 import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import { FaMinusCircle, FaRegCheckCircle , FaRegTimesCircle } from "react-icons/fa";
 import Source from "./Source";
-import { TbSend2 } from "react-icons/tb";
-import { isRTL } from "@/functions/isRTL";
 import { LiaTimesSolid } from "react-icons/lia";
 import FactCheckSourceList from "./FactCheckSourceList";
 import React from "react";
 import { checkIsEmpty } from "@/functions/checkIsEmpty";
-import ModuleIcon from "./ModuleIcons";
-import useWebSocket from "@/hooks/useWebSocket";
 import { useAppSelector } from "@/services/redux/store";
-import { FaRegCircleStop } from "react-icons/fa6";
 import ChatInput from "./ChatInput";
 
 interface ClaimAnswerProps { 
@@ -55,11 +50,7 @@ const FactCheckDisplay = ({data , sources , query , sendMessage} : FactCheckDisp
 
     const [hyperLinkTooltip , setHyperLinkTooltip] = useState<HyperLink | null >(null)
 
-    const {socket} = useWebSocket()
-
     const selectedModule = useAppSelector(state => state.resourceSlice.selectedResource)
-
-    const isAllowed = useAppSelector(state => state.newThreadSlice.isAllowed)
 
     const [followUp , setFollowUp] = useState("")
 

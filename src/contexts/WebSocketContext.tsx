@@ -9,9 +9,9 @@ interface Response {
   isLoading: boolean,
   isDone : boolean,
   images: any,
-  data: any,
+  data: any, // Fact Check response
   videos : any,
-  findoraMessage : any,
+  findoraMessage : any, // Medical response
   relatedQuestions: any
 }
 

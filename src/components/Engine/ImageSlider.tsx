@@ -17,7 +17,7 @@ interface Image {
     imageWidth : number
 }
 
-const NewSlider = ({images} : {images : Image[]}) => {
+const ImagerSlider = ({images} : {images : Image[]}) => {
 
     const [newImages , setNewImages] = useState<Image[]>([])
 
@@ -155,4 +155,4 @@ const ModalSlider = ({setClose , newImages , keyIndex} : {setClose : (val : bool
     </>);
 }
 
-export default NewSlider
+export default ImagerSlider

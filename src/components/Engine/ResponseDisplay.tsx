@@ -1,6 +1,6 @@
 "use client"
 
-import React , {RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
+import React , {RefObject, useEffect, useMemo, useRef, useState} from "react";
 import ReactMarkdown from 'react-markdown';
 import HyperLink from "./HyperLink";
 import { hyperTextForMarkDown } from "@/functions/hypertext";
@@ -8,7 +8,6 @@ import { snippetAndTitleHandler } from "@/functions/snippetAndTitleHandler";
 import Loading from "./Loading";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'; // Choose a style
-import { TbSend2 } from "react-icons/tb";
 import { IoCopyOutline } from "react-icons/io5";
 import CarouselYard from "./CarouselYard";
 import FactCheckDisplay from "./FactCheckDisplay";
@@ -18,7 +17,7 @@ import { FaTimes } from "react-icons/fa";
 import { sourceList } from "@/functions/sourceList";
 import SourceButton from "./SourceButton";
 import remarkGfm from 'remark-gfm'
-import NewSlider from "./NewSlider";
+import ImageSlider from "./ImageSlider";
 import { isRTL } from "@/functions/isRTL";
 import { FiClipboard } from "react-icons/fi";
 import toast from "react-hot-toast";
@@ -273,7 +272,6 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                                 </td>
                             ),
                         }}>
-                            {/*{response}*/}
                             {(sources?.length > 0) ? (uploadedFiles.length > 0 || selectedModule === "url") ? removeHyperText(response , sources) : hyperTextForMarkDown(response , sources) : response}
                         </ReactMarkdown>
                         <div className="flex gap-2 flex-row">
@@ -314,7 +312,7 @@ const ResponseDisplay : React.FC<ResponseDisplayProps> = ({
                         </div>
                     </div>
                     {(images && images?.length > 0) && <div className="md:w-[30%] w-full">
-                        <NewSlider images={images}/>
+                        <ImageSlider images={images}/>
                     </div>}
                 </div>
             </div>}
