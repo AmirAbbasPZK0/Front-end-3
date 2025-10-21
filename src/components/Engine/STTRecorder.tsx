@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import { RiVoiceprintLine } from "react-icons/ri";
 import { FaMicrophone } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaStop , FaTimes } from "react-icons/fa";
+import { FaStop, FaTimes } from "react-icons/fa";
 
 
 interface SpeechRecognitionCustom extends EventTarget {
@@ -23,9 +23,9 @@ interface SpeechRecognitionEventCustom extends Event {
 }
 
 
-const SlidePageSTT: React.FC<{sendMessage : (prompt :string)=> void}> = ({sendMessage}) => {
+const SlidePageSTT: React.FC<{ sendMessage: (prompt: string) => void }> = ({ sendMessage }) => {
 
-  
+
   const [open, setOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
@@ -61,6 +61,8 @@ const SlidePageSTT: React.FC<{sendMessage : (prompt :string)=> void}> = ({sendMe
   const stopRecording = () => {
     recognitionRef.current?.stop();
     setIsRecording(false);
+    if (transcript.trim() !== "")
+      sendMessage(transcript.trim());
   };
 
   return (
@@ -69,7 +71,7 @@ const SlidePageSTT: React.FC<{sendMessage : (prompt :string)=> void}> = ({sendMe
         onClick={() => setOpen(true)}
         className="p-3 text-[18px] rounded-full bg-blue-600 hover:bg-blue-700 text-white "
       >
-        <RiVoiceprintLine/>
+        <RiVoiceprintLine />
       </button>
 
       <AnimatePresence>
@@ -94,7 +96,7 @@ const SlidePageSTT: React.FC<{sendMessage : (prompt :string)=> void}> = ({sendMe
                 }}
                 className="absolute top-6 right-6 text-gray-300 hover:text-white"
               >
-               <FaTimes/>
+                <FaTimes />
               </button>
 
               <motion.div
@@ -103,9 +105,9 @@ const SlidePageSTT: React.FC<{sendMessage : (prompt :string)=> void}> = ({sendMe
                   scale: isRecording ? [1, 1.15, 1] : 1,
                   background: isRecording
                     ? [
-                        "radial-gradient(circle at 30% 30%, #cde9ff, #007BFF 60%, #001f4d)",
-                        "radial-gradient(circle at 70% 70%, #b5e0ff, #005BFF 60%, #001f4d)",
-                      ]
+                      "radial-gradient(circle at 30% 30%, #cde9ff, #007BFF 60%, #001f4d)",
+                      "radial-gradient(circle at 70% 70%, #b5e0ff, #005BFF 60%, #001f4d)",
+                    ]
                     : "radial-gradient(circle at 30% 30%, #a8d8ff, #007BFF 70%, #001f4d)",
                 }}
                 transition={{
@@ -118,7 +120,7 @@ const SlidePageSTT: React.FC<{sendMessage : (prompt :string)=> void}> = ({sendMe
                   onClick={isRecording ? stopRecording : startRecording}
                   className="p-8 rounded-full bg-transparent text-white"
                 >
-                  {isRecording ? <FaStop className="text-[30px]"/> : <FaMicrophone className="text-[30px]"/>}
+                  {isRecording ? <FaStop className="text-[30px]" /> : <FaMicrophone className="text-[30px]" />}
                 </button>
               </motion.div>
 
