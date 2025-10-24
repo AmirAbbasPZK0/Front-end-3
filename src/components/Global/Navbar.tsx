@@ -21,14 +21,14 @@ const Links = [
   { id: 2, title: "Discover", icon: BsSearch, url: "/discover" },
   { id: 3, title: "About", icon: GoPeople, url: "/about" },
   { id: 4, title: "Contact", icon: FiPhone, url: "/contact" },
-  { id: 6, title : "Login" , icon : IoLogInOutline , url : "/login"}
+  { id: 6, title: "Login", icon: IoLogInOutline, url: "/login" }
 ];
 
 const Navbar = () => {
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showLeftMenu, setShowLeftMenu] = useState(false);
-  const {isMobile} = useAgent()
+  const { isMobile } = useAgent()
 
 
   const openLeftMenu = () => {
@@ -99,28 +99,28 @@ const Navbar = () => {
       <div className="border-b-2 border-[#e8e9f3] dark:border-black">
         <div className="px-4 md:px-8 py-3">
           <div className="flex md:hidden justify-between items-center gap-4">
-              <button
-                onClick={openLeftMenu}
-                className="lg:hidden md:hidden flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
-              >
-                <span className="relative z-10 flex flex-col"><RiBarChartHorizontalLine className="text-[26px]"/></span>
-              </button>
-              <a href="https://findora.ai">
-                <Image
-                  src={LogoBlack}
-                  alt="logo"
-                  width={80}
-                  height={80}
-                  className="block dark:hidden"
-                />
-                <Image
-                  src={LogoWhite}
-                  alt="logo"
-                  width={80}
-                  height={80}
-                  className="hidden dark:block"
-                />
-              </a>
+            <button
+              onClick={openLeftMenu}
+              className="lg:hidden md:hidden flex font-medium px-3 py-2 rounded-md text-sm lg:text-base overflow-hidden relative transition-transform lg:hover:scale-105 lg:active:scale-95"
+            >
+              <span className="relative z-10 flex flex-col"><RiBarChartHorizontalLine className="text-[26px]" /></span>
+            </button>
+            <a href="https://findora.ai">
+              <Image
+                src={LogoBlack}
+                alt="logo"
+                width={50}
+                height={50}
+                className="block dark:hidden"
+              />
+              <Image
+                src={LogoWhite}
+                alt="logo"
+                width={50}
+                height={50}
+                className="hidden dark:block"
+              />
+            </a>
             {/* <div className="hidden xl:flex items-center bg-[#f0f0fc] dark:bg-[#111828] dark:text-white p-2 border-2 border-[#e7e7f2] shadow-inner rounded-full">
               {Links.map((link) => (
                 <NavLink link={link} key={link.id} />
@@ -130,7 +130,7 @@ const Navbar = () => {
               <ThemeToggle/>
             </div> */}
             <div className="flex flex-col gap-2 items-center justify-center">
-              <ThemeToggle/>
+              <ThemeToggle />
               {/* <div
                 className="relative block xl:hidden bg-[#f9fafc] dark:bg-[#111828] py-3 px-3 rounded-full shadow-md"
                 ref={dropdownRef}
@@ -166,13 +166,13 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        {(!isMobile) && <MiniSlideBar/>}
-              <AnimatePresence>
-                <Slidebar isOpen={showLeftMenu} onClose={()=>setShowLeftMenu(false)}/>
-              </AnimatePresence>
+        {(!isMobile) && <MiniSlideBar />}
+        <AnimatePresence>
+          <Slidebar isOpen={showLeftMenu} onClose={() => setShowLeftMenu(false)} />
+        </AnimatePresence>
       </div>
     </div>
-    
+
   );
 };
 
