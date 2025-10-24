@@ -14,6 +14,7 @@ export default function Home() {
 
 
   return (
+    
     <div>
       {/* <PreLoader /> */}
       {/* {!(pathname.includes("search")) && <PreLoader />} */}
