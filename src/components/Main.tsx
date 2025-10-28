@@ -12,6 +12,7 @@ import AnimatedText from "./Home/AnimatedText";
 
 export default function Home() {
 
+  
 
   return (
     
