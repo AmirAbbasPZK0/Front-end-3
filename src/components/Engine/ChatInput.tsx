@@ -77,7 +77,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ sendMessage, followUp, isSubmited
         />
 
         <div className='flex flex-row gap-2 items-center justify-center'>
-          {/* <STTRecorder sendMessage={sendMessage} /> */}
+          <STTRecorder sendMessage={sendMessage} />
           <button onClick={() => {
             if (checkIsEmpty(followUp)) {
               setFollowUp("")
@@ -89,7 +89,6 @@ const ChatInput: React.FC<ChatInputProps> = ({ sendMessage, followUp, isSubmited
         </div>
 
         {/* <div className="h-full flex items-end justify-end">
-          <STTRecorder sendMessage={sendMessage} />
           <button
             onClick={() => {
               if (checkIsEmpty(followUp)) {
