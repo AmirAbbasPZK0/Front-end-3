@@ -61,6 +61,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={() => onClose()}
+          style={{ zIndex: 40 }}
         ></div>
       )}
 
@@ -69,6 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         className={`fixed inset-y-0 left-0 w-[330px] max-w-full bg-white dark:bg-gray-800 shadow-lg transform ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 ease-in-out z-50`}
+        style={{ zIndex: 50 }}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
@@ -167,7 +169,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     </button>
 
                     {openPopover && (
-                      <div className="absolute bottom-14 left-2 w-[94%] bg-white dark:bg-gray-700 border rounded-lg shadow-lg p-3 z-50">
+                      <div className="absolute bottom-14 left-2 w-[94%] bg-white dark:bg-gray-700 border rounded-lg shadow-lg p-3 z-50" style={{ zIndex: 51 }}>
                         <p className="text-sm font-medium">{user.data?.first_name} {user.data?.last_name}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-300 mb-2">{user.data?.email}</p>
                         <button 
