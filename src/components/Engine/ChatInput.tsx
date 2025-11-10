@@ -4,7 +4,7 @@ import { TbSend2 } from "react-icons/tb";
 import ModuleIcon from "./ModuleIcons";
 import { checkIsEmpty } from "@/functions/checkIsEmpty";
 import useAgent from "@/hooks/useAgent";
-import STTRecorder from "./STTRecorder";
+import Dictate from "./Dictate";
 
 
 interface ChatInputProps {
@@ -77,7 +77,19 @@ const ChatInput: React.FC<ChatInputProps> = ({ sendMessage, followUp, isSubmited
         />
 
         <div className='flex flex-row gap-2 items-center justify-center'>
-          <STTRecorder sendMessage={sendMessage} />
+          <Dictate
+            onTextChange={(text) => {
+              setFollowUp(text);
+            }}
+            onTranscript={(text) => {
+              // When user finishes speaking, automatically send the message
+              if (text.trim() && checkIsEmpty(text)) {
+                setFollowUp(text);
+                sendMessage(text);
+                setIsSubmited(true);
+              }
+            }}
+          />
           <button onClick={() => {
             if (checkIsEmpty(followUp)) {
               setFollowUp("")

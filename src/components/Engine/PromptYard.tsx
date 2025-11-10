@@ -17,7 +17,7 @@ import { checkHistory, increaseCounter, makeItFalse, setCounterToPayload } from 
 import { selectResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 import useAgent from '@/hooks/useAgent';
-import STTRecorder from './STTRecorder';
+import Dictate from './Dictate';
 
 const PropmptYard = () => {
 
@@ -105,9 +105,12 @@ const PropmptYard = () => {
       setNewResponse(prev => prev + data.message);
       setResponse((prev: any) => {
         const cp = { ...prev };
-        cp[localStorage.getItem('counter') as string].text += data.message;
-        if (data.message.claim_1) {
-          cp[localStorage.getItem('counter') as string].data = data;
+        const counter = localStorage.getItem('counter') as string;
+        if (cp[counter]) {
+          cp[counter].text += data.message;
+          if (data.message.claim_1) {
+            cp[counter].data = data;
+          }
         }
         return cp;
       });
@@ -131,14 +134,20 @@ const PropmptYard = () => {
     socket?.on('receive_citation', (data: any) => {
       setResponse((prev: any) => {
         const cp = { ...prev };
-        cp[localStorage.getItem('counter') as string].sources = Object.values(data);
+        const counter = localStorage.getItem('counter') as string;
+        if (cp[counter]) {
+          cp[counter].sources = Object.values(data);
+        }
         return cp;
       });
     });
     socket?.on('receive_relevant', (data: any) => {
       setResponse((prev: any) => {
         const cp = { ...prev };
-        cp[localStorage.getItem('counter') as string].relatedQuestions = data.data?.followUp;
+        const counter = localStorage.getItem('counter') as string;
+        if (cp[counter]) {
+          cp[counter].relatedQuestions = data.data?.followUp;
+        }
         return cp;
       });
     });
@@ -146,7 +155,10 @@ const PropmptYard = () => {
     socket?.on("suggested videos", (data: any) => {
       setResponse((prev: any) => {
         const cp = { ...prev };
-        cp[localStorage.getItem("counter") as string].videos = data.data;
+        const counter = localStorage.getItem("counter") as string;
+        if (cp[counter]) {
+          cp[counter].videos = data.data;
+        }
         return cp;
       });
     });
@@ -304,7 +316,18 @@ const PropmptYard = () => {
                 <NewDropdown />
               </div>
               <div className='flex flex-row gap-2 items-center justify-center'>
-                <STTRecorder sendMessage={sendMessage} />
+                <Dictate
+                  onTextChange={(text) => {
+                    setPrompt(text);
+                  }}
+                  onTranscript={(text) => {
+                    // When user finishes speaking, automatically send the message
+                    if (text.trim() && checkIsEmpty(text)) {
+                      setPrompt(text);
+                      sendMessage(text);
+                    }
+                  }}
+                />
                 <button onClick={() => {
                   if (checkIsEmpty(prompt)) {
                     sendMessage(prompt);
