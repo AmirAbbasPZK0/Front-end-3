@@ -17,6 +17,7 @@ import { checkHistory, increaseCounter, makeItFalse, setCounterToPayload } from 
 import { selectResource } from '@/services/redux/reducers/resourceSlice';
 import SkeletonLoading from './SkeletonLoading';
 import useAgent from '@/hooks/useAgent';
+import STTRecorder from './STTRecorder';
 
 const PropmptYard = () => {
 
@@ -278,81 +279,81 @@ const PropmptYard = () => {
     </div>
   }
 
-    return (<>
-        <div className="flex w-[100%] items-center min-h-[20vh] pt-4 pb-20 justify-center gap-4 flex-col">
-          {isNew && (<>
-            <div className="md:w-[40%] flex flex-col gap-4 items-center justify-center h-[80vh] w-[90%]">
-              {user.isLogin ? 
-                <h3 className="text-[24px] md:text-[30px] md:font-light font-normal text-zinc-900 dark:text-slate-200 antialiased text-center">
-                    Welcome back <span className="font-normal">{user.data?.first_name}</span> <br/>
-                </h3> 
-                : 
-                <h3 className="text-[24px] md:text-[36px] md:font-light font-normal text-zinc-900 dark:text-slate-200 antialiased text-center">
-                    Ask Me Anything
-                </h3>}
-              <div className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
-              <textarea ref={textareaRef} onChange={e => {
-                setPrompt(e.target.value);
-              }} value={prompt} placeholder='Write your text...' dir="auto" rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
-              <div className='flex flex-row items-center justify-between gap-2 w-full'>
-                <div className='flex flex-row gap-2'>
-                  <button onClick={()=>{
-                    setIsAttachOpen(true);
-                  }} type='button' className='flex flex-row gap-2 text-[20px] items-center justify-center'><IoIosAttach/></button>
-                  {isAttachOpen && <AttachFileModal setClose={setIsAttachOpen}/>}
-                  <NewDropdown/>
-                </div>
-                <div className='flex flex-row gap-2 items-center justify-center'>
-                  <STTRecorder sendMessage={sendMessage}/>
-                  <button onClick={()=>{
-                    if(checkIsEmpty(prompt)){
-                      sendMessage(prompt);
-                    }
-                  }} className='text-[20px] p-1' type='submit'><TbSend2/></button>
-                  
-                </div>
+  return (<>
+    <div className="flex w-[100%] items-center min-h-[20vh] pt-4 pb-20 justify-center gap-4 flex-col">
+      {isNew && (<>
+        <div className="md:w-[40%] flex flex-col gap-4 items-center justify-center h-[80vh] w-[90%]">
+          {user.isLogin ?
+            <h3 className="text-[24px] md:text-[30px] md:font-light font-normal text-zinc-900 dark:text-slate-200 antialiased text-center">
+              Welcome back <span className="font-normal">{user.data?.first_name}</span> <br />
+            </h3>
+            :
+            <h3 className="text-[24px] md:text-[36px] md:font-light font-normal text-zinc-900 dark:text-slate-200 antialiased text-center">
+              Ask Me Anything
+            </h3>}
+          <div className='flex flex-col text-center gap-5 w-full bg-slate-50 shadow-md dark:bg-[#202938] p-4 rounded-3xl'>
+            <textarea ref={textareaRef} onChange={e => {
+              setPrompt(e.target.value);
+            }} value={prompt} placeholder='Write your text...' dir="auto" rows={1} cols={200} className={`w-full ${isRTL(prompt) ? "text-right" : "text-left"} resize-none w-full min-h-2 overflow-hidden placeholder-gray-500 bg-transparent outline-none`}></textarea>
+            <div className='flex flex-row items-center justify-between gap-2 w-full'>
+              <div className='flex flex-row gap-2'>
+                <button onClick={() => {
+                  setIsAttachOpen(true);
+                }} type='button' className='flex flex-row gap-2 text-[20px] items-center justify-center'><IoIosAttach /></button>
+                {isAttachOpen && <AttachFileModal setClose={setIsAttachOpen} />}
+                <NewDropdown />
+              </div>
+              <div className='flex flex-row gap-2 items-center justify-center'>
+                <STTRecorder sendMessage={sendMessage} />
+                <button onClick={() => {
+                  if (checkIsEmpty(prompt)) {
+                    sendMessage(prompt);
+                    
+                  }
+                }} className='text-[20px] p-1' type='submit'><TbSend2 /></button>
               </div>
             </div>
-            {selectedResources === 'url' && isNew && (
-                  <div className='w-full'>
-                    {urlInputs.urlInputs.map((url, index) => (
-                      <UrlInput key={index} url={url} urlInputs={urlInputs.urlInputs} index={index}/>
-                    ))}
-                    <button
-                      onClick={() => dispatch(addUrlToInputArray())}
-                      className="bg-slate-50 shadow-md dark:bg-[#202938] p-3 flex flex-row gap-2 justify-center rounded-2xl  mt-2"
-                      type="button"
-                    >
-                      <span>Add URL</span>
-                    </button>
-                  </div>
-            )}
-            {uploadedFiles.uploadedFilesUrl.length > 0 && uploadedFiles.uploadedFilesUrl.map((item: { name: string; url: string; } , index: Key | null | undefined) => (
-              <UploadedFileBox key={index} data={item}/>
-            ))}
+          </div>
+          {selectedResources === 'url' && isNew && (
+            <div className='w-full'>
+              {urlInputs.urlInputs.map((url, index) => (
+                <UrlInput key={index} url={url} urlInputs={urlInputs.urlInputs} index={index} />
+              ))}
+              <button
+                onClick={() => dispatch(addUrlToInputArray())}
+                className="bg-slate-50 shadow-md dark:bg-[#202938] p-3 flex flex-row gap-2 justify-center rounded-2xl  mt-2"
+                type="button"
+              >
+                <span>Add URL</span>
+              </button>
             </div>
-          </>)}
-          {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
-              <ResponseDisplay
-                coreId={key}
-                key={key}
-                id={index}
-                findoraMessage={value.findoraMessage}
-                isDone={value.isDone}
-                videos={value.videos}
-                query={value?.question}
-                data={value.data ? value?.data : false}
-                response={value.text}
-                sources={value.sources}
-                isLoading={value.isLoading}
-                images={value.images}
-                relatedQuestions={value.relatedQuestions}
-                responseRef={(index === Object.keys(response).length - 1 && !value.text) ? responseRef : undefined}
-                sendMessage={sendMessage}
-              />
           )}
+          {uploadedFiles.uploadedFilesUrl.length > 0 && uploadedFiles.uploadedFilesUrl.map((item: { name: string; url: string; }, index: Key | null | undefined) => (
+            <UploadedFileBox key={index} data={item} />
+          ))}
         </div>
-    </>);
+      </>)}
+      {!isNew && Object.entries(response)?.map(([key, value]: any, index) =>
+        <ResponseDisplay
+          coreId={key}
+          key={key}
+          id={index}
+          findoraMessage={value.findoraMessage}
+          isDone={value.isDone}
+          videos={value.videos}
+          query={value?.question}
+          data={value.data ? value?.data : false}
+          response={value.text}
+          sources={value.sources}
+          isLoading={value.isLoading}
+          images={value.images}
+          relatedQuestions={value.relatedQuestions}
+          responseRef={(index === Object.keys(response).length - 1 && !value.text) ? responseRef : undefined}
+          sendMessage={sendMessage}
+        />
+      )}
+    </div>
+  </>);
 };
 
 export default PropmptYard;
